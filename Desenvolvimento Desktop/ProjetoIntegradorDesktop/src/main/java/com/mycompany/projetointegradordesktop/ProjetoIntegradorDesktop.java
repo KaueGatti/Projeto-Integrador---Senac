@@ -4,6 +4,8 @@
 
 package com.mycompany.projetointegradordesktop;
 
+import com.mycompany.projetointegradordesktop.DB.Conexao;
+
 /**
  *
  * @author kaue.vgatti
@@ -11,6 +13,6 @@ package com.mycompany.projetointegradordesktop;
 public class ProjetoIntegradorDesktop {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Conexao.getConnection();
     }
 }
