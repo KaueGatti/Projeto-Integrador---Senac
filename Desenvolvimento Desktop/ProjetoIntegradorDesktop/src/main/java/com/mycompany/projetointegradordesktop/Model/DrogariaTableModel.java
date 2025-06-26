@@ -41,17 +41,17 @@ public class DrogariaTableModel extends AbstractTableModel {
             case 1:
                 return drogarias.get(rowIndex).getCNPJ();
             case 2:
-                return drogarias.get(rowIndex).getEndereco().getRua();
+                return drogarias.get(rowIndex).getRua();
             case 3:
-                return drogarias.get(rowIndex).getEndereco().getNumero();
+                return drogarias.get(rowIndex).getNumero();
             case 4:
-                return drogarias.get(rowIndex).getEndereco().getComplemento();
+                return drogarias.get(rowIndex).getComplemento();
             case 5:
-                return drogarias.get(rowIndex).getEndereco().getBairro();
+                return drogarias.get(rowIndex).getBairro();
             case 6:
-                return drogarias.get(rowIndex).getEndereco().getCidade();
+                return drogarias.get(rowIndex).getCidade();
             case 7:
-                return drogarias.get(rowIndex).getEndereco().getCep();
+                return drogarias.get(rowIndex).getCep();
         }
         return null;
     }

@@ -4,18 +4,25 @@
  */
 package com.mycompany.projetointegradordesktop.JFrame;
 
+import com.mycompany.projetointegradordesktop.Model.LaboratorioTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
+import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import java.awt.Component;
+import java.time.LocalDate;
+import javax.swing.JTextField;
+
 /**
  *
  * @author kaue.vgatti
  */
-public class IFDrogaria extends javax.swing.JInternalFrame {
+public class IFLaboratorio extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form IFDrogaria
-     */
-    public IFDrogaria() {
+    LaboratorioTableModel model = new LaboratorioTableModel();
+    
+    public IFLaboratorio() {
         initComponents();
         setVisible(true);
+        jTLaboratorio.setModel(model);
     }
 
     /**
@@ -54,8 +61,10 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jTFCidade = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jTFInscricaoEstadual = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTDrogaria = new javax.swing.JTable();
+        jTLaboratorio = new javax.swing.JTable();
 
         setBorder(null);
         setClosable(true);
@@ -73,7 +82,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCBTipoPesquisa, 0, 294, Short.MAX_VALUE)
+                .addComponent(jCBTipoPesquisa, 0, 285, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -93,13 +102,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTFRua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFRuaActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Nome Drogaria");
+        jLabel2.setText("Nome Laboratório");
 
         jLabel3.setText("Endereço:");
 
@@ -112,10 +115,25 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jLabel6.setText("CEP");
 
         jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCadastrarActionPerformed(evt);
+            }
+        });
 
         jBAtualizar.setText("Atualizar");
+        jBAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAtualizarActionPerformed(evt);
+            }
+        });
 
         jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Estado");
 
@@ -124,6 +142,8 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jLabel9.setText("Cidade");
 
         jLabel10.setText("Complemento");
+
+        jLabel11.setText("Inscrição Estadual");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,7 +154,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jBAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 363, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -162,14 +182,6 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jTFComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
                         .addComponent(jTFRua, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,8 +192,22 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(jTFNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jTFNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +218,11 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                     .addComponent(jTFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(19, 19, 19)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -228,7 +258,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTDrogaria.setModel(new javax.swing.table.DefaultTableModel(
+        jTLaboratorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -239,7 +269,12 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTDrogaria);
+        jTLaboratorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTLaboratorioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTLaboratorio);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -261,16 +296,75 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTFRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFRuaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFRuaActionPerformed
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        Laboratorio laboratorio = new Laboratorio();
+        
+        laboratorio.setNome(jTFNome.getText());
+        laboratorio.setCNPJ(jTFCNPJ.getText());
+        laboratorio.setInscricaoEstadual(jTFInscricaoEstadual.getText());
+        laboratorio.setNumero(jTFNumero.getText());
+        laboratorio.setRua(jTFRua.getText());
+        laboratorio.setCep(jTFCEP.getText());
+        laboratorio.setBairro(jTFBairro.getText());
+        laboratorio.setCidade(jTFCidade.getText());
+        laboratorio.setEstado(jTFEstado.getText());
+        laboratorio.setComplemento(jTFComplemento.getText());
+        
+        model.addLinha(laboratorio);
+        
+        limpaCampos();
+        
+        jTFNome.requestFocus();
+    }//GEN-LAST:event_jBCadastrarActionPerformed
 
+    private void jBAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarActionPerformed
+        model.setValueAt(jTFNome.getText(), jTLaboratorio.getSelectedRow(), 0);
+        model.setValueAt(jTFCNPJ.getText(), jTLaboratorio.getSelectedRow(), 1);
+        model.setValueAt(jTFInscricaoEstadual.getText(), jTLaboratorio.getSelectedRow(), 2);
+        model.setValueAt(jTFNumero.getText(), jTLaboratorio.getSelectedRow(), 3);
+        model.setValueAt(jTFRua.getText(), jTLaboratorio.getSelectedRow(), 4);
+        model.setValueAt(jTFCEP.getText(), jTLaboratorio.getSelectedRow(), 5);
+        model.setValueAt(jTFBairro.getText(), jTLaboratorio.getSelectedRow(), 6);
+        model.setValueAt(jTFCidade.getText(), jTLaboratorio.getSelectedRow(), 7);
+        model.setValueAt(jTFEstado.getText(), jTLaboratorio.getSelectedRow(), 8);
+        model.setValueAt(jTFComplemento.getText(), jTLaboratorio.getSelectedRow(), 9);
+    }//GEN-LAST:event_jBAtualizarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        if (jTLaboratorio.getSelectedRow() != -1) {
+            model.deleteLinha(jTLaboratorio.getSelectedRow());
+        }
+        limpaCampos();
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jTLaboratorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTLaboratorioMouseClicked
+        if (jTLaboratorio.getSelectedRow() != -1) {
+            jTFNome.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 0).toString());
+            jTFCNPJ.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 1).toString());
+            jTFInscricaoEstadual.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 2).toString());
+            jTFNumero.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 3).toString());
+            jTFRua.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 4).toString());
+            jTFCEP.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 5).toString());
+            jTFBairro.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 6).toString());
+            jTFCidade.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 7).toString());
+            jTFEstado.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 8).toString());
+            jTFComplemento.setText(model.getValueAt(jTLaboratorio.getSelectedRow(), 9).toString());
+        }
+    }//GEN-LAST:event_jTLaboratorioMouseClicked
+
+    public void limpaCampos() {
+        for (Component comp: jTLaboratorio.getComponents()) {
+            if (comp instanceof JTextField jTF) {
+                jTF.setText("");
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizar;
@@ -280,6 +374,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -291,16 +386,17 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTDrogaria;
     private javax.swing.JTextField jTFBairro;
     private javax.swing.JTextField jTFCEP;
     private javax.swing.JTextField jTFCNPJ;
     private javax.swing.JTextField jTFCidade;
     private javax.swing.JTextField jTFComplemento;
     private javax.swing.JTextField jTFEstado;
+    private javax.swing.JTextField jTFInscricaoEstadual;
     private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFNumero;
     private javax.swing.JTextField jTFPesquisa;
     private javax.swing.JTextField jTFRua;
+    private javax.swing.JTable jTLaboratorio;
     // End of variables declaration//GEN-END:variables
 }

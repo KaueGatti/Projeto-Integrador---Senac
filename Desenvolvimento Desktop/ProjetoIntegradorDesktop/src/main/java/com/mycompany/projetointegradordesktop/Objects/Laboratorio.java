@@ -8,8 +8,70 @@ public class Laboratorio {
     private String nome;
     private String CNPJ;
     private String inscricaoEstadual;
-    private Endereco endereco;
-    private List<Medicamento> medicamentosFornecidos = new ArrayList();
+    private String rua;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String cep;
+    private String estado;
+    private List<Remedio> medicamentosFornecidos = new ArrayList();
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public String getNome() {
         return nome;
@@ -35,19 +97,11 @@ public class Laboratorio {
         this.inscricaoEstadual = inscricaoEstadual;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public List<Medicamento> getMedicamentosFornecidos() {
+    public List<Remedio> getMedicamentosFornecidos() {
         return medicamentosFornecidos;
     }
 
-    public void setMedicamentosFornecidos(List<Medicamento> medicamentosFornecidos) {
+    public void setMedicamentosFornecidos(List<Remedio> medicamentosFornecidos) {
         this.medicamentosFornecidos = medicamentosFornecidos;
     }
     

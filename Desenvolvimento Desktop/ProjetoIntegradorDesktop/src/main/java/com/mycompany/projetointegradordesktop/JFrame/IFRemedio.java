@@ -1,12 +1,20 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
+import com.mycompany.projetointegradordesktop.Model.RemedioTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import java.awt.Component;
+import java.time.LocalDate;
+import javax.swing.JTextField;
 import javax.swing.text.StyleConstants;
 
 public class IFRemedio extends javax.swing.JInternalFrame {
 
+    RemedioTableModel model = new RemedioTableModel();
+
     public IFRemedio() {
         initComponents();
         setVisible(true);
+        jTRemedio.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -14,7 +22,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTRemedio = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jTFCod = new javax.swing.JTextField();
         jTFDataUltimaCompra = new javax.swing.JTextField();
@@ -40,7 +48,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTRemedio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,7 +59,12 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTRemedio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTRemedioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTRemedio);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -68,10 +81,25 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jLabel6.setText("Valor Venda");
 
         jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBCadastrarActionPerformed(evt);
+            }
+        });
 
         jBAtualizar.setText("Atualizar");
+        jBAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAtualizarActionPerformed(evt);
+            }
+        });
 
         jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,35 +107,42 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTFValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addGap(11, 11, 11)
-                                .addComponent(jTFValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTFCod, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFDataUltimaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTFDescricao)))
+                                .addComponent(jTFCod, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFDataUltimaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(244, 244, 244)
-                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTFValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel6)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTFValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,11 +164,11 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addComponent(jTFValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTFQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCadastrar)
                     .addComponent(jBAtualizar)
@@ -191,11 +226,63 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        Remedio remedio = new Remedio();
+
+        remedio.setCod(Integer.parseInt(jTFCod.getText()));
+        remedio.setDescricao(jTFDescricao.getText());
+        remedio.setDataUltimaCompra(LocalDate.parse(jTFDataUltimaCompra.getText()));
+        remedio.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
+        remedio.setValorCusto(Double.parseDouble(jTFValorCusto.getText()));
+        remedio.setValorVenda(Double.parseDouble(jTFValorVenda.getText()));
+
+        model.addLinha(remedio);
+        
+        limpaCampos();
+        
+        jTFCod.requestFocus();
+    }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        if (jTRemedio.getSelectedRow() != -1) {
+            model.deleteLinha(jTRemedio.getSelectedRow());
+        }
+        limpaCampos();
+    }//GEN-LAST:event_jBExcluirActionPerformed
+
+    private void jBAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarActionPerformed
+        model.setValueAt(jTFCod.getText(), jTRemedio.getSelectedRow(), 0);
+        model.setValueAt(jTFDescricao.getText(), jTRemedio.getSelectedRow(), 1);
+        model.setValueAt(jTFDataUltimaCompra.getText(), jTRemedio.getSelectedRow(), 2);
+        model.setValueAt(jTFQuantidade.getText(), jTRemedio.getSelectedRow(), 3);
+        model.setValueAt(jTFValorCusto.getText(), jTRemedio.getSelectedRow(), 4);
+        model.setValueAt(jTFValorVenda.getText(), jTRemedio.getSelectedRow(), 5);
+    }//GEN-LAST:event_jBAtualizarActionPerformed
+
+    private void jTRemedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTRemedioMouseClicked
+        if (jTRemedio.getSelectedRow() != -1) {
+            jTFCod.setText(model.getValueAt(jTRemedio.getSelectedRow(), 0).toString());
+            jTFDescricao.setText(model.getValueAt(jTRemedio.getSelectedRow(), 1).toString());
+            jTFDataUltimaCompra.setText(model.getValueAt(jTRemedio.getSelectedRow(), 2).toString());
+            jTFQuantidade.setText(model.getValueAt(jTRemedio.getSelectedRow(), 3).toString());
+            jTFValorCusto.setText(model.getValueAt(jTRemedio.getSelectedRow(), 4).toString());
+            jTFValorVenda.setText(model.getValueAt(jTRemedio.getSelectedRow(), 5).toString());
+        }
+    }//GEN-LAST:event_jTRemedioMouseClicked
+
+    public void limpaCampos() {
+        for (Component comp : jTRemedio.getComponents()) {
+            if (comp instanceof JTextField jTF) {
+                jTF.setText("");
+            }
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,6 +307,6 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorCusto;
     private javax.swing.JTextField jTFValorVenda;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTRemedio;
     // End of variables declaration//GEN-END:variables
 }

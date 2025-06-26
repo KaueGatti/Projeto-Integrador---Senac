@@ -2,7 +2,7 @@ package com.mycompany.projetointegradordesktop.Objects;
 
 import java.time.LocalDate;
 
-public class Medicamento {
+public class Remedio {
 
     private int cod;
     private String descricao;
