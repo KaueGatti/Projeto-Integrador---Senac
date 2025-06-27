@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.projetointegradordesktop.DB.Conexao;
 import java.awt.Component;
 import java.beans.PropertyVetoException;
 import javax.swing.JInternalFrame;
@@ -179,6 +180,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
         closeIF();
+        Conexao.getConnection();
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBRemedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemedioActionPerformed
@@ -227,7 +229,7 @@ public class Menu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {

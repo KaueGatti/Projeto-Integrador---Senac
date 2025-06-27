@@ -1,10 +1,15 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
+import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
+
 public class IFCompra extends javax.swing.JInternalFrame {
+    
+    CompraTableModel model = new CompraTableModel();
 
     public IFCompra() {
         initComponents();
         setVisible(true);
+        jTCompra.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,7 +29,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jTFNome2 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTDrogaria = new javax.swing.JTable();
+        jTCompra = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jTFPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -108,7 +113,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTDrogaria.setModel(new javax.swing.table.DefaultTableModel(
+        jTCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -119,7 +124,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTDrogaria);
+        jScrollPane1.setViewportView(jTCompra);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -191,7 +196,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTDrogaria;
+    private javax.swing.JTable jTCompra;
     private javax.swing.JTextField jTFCNPJ;
     private javax.swing.JTextField jTFNome;
     private javax.swing.JTextField jTFNome1;

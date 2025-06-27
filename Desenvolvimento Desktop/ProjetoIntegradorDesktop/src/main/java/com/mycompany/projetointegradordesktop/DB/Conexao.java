@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     private static final String DRIVE = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3316/ProjetoIntegrador?autoReconnect=true&useSSL=false";
+    private static final String URL = "jdbc:mysql://localhost:3306/distribuidora_cfa?autoReconnect=true&useSSL=false";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "0000";
 
     public static Connection getConnection() {
         try {
@@ -45,7 +45,7 @@ public class Conexao {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public static void closeConnection(Connection conn, PreparedStatement stmt, ResultSet rs) {
         closeConnection(conn, stmt);
         try {
