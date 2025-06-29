@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.Model;
 
 import com.mycompany.projetointegradordesktop.Objects.Venda;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -8,13 +9,13 @@ import javax.swing.table.AbstractTableModel;
 public class VendaTableModel extends AbstractTableModel{
 
     List<Venda> vendas = new ArrayList();
-    String[] colunas = {"Nome da Drogaria"};
+    String[] colunas = {"Cliente", "Data da compra", "Data de entrega", "Nº Nota Fiscal", "Total da Nota", "Forma de Pagamento"};
 
     @Override
     public int getRowCount() {
         return vendas.size();
     }
-
+    
     @Override
     public int getColumnCount() {
         return colunas.length;
@@ -30,6 +31,16 @@ public class VendaTableModel extends AbstractTableModel{
         switch (columnIndex) {
             case 0:
                 return vendas.get(rowIndex).getDrogaria().getNome();
+            case 1:
+                return vendas.get(rowIndex).getDataVenda();
+            case 2:
+                return vendas.get(rowIndex).getDataEntrega();
+            case 3:
+                return vendas.get(rowIndex).getNmr_nota_fiscal();
+            case 4:
+                return vendas.get(rowIndex).getTotalNota();
+            case 5:
+                return vendas.get(rowIndex).getPagamento();
         }
         return null;
     }
@@ -39,6 +50,21 @@ public class VendaTableModel extends AbstractTableModel{
         switch (columnIndex) {
             case 0:
                 vendas.get(rowIndex).getDrogaria().setNome((String) value);
+                break;
+            case 1:
+                vendas.get(rowIndex).setDataVenda(LocalDate.parse((String) value));
+                break;
+            case 2:
+                vendas.get(rowIndex).setDataEntrega(LocalDate.parse((String) value));
+                break;
+            case 3:
+                vendas.get(rowIndex).setNmr_nota_fiscal((String) value);
+                break;
+            case 4:
+                vendas.get(rowIndex).setTotalNota(Integer.parseInt((String) value));
+                break;
+            case 5:
+                vendas.get(rowIndex).setPagamento((String) value);
                 break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);

@@ -6,54 +6,65 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class CompraTableModel extends AbstractTableModel{
-    List<Compra> compras = new ArrayList();
-    String[] colunas = {"Data da compra", "Data de entrega", "Nº Nota Fiscal", "Total da Nota"};
+public class CompraTableModel extends AbstractTableModel {
 
+    List<Compra> compras = new ArrayList();
+    String[] colunas = {"Fornecedor", "Data da compra", "Data de entrega", "Nº Nota Fiscal", "Total da Nota", "Forma de Pagamento"};
+    
     @Override
     public int getRowCount() {
         return compras.size();
     }
-
+    
     @Override
     public int getColumnCount() {
         return colunas.length;
     }
-
+    
     @Override
     public String getColumnName(int column) {
         return colunas[column];
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return compras.get(rowIndex).getData();
+                return compras.get(rowIndex).getLaboratorio().getNome();
             case 1:
-                return compras.get(rowIndex).getEntrega();
+                return compras.get(rowIndex).getDataCompra();
             case 2:
-                return compras.get(rowIndex).getNota();
+                return compras.get(rowIndex).getDataEntrega();
             case 3:
+                return compras.get(rowIndex).getNmr_nota_fiscal();
+            case 4:
                 return compras.get(rowIndex).getTotalNota();
+            case 5:
+                return compras.get(rowIndex).getPagamento();
         }
         return null;
     }
-
+    
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                compras.get(rowIndex).setData(LocalDate.parse((String) value));
+                compras.get(rowIndex).getLaboratorio().setNome((String) value);
                 break;
             case 1:
-                compras.get(rowIndex).setEntrega(LocalDate.parse((String) value));
+                compras.get(rowIndex).setDataCompra(LocalDate.parse((String) value));
                 break;
             case 2:
-                compras.get(rowIndex).setNota(Integer.parseInt((String) value));
+                compras.get(rowIndex).setDataEntrega(LocalDate.parse((String) value));
                 break;
             case 3:
+                compras.get(rowIndex).setNmr_nota_fiscal((String) value);
+                break;
+            case 4:
                 compras.get(rowIndex).setTotalNota(Double.parseDouble((String) value));
+                break;
+            case 5:
+                compras.get(rowIndex).setPagamento((String) value);
                 break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);

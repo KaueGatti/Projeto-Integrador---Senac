@@ -4,15 +4,24 @@ import java.time.LocalDate;
 
 public class Remedio {
 
-    private int cod;
+    private int id;
+    private Laboratorio laboratorio;
     private String descricao;
     private LocalDate DataUltimaCompra;
     private int quantidade;
     private double valorCusto;
     private double valorVenda;
 
-    public int getCod() {
-        return cod;
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getDescricao() {
@@ -55,8 +64,8 @@ public class Remedio {
         this.valorVenda = valorVenda;
     }
 
-    public void setCod(int cod) {
-        this.cod = cod;
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

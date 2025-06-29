@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Laboratorio {
     
+    private int id;
     private String nome;
     private String CNPJ;
     private String inscricaoEstadual;
@@ -16,6 +17,14 @@ public class Laboratorio {
     private String cep;
     private String estado;
     private List<Remedio> medicamentosFornecidos = new ArrayList();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getRua() {
         return rua;

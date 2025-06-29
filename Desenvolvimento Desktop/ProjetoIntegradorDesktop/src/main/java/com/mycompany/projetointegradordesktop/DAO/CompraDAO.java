@@ -13,11 +13,7 @@ public class CompraDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO compra (id_compra, id_lab, id_medic, data_compra, data_entrega, nmr_nota_fiscal, total_nota, forma_pagamento, data_ultima_compra) VALUES (?,?,?,?,?,?,?,?,?)");
-            stmt.setDate(1, java.sql.Date.valueOf(c.getData()));
-            stmt.setDate(2, java.sql.Date.valueOf(c.getEntrega()));
-            stmt.setInt(3, c.getNota());
-            stmt.setDouble(4, c.getTotalNota());
+            stmt = con.prepareStatement("");
 
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!!");
