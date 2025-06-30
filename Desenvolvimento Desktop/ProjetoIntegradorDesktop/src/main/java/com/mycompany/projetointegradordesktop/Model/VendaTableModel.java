@@ -1,21 +1,22 @@
 package com.mycompany.projetointegradordesktop.Model;
 
+import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Objects.Venda;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class VendaTableModel extends AbstractTableModel{
+public class VendaTableModel extends AbstractTableModel {
 
     List<Venda> vendas = new ArrayList();
-    String[] colunas = {"Cliente", "Data da compra", "Data de entrega", "Nº Nota Fiscal", "Total da Nota", "Forma de Pagamento"};
+    String[] colunas = {"Cliente", "Data da venda", "Data de entrega", "Nº Nota Fiscal", "Total da Nota", "Forma de Pagamento"};
 
     @Override
     public int getRowCount() {
         return vendas.size();
     }
-    
+
     @Override
     public int getColumnCount() {
         return colunas.length;
@@ -69,14 +70,26 @@ public class VendaTableModel extends AbstractTableModel{
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
-    
+
     public void addLinha(Venda venda) {
         vendas.add(venda);
         fireTableDataChanged();
     }
-    
+
     public void deleteLinha(int indexLinha) {
         vendas.remove(indexLinha);
         fireTableRowsDeleted(indexLinha, indexLinha);
+    }
+
+    public List<Venda> getVendas() {
+        return vendas;
+    }
+
+    public void loadTable() {
+        vendas.clear();
+        for (Venda venda : VendaDAO.read()) {
+            vendas.add(venda);
+        }
+        fireTableDataChanged();
     }
 }

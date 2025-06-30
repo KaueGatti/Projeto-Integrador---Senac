@@ -1,5 +1,6 @@
 package com.mycompany.projetointegradordesktop.Model;
 
+import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Objects.Compra;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -78,5 +79,17 @@ public class CompraTableModel extends AbstractTableModel {
     public void deleteLinha(int indexLinha) {
         compras.remove(indexLinha);
         fireTableRowsDeleted(indexLinha, indexLinha);
+    }
+    
+    public List<Compra> getCompras() {
+        return compras;
+    }
+    
+    public void loadTable() {
+        compras.clear();
+        for (Compra compra : CompraDAO.read()) {
+            compras.add(compra);
+        }
+        fireTableDataChanged();
     }
 }
