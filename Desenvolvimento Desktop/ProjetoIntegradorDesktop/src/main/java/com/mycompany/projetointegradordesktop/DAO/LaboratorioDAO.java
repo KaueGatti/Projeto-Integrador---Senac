@@ -12,28 +12,33 @@ import javax.swing.JOptionPane;
 
 public class LaboratorioDAO {
 
-    public void create(Laboratorio l) {
+    public static void create(Laboratorio l) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("call add_medic()");
-            stmt.setString(1, l.getCNPJ());
-            stmt.setString(2, l.getInscricaoEstadual());
-            stmt.setString(3, l.getNome());
-            stmt.setString(4, l.getBairro());
-            stmt.setString(5, l.getCidade());
-            stmt.setString(6, l.getEstado());
-            stmt.setString(7, l.getComplemento());
+            stmt = con.prepareStatement("CALL add_lab(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            
+            stmt.setString(1, l.getNome());
+            stmt.setString(2, l.getCNPJ());
+            stmt.setString(3, l.getInscricaoEstadual());
+            stmt.setString(4, l.getNumero());
+            stmt.setString(5, l.getRua());
+            stmt.setString(6, l.getCep());
+            stmt.setString(7, l.getBairro());
             stmt.setString(8, l.getCidade());
-            stmt.setString(9, l.getNumero());
-            stmt.setString(10, l.getRua());
+            stmt.setString(9, l.getEstado());
+            stmt.setString(10, l.getComplemento());
+            
+            stmt.executeUpdate();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar laboratório: " + e);
         } finally {
+            Conexao.closeConnection(con, stmt);
         }
     }
-    
+
     public static List<Laboratorio> read() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -43,24 +48,25 @@ public class LaboratorioDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM laboratorio");
             rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 Laboratorio lab = new Laboratorio();
-                
+
                 lab.setId(rs.getInt("id_lab"));
                 lab.setNome(rs.getString("nome"));
                 lab.setCNPJ(rs.getString("cnpj"));
                 lab.setInscricaoEstadual(rs.getString("ie"));
-                lab.setRua(rs.getString("rua"));
                 lab.setNumero(rs.getString("numero"));
-                lab.setComplemento(rs.getString("complemento"));
-                lab.setBairro(rs.getString("bairro"));
+                lab.setRua(rs.getString("rua"));
                 lab.setCep(rs.getString("cep"));
+                lab.setBairro(rs.getString("bairro"));
+                lab.setCidade(rs.getString("cidade"));
                 lab.setEstado(rs.getString("uf"));
-                
+                lab.setComplemento(rs.getString("complemento"));
+
                 laboratorios.add(lab);
-                return laboratorios;
             }
+            return laboratorios;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar laboratórios: " + e);
         } finally {
@@ -68,5 +74,48 @@ public class LaboratorioDAO {
         }
         return null;
     }
+    
+    public static void update(Laboratorio l) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
 
+        try {
+            stmt = con.prepareStatement("CALL update_lab(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            
+            stmt.setInt(1, l.getId());
+            stmt.setString(2, l.getNome());
+            stmt.setString(3, l.getCNPJ());
+            stmt.setString(4, l.getInscricaoEstadual());
+            stmt.setString(5, l.getNumero());
+            stmt.setString(6, l.getRua());
+            stmt.setString(7, l.getCep());
+            stmt.setString(8, l.getBairro());
+            stmt.setString(9, l.getCidade());
+            stmt.setString(10, l.getEstado());
+            stmt.setString(11, l.getComplemento());
+            
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar laboratório: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
+    
+    public static void delete(Laboratorio l) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("CALL delete_lab(?)");
+            
+            stmt.setInt(1, l.getId());
+            
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao deletar laboratório: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
 }

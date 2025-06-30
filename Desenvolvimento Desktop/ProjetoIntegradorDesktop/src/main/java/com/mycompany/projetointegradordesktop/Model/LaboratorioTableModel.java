@@ -1,5 +1,6 @@
 package com.mycompany.projetointegradordesktop.Model;
 
+import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,5 +100,16 @@ public class LaboratorioTableModel extends AbstractTableModel {
         laboratorios.remove(indexLinha);
         fireTableRowsDeleted(indexLinha, indexLinha);
     }
-
+    
+    public List<Laboratorio> getLaboratorios() {
+        return laboratorios;
+    }
+    
+    public void loadTable() {
+        laboratorios.clear();
+        for (Laboratorio lab: LaboratorioDAO.read()) {
+            laboratorios.add(lab);
+        }
+        fireTableDataChanged();
+    }
 }

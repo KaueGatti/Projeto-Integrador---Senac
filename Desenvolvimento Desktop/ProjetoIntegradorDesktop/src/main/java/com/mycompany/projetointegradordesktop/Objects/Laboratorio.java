@@ -9,13 +9,13 @@ public class Laboratorio {
     private String nome;
     private String CNPJ;
     private String inscricaoEstadual;
-    private String rua;
     private String numero;
-    private String complemento;
+    private String rua;
+    private String cep;
     private String bairro;
     private String cidade;
-    private String cep;
     private String estado;
+    private String complemento;
     private List<Remedio> medicamentosFornecidos = new ArrayList();
 
     public int getId() {

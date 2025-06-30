@@ -1,6 +1,8 @@
 package com.mycompany.projetointegradordesktop.Objects;
 
 public class Drogaria {
+    
+    private int id;
     private String nome;
     private String CNPJ;
     private String rua;
@@ -10,6 +12,14 @@ public class Drogaria {
     private String cidade;
     private String cep;
     private String estado;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
