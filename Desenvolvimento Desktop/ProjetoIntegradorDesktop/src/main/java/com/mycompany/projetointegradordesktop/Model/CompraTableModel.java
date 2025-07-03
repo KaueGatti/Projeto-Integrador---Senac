@@ -12,22 +12,22 @@ public class CompraTableModel extends AbstractTableModel {
 
     List<Compra> compras = new ArrayList();
     String[] colunas = {"Fornecedor", "Data da compra", "Data de entrega", "Nº Nota Fiscal", "Total da Nota", "Forma de Pagamento"};
-    
+
     @Override
     public int getRowCount() {
         return compras.size();
     }
-    
+
     @Override
     public int getColumnCount() {
         return colunas.length;
     }
-    
+
     @Override
     public String getColumnName(int column) {
         return colunas[column];
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -36,7 +36,10 @@ public class CompraTableModel extends AbstractTableModel {
             case 1:
                 return compras.get(rowIndex).getDataCompra();
             case 2:
-                return compras.get(rowIndex).getDataEntrega();
+                if (compras.get(rowIndex).getDataEntrega() != null) {
+                    return compras.get(rowIndex).getDataEntrega();
+                }
+                return "";
             case 3:
                 return compras.get(rowIndex).getNmr_nota_fiscal();
             case 4:
@@ -46,7 +49,7 @@ public class CompraTableModel extends AbstractTableModel {
         }
         return null;
     }
-    
+
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch (columnIndex) {
@@ -71,21 +74,21 @@ public class CompraTableModel extends AbstractTableModel {
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
-    
+
     public void addLinha(Compra compra) {
         compras.add(compra);
         fireTableDataChanged();
     }
-    
+
     public void deleteLinha(int indexLinha) {
         compras.remove(indexLinha);
         fireTableRowsDeleted(indexLinha, indexLinha);
     }
-    
+
     public List<Compra> getCompras() {
         return compras;
     }
-    
+
     public void loadTable() {
         compras.clear();
         for (Compra compra : CompraDAO.read()) {

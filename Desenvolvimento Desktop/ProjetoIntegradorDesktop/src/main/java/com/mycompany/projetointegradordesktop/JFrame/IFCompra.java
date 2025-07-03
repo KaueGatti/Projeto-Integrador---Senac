@@ -1,5 +1,6 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
+import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
 import javax.swing.JDesktopPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -161,7 +162,10 @@ public class IFCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
-        // TODO add your handling code here:
+        if (jTCompra.getSelectedRow() != -1) {
+            CompraDAO.delete(model.getCompras().get(jTCompra.getSelectedRow()));
+            model.deleteLinha(jTCompra.getSelectedRow());
+        }
     }//GEN-LAST:event_jBExcluirCompraActionPerformed
 
     private void jBNovaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaCompraActionPerformed

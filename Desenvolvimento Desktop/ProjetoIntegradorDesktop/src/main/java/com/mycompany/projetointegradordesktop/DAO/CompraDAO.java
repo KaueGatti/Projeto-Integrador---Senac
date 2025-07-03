@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,28 +16,31 @@ import javax.swing.JOptionPane;
 
 public class CompraDAO {
 
-    public static void create(Compra c) {
+    public static int create(Compra c) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
-
+        ResultSet rs = null;
         try {
-            stmt = con.prepareStatement("CALL add_compra(?, ?, ?, ?, ?, ?)");
-            
+            stmt = con.prepareStatement("CALL add_compra(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
             stmt.setInt(1, c.getLaboratorio().getId());
             stmt.setDate(2, Date.valueOf(c.getDataCompra()));
-            stmt.setDate(3, Date.valueOf(c.getDataEntrega()));
-            stmt.setString(4, c.getNmr_nota_fiscal());
-            stmt.setDouble(5, c.getTotalNota());
-            stmt.setString(6, c.getPagamento());
-            
-            stmt.executeUpdate();
+            stmt.setString(3, c.getNmr_nota_fiscal());
+            stmt.setDouble(4, c.getTotalNota());
+            stmt.setString(5, c.getPagamento());
+
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar compra: " + e);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+        return 0;
     }
-    
+
     public static List<Compra> read() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -58,7 +62,9 @@ public class CompraDAO {
                     }
                 }
                 compra.setDataCompra(LocalDate.parse(rs.getString("data_compra")));
-                compra.setDataEntrega(LocalDate.parse(rs.getString("data_entrega")));
+                if (rs.getString("data_entrega") != null) {
+                    compra.setDataEntrega(LocalDate.parse(rs.getString("data_entrega")));
+                }
                 compra.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
                 compra.setTotalNota(rs.getDouble("total_nota"));
                 compra.setPagamento(rs.getString("forma_pagamento"));
@@ -73,14 +79,14 @@ public class CompraDAO {
         }
         return null;
     }
-    
+
     public static void update(Compra c) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
             stmt = con.prepareStatement("CALL update_compra(?, ?, ?, ?, ?, ?, ?)");
-            
+
             stmt.setInt(1, c.getId());
             stmt.setInt(2, c.getLaboratorio().getId());
             stmt.setDate(3, Date.valueOf(c.getDataCompra()));
@@ -88,7 +94,7 @@ public class CompraDAO {
             stmt.setString(5, c.getNmr_nota_fiscal());
             stmt.setDouble(6, c.getTotalNota());
             stmt.setString(7, c.getPagamento());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar compra: " + e);
@@ -96,16 +102,16 @@ public class CompraDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
+
     public static void delete(Compra c) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
             stmt = con.prepareStatement("CALL delete_compra(?)");
-            
+
             stmt.setInt(1, c.getId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar compra: " + e);
@@ -113,6 +119,5 @@ public class CompraDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
 
 }

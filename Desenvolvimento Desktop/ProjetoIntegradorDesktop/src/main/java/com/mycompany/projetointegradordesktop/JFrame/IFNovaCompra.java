@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
+import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Model.ItemTableModel;
@@ -9,11 +10,10 @@ import com.mycompany.projetointegradordesktop.Objects.Item;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Random;
-import java.util.random.RandomGeneratorFactory;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.text.MaskFormatter;
@@ -23,7 +23,9 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     private double total = 0;
 
     ItemTableModel model = new ItemTableModel();
-
+    
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
     public IFNovaCompra() {
         initComponents();
         loadCampoData();
@@ -39,7 +41,6 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -62,6 +63,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         jFTFData = new javax.swing.JFormattedTextField();
         jLInfoData = new javax.swing.JLabel();
         jCBPagamento = new javax.swing.JComboBox<>();
+        jLInfoCompra = new javax.swing.JLabel();
 
         setBorder(null);
 
@@ -182,6 +184,10 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         jCBPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pix", "Débito", "Crédito", "Cheque", "Boleto", "" }));
 
+        jLInfoCompra.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLInfoCompra.setForeground(new java.awt.Color(204, 0, 0));
+        jLInfoCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,7 +223,9 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLInfoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -278,9 +286,11 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                     .addComponent(jLTotal)
                     .addComponent(jCBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLInfoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
@@ -313,6 +323,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                 total += item.getSubtotal();
                 loadTotal();
                 model.addLinha(item);
+                jLInfoCompra.setText("");
             }
         }
     }//GEN-LAST:event_jBAdicionarActionPerformed
@@ -329,16 +340,23 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         if (total > 0) {
             Compra compra = new Compra();
 
-            compra.setDataCompra(LocalDate.parse(jFTFData.getText()));
+            compra.setDataCompra(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             compra.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
             compra.setTotalNota(total);
             compra.setNmr_nota_fiscal(String.valueOf(new Random().nextInt(99999)));
             compra.setPagamento(jCBPagamento.getSelectedItem().toString());
 
-            CompraDAO.create(compra);
+            int idNovaCompra = CompraDAO.create(compra);
+            System.out.println(idNovaCompra);
+            for (Item item: model.getItens()) {
+                item.setIdTransacao(idNovaCompra);
+            }
+            
+            ItemDAO.create(model.getItens());
+            
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Adicione pelo menos 1 remédio a compra");
+            jLInfoCompra.setText("Adicione pelo menos 1 remédio a compra");
         }
     }//GEN-LAST:event_jBSalvarActionPerformed
 
@@ -346,13 +364,13 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         if (jFTFData.getText().contains("_")) {
             jLInfoData.setText("Preencha todos os digitos");
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            sdf.setLenient(false);
             try {
-                Date data = sdf.parse(jFTFData.getText());
+                LocalDate data = LocalDate.parse(jFTFData.getText(), dtf);
                 jLInfoData.setText("");
-            } catch (ParseException e) {
+            } catch (DateTimeParseException e) {
+                jLInfoData.setText("Data inváida!");
                 loadCampoData();
+                jFTFData.requestFocus();
             }
         }
     }//GEN-LAST:event_jFTFDataFocusLost
@@ -382,16 +400,13 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             mascara.install(jFTFData);
             jFTFData.setColumns(10);
             jFTFData.setFont(jCBLaboratorio.getFont());
-            jFTFData.setText(new SimpleDateFormat("ddMMyyyy").format(new Date()));
-            this.revalidate();
-            this.repaint();
+            jFTFData.setText(LocalDate.now().format(dtf));
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar campo data: " + e);
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jBAdicionar;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBRemover;
@@ -400,6 +415,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jCBPagamento;
     private javax.swing.JComboBox<Remedio> jCBRemedio;
     private javax.swing.JFormattedTextField jFTFData;
+    private javax.swing.JLabel jLInfoCompra;
     private javax.swing.JLabel jLInfoData;
     private javax.swing.JLabel jLTotal;
     private javax.swing.JLabel jLabel1;
