@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Laboratorio {
-    
+
     private int id;
     private String nome;
     private String CNPJ;
@@ -113,5 +113,27 @@ public class Laboratorio {
     public void setMedicamentosFornecidos(List<Remedio> medicamentosFornecidos) {
         this.medicamentosFornecidos = medicamentosFornecidos;
     }
-    
+
+    @Override
+    public String toString() {
+        return nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Laboratorio outro = (Laboratorio) obj;
+        return this.nome.equals(outro.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return nome.hashCode();
+    }
+
 }

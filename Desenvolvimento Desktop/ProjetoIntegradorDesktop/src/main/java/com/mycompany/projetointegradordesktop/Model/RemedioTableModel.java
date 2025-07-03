@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.Model;
 
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
+import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,9 @@ public class RemedioTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch (columnIndex) {
+            case 0:
+                remedios.get(rowIndex).setLaboratorio((Laboratorio) value);
+                break;
             case 1:
                 remedios.get(rowIndex).setDescricao((String) value);
                 break;
@@ -80,10 +84,10 @@ public class RemedioTableModel extends AbstractTableModel {
     public List<Remedio> getRemedios() {
         return remedios;
     }
-    
+
     public void loadTable() {
         remedios.clear();
-        for (Remedio remedio: RemedioDAO.read()) {
+        for (Remedio remedio : RemedioDAO.read()) {
             remedios.add(remedio);
         }
         fireTableDataChanged();

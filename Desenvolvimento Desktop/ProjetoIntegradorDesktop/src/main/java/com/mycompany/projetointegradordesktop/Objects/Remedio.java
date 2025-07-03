@@ -68,4 +68,8 @@ public class Remedio {
         this.id = id;
     }
     
+    @Override
+    public String toString() {
+        return descricao;
+    }
 }

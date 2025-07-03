@@ -73,17 +73,61 @@ public class RemedioDAO {
         return null;
     }
 
+    public static List<Remedio> read(Laboratorio l) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Remedio> remedios = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM remedio WHERE id_lab = ?");
+            
+            stmt.setInt(1, l.getId());
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Remedio remedio = new Remedio();
+
+                remedio.setId(rs.getInt("id_remedio"));
+                for (Laboratorio lab : LaboratorioDAO.read()) {
+                    if (lab.getId() == rs.getInt("id_lab")) {
+                        remedio.setLaboratorio(lab);
+                        break;
+                    }
+                }
+                remedio.setDescricao(rs.getString("descricao"));
+                if (rs.getDate("data_ultima_compra") != null) {
+                    remedio.setDataUltimaCompra(rs.getDate("data_ultima_compra").toLocalDate());
+                }
+                remedio.setValorCusto(rs.getDouble("valor_custo"));
+                remedio.setValorVenda(rs.getDouble("valor_venda"));
+                remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+
+                remedios.add(remedio);
+            }
+
+            return remedios;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios por laboratório: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+        return null;
+    }
+
     public static void update(Remedio remedio) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_remedio(?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL update_remedio(?, ?, ?, ?, ?)");
 
             stmt.setInt(1, remedio.getId());
-            stmt.setString(2, remedio.getDescricao());
-            stmt.setDouble(3, remedio.getValorCusto());
-            stmt.setDouble(4, remedio.getValorVenda());
+            stmt.setInt(2, remedio.getLaboratorio().getId());
+            stmt.setString(3, remedio.getDescricao());
+            stmt.setDouble(4, remedio.getValorCusto());
+            stmt.setDouble(5, remedio.getValorVenda());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

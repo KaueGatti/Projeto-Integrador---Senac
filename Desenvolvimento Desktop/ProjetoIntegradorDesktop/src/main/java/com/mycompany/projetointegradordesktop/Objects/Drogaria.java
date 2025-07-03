@@ -1,7 +1,7 @@
 package com.mycompany.projetointegradordesktop.Objects;
 
 public class Drogaria {
-    
+
     private int id;
     private String nome;
     private String CNPJ;
@@ -92,5 +92,9 @@ public class Drogaria {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

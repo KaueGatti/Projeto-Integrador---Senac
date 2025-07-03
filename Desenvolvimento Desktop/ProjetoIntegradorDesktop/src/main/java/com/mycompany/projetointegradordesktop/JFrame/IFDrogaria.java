@@ -5,13 +5,15 @@ import com.mycompany.projetointegradordesktop.Model.DrogariaTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import java.awt.Component;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class IFDrogaria extends javax.swing.JInternalFrame {
 
     DrogariaTableModel model = new DrogariaTableModel();
-    
+
     public IFDrogaria() {
         initComponents();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         jTDrogaria.setModel(model);
         model.loadTable();
@@ -280,7 +282,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
         );
 
         pack();
@@ -292,7 +294,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         Drogaria drogaria = new Drogaria();
-        
+
         drogaria.setNome(jTFNome.getText());
         drogaria.setCNPJ(jTFCNPJ.getText());
         drogaria.setNumero(jTFNumero.getText());
@@ -302,12 +304,12 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         drogaria.setCidade(jTFCidade.getText());
         drogaria.setEstado(jTFEstado.getText());
         drogaria.setComplemento(jTFComplemento.getText());
-        
+
         DrogariaDAO.create(drogaria);
         model.loadTable();
-        
+
         limpaCampos();
-        
+
         jTFNome.requestFocus();
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
@@ -321,7 +323,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         model.setValueAt(jTFCidade.getText(), jTDrogaria.getSelectedRow(), 6);
         model.setValueAt(jTFEstado.getText(), jTDrogaria.getSelectedRow(), 7);
         model.setValueAt(jTFComplemento.getText(), jTDrogaria.getSelectedRow(), 8);
-        
+
         DrogariaDAO.update(model.getDrogarias().get(jTDrogaria.getSelectedRow()));
     }//GEN-LAST:event_jBAtualizarActionPerformed
 
@@ -347,8 +349,8 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jTDrogariaMouseClicked
 
-        public void limpaCampos() {
-        for (Component comp: jPCadastro.getComponents()) {
+    public void limpaCampos() {
+        for (Component comp : jPCadastro.getComponents()) {
             if (comp instanceof JTextField jTF) {
                 jTF.setText("");
             }

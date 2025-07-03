@@ -2,6 +2,7 @@ package com.mycompany.projetointegradordesktop.Model;
 
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Objects.Compra;
+import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CompraTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                compras.get(rowIndex).getLaboratorio().setNome((String) value);
+                compras.get(rowIndex).setLaboratorio((Laboratorio) value);
                 break;
             case 1:
                 compras.get(rowIndex).setDataCompra(LocalDate.parse((String) value));

@@ -13,6 +13,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        System.out.println(jDesktopPane1.getSize().toString());
     }
 
     @SuppressWarnings("unchecked")
@@ -143,7 +144,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -213,7 +214,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jBCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCompraActionPerformed
         closeIF();
-        IFCompra IFCompra = new IFCompra();
+        IFCompra IFCompra = new IFCompra(jDesktopPane1);
         IFCompra.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFCompra);
     }//GEN-LAST:event_jBCompraActionPerformed

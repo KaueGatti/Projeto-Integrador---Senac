@@ -5,6 +5,7 @@ import com.mycompany.projetointegradordesktop.Model.LaboratorioTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import java.awt.Component;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class IFLaboratorio extends javax.swing.JInternalFrame {
 
@@ -12,6 +13,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     
     public IFLaboratorio() {
         initComponents();
+        ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         jTLaboratorio.setModel(model);
         model.loadTable();
