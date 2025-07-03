@@ -2,22 +2,24 @@ package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
-import javax.swing.JDesktopPane;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 public class IFCompra extends javax.swing.JInternalFrame {
-    
-    JDesktopPane jDP;
 
     CompraTableModel model = new CompraTableModel();
 
-    public IFCompra(JDesktopPane jDP) {
+    public IFCompra() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         jTCompra.setModel(model);
         model.loadTable();
-        this.jDP = jDP;
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+        jTCompra.setRowSorter(sorter);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,8 +37,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
-        setClosable(true);
-        setMaximizable(true);
 
         jTCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,7 +73,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCBTipoPesquisa, 0, 270, Short.MAX_VALUE)
+                .addComponent(jCBTipoPesquisa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -123,19 +123,18 @@ public class IFCompra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 488, Short.MAX_VALUE)
                         .addComponent(jBNovaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))))
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,7 +157,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
@@ -170,8 +168,15 @@ public class IFCompra extends javax.swing.JInternalFrame {
 
     private void jBNovaCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaCompraActionPerformed
         IFNovaCompra IFNovaCompra = new IFNovaCompra();
-        IFNovaCompra.setSize(jDP.getSize());
-        jDP.add(IFNovaCompra);
+        IFNovaCompra.addInternalFrameListener(new InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(InternalFrameEvent e) {
+                model.loadTable();
+            }
+        }
+        );
+        IFNovaCompra.setSize(getDesktopPane().getSize());
+        getDesktopPane().add(IFNovaCompra);
         IFNovaCompra.toFront();
     }//GEN-LAST:event_jBNovaCompraActionPerformed
 

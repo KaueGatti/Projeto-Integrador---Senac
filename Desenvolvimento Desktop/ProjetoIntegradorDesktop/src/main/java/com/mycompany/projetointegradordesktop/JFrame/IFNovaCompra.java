@@ -61,9 +61,9 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jBRemover = new javax.swing.JButton();
         jFTFData = new javax.swing.JFormattedTextField();
-        jLInfoData = new javax.swing.JLabel();
         jCBPagamento = new javax.swing.JComboBox<>();
         jLInfoCompra = new javax.swing.JLabel();
+        jLInfoData = new javax.swing.JLabel();
 
         setBorder(null);
 
@@ -179,14 +179,14 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             }
         });
 
-        jLInfoData.setForeground(new java.awt.Color(204, 0, 0));
-
         jCBPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pix", "Débito", "Crédito", "Cheque", "Boleto", "" }));
 
         jLInfoCompra.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLInfoCompra.setForeground(new java.awt.Color(204, 0, 0));
         jLInfoCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLInfoData.setForeground(new java.awt.Color(204, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,7 +195,6 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jBRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +203,6 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                                 .addGap(221, 221, 221)
                                 .addComponent(jCBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel8)
                                     .addGap(307, 307, 307)
@@ -226,18 +224,20 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                                     .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(jLInfoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1))))
+                                .addComponent(jScrollPane1)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel3)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jFTFData, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLInfoData))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(305, 305, 305))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(314, 314, 314))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,13 +245,13 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(jFTFData, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLInfoData))
-                        .addGap(1, 1, 1)))
+                            .addGap(1, 1, 1)))
+                    .addComponent(jLInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -352,7 +352,9 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                 item.setIdTransacao(idNovaCompra);
             }
             
-            ItemDAO.create(model.getItens());
+            ItemDAO.create(model.getItens(), "compra");
+            
+            
             
             this.dispose();
         } else {
@@ -365,7 +367,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             jLInfoData.setText("Preencha todos os digitos");
         } else {
             try {
-                LocalDate data = LocalDate.parse(jFTFData.getText(), dtf);
+                LocalDate.parse(jFTFData.getText(), dtf);
                 jLInfoData.setText("");
             } catch (DateTimeParseException e) {
                 jLInfoData.setText("Data inváida!");

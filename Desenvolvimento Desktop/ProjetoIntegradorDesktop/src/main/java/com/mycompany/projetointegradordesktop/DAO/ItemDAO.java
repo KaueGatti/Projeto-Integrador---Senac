@@ -13,12 +13,16 @@ import javax.swing.JOptionPane;
 
 public class ItemDAO {
 
-    public static void create(List<Item> itens) {
+    public static void create(List<Item> itens, String transicao) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL add_item_compra(?, ?, ?)");
+            if (transicao.equals("venda")) {
+                stmt = con.prepareStatement("CALL add_item_venda(?, ?, ?)");
+            } else {
+                stmt = con.prepareStatement("CALL add_item_compra(?, ?, ?)");
+            }
 
             for (Item item : itens) {
                 stmt.setInt(1, item.getIdTransacao());
@@ -29,7 +33,7 @@ public class ItemDAO {
 
             stmt.executeBatch();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar itens da compra: " + e);
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar itens de compra/venda: " + e);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
@@ -69,7 +73,7 @@ public class ItemDAO {
         }
         return null;
     }
-    
+
     public static List<Item> readVendas() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;

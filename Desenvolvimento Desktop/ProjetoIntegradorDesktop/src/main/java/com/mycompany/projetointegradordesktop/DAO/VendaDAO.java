@@ -1,15 +1,14 @@
 package com.mycompany.projetointegradordesktop.DAO;
 
 import com.mycompany.projetointegradordesktop.DB.Conexao;
-import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
-import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Venda;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +16,30 @@ import javax.swing.JOptionPane;
 
 public class VendaDAO {
 
-    public static void create(Venda v) {
+    public static int create(Venda v) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
-
+        ResultSet rs = null;
         try {
-            stmt = con.prepareStatement("CALL add_venda(?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL add_venda(?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
             stmt.setInt(1, v.getDrogaria().getId());
             stmt.setDate(2, Date.valueOf(v.getDataVenda()));
-            stmt.setDate(3, Date.valueOf(v.getDataEntrega()));
-            stmt.setString(4, v.getNmr_nota_fiscal());
-            stmt.setDouble(5, v.getTotalNota());
-            stmt.setString(6, v.getPagamento());
+            stmt.setString(3, v.getNmr_nota_fiscal());
+            stmt.setDouble(4, v.getTotalNota());
+            stmt.setString(5, v.getPagamento());
 
-            stmt.executeUpdate();
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar venda: " + e);
         } finally {
             Conexao.closeConnection(con, stmt);
         }
+        return 0;
     }
 
     public static List<Venda> read() {
@@ -60,7 +63,9 @@ public class VendaDAO {
                     }
                 }
                 venda.setDataVenda(LocalDate.parse(rs.getString("data_venda")));
-                venda.setDataEntrega(LocalDate.parse(rs.getString("data_entrega")));
+                if (rs.getDate("data_entrega") != null) {
+                    venda.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                }
                 venda.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
                 venda.setTotalNota(rs.getDouble("total_nota"));
                 venda.setPagamento(rs.getString("forma_pagamento"));

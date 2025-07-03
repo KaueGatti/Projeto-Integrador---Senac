@@ -62,8 +62,8 @@ public class CompraDAO {
                     }
                 }
                 compra.setDataCompra(LocalDate.parse(rs.getString("data_compra")));
-                if (rs.getString("data_entrega") != null) {
-                    compra.setDataEntrega(LocalDate.parse(rs.getString("data_entrega")));
+                if (rs.getDate("data_entrega") != null) {
+                    compra.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
                 }
                 compra.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
                 compra.setTotalNota(rs.getDouble("total_nota"));
