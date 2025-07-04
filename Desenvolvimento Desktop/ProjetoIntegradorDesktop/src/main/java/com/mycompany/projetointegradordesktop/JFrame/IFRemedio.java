@@ -6,6 +6,8 @@ import com.mycompany.projetointegradordesktop.Model.RemedioTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -159,7 +161,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addComponent(jTFValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                 .addGroup(jPCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBCadastrar)
                     .addComponent(jBAtualizar)
@@ -195,7 +197,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBPesquisar)
                     .addComponent(jCBTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(306, Short.MAX_VALUE))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,7 +227,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         Remedio remedio = new Remedio();
-        
+
         remedio.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
         remedio.setDescricao(jTFDescricao.getText());
         remedio.setValorCusto(Double.parseDouble(jTFValorCusto.getText()));
@@ -258,10 +260,23 @@ public class IFRemedio extends javax.swing.JInternalFrame {
 
     private void jTRemedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTRemedioMouseClicked
         if (jTRemedio.getSelectedRow() != -1) {
-            jCBLaboratorio.setSelectedItem(model.getRemedios().get(jTRemedio.getSelectedRow()).getLaboratorio());
-            jTFDescricao.setText(model.getValueAt(jTRemedio.getSelectedRow(), 1).toString());
-            jTFValorCusto.setText(model.getValueAt(jTRemedio.getSelectedRow(), 3).toString());
-            jTFValorVenda.setText(model.getValueAt(jTRemedio.getSelectedRow(), 4).toString());
+            Remedio remedio = model.getRemedios().get(jTRemedio.getSelectedRow());
+            if (evt.getClickCount() == 2) {
+                JFAtualizarRemedio JFAtualizarRemedio = new JFAtualizarRemedio(remedio);
+                JFAtualizarRemedio.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        if (JFAtualizarRemedio.getResponse() == 1) {
+                            Remedio remedioUpdated = JFAtualizarRemedio.getRemedioUpdated();
+                            model.setValueAt(remedioUpdated.getLaboratorio(), jTRemedio.getSelectedRow(), 0);
+                            model.setValueAt(remedioUpdated.getDescricao(), jTRemedio.getSelectedRow(), 1);
+                            model.setValueAt(remedioUpdated.getValorCusto(), jTRemedio.getSelectedRow(), 3);
+                            model.setValueAt(remedioUpdated.getValorVenda(), jTRemedio.getSelectedRow(), 4);
+                            RemedioDAO.update(model.getRemedios().get(jTRemedio.getSelectedRow()));
+                        }
+                    }
+                });
+            }
         }
     }//GEN-LAST:event_jTRemedioMouseClicked
 
@@ -275,7 +290,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             jCBLaboratorio.addItem(l);
         }
     }
-    
+
     public void limpaCampos() {
         for (Component comp : jPCadastro.getComponents()) {
             if (comp instanceof JTextField jTF) {

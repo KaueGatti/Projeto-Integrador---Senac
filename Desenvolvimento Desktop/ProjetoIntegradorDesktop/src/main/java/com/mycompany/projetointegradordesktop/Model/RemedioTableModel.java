@@ -3,6 +3,7 @@ package com.mycompany.projetointegradordesktop.Model;
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -36,7 +37,7 @@ public class RemedioTableModel extends AbstractTableModel {
                 return remedios.get(rowIndex).getDescricao();
             case 2:
                 if (remedios.get(rowIndex).getDataUltimaCompra() != null) {
-                    return remedios.get(rowIndex).getDataUltimaCompra();
+                    return remedios.get(rowIndex).getDataUltimaCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 }
                 break;
             case 3:
@@ -59,13 +60,10 @@ public class RemedioTableModel extends AbstractTableModel {
                 remedios.get(rowIndex).setDescricao((String) value);
                 break;
             case 3:
-                remedios.get(rowIndex).setValorCusto(Double.parseDouble((String) value));
+                remedios.get(rowIndex).setValorCusto((Double) value);
                 break;
             case 4:
-                remedios.get(rowIndex).setValorVenda(Double.parseDouble((String) value));
-                break;
-            case 5:
-                remedios.get(rowIndex).setQuantidade(Integer.parseInt((String) value));
+                remedios.get(rowIndex).setValorVenda((Double) value);
                 break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);

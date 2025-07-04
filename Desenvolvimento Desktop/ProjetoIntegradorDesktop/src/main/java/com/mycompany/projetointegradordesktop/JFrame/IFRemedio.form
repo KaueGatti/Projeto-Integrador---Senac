@@ -147,7 +147,7 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="205" max="32767" attributes="0"/>
+                  <EmptySpace pref="213" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jBCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -262,7 +262,7 @@
                       <Component id="jBPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jCBTipoPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="306" max="32767" attributes="0"/>
+                  <EmptySpace pref="314" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -19,11 +19,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.text.MaskFormatter;
 
 public class IFNovaVenda extends javax.swing.JInternalFrame {
-    
+
     ItemTableModel model = new ItemTableModel();
-    
+
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
+
     private double total = 0;
 
     public IFNovaVenda() {
@@ -36,7 +36,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         loadRemedios();
         jLTotal.setText("Total: R$ " + total);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -300,16 +300,30 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
     private void jBAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAdicionarActionPerformed
         Item item = new Item();
-        if (jCBRemedio.getSelectedItem() != null && !jTFQuantidade.getText().equals("")) {
+        Remedio remedio = (Remedio) jCBRemedio.getSelectedItem();
+        if (!jTFQuantidade.getText().equals("")) {
             if (Integer.parseInt(jTFQuantidade.getText()) > 0) {
-                item.setRemedio((Remedio) jCBRemedio.getSelectedItem());
-                item.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
-                item.setSubtotal(item.getQuantidade() * item.getRemedio().getValorCusto());
-                total += item.getSubtotal();
-                loadTotal();
-                model.addLinha(item);
-                jLInfoCompra.setText("");
+                if (!(Integer.parseInt(jTFQuantidade.getText()) > remedio.getQuantidade())) {
+                    item.setRemedio((Remedio) jCBRemedio.getSelectedItem());
+                    item.setQuantidade(Integer.parseInt(jTFQuantidade.getText()));
+                    item.setSubtotal(item.getQuantidade() * item.getRemedio().getValorCusto());
+                    total += item.getSubtotal();
+                    loadTotal();
+                    model.addLinha(item);
+                    jLInfoCompra.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "A quantidade em estoque é menor do que a solicitada"
+                            + "\nQuantidade solicitada: " + jTFQuantidade.getText() 
+                            + "\nQuantidade em estoque: " + remedio.getQuantidade());
+                    jTFQuantidade.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "A quantidade solicitada não pode ser menor ou igual a 0");
+                jTFQuantidade.requestFocus();
             }
+        } else {
+             JOptionPane.showMessageDialog(null, "Digite a quantidade desejada");
+             jTFQuantidade.requestFocus();
         }
     }//GEN-LAST:event_jBAdicionarActionPerformed
 
@@ -325,7 +339,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
             int idNovaVenda = VendaDAO.create(venda);
             System.out.println(idNovaVenda);
-            for (Item item: model.getItens()) {
+            for (Item item : model.getItens()) {
                 item.setIdTransacao(idNovaVenda);
             }
 
@@ -371,7 +385,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jCBRemedioActionPerformed
 
-        public void loadDrogarias() {
+    public void loadDrogarias() {
         jCBDrogaria.removeAllItems();
         for (Drogaria d : DrogariaDAO.read()) {
             jCBDrogaria.addItem(d);

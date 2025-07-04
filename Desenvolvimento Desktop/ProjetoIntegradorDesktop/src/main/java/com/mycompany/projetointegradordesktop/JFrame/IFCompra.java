@@ -54,7 +54,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jCBTipoPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBTipoPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jBPesquisar.setBackground(new java.awt.Color(153, 153, 153));
         jBPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -157,6 +156,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
