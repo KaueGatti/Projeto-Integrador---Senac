@@ -3,9 +3,11 @@ package com.mycompany.projetointegradordesktop.Model;
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import com.mycompany.projetointegradordesktop.Util.RealRendererTable;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 public class RemedioTableModel extends AbstractTableModel {
@@ -13,6 +15,11 @@ public class RemedioTableModel extends AbstractTableModel {
     private List<Remedio> remedios = new ArrayList();
     private final String[] colunas = {"Laboratório", "Descrição", "Data da última compra", "Valor de custo", "Valor de venda", "Quantidade"};
 
+    public void render(JTable tabela) {
+        tabela.getColumnModel().getColumn(3).setCellRenderer(new RealRendererTable());
+        tabela.getColumnModel().getColumn(4).setCellRenderer(new RealRendererTable());
+    }
+    
     @Override
     public int getRowCount() {
         return remedios.size();

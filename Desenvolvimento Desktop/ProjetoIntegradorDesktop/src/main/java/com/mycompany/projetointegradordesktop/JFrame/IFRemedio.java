@@ -20,6 +20,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         jTRemedio.setModel(model);
+        model.render(jTRemedio);
         model.loadTable();
         loadLaboratorios();
     }

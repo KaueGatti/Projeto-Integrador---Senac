@@ -13,7 +13,6 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        System.out.println(jDesktopPane1.getSize().toString());
     }
 
     @SuppressWarnings("unchecked")

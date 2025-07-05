@@ -2,10 +2,12 @@ package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
-import javax.swing.JFrame;
+import com.mycompany.projetointegradordesktop.Util.NumberFormatReal;
+import java.util.function.Consumer;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 public class JFAtualizarRemedio extends javax.swing.JFrame {
 
@@ -17,14 +19,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         remedioUpdated = remedio;
-        jTFLab.setText(remedio.getLaboratorio().getNome());
-        jTFDescricao.setText(remedio.getDescricao());
-        if (remedio.getDataUltimaCompra() != null) {
-            jTFUltCompra.setText(remedio.getDataUltimaCompra().toString());
-        }
-        jFTFValorCusto.setText(String.valueOf(remedio.getValorCusto()));
-        jFTFValorVenda.setText(String.valueOf(remedio.getValorVenda()));
-        jTFQntdEstoque.setText(String.valueOf(remedio.getQuantidade()));
+        loadCampos();
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +43,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         jLInfoValorCusto = new javax.swing.JLabel();
         jLInfoValorVenda = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLInfoDescricao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -93,14 +89,37 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
 
         jTFLab.setEditable(false);
         jTFLab.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFLab.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTFLab.setEnabled(false);
 
         jTFDescricao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFDescricao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTFDescricao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTFDescricaoFocusLost(evt);
+            }
+        });
 
         jTFUltCompra.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFUltCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTFUltCompra.setEnabled(false);
 
+        jFTFValorCusto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTFValorCusto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFTFValorCustoFocusLost(evt);
+            }
+        });
+
+        jFTFValorVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTFValorVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFTFValorVendaFocusLost(evt);
+            }
+        });
+
         jTFQntdEstoque.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFQntdEstoque.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTFQntdEstoque.setEnabled(false);
 
         jLInfoValorCusto.setForeground(new java.awt.Color(204, 51, 0));
@@ -112,6 +131,9 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Atualização de Remédio");
+
+        jLInfoDescricao.setForeground(new java.awt.Color(204, 51, 0));
+        jLInfoDescricao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,18 +149,13 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                         .addComponent(jBCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(35, 35, 35)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLInfoValorCusto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTFLab)
@@ -147,7 +164,8 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                             .addComponent(jFTFValorCusto)
                             .addComponent(jFTFValorVenda)
                             .addComponent(jTFQntdEstoque)
-                            .addComponent(jLInfoValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLInfoValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLInfoDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8)))
                 .addGap(29, 29, 29))
             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -165,7 +183,9 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(2, 2, 2)
+                .addComponent(jLInfoDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTFUltCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,36 +216,61 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        if (!jTFDescricao.getText().equals("")) {
-            remedioUpdated.setDescricao(jTFDescricao.getText());
+        boolean descricaoIsValid = validarDescricao();
+        boolean valorCustoIsValid = validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, remedioUpdated::setValorCusto);
+        boolean valorVendaIsValid = validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, remedioUpdated::setValorVenda);
+        if (descricaoIsValid && valorCustoIsValid && valorVendaIsValid) {
+            response = 1;
+            dispose();
         }
-        if (!jFTFValorCusto.getText().equals("")) {
-            if (Double.parseDouble(jFTFValorCusto.getText()) > 0 ) {
-                remedioUpdated.setValorCusto(Double.parseDouble(jFTFValorCusto.getText()));
-            } else {
-                jLInfoValorCusto.setText("Valor inválido");
-            }
-        } else {
-            jLInfoValorCusto.setText("Defina um Valor de Custo");
-        }
-        
-        if (!jFTFValorVenda.getText().equals("")) {
-            if (Double.parseDouble(jFTFValorVenda.getText()) > 0 ) {
-                remedioUpdated.setValorVenda(Double.parseDouble(jFTFValorVenda.getText()));
-            } else {
-                jLInfoValorCusto.setText("Valor inválido");
-            }
-        } else {
-            jLInfoValorCusto.setText("Defina um Valor de Venda");
-        }
-        response = 1;
-        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
+
+    private boolean validarCampoNumerico(JFormattedTextField campo, JLabel erro, Consumer<Double> setter) {
+        Object valueCampo = campo.getValue();
+        if (valueCampo != null && valueCampo instanceof Number) {
+            double value = ((Number) valueCampo).doubleValue();
+            if (value > 0) {
+                setter.accept(value);
+                erro.setText("");
+                return true;
+            } else {
+                erro.setText("Valor inválido");
+                return false;
+            }
+        } else {
+            erro.setText("Defina um Valor");
+            return false;
+        }
+    }
+
+    private boolean validarDescricao() {
+        String descricao = jTFDescricao.getText();
+        if (!descricao.equals("")) {
+            remedioUpdated.setDescricao(descricao);
+            jLInfoDescricao.setText("");
+            return true;
+        } else {
+            jLInfoDescricao.setText("Defina uma descrição");
+            return false;
+        }
+    }
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
         response = 0;
         dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jTFDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDescricaoFocusLost
+        validarDescricao();
+    }//GEN-LAST:event_jTFDescricaoFocusLost
+
+    private void jFTFValorCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorCustoFocusLost
+        validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, remedioUpdated::setValorCusto);
+    }//GEN-LAST:event_jFTFValorCustoFocusLost
+
+    private void jFTFValorVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorVendaFocusLost
+        validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, remedioUpdated::setValorVenda);
+    }//GEN-LAST:event_jFTFValorVendaFocusLost
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -264,10 +309,25 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         });
     }
 
+    public void loadCampos() {
+        NumberFormatReal.formatReal(jFTFValorCusto);
+        NumberFormatReal.formatReal(jFTFValorVenda);
+        jFTFValorCusto.setFont(jTFDescricao.getFont());
+        jFTFValorVenda.setFont(jTFDescricao.getFont());
+        jTFLab.setText(remedioUpdated.getLaboratorio().getNome());
+        jTFDescricao.setText(remedioUpdated.getDescricao());
+        if (remedioUpdated.getDataUltimaCompra() != null) {
+            jTFUltCompra.setText(remedioUpdated.getDataUltimaCompra().toString());
+        }
+        jFTFValorCusto.setValue(remedioUpdated.getValorCusto());
+        jFTFValorVenda.setValue(remedioUpdated.getValorVenda());
+        jTFQntdEstoque.setText(String.valueOf(remedioUpdated.getQuantidade()));
+    }
+
     public Remedio getRemedioUpdated() {
         return remedioUpdated;
     }
-    
+
     public int getResponse() {
         return response;
     }
@@ -277,6 +337,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
     private javax.swing.JButton jBSalvar;
     private javax.swing.JFormattedTextField jFTFValorCusto;
     private javax.swing.JFormattedTextField jFTFValorVenda;
+    private javax.swing.JLabel jLInfoDescricao;
     private javax.swing.JLabel jLInfoValorCusto;
     private javax.swing.JLabel jLInfoValorVenda;
     private javax.swing.JLabel jLabel1;
