@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.Model;
 
 import com.mycompany.projetointegradordesktop.Objects.Item;
+import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -33,9 +34,9 @@ public class ItemTableModel extends AbstractTableModel {
             case 1:
                 return itens.get(rowIndex).getQuantidade();
             case 2:
-                return itens.get(rowIndex).getRemedio().getValorCusto();
+                return FormatadorValor.formatarValor(itens.get(rowIndex).getRemedio().getValorCusto());
             case 3:
-                return itens.get(rowIndex).getSubtotal();
+                return FormatadorValor.formatarValor(itens.get(rowIndex).getSubtotal());
         }
         return null;
     }

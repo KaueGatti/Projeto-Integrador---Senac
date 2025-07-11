@@ -2,25 +2,25 @@ package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Model.VendaTableModel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class IFVenda extends javax.swing.JInternalFrame {
 
     VendaTableModel model = new VendaTableModel();
-    
+
     public IFVenda() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
-        jTVenda.setModel(model);
-        model.loadTable();
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        jTVenda.setRowSorter(sorter);
+        loadTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -139,10 +139,10 @@ public class IFVenda extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -179,6 +179,19 @@ public class IFVenda extends javax.swing.JInternalFrame {
         getDesktopPane().add(IFNovaVenda);
         IFNovaVenda.toFront();
     }//GEN-LAST:event_jBNovaVendaActionPerformed
+
+    private void loadTable() {
+        jTVenda.setModel(model);
+        model.loadTable();
+        jTVenda.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        jTVenda.setRowHeight(24);
+        DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
+        centralizador.setHorizontalAlignment(SwingConstants.CENTER);
+        jTVenda.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTVenda.getColumnModel().getColumn(2).setCellRenderer(centralizador);
+        jTVenda.getColumnModel().getColumn(3).setCellRenderer(centralizador);
+        jTVenda.getColumnModel().getColumn(4).setCellRenderer(centralizador);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBExcluirVenda;

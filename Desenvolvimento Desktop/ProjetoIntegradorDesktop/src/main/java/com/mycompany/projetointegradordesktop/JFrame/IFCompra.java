@@ -2,11 +2,12 @@ package com.mycompany.projetointegradordesktop.JFrame;
 
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class IFCompra extends javax.swing.JInternalFrame {
 
@@ -16,10 +17,9 @@ public class IFCompra extends javax.swing.JInternalFrame {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
+        loadTable();
         jTCompra.setModel(model);
         model.loadTable();
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
-        jTCompra.setRowSorter(sorter);
     }
 
     @SuppressWarnings("unchecked")
@@ -28,13 +28,13 @@ public class IFCompra extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTCompra = new javax.swing.JTable();
+        jBExcluirCompra = new javax.swing.JButton();
+        jBNovaCompra = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTFPesquisa = new javax.swing.JTextField();
         jCBTipoPesquisa = new javax.swing.JComboBox<>();
         jBPesquisar = new javax.swing.JButton();
-        jBExcluirCompra = new javax.swing.JButton();
-        jBNovaCompra = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
 
@@ -49,11 +49,38 @@ public class IFCompra extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTCompra.setMaximumSize(new java.awt.Dimension(100, 80));
         jScrollPane1.setViewportView(jTCompra);
+
+        jBExcluirCompra.setBackground(new java.awt.Color(153, 51, 0));
+        jBExcluirCompra.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBExcluirCompra.setForeground(new java.awt.Color(255, 255, 255));
+        jBExcluirCompra.setText("Excluir Compra");
+        jBExcluirCompra.setBorder(null);
+        jBExcluirCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirCompraActionPerformed(evt);
+            }
+        });
+
+        jBNovaCompra.setBackground(new java.awt.Color(51, 90, 15));
+        jBNovaCompra.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBNovaCompra.setForeground(new java.awt.Color(255, 255, 255));
+        jBNovaCompra.setText("Nova Compra");
+        jBNovaCompra.setBorder(null);
+        jBNovaCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNovaCompraActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setText("Compras");
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jCBTipoPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBTipoPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jBPesquisar.setBackground(new java.awt.Color(153, 153, 153));
         jBPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -90,31 +117,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jBExcluirCompra.setBackground(new java.awt.Color(153, 51, 0));
-        jBExcluirCompra.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBExcluirCompra.setForeground(new java.awt.Color(255, 255, 255));
-        jBExcluirCompra.setText("Excluir Compra");
-        jBExcluirCompra.setBorder(null);
-        jBExcluirCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBExcluirCompraActionPerformed(evt);
-            }
-        });
-
-        jBNovaCompra.setBackground(new java.awt.Color(51, 90, 15));
-        jBNovaCompra.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBNovaCompra.setForeground(new java.awt.Color(255, 255, 255));
-        jBNovaCompra.setText("Nova Compra");
-        jBNovaCompra.setBorder(null);
-        jBNovaCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBNovaCompraActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Compras");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,9 +132,10 @@ public class IFCompra extends javax.swing.JInternalFrame {
                         .addComponent(jBExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -140,7 +143,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -154,10 +157,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        
-    }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
         if (jTCompra.getSelectedRow() != -1) {
@@ -179,6 +178,23 @@ public class IFCompra extends javax.swing.JInternalFrame {
         getDesktopPane().add(IFNovaCompra);
         IFNovaCompra.toFront();
     }//GEN-LAST:event_jBNovaCompraActionPerformed
+
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        System.out.println(this.getDesktopPane());
+    }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void loadTable() {
+        jTCompra.setModel(model);
+        model.loadTable();
+        jTCompra.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        jTCompra.setRowHeight(24);
+        DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
+        centralizador.setHorizontalAlignment(SwingConstants.CENTER);
+        jTCompra.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTCompra.getColumnModel().getColumn(2).setCellRenderer(centralizador);
+        jTCompra.getColumnModel().getColumn(3).setCellRenderer(centralizador);
+        jTCompra.getColumnModel().getColumn(4).setCellRenderer(centralizador);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBExcluirCompra;

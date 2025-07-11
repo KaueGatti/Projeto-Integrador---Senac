@@ -2,6 +2,7 @@ package com.mycompany.projetointegradordesktop.Model;
 
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Objects.Venda;
+import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class VendaTableModel extends AbstractTableModel {
             case 3:
                 return vendas.get(rowIndex).getNmr_nota_fiscal();
             case 4:
-                return vendas.get(rowIndex).getTotalNota();
+                return FormatadorValor.formatarValor(vendas.get(rowIndex).getTotalNota());
             case 5:
                 return vendas.get(rowIndex).getPagamento();
         }

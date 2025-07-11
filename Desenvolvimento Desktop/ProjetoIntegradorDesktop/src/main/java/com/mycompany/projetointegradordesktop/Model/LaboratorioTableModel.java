@@ -32,15 +32,15 @@ public class LaboratorioTableModel extends AbstractTableModel {
             case 0:
                 return laboratorios.get(rowIndex).getNome();
             case 1:
-                return laboratorios.get(rowIndex).getCNPJ();
+                return laboratorios.get(rowIndex).getCNPJ().replaceFirst("(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})", "$1.$2.$3/$4-$5");
             case 2:
-                return laboratorios.get(rowIndex).getInscricaoEstadual();
+                return laboratorios.get(rowIndex).getInscricaoEstadual().replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{3})", "$1.$2.$3.$4");
             case 3:
                 return laboratorios.get(rowIndex).getNumero();
             case 4:
                 return laboratorios.get(rowIndex).getRua();
             case 5:
-                return laboratorios.get(rowIndex).getCep();
+                return laboratorios.get(rowIndex).getCep().replaceFirst("(\\d{5})(\\d{3})", "$1-$2");
             case 6:
                 return laboratorios.get(rowIndex).getBairro();
             case 7:

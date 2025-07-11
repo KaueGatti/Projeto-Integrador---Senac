@@ -3,22 +3,16 @@ package com.mycompany.projetointegradordesktop.Model;
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
-import com.mycompany.projetointegradordesktop.Util.RealRendererTable;
+import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 public class RemedioTableModel extends AbstractTableModel {
 
     private List<Remedio> remedios = new ArrayList();
     private final String[] colunas = {"Laboratório", "Descrição", "Data da última compra", "Valor de custo", "Valor de venda", "Quantidade"};
-
-    public void render(JTable tabela) {
-        tabela.getColumnModel().getColumn(3).setCellRenderer(new RealRendererTable());
-        tabela.getColumnModel().getColumn(4).setCellRenderer(new RealRendererTable());
-    }
     
     @Override
     public int getRowCount() {
@@ -48,9 +42,9 @@ public class RemedioTableModel extends AbstractTableModel {
                 }
                 break;
             case 3:
-                return remedios.get(rowIndex).getValorCusto();
+                return FormatadorValor.formatarValor(remedios.get(rowIndex).getValorCusto());
             case 4:
-                return remedios.get(rowIndex).getValorVenda();
+                return FormatadorValor.formatarValor(remedios.get(rowIndex).getValorVenda());
             case 5:
                 return remedios.get(rowIndex).getQuantidade();
         }
@@ -89,6 +83,15 @@ public class RemedioTableModel extends AbstractTableModel {
     public List<Remedio> getRemedios() {
         return remedios;
     }
+    
+    public void clearTable() {
+        remedios.clear();
+    }
+
+    public void setRemedios(List<Remedio> remedios) {
+        this.remedios = remedios;
+        fireTableDataChanged();
+    }
 
     public void loadTable() {
         remedios.clear();
@@ -97,4 +100,5 @@ public class RemedioTableModel extends AbstractTableModel {
         }
         fireTableDataChanged();
     }
+    
 }

@@ -3,6 +3,7 @@ package com.mycompany.projetointegradordesktop.Model;
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
+import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class CompraTableModel extends AbstractTableModel {
             case 3:
                 return compras.get(rowIndex).getNmr_nota_fiscal();
             case 4:
-                return compras.get(rowIndex).getTotalNota();
+                return FormatadorValor.formatarValor(compras.get(rowIndex).getTotalNota());
             case 5:
                 return compras.get(rowIndex).getPagamento();
         }
