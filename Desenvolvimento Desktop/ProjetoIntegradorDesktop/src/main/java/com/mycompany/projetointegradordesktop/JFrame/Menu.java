@@ -6,11 +6,13 @@ import java.beans.PropertyVetoException;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
 public class Menu extends javax.swing.JFrame {
 
     public Menu() {
         initComponents();
+        loadButtons();
         setExtendedState(MAXIMIZED_BOTH);
     }
 
@@ -35,11 +37,17 @@ public class Menu extends javax.swing.JFrame {
         jBMenu.setBackground(new java.awt.Color(51, 90, 15));
         jBMenu.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBMenu.setForeground(new java.awt.Color(255, 255, 255));
+        jBMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Menu.png")); // NOI18N
         jBMenu.setText("Menu");
-        jBMenu.setBorder(null);
+        jBMenu.setToolTipText("");
+        jBMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jBMenu.setBorderPainted(false);
-        jBMenu.setIconTextGap(60);
-        jBMenu.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBMenu.setDisplayedMnemonicIndex(1);
+        jBMenu.setHideActionText(true);
+        jBMenu.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBMenu.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBMenu.setIconTextGap(30);
+        jBMenu.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBMenuActionPerformed(evt);
@@ -49,11 +57,17 @@ public class Menu extends javax.swing.JFrame {
         jBRemedio.setBackground(new java.awt.Color(51, 90, 15));
         jBRemedio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBRemedio.setForeground(new java.awt.Color(255, 255, 255));
+        jBRemedio.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Remedio.png")); // NOI18N
         jBRemedio.setText("Remédios");
+        jBRemedio.setToolTipText("");
         jBRemedio.setBorder(null);
         jBRemedio.setBorderPainted(false);
-        jBRemedio.setIconTextGap(60);
-        jBRemedio.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBRemedio.setDisplayedMnemonicIndex(1);
+        jBRemedio.setHideActionText(true);
+        jBRemedio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBRemedio.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBRemedio.setIconTextGap(30);
+        jBRemedio.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBRemedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBRemedioActionPerformed(evt);
@@ -63,11 +77,17 @@ public class Menu extends javax.swing.JFrame {
         jBDrogaria.setBackground(new java.awt.Color(51, 90, 15));
         jBDrogaria.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBDrogaria.setForeground(new java.awt.Color(255, 255, 255));
+        jBDrogaria.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Drogaria.png")); // NOI18N
         jBDrogaria.setText("Drogarias");
+        jBDrogaria.setToolTipText("");
         jBDrogaria.setBorder(null);
         jBDrogaria.setBorderPainted(false);
-        jBDrogaria.setIconTextGap(60);
-        jBDrogaria.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBDrogaria.setDisplayedMnemonicIndex(1);
+        jBDrogaria.setHideActionText(true);
+        jBDrogaria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBDrogaria.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBDrogaria.setIconTextGap(30);
+        jBDrogaria.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBDrogariaActionPerformed(evt);
@@ -77,11 +97,17 @@ public class Menu extends javax.swing.JFrame {
         jBVenda.setBackground(new java.awt.Color(51, 90, 15));
         jBVenda.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBVenda.setForeground(new java.awt.Color(255, 255, 255));
+        jBVenda.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Venda.png")); // NOI18N
         jBVenda.setText("Vendas");
+        jBVenda.setToolTipText("");
         jBVenda.setBorder(null);
         jBVenda.setBorderPainted(false);
-        jBVenda.setIconTextGap(60);
-        jBVenda.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBVenda.setDisplayedMnemonicIndex(1);
+        jBVenda.setHideActionText(true);
+        jBVenda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBVenda.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBVenda.setIconTextGap(30);
+        jBVenda.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBVendaActionPerformed(evt);
@@ -91,11 +117,17 @@ public class Menu extends javax.swing.JFrame {
         jBLaboratorio.setBackground(new java.awt.Color(51, 90, 15));
         jBLaboratorio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
+        jBLaboratorio.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Laboratorio.png")); // NOI18N
         jBLaboratorio.setText("Laboratórios");
+        jBLaboratorio.setToolTipText("");
         jBLaboratorio.setBorder(null);
         jBLaboratorio.setBorderPainted(false);
-        jBLaboratorio.setIconTextGap(60);
-        jBLaboratorio.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBLaboratorio.setDisplayedMnemonicIndex(1);
+        jBLaboratorio.setHideActionText(true);
+        jBLaboratorio.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBLaboratorio.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBLaboratorio.setIconTextGap(30);
+        jBLaboratorio.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBLaboratorioActionPerformed(evt);
@@ -105,11 +137,17 @@ public class Menu extends javax.swing.JFrame {
         jBCompra.setBackground(new java.awt.Color(51, 90, 15));
         jBCompra.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBCompra.setForeground(new java.awt.Color(255, 255, 255));
+        jBCompra.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaueg\\OneDrive\\Área de Trabalho\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Compra.png")); // NOI18N
         jBCompra.setText("Compras");
+        jBCompra.setToolTipText("");
         jBCompra.setBorder(null);
         jBCompra.setBorderPainted(false);
-        jBCompra.setIconTextGap(60);
-        jBCompra.setMargin(new java.awt.Insets(10, 14, 3, 50));
+        jBCompra.setDisplayedMnemonicIndex(1);
+        jBCompra.setHideActionText(true);
+        jBCompra.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jBCompra.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jBCompra.setIconTextGap(30);
+        jBCompra.setMargin(new java.awt.Insets(10, 50, 10, 10));
         jBCompra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCompraActionPerformed(evt);
@@ -130,7 +168,7 @@ public class Menu extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+                .addGap(200, 200, 200)
                 .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,7 +180,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -224,6 +262,15 @@ public class Menu extends javax.swing.JFrame {
                 }
             }
         }
+    }
+    
+    private void loadButtons() {
+        jBMenu.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBRemedio.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBCompra.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBVenda.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBLaboratorio.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBDrogaria.setBorder(new EmptyBorder(10, 90, 10, 10));
     }
 
     public static void main(String args[]) {

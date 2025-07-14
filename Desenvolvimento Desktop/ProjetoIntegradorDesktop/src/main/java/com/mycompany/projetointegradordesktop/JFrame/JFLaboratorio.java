@@ -26,9 +26,11 @@ public class JFLaboratorio extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setVisible(true);
-        loadCampos();
         labUpdated = lab;
+        loadCampos();
         loadUpdate();
+        revalidate();
+        repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -197,8 +199,8 @@ public class JFLaboratorio extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTFRua, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addComponent(jTFRua, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
                                 .addComponent(jLabel13)
                                 .addGap(18, 18, 18)
                                 .addComponent(jFTFCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -267,7 +269,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
             if (labUpdated != null) {
                 labUpdated.setNumero(jTFNumero.getText());
                 labUpdated.setRua(jTFRua.getText());
-                labUpdated.setCep(jFTFCEP.getValue().toString());
+                labUpdated.setCep(jFTFCEP.getValue().toString().replaceAll("[^\\d]", ""));
                 labUpdated.setBairro(jTFBairro.getText());
                 labUpdated.setCidade(jTFCidade.getText());
                 labUpdated.setEstado(jCBEstado.getSelectedItem().toString());
@@ -288,6 +290,10 @@ public class JFLaboratorio extends javax.swing.JFrame {
             }
             dispose();
         }
+        System.out.println("CEP vindo do banco: " + labUpdated.getCep());
+        System.out.println("jFTFCEP.getValue(): " + jFTFCEP.getValue());
+        System.out.println("jFTFCEP.getText(): " + jFTFCEP.getText());
+
     }//GEN-LAST:event_jBSalvarActionPerformed
 
     private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
@@ -298,7 +304,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     public Laboratorio getLaboratorioUpdated() {
         return labUpdated;
     }
-    
+
     public Laboratorio getNewLaboratorio() {
         return newLab;
     }
@@ -340,22 +346,33 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jFTFIE.setEnabled(true);
         jBSalvar.setText("Cadastrar");
     }
-    
+
     private void loadUpdate() {
         jTFNome.setText(labUpdated.getNome());
-        jFTFCNPJ.setText(labUpdated.getCNPJ());
-        jFTFIE.setText(labUpdated.getInscricaoEstadual());
+        jFTFCNPJ.setValue(labUpdated.getCNPJ());
+        //jFTFCNPJ.setText(labUpdated.getCNPJ());
+        jFTFIE.setValue(labUpdated.getInscricaoEstadual());
+        //jFTFIE.setText(labUpdated.getInscricaoEstadual());
         jTFNumero.setText(labUpdated.getNumero());
         jTFRua.setText(labUpdated.getRua());
-        jFTFCEP.setText(labUpdated.getCep());
+        jFTFCEP.setValue(labUpdated.getCep());
+        //jFTFCEP.setText(labUpdated.getCep());
         jTFBairro.setText(labUpdated.getBairro());
         jTFCidade.setText(labUpdated.getCidade());
         jCBEstado.setSelectedItem(labUpdated.getEstado());
         jTFComplemento.setText(labUpdated.getComplemento());
+        
+        try {
+            jFTFCNPJ.commitEdit();
+            jFTFIE.commitEdit();
+            jFTFCEP.commitEdit();
+        } catch (Exception e) {
+            System.out.println("Erro: " + e);
+        }
     }
 
     private boolean validarCNPJ() {
-        if (!jFTFCNPJ.getText().contains("_")) {
+        if (!jFTFCNPJ.getText().contains("_") && jFTFCNPJ.getValue() != null) {
             return true;
         } else {
             jLErro.setText("CNPJ inválido");
@@ -364,7 +381,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     }
 
     private boolean validarIE() {
-        if (!jFTFIE.getText().contains("_")) {
+        if (!jFTFIE.getText().contains("_") && jFTFIE.getValue() != null) {
             return true;
         } else {
             jLErro.setText("Inscrição Estadual inválida");
@@ -373,7 +390,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     }
 
     private boolean validarCEP() {
-        if (!jFTFCEP.getText().contains("_")) {
+        if (!jFTFCEP.getText().contains("_") && jFTFCEP.getValue() != null) {
             return true;
         } else {
             jLErro.setText("CEP inválido");

@@ -29,12 +29,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                       <Component id="jBRemover" min="-2" pref="100" max="-2" attributes="0"/>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLTotal" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                              <Component id="jCBPagamento" min="-2" pref="180" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -42,15 +37,6 @@
                                   <Component id="jLabel9" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                                   <Component id="jLabel10" min="-2" pref="100" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jCBRemedio" min="-2" pref="346" max="-2" attributes="0"/>
-                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                                  <Component id="jTFQuantidade" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
-                                  <Component id="jTFValorUnt" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
-                                  <Component id="jBAdicionar" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
@@ -68,7 +54,25 @@
                                   <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                                   <Component id="jCBLaboratorio" min="-2" pref="230" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jCBRemedio" alignment="0" min="-2" pref="346" max="-2" attributes="0"/>
+                                      <Component id="jLTotal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jCBPagamento" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jTFQuantidade" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                                          <Component id="jTFValorUnt" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
+                                          <Component id="jBAdicionar" min="-2" pref="100" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                           </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -79,7 +83,7 @@
                       <Component id="jLInfoData" min="-2" pref="250" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="314" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
