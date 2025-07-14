@@ -1,7 +1,9 @@
 package com.mycompany.projetointegradordesktop.JFrame;
 
+import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
 import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Model.RemedioTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -19,6 +21,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         loadTable();
+        loadLaboratorios();
     }
 
     @SuppressWarnings("unchecked")
@@ -35,6 +38,9 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jTFPesquisa = new javax.swing.JTextField();
         jCBTipoPesquisa = new javax.swing.JComboBox<>();
         jBPesquisar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jCBLaboratorio = new javax.swing.JComboBox<>();
+        jBFiltrar = new javax.swing.JButton();
 
         setBorder(null);
 
@@ -80,7 +86,6 @@ public class IFRemedio extends javax.swing.JInternalFrame {
 
         jBAtualizarRemedio.setBackground(new java.awt.Color(204, 204, 204));
         jBAtualizarRemedio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBAtualizarRemedio.setForeground(new java.awt.Color(0, 0, 0));
         jBAtualizarRemedio.setText("Atualizar Remédio");
         jBAtualizarRemedio.setBorder(null);
         jBAtualizarRemedio.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +100,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jCBTipoPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBTipoPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCBTipoPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Descrição", "Fornecedor" }));
 
         jBPesquisar.setBackground(new java.awt.Color(153, 153, 153));
         jBPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -108,18 +113,44 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Laboratório");
+
+        jCBLaboratorio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jBFiltrar.setBackground(new java.awt.Color(0, 102, 204));
+        jBFiltrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
+        jBFiltrar.setText("Filtrar");
+        jBFiltrar.setBorder(null);
+        jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBFiltrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCBTipoPesquisa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jCBTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +160,12 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCBTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,7 +196,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +204,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                         .addComponent(jBAtualizarRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -212,8 +248,20 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBAtualizarRemedioActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        System.out.println(this.getDesktopPane());
+        switch (jCBTipoPesquisa.getSelectedIndex()) {
+            case 0:
+                model.setRemedios(RemedioDAO.read(jTFPesquisa.getText()));
+                break;
+        }
     }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
+        if (jCBLaboratorio.getSelectedIndex() == 0) {
+            model.setRemedios(RemedioDAO.read(jTFPesquisa.getText()));
+        } else {
+            model.setRemedios(RemedioDAO.read(jTFPesquisa.getText(), (Laboratorio) jCBLaboratorio.getSelectedItem()));
+        }
+    }//GEN-LAST:event_jBFiltrarActionPerformed
 
     private void loadTable() {
         jTRemedio.setModel(model);
@@ -244,15 +292,28 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             }
         });
     }
+    
+    public void loadLaboratorios() {
+        jCBLaboratorio.removeAllItems();
+        Laboratorio l = new Laboratorio();
+        l.setNome("Todos");
+        jCBLaboratorio.addItem(l);
+        for (Laboratorio lab : LaboratorioDAO.read()) {
+            jCBLaboratorio.addItem(lab);
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarRemedio;
     private javax.swing.JButton jBCadastrarRemedio;
     private javax.swing.JButton jBExcluirRemedio;
+    private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBPesquisar;
+    private javax.swing.JComboBox<Laboratorio> jCBLaboratorio;
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFPesquisa;

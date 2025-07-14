@@ -269,7 +269,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
             if (labUpdated != null) {
                 labUpdated.setNumero(jTFNumero.getText());
                 labUpdated.setRua(jTFRua.getText());
-                labUpdated.setCep(jFTFCEP.getValue().toString().replaceAll("[^\\d]", ""));
+                labUpdated.setCep(jFTFCEP.getText());
                 labUpdated.setBairro(jTFBairro.getText());
                 labUpdated.setCidade(jTFCidade.getText());
                 labUpdated.setEstado(jCBEstado.getSelectedItem().toString());
@@ -277,11 +277,11 @@ public class JFLaboratorio extends javax.swing.JFrame {
                 response = 1;
             } else {
                 newLab.setNome(jTFNome.getText());
-                newLab.setCNPJ(jFTFCNPJ.getValue().toString().replaceAll("[^\\d]", ""));
-                newLab.setInscricaoEstadual(jFTFIE.getValue().toString().replaceAll("[^\\d]", ""));
+                newLab.setCNPJ(jFTFCNPJ.getText());
+                newLab.setInscricaoEstadual(jFTFIE.getText());
                 newLab.setNumero(jTFNumero.getText());
                 newLab.setRua(jTFRua.getText());
-                newLab.setCep(jFTFCEP.getValue().toString().replaceAll("[^\\d]", ""));
+                newLab.setCep(jFTFCEP.getText());
                 newLab.setBairro(jTFBairro.getText());
                 newLab.setCidade(jTFCidade.getText());
                 newLab.setEstado(jCBEstado.getSelectedItem().toString());
@@ -290,9 +290,6 @@ public class JFLaboratorio extends javax.swing.JFrame {
             }
             dispose();
         }
-        System.out.println("CEP vindo do banco: " + labUpdated.getCep());
-        System.out.println("jFTFCEP.getValue(): " + jFTFCEP.getValue());
-        System.out.println("jFTFCEP.getText(): " + jFTFCEP.getText());
 
     }//GEN-LAST:event_jBSalvarActionPerformed
 
@@ -349,30 +346,19 @@ public class JFLaboratorio extends javax.swing.JFrame {
 
     private void loadUpdate() {
         jTFNome.setText(labUpdated.getNome());
-        jFTFCNPJ.setValue(labUpdated.getCNPJ());
-        //jFTFCNPJ.setText(labUpdated.getCNPJ());
-        jFTFIE.setValue(labUpdated.getInscricaoEstadual());
-        //jFTFIE.setText(labUpdated.getInscricaoEstadual());
+        jFTFCNPJ.setText(labUpdated.getCNPJ());
+        jFTFIE.setText(labUpdated.getInscricaoEstadual());
         jTFNumero.setText(labUpdated.getNumero());
         jTFRua.setText(labUpdated.getRua());
-        jFTFCEP.setValue(labUpdated.getCep());
-        //jFTFCEP.setText(labUpdated.getCep());
+        jFTFCEP.setText(labUpdated.getCep());
         jTFBairro.setText(labUpdated.getBairro());
         jTFCidade.setText(labUpdated.getCidade());
         jCBEstado.setSelectedItem(labUpdated.getEstado());
         jTFComplemento.setText(labUpdated.getComplemento());
-        
-        try {
-            jFTFCNPJ.commitEdit();
-            jFTFIE.commitEdit();
-            jFTFCEP.commitEdit();
-        } catch (Exception e) {
-            System.out.println("Erro: " + e);
-        }
     }
 
     private boolean validarCNPJ() {
-        if (!jFTFCNPJ.getText().contains("_") && jFTFCNPJ.getValue() != null) {
+        if (!jFTFCNPJ.getText().contains("_")) {
             return true;
         } else {
             jLErro.setText("CNPJ inválido");
@@ -381,7 +367,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     }
 
     private boolean validarIE() {
-        if (!jFTFIE.getText().contains("_") && jFTFIE.getValue() != null) {
+        if (!jFTFIE.getText().contains("_")) {
             return true;
         } else {
             jLErro.setText("Inscrição Estadual inválida");
@@ -390,7 +376,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     }
 
     private boolean validarCEP() {
-        if (!jFTFCEP.getText().contains("_") && jFTFCEP.getValue() != null) {
+        if (!jFTFCEP.getText().contains("_")) {
             return true;
         } else {
             jLErro.setText("CEP inválido");

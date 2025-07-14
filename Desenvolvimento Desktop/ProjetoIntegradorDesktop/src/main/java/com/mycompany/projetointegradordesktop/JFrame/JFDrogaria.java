@@ -259,10 +259,10 @@ public class JFDrogaria extends javax.swing.JFrame {
                 response = 1;
             } else {
                 newDrogaria.setNome(jTFNumero.getText());
-                newDrogaria.setCNPJ(jFTFCNPJ.getValue().toString().replaceAll("[^\\d]", ""));
+                newDrogaria.setCNPJ(jFTFCNPJ.getText());
                 newDrogaria.setNumero(jTFNumero.getText());
                 newDrogaria.setRua(jTFRua.getText());
-                newDrogaria.setCep(jFTFCEP.getValue().toString().replaceAll("[^\\d]", ""));
+                newDrogaria.setCep(jFTFCEP.getText());
                 newDrogaria.setBairro(jTFBairro.getText());
                 newDrogaria.setCidade(jTFCidade.getText());
                 newDrogaria.setEstado(jCBEstado.getSelectedItem().toString());

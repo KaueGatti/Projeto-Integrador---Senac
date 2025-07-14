@@ -93,7 +93,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Menu.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Menu.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Menu"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -128,7 +128,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Remedio.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Remedio.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Rem&#xe9;dios"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -161,7 +161,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Drogaria.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Drogaria.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Drogarias"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -194,7 +194,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Venda.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Venda.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Vendas"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -227,7 +227,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Laboratorio.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Laboratorio.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Laborat&#xf3;rios"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
@@ -260,7 +260,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kaueg\OneDrive\&#xc1;rea de Trabalho\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Compra.png"/>
+              <Image iconType="2" name="C:\Users\kaue.vgatti\Desktop\Projeto Integrador\Desenvolvimento Desktop\ProjetoIntegradorDesktop\src\main\java\com\mycompany\projetointegradordesktop\Image\Compra.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Compras"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>

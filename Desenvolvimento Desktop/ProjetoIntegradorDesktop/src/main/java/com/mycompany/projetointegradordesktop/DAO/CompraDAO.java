@@ -3,6 +3,7 @@ package com.mycompany.projetointegradordesktop.DAO;
 import com.mycompany.projetointegradordesktop.DB.Conexao;
 import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
+import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -49,6 +50,48 @@ public class CompraDAO {
 
         try {
             stmt = con.prepareStatement("SELECT * FROM compra");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Compra compra = new Compra();
+
+                compra.setId(rs.getInt("id_compra"));
+                for (Laboratorio lab : LaboratorioDAO.read()) {
+                    if (lab.getId() == rs.getInt("id_lab")) {
+                        compra.setLaboratorio(lab);
+                        break;
+                    }
+                }
+                compra.setDataCompra(LocalDate.parse(rs.getString("data_compra")));
+                if (rs.getDate("data_entrega") != null) {
+                    compra.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                }
+                compra.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
+                compra.setTotalNota(rs.getDouble("total_nota"));
+                compra.setPagamento(rs.getString("forma_pagamento"));
+
+                compras.add(compra);
+            }
+            return compras;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar compras: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+    
+    public static List<Compra> read(Laboratorio l) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Compra> compras = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM compra WHERE id_lab = ?");
+            
+            stmt.setInt(1, l.getId());
+            
             rs = stmt.executeQuery();
 
             while (rs.next()) {

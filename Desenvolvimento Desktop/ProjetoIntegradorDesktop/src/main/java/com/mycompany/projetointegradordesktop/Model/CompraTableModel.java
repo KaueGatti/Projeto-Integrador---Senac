@@ -19,6 +19,11 @@ public class CompraTableModel extends AbstractTableModel {
         return compras.size();
     }
 
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
+        fireTableDataChanged();
+    }
+
     @Override
     public int getColumnCount() {
         return colunas.length;
