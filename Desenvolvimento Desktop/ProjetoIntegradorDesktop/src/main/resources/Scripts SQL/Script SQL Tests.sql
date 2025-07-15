@@ -114,12 +114,10 @@ INSERT INTO remedio (id_lab, descricao, data_ultima_compra, valor_custo, valor_v
 (9, 'Finasterida', '2025-06-04', 2.10, 4.20, 60),
 (10, 'Minoxidil', '2025-05-31', 2.50, 5.00, 68);
 
-select * from laboratorio;
+/*select * from laboratorio;
 select * from remedio;
 select * from drogaria;
 select * from venda;
 select * from compra;
 select * from item_compra;
-select * from item_venda;
-
-CALL filterRemedio("%Am%", 2, 0, 1000, 0, 3.5);
+select * from item_venda;*/

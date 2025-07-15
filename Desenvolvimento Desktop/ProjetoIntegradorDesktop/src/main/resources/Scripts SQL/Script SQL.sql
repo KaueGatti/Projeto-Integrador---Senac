@@ -50,7 +50,7 @@ CREATE TABLE venda (
     id_drog INT NOT NULL,
     data_venda DATE NOT NULL,
     data_entrega DATE,
-    nmr_nota_fiscal VARCHAR(10) NOT NULL UNIQUE,
+    nmr_nota_fiscal VARCHAR(30) NOT NULL UNIQUE,
     total_nota DECIMAL(10,2) NOT NULL,
     forma_pagamento VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_venda),
@@ -62,7 +62,7 @@ CREATE TABLE compra (
     id_lab INT NOT NULL,
     data_compra DATE NOT NULL,
     data_entrega DATE,
-    nmr_nota_fiscal VARCHAR(10) NOT NULL UNIQUE,
+    nmr_nota_fiscal VARCHAR(30) NOT NULL UNIQUE,
     total_nota DECIMAL(10,2) NOT NULL,
     forma_pagamento VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_compra),
@@ -180,30 +180,65 @@ CREATE PROCEDURE delete_item_venda(id_item_venda INT)
 DELETE FROM item_venda
 WHERE item_venda.id_item_venda = id_item_venda;
 
-CREATE PROCEDURE filterRemedio(descricao varchar(30), id_lab int, valor_custo_min double, valor_custo_max double, valor_venda_min double, valor_venda_max double)
-SELECT * FROM remedio
-WHERE remedio.descricao LIKE descricao AND 
-remedio.id_lab = id_lab AND
-valor_custo BETWEEN valor_custo_min AND valor_custo_max AND 
-valor_venda BETWEEN valor_venda_min AND valor_venda_max;
-
-CREATE PROCEDURE filterRemedioValor(descricao varchar(30), valor_custo_min double, valor_custo_max double, valor_venda_min double, valor_venda_max double)
-SELECT * FROM remedio
-WHERE remedio.descricao LIKE descricao AND 
-valor_custo BETWEEN valor_custo_min AND valor_custo_max AND 
-valor_venda BETWEEN valor_venda_min AND valor_venda_max;
-
+DELIMITER $$
 CREATE PROCEDURE filterRemedioDinamico
-(descricao VARCHAR(30), id_lab INT, valor_custo_min DOUBLE, valor_custo_max DOUBLE, valor_venda_min DOUBLE, valor_venda_max DOUBLE, orderBy VARCHAR(15), isDesc BOOLEAN)
-SELECT * FROM remedio
-WHERE
-	remedio.descricao LIKE CONCAT('%', descricao, '%') AND
-    (id_lab IS NULL OR remedio.id_lab = id_lab) AND
-    valor_custo BETWEEN valor_custo_min AND valor_custo_max AND 
-	valor_venda BETWEEN valor_venda_min AND valor_venda_max AND
-    (orderBy IS NULL OR ORDER BY orderBy)
-    (isDesc = FALSE OR DESC);
+(descricao VARCHAR(30), id_lab INT, valor_custo_min DOUBLE, valor_custo_max DOUBLE, valor_venda_min DOUBLE, valor_venda_max DOUBLE, orderBy VARCHAR(20), isDesc BOOLEAN)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM remedio WHERE valor_custo BETWEEN ', valor_custo_min, ' AND ', valor_custo_max, ' AND valor_venda BETWEEN ', valor_venda_min, ' AND ', valor_venda_max);
     
+    IF descricao IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND remedio.descricao LIKE \'', descricao, '\'');
+	END IF;
+    
+    IF id_lab IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND remedio.id_lab = ', id_lab);
+	END IF;
+    
+    IF orderBy IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
+		IF isDesc THEN
+			SET @sql = CONCAT(@sql, ' DESC');
+		END IF;
+	END IF;
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE filterCompraDinamico
+(nNF VARCHAR(30), id_lab INT, pagamento VARCHAR(20), valor_total_min double, valor_total_max double, orderBy VARCHAR(20), isDesc BOOLEAN)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM compra WHERE total_nota BETWEEN ', valor_total_min, ' AND ', valor_total_max);
+    
+    IF nNF IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND compra.nmr_nota_fiscal LIKE \'', nNF, '\'');
+	END IF;
+    
+    IF id_lab IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND compra.id_lab = ', id_lab);
+	END IF;
+    
+    IF pagamento IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND compra.forma_pagamento = \'', pagamento, '\'');
+	END IF;
+    
+    IF orderBy IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
+		IF isDesc THEN
+			SET @sql = CONCAT(@sql, ' DESC');
+		END IF;
+	END IF;
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+#drop procedure filterCompraDinamico;
 
 DELIMITER $$
 CREATE TRIGGER compra_remedio

@@ -25,6 +25,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         loadTable();
         loadLaboratorios();
         loadCampos();
+        loadOrdenar();
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +59,9 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jFTFValorVendaMin = new javax.swing.JFormattedTextField();
         jLValorCustoMax3 = new javax.swing.JLabel();
         jFTFValorVendaMax = new javax.swing.JFormattedTextField();
+        jCBOrdenar = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jCBoxDesc = new javax.swing.JCheckBox();
 
         setBorder(null);
 
@@ -147,6 +151,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Descrição");
 
+        jCBoxValorCusto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBoxValorCusto.setText("Ativar");
         jCBoxValorCusto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +159,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             }
         });
 
+        jCBoxValorVenda.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBoxValorVenda.setText("Ativar");
         jCBoxValorVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,34 +253,59 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jCBOrdenar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Ordenar por");
+
+        jCBoxDesc.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBoxDesc.setText("Decrescente");
+        jCBoxDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBoxDescActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBoxValorCusto))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBoxValorVenda))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCBoxDesc))
+                                    .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCBoxValorCusto))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCBoxValorVenda))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -293,9 +324,9 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jPValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCBoxValorCusto)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,6 +335,11 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                         .addComponent(jCBoxValorVenda))
                     .addComponent(jPValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBoxDesc))
+                .addGap(12, 12, 12)
                 .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -399,11 +435,16 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         boolean filterValorVenda = jCBoxValorVenda.isSelected();
 
         String descricao = jTFPesquisa.getText();
-        Laboratorio l = (Laboratorio) jCBLaboratorio.getSelectedItem();
+        Laboratorio l = null;
         double valorCustoMin = 0;
         double valorCustoMax = 1000;
         double valorVendaMin = 0;
         double valorVendaMax = 1000;
+        String orderBy = null;
+        boolean desc = false;
+        if (filterLab) {
+            l = (Laboratorio) jCBLaboratorio.getSelectedItem();
+        }
         if (filterValorCusto) {
             valorCustoMin = ((Number) jFTFValorCustoMin.getValue()).doubleValue();
             valorCustoMax = ((Number) jFTFValorCustoMax.getValue()).doubleValue();
@@ -412,16 +453,13 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             valorVendaMin = ((Number) jFTFValorVendaMin.getValue()).doubleValue();
             valorVendaMax = ((Number) jFTFValorVendaMax.getValue()).doubleValue();
         }
-
-        if (filterLab && (filterValorCusto || filterValorVenda)) {
-            model.setRemedios(RemedioDAO.read(descricao, l, valorCustoMin, valorCustoMax, valorVendaMin, valorVendaMax));
-        } else if (filterLab) {
-            model.setRemedios(RemedioDAO.read(descricao, l));
-        } else if ((filterValorCusto || filterValorVenda)) {
-            model.setRemedios(RemedioDAO.read(descricao, valorCustoMin, valorCustoMax, valorVendaMin, valorVendaMax));
-        } else {
-            model.setRemedios(RemedioDAO.read(descricao));
+        if (jCBOrdenar.getSelectedIndex() != 0) {
+            orderBy = getOrdenar();
         }
+        if (jCBoxDesc.isSelected()) {
+            desc = true;
+        }
+        model.setRemedios(RemedioDAO.readDinamico(descricao, l, valorCustoMin, valorCustoMax, valorVendaMin, valorVendaMax, orderBy, desc));
     }//GEN-LAST:event_jBFiltrarActionPerformed
 
     private void jCBoxValorCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBoxValorCustoActionPerformed
@@ -448,6 +486,10 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jCBoxValorVendaActionPerformed
+
+    private void jCBoxDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBoxDescActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBoxDescActionPerformed
 
     private void loadTable() {
         jTRemedio.setModel(model);
@@ -506,6 +548,32 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jFTFValorVendaMax.setValue(100);
     }
 
+    private void loadOrdenar() {
+        jCBOrdenar.removeAllItems();
+        jCBOrdenar.addItem("Nenhum");
+        for (String coluna : model.getColunas()) {
+            jCBOrdenar.addItem(coluna);
+        }
+    }
+
+    private String getOrdenar() {
+        switch (jCBOrdenar.getSelectedIndex()) {
+            case 1:
+                return "id_lab";
+            case 2:
+                return "descricao";
+            case 3:
+                return "data_ultima_compra";
+            case 4:
+                return "valor_custo";
+            case 5:
+                return "valor_venda";
+            case 6:
+                return "qntd_armazenada";
+        }
+        return null;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarRemedio;
@@ -514,6 +582,8 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<Laboratorio> jCBLaboratorio;
+    private javax.swing.JComboBox<String> jCBOrdenar;
+    private javax.swing.JCheckBox jCBoxDesc;
     private javax.swing.JCheckBox jCBoxValorCusto;
     private javax.swing.JCheckBox jCBoxValorVenda;
     private javax.swing.JFormattedTextField jFTFValorCustoMax;
@@ -529,6 +599,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPValorCusto;
     private javax.swing.JPanel jPValorVenda;
     private javax.swing.JPanel jPanel2;

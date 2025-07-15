@@ -3,10 +3,13 @@ package com.mycompany.projetointegradordesktop.DAO;
 import com.mycompany.projetointegradordesktop.DB.Conexao;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -159,70 +162,41 @@ public class RemedioDAO {
         return null;
     }
 
-    public static List<Remedio> read(String descricao, Laboratorio l) {
-        Connection con = Conexao.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Remedio> remedios = new ArrayList();
-
-        try {
-            stmt = con.prepareStatement("SELECT * FROM remedio WHERE descricao LIKE ? AND id_lab = ?");
-
-            stmt.setString(1, "%" + descricao + "%");
-            stmt.setInt(2, l.getId());
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Remedio remedio = new Remedio();
-
-                remedio.setId(rs.getInt("id_remedio"));
-                for (Laboratorio lab : LaboratorioDAO.read()) {
-                    if (lab.getId() == rs.getInt("id_lab")) {
-                        remedio.setLaboratorio(lab);
-                        break;
-                    }
-                }
-                remedio.setDescricao(rs.getString("descricao"));
-                if (rs.getDate("data_ultima_compra") != null) {
-                    remedio.setDataUltimaCompra(rs.getDate("data_ultima_compra").toLocalDate());
-                }
-                remedio.setValorCusto(rs.getDouble("valor_custo"));
-                remedio.setValorVenda(rs.getDouble("valor_venda"));
-                remedio.setQuantidade(rs.getInt("qntd_armazenada"));
-
-                remedios.add(remedio);
-            }
-
-            return remedios;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios pela descrição: " + e);
-        } finally {
-            Conexao.closeConnection(con, stmt);
-        }
-        return null;
-    }
-
-    public static List<Remedio> read(String descricao, Laboratorio l,
+    public static List<Remedio> readDinamico(String descricao, Laboratorio l,
             double valorCustoMin, double valorCustoMax,
-            double valorVendaMin, double valorVendaMax) {
+            double valorVendaMin, double valorVendaMax,
+            String orderBy, boolean desc) {
 
         Connection con = Conexao.getConnection();
-        PreparedStatement stmt = null;
+        CallableStatement cs = null;
         ResultSet rs = null;
         List<Remedio> remedios = new ArrayList();
 
         try {
-            stmt = con.prepareStatement("CALL filterRemedio(?, ?, ?, ?, ?, ?)");
+            cs = con.prepareCall("CALL filterRemedioDinamico(?, ?, ?, ?, ?, ?, ?, ?)");
 
-            stmt.setString(1, "%" + descricao + "%");
-            stmt.setInt(2, l.getId());
-            stmt.setDouble(3, valorCustoMin);
-            stmt.setDouble(4, valorCustoMax);
-            stmt.setDouble(5, valorVendaMin);
-            stmt.setDouble(6, valorVendaMax);
+            cs.setString(1, "%" + descricao + "%");
+            
+            if (l != null) {
+                cs.setInt(2, l.getId());
+            } else {
+                cs.setNull(2, Types.INTEGER);
+            }
+            
+            cs.setDouble(3, valorCustoMin);
+            cs.setDouble(4, valorCustoMax);
+            cs.setDouble(5, valorVendaMin);
+            cs.setDouble(6, valorVendaMax);
+            
+            if (orderBy != null) {
+                cs.setString(7, orderBy);
+            } else {
+                cs.setNull(7, Types.VARCHAR);
+            }
+            
+            cs.setBoolean(8, desc);
 
-            rs = stmt.executeQuery();
+            rs = cs.executeQuery();
 
             while (rs.next()) {
                 Remedio remedio = new Remedio();
@@ -247,59 +221,9 @@ public class RemedioDAO {
 
             return remedios;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios pela descrição: " + e);
+            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios dinamicamente: " + e);
         } finally {
-            Conexao.closeConnection(con, stmt);
-        }
-        return null;
-    }
-    
-    public static List<Remedio> read(String descricao,
-            double valorCustoMin, double valorCustoMax,
-            double valorVendaMin, double valorVendaMax) {
-
-        Connection con = Conexao.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Remedio> remedios = new ArrayList();
-
-        try {
-            stmt = con.prepareStatement("CALL filterRemedioValor(?, ?, ?, ?, ?)");
-
-            stmt.setString(1, "%" + descricao + "%");
-            stmt.setDouble(2, valorCustoMin);
-            stmt.setDouble(3, valorCustoMax);
-            stmt.setDouble(4, valorVendaMin);
-            stmt.setDouble(5, valorVendaMax);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Remedio remedio = new Remedio();
-
-                remedio.setId(rs.getInt("id_remedio"));
-                for (Laboratorio lab : LaboratorioDAO.read()) {
-                    if (lab.getId() == rs.getInt("id_lab")) {
-                        remedio.setLaboratorio(lab);
-                        break;
-                    }
-                }
-                remedio.setDescricao(rs.getString("descricao"));
-                if (rs.getDate("data_ultima_compra") != null) {
-                    remedio.setDataUltimaCompra(rs.getDate("data_ultima_compra").toLocalDate());
-                }
-                remedio.setValorCusto(rs.getDouble("valor_custo"));
-                remedio.setValorVenda(rs.getDouble("valor_venda"));
-                remedio.setQuantidade(rs.getInt("qntd_armazenada"));
-
-                remedios.add(remedio);
-            }
-
-            return remedios;
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios pela descrição: " + e);
-        } finally {
-            Conexao.closeConnection(con, stmt);
+            Conexao.closeConnection(con, cs);
         }
         return null;
     }

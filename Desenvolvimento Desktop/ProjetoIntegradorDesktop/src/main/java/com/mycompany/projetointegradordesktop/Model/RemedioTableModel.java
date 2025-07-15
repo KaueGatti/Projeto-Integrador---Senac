@@ -19,6 +19,10 @@ public class RemedioTableModel extends AbstractTableModel {
         return remedios.size();
     }
 
+    public String[] getColunas() {
+        return colunas;
+    }
+
     @Override
     public int getColumnCount() {
         return colunas.length;
