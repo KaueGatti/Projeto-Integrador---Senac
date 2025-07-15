@@ -1,4 +1,4 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
@@ -11,8 +11,6 @@ import javax.swing.event.InternalFrameEvent;
 
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 public class IFVenda extends javax.swing.JInternalFrame {
 
@@ -23,6 +21,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
         loadTable();
+        loadDrogarias();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,12 +35,11 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jBNovaVenda = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jTFPesquisa = new javax.swing.JTextField();
-        jCBTipoPesquisa = new javax.swing.JComboBox<>();
-        jBPesquisar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jCBDrogaria = new javax.swing.JComboBox<>();
-        jBCadastrarRemedio1 = new javax.swing.JButton();
+        jBFiltrar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jCBPagamento = new javax.swing.JComboBox<>();
 
         jTextField1.setText("jTextField1");
 
@@ -85,37 +83,27 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Vendas");
 
-        jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jCBTipoPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBTipoPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Descrição", "Fornecedor" }));
-
-        jBPesquisar.setBackground(new java.awt.Color(153, 153, 153));
-        jBPesquisar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBPesquisar.setForeground(new java.awt.Color(255, 255, 255));
-        jBPesquisar.setText("Pesquisar");
-        jBPesquisar.setBorder(null);
-        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBPesquisarActionPerformed(evt);
-            }
-        });
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Drogaria");
 
         jCBDrogaria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jBCadastrarRemedio1.setBackground(new java.awt.Color(0, 102, 204));
-        jBCadastrarRemedio1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBCadastrarRemedio1.setForeground(new java.awt.Color(255, 255, 255));
-        jBCadastrarRemedio1.setText("Filtrar");
-        jBCadastrarRemedio1.setBorder(null);
-        jBCadastrarRemedio1.addActionListener(new java.awt.event.ActionListener() {
+        jBFiltrar.setBackground(new java.awt.Color(0, 102, 204));
+        jBFiltrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
+        jBFiltrar.setText("Filtrar");
+        jBFiltrar.setBorder(null);
+        jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBCadastrarRemedio1ActionPerformed(evt);
+                jBFiltrarActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Pagamento");
+
+        jCBPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Pix", "Débito", "Crédito", "Cheque", "Boleto" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -123,36 +111,27 @@ public class IFVenda extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBCadastrarRemedio1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jCBTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTFPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jCBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(230, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBTipoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBCadastrarRemedio1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(jCBPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -171,16 +150,16 @@ public class IFVenda extends javax.swing.JInternalFrame {
                         .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -214,13 +193,17 @@ public class IFVenda extends javax.swing.JInternalFrame {
         IFNovaVenda.toFront();
     }//GEN-LAST:event_jBNovaVendaActionPerformed
 
-    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-
-    }//GEN-LAST:event_jBPesquisarActionPerformed
-
-    private void jBCadastrarRemedio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarRemedio1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBCadastrarRemedio1ActionPerformed
+    private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
+        if (jCBDrogaria.getSelectedIndex() == 0 && jCBPagamento.getSelectedIndex()== 0) {
+            model.setVendas(VendaDAO.read());       
+        } else if (jCBDrogaria.getSelectedIndex() == 0) {
+            model.setVendas(VendaDAO.read(jCBPagamento.getSelectedItem().toString()));
+        } else if (jCBPagamento.getSelectedIndex() == 0) {
+            model.setVendas(VendaDAO.read((Drogaria) jCBDrogaria.getSelectedItem()));
+        } else {
+            model.setVendas(VendaDAO.read((Drogaria) jCBDrogaria.getSelectedItem(), jCBPagamento.getSelectedItem().toString()));
+        }
+    }//GEN-LAST:event_jBFiltrarActionPerformed
 
     private void loadTable() {
         jTVenda.setModel(model);
@@ -246,17 +229,16 @@ public class IFVenda extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBCadastrarRemedio1;
     private javax.swing.JButton jBExcluirVenda;
+    private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBNovaVenda;
-    private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<Drogaria> jCBDrogaria;
-    private javax.swing.JComboBox<String> jCBTipoPesquisa;
+    private javax.swing.JComboBox<String> jCBPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTFPesquisa;
     private javax.swing.JTable jTVenda;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

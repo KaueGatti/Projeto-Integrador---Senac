@@ -224,7 +224,7 @@ public class RemedioDAO {
         }
     }
 
-    public static void delete(Remedio remedio) {
+    public static int delete(Remedio remedio) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
@@ -234,8 +234,11 @@ public class RemedioDAO {
             stmt.setInt(1, remedio.getId());
 
             stmt.executeUpdate();
+            return 1;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Falha ao excluir remédio: " + e);
+            JOptionPane.showMessageDialog(null, "Falha ao excluir remédio: Existem compras/vendas vinculadas a este remédio");
+            System.out.println(e);
+            return 0;
         } finally {
             Conexao.closeConnection(con, stmt);
         }

@@ -1,4 +1,4 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
 import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
@@ -82,7 +82,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         });
 
         jCBPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pix", "Débito", "Crédito", "Cheque", "Boleto", "" }));
+        jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pix", "Débito", "Crédito", "Cheque", "Boleto" }));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel17.setText("Resumo");

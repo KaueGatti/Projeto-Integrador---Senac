@@ -18,6 +18,11 @@ public class VendaTableModel extends AbstractTableModel {
         return vendas.size();
     }
 
+    public void setVendas(List<Venda> vendas) {
+        this.vendas = vendas;
+        fireTableDataChanged();
+    }
+
     @Override
     public int getColumnCount() {
         return colunas.length;

@@ -189,13 +189,12 @@
           <Font name="Segoe UI" size="18" style="0"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="6">
+          <StringArray count="5">
             <StringItem index="0" value="Pix"/>
             <StringItem index="1" value="D&#xe9;bito"/>
             <StringItem index="2" value="Cr&#xe9;dito"/>
             <StringItem index="3" value="Cheque"/>
             <StringItem index="4" value="Boleto"/>
-            <StringItem index="5" value=""/>
           </StringArray>
         </Property>
       </Properties>

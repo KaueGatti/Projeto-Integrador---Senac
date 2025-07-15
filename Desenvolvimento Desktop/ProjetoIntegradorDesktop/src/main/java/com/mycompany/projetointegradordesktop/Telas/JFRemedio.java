@@ -1,24 +1,24 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
+import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
+import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.util.function.Consumer;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
-public class JFAtualizarRemedio extends javax.swing.JFrame {
+public class JFRemedio extends javax.swing.JFrame {
 
-    private Remedio remedioUpdated;
-    private int response;
-    
-    public JFAtualizarRemedio(Remedio remedio) {
+    private Remedio newRemedio = new Remedio();
+    private static boolean response;
+
+    public JFRemedio() {
         initComponents();
-        setLocationRelativeTo(null);
         setVisible(true);
-        remedioUpdated = remedio;
+        setLocationRelativeTo(null);
+        loadLaboratorios();
         loadCampos();
     }
 
@@ -27,23 +27,19 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jBSalvar = new javax.swing.JButton();
-        jBCancelar = new javax.swing.JButton();
-        jTFLab = new javax.swing.JTextField();
-        jTFDescricao = new javax.swing.JTextField();
-        jTFUltCompra = new javax.swing.JTextField();
         jFTFValorCusto = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
         jFTFValorVenda = new javax.swing.JFormattedTextField();
-        jTFQntdEstoque = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         jLInfoValorCusto = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLInfoValorVenda = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jBCadastrar = new javax.swing.JButton();
         jLInfoDescricao = new javax.swing.JLabel();
+        jBCancelar = new javax.swing.JButton();
+        jTFDescricao = new javax.swing.JTextField();
+        jCBLaboratorio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -51,30 +47,51 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Laboratório");
 
+        jFTFValorCusto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTFValorCusto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFTFValorCustoFocusLost(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Descrição");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Data Últ. Compra");
+        jFTFValorVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTFValorVenda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFTFValorVendaFocusLost(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Valor de Custo");
 
+        jLInfoValorCusto.setForeground(new java.awt.Color(204, 51, 0));
+        jLInfoValorCusto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Valor de Venda");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Quantidade em estoque");
+        jLInfoValorVenda.setForeground(new java.awt.Color(204, 51, 0));
+        jLInfoValorVenda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jBSalvar.setBackground(new java.awt.Color(51, 91, 15));
-        jBSalvar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jBSalvar.setForeground(new java.awt.Color(255, 255, 255));
-        jBSalvar.setText("Salvar");
-        jBSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Cadastro de Remédio");
+
+        jBCadastrar.setBackground(new java.awt.Color(51, 91, 15));
+        jBCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jBCadastrar.setForeground(new java.awt.Color(255, 255, 255));
+        jBCadastrar.setText("Cadastrar");
+        jBCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBSalvarActionPerformed(evt);
+                jBCadastrarActionPerformed(evt);
             }
         });
+
+        jLInfoDescricao.setForeground(new java.awt.Color(204, 51, 0));
+        jLInfoDescricao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jBCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -86,11 +103,6 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
             }
         });
 
-        jTFLab.setEditable(false);
-        jTFLab.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTFLab.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTFLab.setEnabled(false);
-
         jTFDescricao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTFDescricao.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTFDescricao.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -99,40 +111,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
             }
         });
 
-        jTFUltCompra.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTFUltCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTFUltCompra.setEnabled(false);
-
-        jFTFValorCusto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFTFValorCusto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFTFValorCustoFocusLost(evt);
-            }
-        });
-
-        jFTFValorVenda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFTFValorVenda.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jFTFValorVendaFocusLost(evt);
-            }
-        });
-
-        jTFQntdEstoque.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTFQntdEstoque.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTFQntdEstoque.setEnabled(false);
-
-        jLInfoValorCusto.setForeground(new java.awt.Color(204, 51, 0));
-        jLInfoValorCusto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jLInfoValorVenda.setForeground(new java.awt.Color(204, 51, 0));
-        jLInfoValorVenda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Atualização de Remédio");
-
-        jLInfoDescricao.setForeground(new java.awt.Color(204, 51, 0));
-        jLInfoDescricao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCBLaboratorio.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,28 +122,24 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(205, 205, 205)
-                        .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLInfoValorCusto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTFLab)
                             .addComponent(jTFDescricao)
-                            .addComponent(jTFUltCompra)
                             .addComponent(jFTFValorCusto)
                             .addComponent(jFTFValorVenda)
-                            .addComponent(jTFQntdEstoque)
-                            .addComponent(jLInfoValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLInfoDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLInfoValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(jLInfoDescricao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jCBLaboratorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8)))
                 .addGap(29, 29, 29))
             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,18 +152,14 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTFLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTFDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(jLInfoDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTFUltCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jFTFValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -200,29 +171,51 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                     .addComponent(jFTFValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLInfoValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTFQntdEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(24, 24, 24))
+                .addGap(27, 27, 27))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+    private void jFTFValorCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorCustoFocusLost
+        validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, newRemedio::setValorCusto);
+    }//GEN-LAST:event_jFTFValorCustoFocusLost
+
+    private void jFTFValorVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorVendaFocusLost
+        validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, newRemedio::setValorVenda);
+    }//GEN-LAST:event_jFTFValorVendaFocusLost
+
+    private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
+        newRemedio.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
         boolean descricaoIsValid = validarDescricao();
-        boolean valorCustoIsValid = validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, remedioUpdated::setValorCusto);
-        boolean valorVendaIsValid = validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, remedioUpdated::setValorVenda);
+        boolean valorCustoIsValid = validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, newRemedio::setValorCusto);
+        boolean valorVendaIsValid = validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, newRemedio::setValorVenda);
         if (descricaoIsValid && valorCustoIsValid && valorVendaIsValid) {
-            response = 1;
+            RemedioDAO.create(newRemedio);
+            response = true;
             dispose();
         }
-    }//GEN-LAST:event_jBSalvarActionPerformed
+    }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
+        response = false;
+        dispose();
+    }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jTFDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDescricaoFocusLost
+        validarDescricao();
+    }//GEN-LAST:event_jTFDescricaoFocusLost
+
+    private void loadLaboratorios() {
+        jCBLaboratorio.removeAllItems();
+        for (Laboratorio l : LaboratorioDAO.read()) {
+            jCBLaboratorio.addItem(l);
+        }
+    }
 
     private boolean validarCampoNumerico(JFormattedTextField campo, JLabel erro, Consumer<Double> setter) {
         Object valueCampo = campo.getValue();
@@ -245,7 +238,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
     private boolean validarDescricao() {
         String descricao = jTFDescricao.getText();
         if (!descricao.equals("")) {
-            remedioUpdated.setDescricao(descricao);
+            newRemedio.setDescricao(descricao);
             jLInfoDescricao.setText("");
             return true;
         } else {
@@ -254,22 +247,18 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         }
     }
 
-    private void jBCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCancelarActionPerformed
-        response = 0;
-        dispose();
-    }//GEN-LAST:event_jBCancelarActionPerformed
+    public void loadCampos() {
+        FormatadorValor.formatarCampo(jFTFValorCusto);
+        FormatadorValor.formatarCampo(jFTFValorVenda);
+        jFTFValorCusto.setFont(jTFDescricao.getFont());
+        jFTFValorVenda.setFont(jTFDescricao.getFont());
+        jFTFValorCusto.setValue(0D);
+        jFTFValorVenda.setValue(0D);
+    }
 
-    private void jTFDescricaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFDescricaoFocusLost
-        validarDescricao();
-    }//GEN-LAST:event_jTFDescricaoFocusLost
-
-    private void jFTFValorCustoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorCustoFocusLost
-        validarCampoNumerico(jFTFValorCusto, jLInfoValorCusto, remedioUpdated::setValorCusto);
-    }//GEN-LAST:event_jFTFValorCustoFocusLost
-
-    private void jFTFValorVendaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTFValorVendaFocusLost
-        validarCampoNumerico(jFTFValorVenda, jLInfoValorVenda, remedioUpdated::setValorVenda);
-    }//GEN-LAST:event_jFTFValorVendaFocusLost
+    public static boolean getResponse() {
+        return response;
+    }
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -285,55 +274,29 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFAtualizarRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFAtualizarRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFAtualizarRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFAtualizarRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFRemedio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    UIManager.setLookAndFeel(new FlatLightLaf());
-                } catch (UnsupportedLookAndFeelException e) {
-                    e.printStackTrace();
-                }
-                new JFAtualizarRemedio(new Remedio()).setVisible(true);
+                new JFRemedio().setVisible(true);
             }
         });
     }
 
-    public void loadCampos() {
-        FormatadorValor.formatarCampo(jFTFValorCusto);
-        FormatadorValor.formatarCampo(jFTFValorVenda);
-        jFTFValorCusto.setFont(jTFDescricao.getFont());
-        jFTFValorVenda.setFont(jTFDescricao.getFont());
-        jTFLab.setText(remedioUpdated.getLaboratorio().getNome());
-        jTFDescricao.setText(remedioUpdated.getDescricao());
-        if (remedioUpdated.getDataUltimaCompra() != null) {
-            jTFUltCompra.setText(remedioUpdated.getDataUltimaCompra().toString());
-        }
-        jFTFValorCusto.setValue(remedioUpdated.getValorCusto());
-        jFTFValorVenda.setValue(remedioUpdated.getValorVenda());
-        jTFQntdEstoque.setText(String.valueOf(remedioUpdated.getQuantidade()));
-    }
-
-    public Remedio getRemedioUpdated() {
-        return remedioUpdated;
-    }
-
-    public int getResponse() {
-        return response;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBCancelar;
-    private javax.swing.JButton jBSalvar;
+    private javax.swing.JComboBox<Laboratorio> jCBLaboratorio;
     private javax.swing.JFormattedTextField jFTFValorCusto;
     private javax.swing.JFormattedTextField jFTFValorVenda;
     private javax.swing.JLabel jLInfoDescricao;
@@ -341,14 +304,9 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
     private javax.swing.JLabel jLInfoValorVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField jTFDescricao;
-    private javax.swing.JTextField jTFLab;
-    private javax.swing.JTextField jTFQntdEstoque;
-    private javax.swing.JTextField jTFUltCompra;
     // End of variables declaration//GEN-END:variables
 }

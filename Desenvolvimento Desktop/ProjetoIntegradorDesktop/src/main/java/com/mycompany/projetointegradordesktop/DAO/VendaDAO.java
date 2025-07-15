@@ -80,6 +80,133 @@ public class VendaDAO {
         }
         return null;
     }
+    
+    public static List<Venda> read(Drogaria d) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Venda> vendas = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM venda WHERE id_drog = ?");
+            
+            stmt.setInt(1, d.getId());
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Venda venda = new Venda();
+
+                venda.setId(rs.getInt("id_venda"));
+                for (Drogaria drog : DrogariaDAO.read()) {
+                    if (drog.getId() == rs.getInt("id_drog")) {
+                        venda.setDrogaria(drog);
+                        break;
+                    }
+                }
+                venda.setDataVenda(LocalDate.parse(rs.getString("data_venda")));
+                if (rs.getDate("data_entrega") != null) {
+                    venda.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                }
+                venda.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
+                venda.setTotalNota(rs.getDouble("total_nota"));
+                venda.setPagamento(rs.getString("forma_pagamento"));
+
+                vendas.add(venda);
+            }
+            return vendas;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar vendas: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+    
+    public static List<Venda> read(String pagamento) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Venda> vendas = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM venda WHERE forma_pagamento = ?");
+            
+            stmt.setString(1, pagamento);
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Venda venda = new Venda();
+
+                venda.setId(rs.getInt("id_venda"));
+                for (Drogaria drog : DrogariaDAO.read()) {
+                    if (drog.getId() == rs.getInt("id_drog")) {
+                        venda.setDrogaria(drog);
+                        break;
+                    }
+                }
+                venda.setDataVenda(LocalDate.parse(rs.getString("data_venda")));
+                if (rs.getDate("data_entrega") != null) {
+                    venda.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                }
+                venda.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
+                venda.setTotalNota(rs.getDouble("total_nota"));
+                venda.setPagamento(rs.getString("forma_pagamento"));
+
+                vendas.add(venda);
+            }
+            return vendas;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar vendas: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+
+    public static List<Venda> read(Drogaria d, String pagamento) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Venda> vendas = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM venda WHERE id_drog = ? AND forma_pagamento = ?");
+
+            stmt.setInt(1, d.getId());
+            stmt.setString(2, pagamento);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Venda venda = new Venda();
+
+                venda.setId(rs.getInt("id_venda"));
+                for (Drogaria drog : DrogariaDAO.read()) {
+                    if (drog.getId() == rs.getInt("id_drog")) {
+                        venda.setDrogaria(drog);
+                        break;
+                    }
+                }
+                venda.setDataVenda(LocalDate.parse(rs.getString("data_venda")));
+                if (rs.getDate("data_entrega") != null) {
+                    venda.setDataEntrega(rs.getDate("data_entrega").toLocalDate());
+                }
+                venda.setNmr_nota_fiscal(rs.getString("nmr_nota_fiscal"));
+                venda.setTotalNota(rs.getDouble("total_nota"));
+                venda.setPagamento(rs.getString("forma_pagamento"));
+
+                vendas.add(venda);
+            }
+            return vendas;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar vendas: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
 
     public static void update(Venda v) {
         Connection con = Conexao.getConnection();

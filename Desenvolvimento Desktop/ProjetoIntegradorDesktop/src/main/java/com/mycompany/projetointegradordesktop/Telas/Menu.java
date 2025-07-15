@@ -1,8 +1,10 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Component;
 import java.beans.PropertyVetoException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -37,7 +39,6 @@ public class Menu extends javax.swing.JFrame {
         jBMenu.setBackground(new java.awt.Color(51, 90, 15));
         jBMenu.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBMenu.setForeground(new java.awt.Color(255, 255, 255));
-        jBMenu.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Menu.png")); // NOI18N
         jBMenu.setText("Menu");
         jBMenu.setToolTipText("");
         jBMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -57,7 +58,6 @@ public class Menu extends javax.swing.JFrame {
         jBRemedio.setBackground(new java.awt.Color(51, 90, 15));
         jBRemedio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBRemedio.setForeground(new java.awt.Color(255, 255, 255));
-        jBRemedio.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Remedio.png")); // NOI18N
         jBRemedio.setText("Remédios");
         jBRemedio.setToolTipText("");
         jBRemedio.setBorder(null);
@@ -77,7 +77,6 @@ public class Menu extends javax.swing.JFrame {
         jBDrogaria.setBackground(new java.awt.Color(51, 90, 15));
         jBDrogaria.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBDrogaria.setForeground(new java.awt.Color(255, 255, 255));
-        jBDrogaria.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Drogaria.png")); // NOI18N
         jBDrogaria.setText("Drogarias");
         jBDrogaria.setToolTipText("");
         jBDrogaria.setBorder(null);
@@ -97,7 +96,6 @@ public class Menu extends javax.swing.JFrame {
         jBVenda.setBackground(new java.awt.Color(51, 90, 15));
         jBVenda.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBVenda.setForeground(new java.awt.Color(255, 255, 255));
-        jBVenda.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Venda.png")); // NOI18N
         jBVenda.setText("Vendas");
         jBVenda.setToolTipText("");
         jBVenda.setBorder(null);
@@ -117,7 +115,6 @@ public class Menu extends javax.swing.JFrame {
         jBLaboratorio.setBackground(new java.awt.Color(51, 90, 15));
         jBLaboratorio.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jBLaboratorio.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Laboratorio.png")); // NOI18N
         jBLaboratorio.setText("Laboratórios");
         jBLaboratorio.setToolTipText("");
         jBLaboratorio.setBorder(null);
@@ -137,7 +134,6 @@ public class Menu extends javax.swing.JFrame {
         jBCompra.setBackground(new java.awt.Color(51, 90, 15));
         jBCompra.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jBCompra.setForeground(new java.awt.Color(255, 255, 255));
-        jBCompra.setIcon(new javax.swing.ImageIcon("C:\\Users\\kaue.vgatti\\Desktop\\Projeto Integrador\\Desenvolvimento Desktop\\ProjetoIntegradorDesktop\\src\\main\\java\\com\\mycompany\\projetointegradordesktop\\Image\\Compra.png")); // NOI18N
         jBCompra.setText("Compras");
         jBCompra.setToolTipText("");
         jBCompra.setBorder(null);
@@ -266,13 +262,20 @@ public class Menu extends javax.swing.JFrame {
     
     private void loadButtons() {
         jBMenu.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens/Menu.png")));
         jBRemedio.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBRemedio.setIcon(new ImageIcon(getClass().getResource("/Imagens/Remedio.png")));
         jBCompra.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBCompra.setIcon(new ImageIcon(getClass().getResource("/Imagens/Compra.png")));
         jBVenda.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBVenda.setIcon(new ImageIcon(getClass().getResource("/Imagens/Venda.png")));
         jBLaboratorio.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBLaboratorio.setIcon(new ImageIcon(getClass().getResource("/Imagens/Laboratorio.png")));
         jBDrogaria.setBorder(new EmptyBorder(10, 90, 10, 10));
+        jBDrogaria.setIcon(new ImageIcon(getClass().getResource("/Imagens/Drogaria.png")));
+        
     }
-
+    
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {

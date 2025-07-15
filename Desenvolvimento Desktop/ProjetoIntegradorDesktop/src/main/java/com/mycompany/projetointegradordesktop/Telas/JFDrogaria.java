@@ -1,4 +1,4 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import java.awt.Component;
@@ -124,9 +124,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setText("Complemento");
 
-        jBCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jBCancelar.setForeground(new java.awt.Color(0, 0, 0));
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -1,8 +1,8 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
-import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
-import com.mycompany.projetointegradordesktop.Model.LaboratorioTableModel;
-import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
+import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
+import com.mycompany.projetointegradordesktop.Model.DrogariaTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,11 +10,11 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class IFLaboratorio extends javax.swing.JInternalFrame {
+public class IFDrogaria extends javax.swing.JInternalFrame {
 
-    LaboratorioTableModel model = new LaboratorioTableModel();
+    DrogariaTableModel model = new DrogariaTableModel();
 
-    public IFLaboratorio() {
+    public IFDrogaria() {
         initComponents();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
@@ -25,34 +25,23 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jBAtualizarLaboratorio = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTFPesquisa = new javax.swing.JTextField();
         jCBTipoPesquisa = new javax.swing.JComboBox<>();
         jBPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTLaboratorio = new javax.swing.JTable();
-        jBCadastrarLaboratorio = new javax.swing.JButton();
-        jBExcluirLaboratorio = new javax.swing.JButton();
+        jTDrogaria = new javax.swing.JTable();
+        jBCadastrarDrogaria = new javax.swing.JButton();
+        jBExcluirDrogaria = new javax.swing.JButton();
+        jBAtualizarDrogaria = new javax.swing.JButton();
 
         setBorder(null);
         setClosable(true);
         setMaximizable(true);
 
-        jBAtualizarLaboratorio.setBackground(new java.awt.Color(204, 204, 204));
-        jBAtualizarLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBAtualizarLaboratorio.setForeground(new java.awt.Color(0, 0, 0));
-        jBAtualizarLaboratorio.setText("Atualizar Laboratório");
-        jBAtualizarLaboratorio.setBorder(null);
-        jBAtualizarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBAtualizarLaboratorioActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Laboratórios");
+        jLabel1.setText("Drogarias");
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -94,7 +83,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jTLaboratorio.setModel(new javax.swing.table.DefaultTableModel(
+        jTDrogaria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -105,32 +94,43 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTLaboratorio.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTDrogaria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTLaboratorioMouseClicked(evt);
+                jTDrogariaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTLaboratorio);
+        jScrollPane1.setViewportView(jTDrogaria);
 
-        jBCadastrarLaboratorio.setBackground(new java.awt.Color(51, 90, 15));
-        jBCadastrarLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBCadastrarLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jBCadastrarLaboratorio.setText("Cadastrar Laboratório");
-        jBCadastrarLaboratorio.setBorder(null);
-        jBCadastrarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+        jBCadastrarDrogaria.setBackground(new java.awt.Color(51, 90, 15));
+        jBCadastrarDrogaria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBCadastrarDrogaria.setForeground(new java.awt.Color(255, 255, 255));
+        jBCadastrarDrogaria.setText("Cadastrar Drogaria");
+        jBCadastrarDrogaria.setBorder(null);
+        jBCadastrarDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBCadastrarLaboratorioActionPerformed(evt);
+                jBCadastrarDrogariaActionPerformed(evt);
             }
         });
 
-        jBExcluirLaboratorio.setBackground(new java.awt.Color(153, 51, 0));
-        jBExcluirLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBExcluirLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jBExcluirLaboratorio.setText("Excluir Laboratório");
-        jBExcluirLaboratorio.setBorder(null);
-        jBExcluirLaboratorio.addActionListener(new java.awt.event.ActionListener() {
+        jBExcluirDrogaria.setBackground(new java.awt.Color(153, 51, 0));
+        jBExcluirDrogaria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBExcluirDrogaria.setForeground(new java.awt.Color(255, 255, 255));
+        jBExcluirDrogaria.setText("Excluir Drogaria");
+        jBExcluirDrogaria.setBorder(null);
+        jBExcluirDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBExcluirLaboratorioActionPerformed(evt);
+                jBExcluirDrogariaActionPerformed(evt);
+            }
+        });
+
+        jBAtualizarDrogaria.setBackground(new java.awt.Color(204, 204, 204));
+        jBAtualizarDrogaria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBAtualizarDrogaria.setForeground(new java.awt.Color(0, 0, 0));
+        jBAtualizarDrogaria.setText("Atualizar Drogaria");
+        jBAtualizarDrogaria.setBorder(null);
+        jBAtualizarDrogaria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAtualizarDrogariaActionPerformed(evt);
             }
         });
 
@@ -144,11 +144,11 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBAtualizarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBAtualizarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBExcluirLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBExcluirDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
@@ -165,9 +165,9 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBExcluirLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBAtualizarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBExcluirDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBAtualizarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
@@ -177,72 +177,71 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBAtualizarLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarLaboratorioActionPerformed
-        if (jTLaboratorio.getSelectedRow() != -1) {
-            Laboratorio lab = model.getLaboratorios().get(jTLaboratorio.getSelectedRow());
-            openLaboratorioWindow(lab);
-        }
-    }//GEN-LAST:event_jBAtualizarLaboratorioActionPerformed
-
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-
+        
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
-    private void jTLaboratorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTLaboratorioMouseClicked
-        if (jTLaboratorio.getSelectedRow() != -1) {
-            Laboratorio lab = model.getLaboratorios().get(jTLaboratorio.getSelectedRow());
+    private void jTDrogariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTDrogariaMouseClicked
+        if (jTDrogaria.getSelectedRow() != -1) {
+            Drogaria drogaria = model.getDrogarias().get(jTDrogaria.getSelectedRow());
             if (evt.getClickCount() == 2) {
-                openLaboratorioWindow(lab);
+                openDrogariaWindow(drogaria);
             }
         }
-    }//GEN-LAST:event_jTLaboratorioMouseClicked
+    }//GEN-LAST:event_jTDrogariaMouseClicked
 
-    private void jBCadastrarLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarLaboratorioActionPerformed
-        openLaboratorioWindow(null);
-    }//GEN-LAST:event_jBCadastrarLaboratorioActionPerformed
+    private void jBCadastrarDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarDrogariaActionPerformed
+        openDrogariaWindow(null);
+    }//GEN-LAST:event_jBCadastrarDrogariaActionPerformed
 
-    private void jBExcluirLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirLaboratorioActionPerformed
-        if (jTLaboratorio.getSelectedRow() != -1) {
-            LaboratorioDAO.delete(model.getLaboratorios().get(jTLaboratorio.getSelectedRow()));
-            model.deleteLinha(jTLaboratorio.getSelectedRow());
+    private void jBExcluirDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirDrogariaActionPerformed
+        if (jTDrogaria.getSelectedRow() != -1) {
+            DrogariaDAO.delete(model.getDrogarias().get(jTDrogaria.getSelectedRow()));
+            model.deleteLinha(jTDrogaria.getSelectedRow());
         }
-    }//GEN-LAST:event_jBExcluirLaboratorioActionPerformed
+    }//GEN-LAST:event_jBExcluirDrogariaActionPerformed
+
+    private void jBAtualizarDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarDrogariaActionPerformed
+        if (jTDrogaria.getSelectedRow() != -1) {
+            Drogaria drogaria = model.getDrogarias().get(jTDrogaria.getSelectedRow());
+            openDrogariaWindow(drogaria);
+        }
+    }//GEN-LAST:event_jBAtualizarDrogariaActionPerformed
 
     private void loadTable() {
-        jTLaboratorio.setModel(model);
+        jTDrogaria.setModel(model);
         model.loadTable();
-        jTLaboratorio.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        jTLaboratorio.setRowHeight(24);
+        jTDrogaria.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        jTDrogaria.setRowHeight(24);
         DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
         centralizador.setHorizontalAlignment(SwingConstants.CENTER);
-        jTLaboratorio.getColumnModel().getColumn(1).setCellRenderer(centralizador);
-        jTLaboratorio.getColumnModel().getColumn(2).setCellRenderer(centralizador);
-        jTLaboratorio.getColumnModel().getColumn(5).setCellRenderer(centralizador);
-        jTLaboratorio.getColumnModel().getColumn(8).setCellRenderer(centralizador);
+        jTDrogaria.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTDrogaria.getColumnModel().getColumn(4).setCellRenderer(centralizador);
+        jTDrogaria.getColumnModel().getColumn(7).setCellRenderer(centralizador);
     }
-
-    private void openLaboratorioWindow(Laboratorio lab) {
-        JFLaboratorio JFLaboratorio;
-        if (lab != null) {
-            JFLaboratorio = new JFLaboratorio(lab);
+    
+    private void openDrogariaWindow(Drogaria drogaria) {
+        JFDrogaria JFDrogaria;
+        if (drogaria != null) {
+            JFDrogaria = new JFDrogaria(drogaria);
         } else {
-            JFLaboratorio = new JFLaboratorio();
+            JFDrogaria = new JFDrogaria();
         }
-        JFLaboratorio.addWindowListener(new WindowAdapter() {
+        JFDrogaria.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                if (JFLaboratorio.getResponse() == 1) {
-                    Laboratorio labUpdated = JFLaboratorio.getLaboratorioUpdated();
-                    model.setValueAt(labUpdated.getNumero(), jTLaboratorio.getSelectedRow(), 3);
-                    model.setValueAt(labUpdated.getRua(), jTLaboratorio.getSelectedRow(), 4);
-                    model.setValueAt(labUpdated.getCep(), jTLaboratorio.getSelectedRow(), 5);
-                    model.setValueAt(labUpdated.getBairro(), jTLaboratorio.getSelectedRow(), 6);
-                    model.setValueAt(labUpdated.getCidade(), jTLaboratorio.getSelectedRow(), 7);
-                    model.setValueAt(labUpdated.getEstado(), jTLaboratorio.getSelectedRow(), 8);
-                    model.setValueAt(labUpdated.getComplemento(), jTLaboratorio.getSelectedRow(), 9);
-                    LaboratorioDAO.update(labUpdated);
-                } else if (JFLaboratorio.getResponse() == 2) {
-                    LaboratorioDAO.create(JFLaboratorio.getNewLaboratorio());
+                if (JFDrogaria.getResponse() == 1) {
+                    Drogaria drogariaUpdated = JFDrogaria.getDrogariaUpdated();
+                    model.setValueAt(drogariaUpdated.getNumero(), jTDrogaria.getSelectedRow(), 2);
+                    model.setValueAt(drogariaUpdated.getRua(), jTDrogaria.getSelectedRow(), 3);
+                    model.setValueAt(drogariaUpdated.getCep(), jTDrogaria.getSelectedRow(), 4);
+                    model.setValueAt(drogariaUpdated.getBairro(), jTDrogaria.getSelectedRow(), 5);
+                    model.setValueAt(drogariaUpdated.getCidade(), jTDrogaria.getSelectedRow(), 6);
+                    model.setValueAt(drogariaUpdated.getEstado(), jTDrogaria.getSelectedRow(), 7);
+                    model.setValueAt(drogariaUpdated.getComplemento(), jTDrogaria.getSelectedRow(), 8);
+                    DrogariaDAO.update(drogariaUpdated);
+                } else if (JFDrogaria.getResponse() == 2) {
+                    DrogariaDAO.create(JFDrogaria.getNewDrogaria());
                     model.loadTable();
                 }
             }
@@ -250,15 +249,15 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBAtualizarLaboratorio;
-    private javax.swing.JButton jBCadastrarLaboratorio;
-    private javax.swing.JButton jBExcluirLaboratorio;
+    private javax.swing.JButton jBAtualizarDrogaria;
+    private javax.swing.JButton jBCadastrarDrogaria;
+    private javax.swing.JButton jBExcluirDrogaria;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTDrogaria;
     private javax.swing.JTextField jTFPesquisa;
-    private javax.swing.JTable jTLaboratorio;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,4 @@
-package com.mycompany.projetointegradordesktop.JFrame;
+package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import java.awt.Component;
@@ -80,9 +80,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
             }
         });
 
-        jBCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jBCancelar.setForeground(new java.awt.Color(0, 0, 0));
         jBCancelar.setText("Cancelar");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
