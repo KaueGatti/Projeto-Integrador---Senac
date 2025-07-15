@@ -81,9 +81,9 @@ public class RemedioDAO {
 
         try {
             stmt = con.prepareStatement("SELECT * FROM remedio WHERE id_lab = ?");
-            
+
             stmt.setInt(1, l.getId());
-            
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -115,7 +115,7 @@ public class RemedioDAO {
         }
         return null;
     }
-    
+
     public static List<Remedio> read(String descricao) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -124,9 +124,104 @@ public class RemedioDAO {
 
         try {
             stmt = con.prepareStatement("SELECT * FROM remedio WHERE descricao LIKE ?");
-            
+
             stmt.setString(1, "%" + descricao + "%");
-            
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Remedio remedio = new Remedio();
+
+                remedio.setId(rs.getInt("id_remedio"));
+                for (Laboratorio lab : LaboratorioDAO.read()) {
+                    if (lab.getId() == rs.getInt("id_lab")) {
+                        remedio.setLaboratorio(lab);
+                        break;
+                    }
+                }
+                remedio.setDescricao(rs.getString("descricao"));
+                if (rs.getDate("data_ultima_compra") != null) {
+                    remedio.setDataUltimaCompra(rs.getDate("data_ultima_compra").toLocalDate());
+                }
+                remedio.setValorCusto(rs.getDouble("valor_custo"));
+                remedio.setValorVenda(rs.getDouble("valor_venda"));
+                remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+
+                remedios.add(remedio);
+            }
+
+            return remedios;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios pela descrição: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+        return null;
+    }
+
+    public static List<Remedio> read(String descricao, Laboratorio l) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Remedio> remedios = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM remedio WHERE descricao LIKE ? AND id_lab = ?");
+
+            stmt.setString(1, "%" + descricao + "%");
+            stmt.setInt(2, l.getId());
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Remedio remedio = new Remedio();
+
+                remedio.setId(rs.getInt("id_remedio"));
+                for (Laboratorio lab : LaboratorioDAO.read()) {
+                    if (lab.getId() == rs.getInt("id_lab")) {
+                        remedio.setLaboratorio(lab);
+                        break;
+                    }
+                }
+                remedio.setDescricao(rs.getString("descricao"));
+                if (rs.getDate("data_ultima_compra") != null) {
+                    remedio.setDataUltimaCompra(rs.getDate("data_ultima_compra").toLocalDate());
+                }
+                remedio.setValorCusto(rs.getDouble("valor_custo"));
+                remedio.setValorVenda(rs.getDouble("valor_venda"));
+                remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+
+                remedios.add(remedio);
+            }
+
+            return remedios;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Falha ao buscar remédios pela descrição: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+        return null;
+    }
+
+    public static List<Remedio> read(String descricao, Laboratorio l,
+            double valorCustoMin, double valorCustoMax,
+            double valorVendaMin, double valorVendaMax) {
+
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Remedio> remedios = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("CALL filterRemedio(?, ?, ?, ?, ?, ?)");
+
+            stmt.setString(1, "%" + descricao + "%");
+            stmt.setInt(2, l.getId());
+            stmt.setDouble(3, valorCustoMin);
+            stmt.setDouble(4, valorCustoMax);
+            stmt.setDouble(5, valorVendaMin);
+            stmt.setDouble(6, valorVendaMax);
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -159,18 +254,24 @@ public class RemedioDAO {
         return null;
     }
     
-    public static List<Remedio> read(String descricao, Laboratorio l) {
+    public static List<Remedio> read(String descricao,
+            double valorCustoMin, double valorCustoMax,
+            double valorVendaMin, double valorVendaMax) {
+
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Remedio> remedios = new ArrayList();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM remedio WHERE descricao LIKE ? AND id_lab = ?");
-            
+            stmt = con.prepareStatement("CALL filterRemedioValor(?, ?, ?, ?, ?)");
+
             stmt.setString(1, "%" + descricao + "%");
-            stmt.setInt(2, l.getId());
-            
+            stmt.setDouble(2, valorCustoMin);
+            stmt.setDouble(3, valorCustoMax);
+            stmt.setDouble(4, valorVendaMin);
+            stmt.setDouble(5, valorVendaMax);
+
             rs = stmt.executeQuery();
 
             while (rs.next()) {

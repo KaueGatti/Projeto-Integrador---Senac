@@ -6,6 +6,7 @@ import com.mycompany.projetointegradordesktop.Model.RemedioTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -23,7 +24,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         setVisible(true);
         loadTable();
         loadLaboratorios();
-        loadSliders();
+        loadCampos();
     }
 
     @SuppressWarnings("unchecked")
@@ -43,9 +44,20 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jCBLaboratorio = new javax.swing.JComboBox<>();
         jBFiltrar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jSValorCustoMax = new javax.swing.JSlider();
+        jCBoxValorCusto = new javax.swing.JCheckBox();
+        jCBoxValorVenda = new javax.swing.JCheckBox();
+        jPValorCusto = new javax.swing.JPanel();
+        jLValorCustoMax5 = new javax.swing.JLabel();
         jLValorCustoMax = new javax.swing.JLabel();
+        jFTFValorCustoMin = new javax.swing.JFormattedTextField();
         jFTFValorCustoMax = new javax.swing.JFormattedTextField();
+        jLValorCustoMax1 = new javax.swing.JLabel();
+        jPValorVenda = new javax.swing.JPanel();
+        jLValorCustoMax2 = new javax.swing.JLabel();
+        jLValorCustoMax4 = new javax.swing.JLabel();
+        jFTFValorVendaMin = new javax.swing.JFormattedTextField();
+        jLValorCustoMax3 = new javax.swing.JLabel();
+        jFTFValorVendaMax = new javax.swing.JFormattedTextField();
 
         setBorder(null);
 
@@ -135,14 +147,105 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Descrição");
 
-        jSValorCustoMax.setMajorTickSpacing(2500);
-        jSValorCustoMax.setMaximum(100000);
-        jSValorCustoMax.setMinorTickSpacing(500);
+        jCBoxValorCusto.setText("Ativar");
+        jCBoxValorCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBoxValorCustoActionPerformed(evt);
+            }
+        });
+
+        jCBoxValorVenda.setText("Ativar");
+        jCBoxValorVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBoxValorVendaActionPerformed(evt);
+            }
+        });
+
+        jLValorCustoMax5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLValorCustoMax5.setText("Min.");
 
         jLValorCustoMax.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLValorCustoMax.setText("Valor de Custo Máx");
+        jLValorCustoMax.setText("Valor de Custo");
+
+        jFTFValorCustoMin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jFTFValorCustoMax.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLValorCustoMax1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLValorCustoMax1.setText("Máx.");
+
+        javax.swing.GroupLayout jPValorCustoLayout = new javax.swing.GroupLayout(jPValorCusto);
+        jPValorCusto.setLayout(jPValorCustoLayout);
+        jPValorCustoLayout.setHorizontalGroup(
+            jPValorCustoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPValorCustoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLValorCustoMax)
+                .addGap(25, 25, 25)
+                .addComponent(jLValorCustoMax5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFTFValorCustoMin, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLValorCustoMax1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFTFValorCustoMax, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
+        );
+        jPValorCustoLayout.setVerticalGroup(
+            jPValorCustoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPValorCustoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPValorCustoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLValorCustoMax)
+                    .addComponent(jFTFValorCustoMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFTFValorCustoMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLValorCustoMax1)
+                    .addComponent(jLValorCustoMax5))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLValorCustoMax2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLValorCustoMax2.setText("Valor de Venda");
+
+        jLValorCustoMax4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLValorCustoMax4.setText("Min.");
+
+        jFTFValorVendaMin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLValorCustoMax3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLValorCustoMax3.setText("Máx.");
+
+        jFTFValorVendaMax.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        javax.swing.GroupLayout jPValorVendaLayout = new javax.swing.GroupLayout(jPValorVenda);
+        jPValorVenda.setLayout(jPValorVendaLayout);
+        jPValorVendaLayout.setHorizontalGroup(
+            jPValorVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPValorVendaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLValorCustoMax2)
+                .addGap(18, 18, 18)
+                .addComponent(jLValorCustoMax4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFTFValorVendaMin, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLValorCustoMax3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFTFValorVendaMax, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPValorVendaLayout.setVerticalGroup(
+            jPValorVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPValorVendaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPValorVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLValorCustoMax2)
+                    .addComponent(jLValorCustoMax4)
+                    .addComponent(jFTFValorVendaMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLValorCustoMax3)
+                    .addComponent(jFTFValorVendaMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -159,19 +262,20 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                         .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLValorCustoMax)
+                        .addComponent(jPValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFTFValorCustoMax, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBoxValorCusto))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSValorCustoMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jCBoxValorVenda))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,14 +289,23 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLValorCustoMax)
-                    .addComponent(jFTFValorCustoMax)
-                    .addComponent(jSValorCustoMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jPValorCusto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBoxValorCusto)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jCBoxValorVenda))
+                    .addComponent(jPValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,16 +390,64 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBAtualizarRemedioActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-       model.setRemedios(RemedioDAO.read(jTFPesquisa.getText()));
+        model.setRemedios(RemedioDAO.read(jTFPesquisa.getText()));
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
-        if (jCBLaboratorio.getSelectedIndex() == 0) {
-            model.setRemedios(RemedioDAO.read(jTFPesquisa.getText()));
+        boolean filterLab = jCBLaboratorio.getSelectedIndex() != 0;
+        boolean filterValorCusto = jCBoxValorCusto.isSelected();
+        boolean filterValorVenda = jCBoxValorVenda.isSelected();
+
+        String descricao = jTFPesquisa.getText();
+        Laboratorio l = (Laboratorio) jCBLaboratorio.getSelectedItem();
+        double valorCustoMin = 0;
+        double valorCustoMax = 1000;
+        double valorVendaMin = 0;
+        double valorVendaMax = 1000;
+        if (filterValorCusto) {
+            valorCustoMin = ((Number) jFTFValorCustoMin.getValue()).doubleValue();
+            valorCustoMax = ((Number) jFTFValorCustoMax.getValue()).doubleValue();
+        }
+        if (filterValorVenda) {
+            valorVendaMin = ((Number) jFTFValorVendaMin.getValue()).doubleValue();
+            valorVendaMax = ((Number) jFTFValorVendaMax.getValue()).doubleValue();
+        }
+
+        if (filterLab && (filterValorCusto || filterValorVenda)) {
+            model.setRemedios(RemedioDAO.read(descricao, l, valorCustoMin, valorCustoMax, valorVendaMin, valorVendaMax));
+        } else if (filterLab) {
+            model.setRemedios(RemedioDAO.read(descricao, l));
+        } else if ((filterValorCusto || filterValorVenda)) {
+            model.setRemedios(RemedioDAO.read(descricao, valorCustoMin, valorCustoMax, valorVendaMin, valorVendaMax));
         } else {
-            model.setRemedios(RemedioDAO.read(jTFPesquisa.getText(), (Laboratorio) jCBLaboratorio.getSelectedItem()));
+            model.setRemedios(RemedioDAO.read(descricao));
         }
     }//GEN-LAST:event_jBFiltrarActionPerformed
+
+    private void jCBoxValorCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBoxValorCustoActionPerformed
+        if (jCBoxValorCusto.isSelected()) {
+            for (Component comp : jPValorCusto.getComponents()) {
+                comp.setEnabled(true);
+            }
+        } else {
+            for (Component comp : jPValorCusto.getComponents()) {
+                comp.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jCBoxValorCustoActionPerformed
+
+    private void jCBoxValorVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBoxValorVendaActionPerformed
+        if (jCBoxValorVenda.isSelected()) {
+
+            for (Component comp : jPValorVenda.getComponents()) {
+                comp.setEnabled(true);
+            }
+        } else {
+            for (Component comp : jPValorVenda.getComponents()) {
+                comp.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jCBoxValorVendaActionPerformed
 
     private void loadTable() {
         jTRemedio.setModel(model);
@@ -317,7 +478,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     public void loadLaboratorios() {
         jCBLaboratorio.removeAllItems();
         Laboratorio l = new Laboratorio();
@@ -327,14 +488,22 @@ public class IFRemedio extends javax.swing.JInternalFrame {
             jCBLaboratorio.addItem(lab);
         }
     }
-    
-    private void loadSliders() {
+
+    private void loadCampos() {
+        for (Component comp : jPValorCusto.getComponents()) {
+            comp.setEnabled(false);
+        }
+        for (Component comp : jPValorVenda.getComponents()) {
+            comp.setEnabled(false);
+        }
+        FormatadorValor.formatarCampo(jFTFValorCustoMin);
+        jFTFValorCustoMin.setValue(0);
         FormatadorValor.formatarCampo(jFTFValorCustoMax);
-        jFTFValorCustoMax.setValue(500);
-        jSValorCustoMax.addChangeListener(e -> {
-            double valorAtualizado = jSValorCustoMax.getValue() / 100;
-            jFTFValorCustoMax.setValue(valorAtualizado);
-        });
+        jFTFValorCustoMax.setValue(100);
+        FormatadorValor.formatarCampo(jFTFValorVendaMin);
+        jFTFValorVendaMin.setValue(0);
+        FormatadorValor.formatarCampo(jFTFValorVendaMax);
+        jFTFValorVendaMax.setValue(100);
     }
 
 
@@ -345,13 +514,24 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<Laboratorio> jCBLaboratorio;
+    private javax.swing.JCheckBox jCBoxValorCusto;
+    private javax.swing.JCheckBox jCBoxValorVenda;
     private javax.swing.JFormattedTextField jFTFValorCustoMax;
+    private javax.swing.JFormattedTextField jFTFValorCustoMin;
+    private javax.swing.JFormattedTextField jFTFValorVendaMax;
+    private javax.swing.JFormattedTextField jFTFValorVendaMin;
     private javax.swing.JLabel jLValorCustoMax;
+    private javax.swing.JLabel jLValorCustoMax1;
+    private javax.swing.JLabel jLValorCustoMax2;
+    private javax.swing.JLabel jLValorCustoMax3;
+    private javax.swing.JLabel jLValorCustoMax4;
+    private javax.swing.JLabel jLValorCustoMax5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPValorCusto;
+    private javax.swing.JPanel jPValorVenda;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSlider jSValorCustoMax;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFPesquisa;
     private javax.swing.JTable jTRemedio;
