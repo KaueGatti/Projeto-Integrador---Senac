@@ -64,6 +64,8 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         jTFQuantidade = new javax.swing.JTextField();
         jFTFData = new javax.swing.JFormattedTextField();
         jLInfoData = new javax.swing.JLabel();
+        jTFNNF = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
 
         setBorder(null);
 
@@ -183,6 +185,12 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
         jLInfoData.setForeground(new java.awt.Color(204, 0, 0));
 
+        jTFNNF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFNNF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel25.setText("N° NF");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -231,7 +239,11 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addGap(18, 18, 18)
-                        .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel25)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFNNF, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(140, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -252,7 +264,10 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jLabel23))
-                            .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jCBDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFNNF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel25)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel24)
                         .addGap(6, 6, 6)
@@ -329,7 +344,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
             venda.setDataVenda(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             venda.setDrogaria((Drogaria) jCBDrogaria.getSelectedItem());
             venda.setTotalNota(total);
-            venda.setNmr_nota_fiscal(String.valueOf(new Random().nextInt(99999)));
+            venda.setNmr_nota_fiscal(jTFNNF.getText());
             venda.setPagamento(jCBPagamento.getSelectedItem().toString());
 
             int idNovaVenda = VendaDAO.create(venda);
@@ -431,7 +446,9 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTFNNF;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnt;
     private javax.swing.JTable jTItens;

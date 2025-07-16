@@ -64,6 +64,8 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         jCBPagamento = new javax.swing.JComboBox<>();
         jLInfoCompra = new javax.swing.JLabel();
         jLInfoData = new javax.swing.JLabel();
+        jTFNNF = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setBorder(null);
 
@@ -188,6 +190,12 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
 
         jLInfoData.setForeground(new java.awt.Color(204, 0, 0));
 
+        jTFNNF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTFNNF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel5.setText("N° NF");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,7 +225,11 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTFNNF, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCBRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,7 +269,10 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel2))
-                    .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCBLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTFNNF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(6, 6, 6)
@@ -342,7 +357,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             compra.setDataCompra(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             compra.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
             compra.setTotalNota(total);
-            compra.setNmr_nota_fiscal(String.valueOf(new Random().nextInt(99999)));
+            compra.setNmr_nota_fiscal(jTFNNF.getText());
             compra.setPagamento(jCBPagamento.getSelectedItem().toString());
 
             int idNovaCompra = CompraDAO.create(compra);
@@ -424,10 +439,12 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTFNNF;
     private javax.swing.JTextField jTFQuantidade;
     private javax.swing.JTextField jTFValorUnt;
     private javax.swing.JTable jTItens;

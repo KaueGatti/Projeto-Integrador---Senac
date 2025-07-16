@@ -238,7 +238,38 @@ BEGIN
 END $$
 DELIMITER ;
 
-#drop procedure filterCompraDinamico;
+DELIMITER $$
+CREATE PROCEDURE filterVendaDinamico
+(nNF VARCHAR(30), id_drog INT, pagamento VARCHAR(20), valor_total_min double, valor_total_max double, orderBy VARCHAR(20), isDesc BOOLEAN)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM venda WHERE total_nota BETWEEN ', valor_total_min, ' AND ', valor_total_max);
+    
+    IF nNF IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND nmr_nota_fiscal LIKE \'', nNF, '\'');
+	END IF;
+    
+    IF id_drog IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND venda.id_drog = ', id_drog);
+	END IF;
+    
+    IF pagamento IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND venda.forma_pagamento = \'', pagamento, '\'');
+	END IF;
+    
+    IF orderBy IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
+		IF isDesc THEN
+			SET @sql = CONCAT(@sql, ' DESC');
+		END IF;
+	END IF;
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+#drop procedure filterVendaDinamico;
 
 DELIMITER $$
 CREATE TRIGGER compra_remedio

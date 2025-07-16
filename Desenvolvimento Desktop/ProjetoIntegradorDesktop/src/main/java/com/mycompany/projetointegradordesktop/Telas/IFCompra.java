@@ -44,7 +44,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jBPesquisar = new javax.swing.JButton();
         jBFiltrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jCBoxValorTotal = new javax.swing.JCheckBox();
         jPValorTotal = new javax.swing.JPanel();
         jLValorCustoMax5 = new javax.swing.JLabel();
         jLValorCustoMax = new javax.swing.JLabel();
@@ -58,6 +57,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jCBLaboratorio = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jCBPagamento = new javax.swing.JComboBox<>();
+        jCBoxValorTotal = new javax.swing.JCheckBox();
 
         setBorder(null);
 
@@ -127,14 +127,6 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("N° NF");
 
-        jCBoxValorTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBoxValorTotal.setText("Ativar");
-        jCBoxValorTotal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBoxValorTotalActionPerformed(evt);
-            }
-        });
-
         jLValorCustoMax5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLValorCustoMax5.setText("Min.");
 
@@ -158,12 +150,12 @@ public class IFCompra extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLValorCustoMax5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFTFValorTotalMin, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jFTFValorTotalMin, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLValorCustoMax1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFTFValorTotalMax, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addComponent(jFTFValorTotalMax, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPValorTotalLayout.setVerticalGroup(
             jPValorTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +187,15 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jLabel3.setText("Pagamento");
 
         jCBPagamento.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Pix", "Débito", "Crédito", "Cheque", "Boleto", "" }));
+        jCBPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Pix", "Débito", "Crédito", "Cheque", "Boleto" }));
+
+        jCBoxValorTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBoxValorTotal.setText("Ativar");
+        jCBoxValorTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBoxValorTotalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -204,22 +204,15 @@ public class IFCompra extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(12, 12, 12)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jPValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCBoxValorTotal))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCBoxDesc))
-                                    .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBoxDesc))
+                            .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,8 +229,12 @@ public class IFCompra extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jTFPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(377, 377, 377))
+                                .addComponent(jBPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBoxValorTotal)))
+                .addContainerGap(395, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,7 +255,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(26, 26, 26)
                         .addComponent(jCBoxValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

@@ -23,6 +23,10 @@ public class VendaTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    public String[] getColunas() {
+        return colunas;
+    }
+
     @Override
     public int getColumnCount() {
         return colunas.length;
