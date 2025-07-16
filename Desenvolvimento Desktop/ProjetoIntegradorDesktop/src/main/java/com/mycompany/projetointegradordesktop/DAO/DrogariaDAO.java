@@ -2,10 +2,12 @@ package com.mycompany.projetointegradordesktop.DAO;
 
 import com.mycompany.projetointegradordesktop.DB.Conexao;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -69,6 +71,59 @@ public class DrogariaDAO {
             JOptionPane.showMessageDialog(null, "Erro ao buscar drogarias: " + e);
         } finally {
             Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+    
+    public static List<Drogaria> readDinamico(String pesquisa, int tipo, String estado, String orderBy, boolean isDesc) {
+        Connection con = Conexao.getConnection();
+        CallableStatement cs = null;
+        ResultSet rs = null;
+        List<Drogaria> drogarias = new ArrayList();
+
+        try {
+            cs = con.prepareCall("CALL filterDrogariaDinamico(?, ?, ?, ?, ?)");
+            
+            cs.setString(1, "%" + pesquisa + "%");
+            cs.setInt(2, tipo);
+
+            if (estado != null) {
+                cs.setString(3, estado);
+            } else {
+                cs.setNull(3, Types.VARCHAR);
+            }
+
+            if (orderBy != null) {
+                cs.setString(4, orderBy);
+            } else {
+                cs.setNull(4, Types.VARCHAR);
+            }
+            
+            cs.setBoolean(5, isDesc);
+            
+            rs = cs.executeQuery();
+
+            while (rs.next()) {
+                Drogaria drogaria = new Drogaria();
+
+                drogaria.setId(rs.getInt("id_drog"));
+                drogaria.setNome(rs.getString("nome"));
+                drogaria.setCNPJ(rs.getString("cnpj"));
+                drogaria.setNumero(rs.getString("numero"));
+                drogaria.setRua(rs.getString("rua"));
+                drogaria.setCep(rs.getString("cep"));
+                drogaria.setBairro(rs.getString("bairro"));
+                drogaria.setCidade(rs.getString("cidade"));
+                drogaria.setEstado(rs.getString("uf"));
+                drogaria.setComplemento(rs.getString("complemento"));
+
+                drogarias.add(drogaria);
+            }
+            return drogarias;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar drogarias: " + e);
+        } finally {
+            Conexao.closeConnection(con, cs, rs);
         }
         return null;
     }

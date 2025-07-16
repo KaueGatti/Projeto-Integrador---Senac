@@ -1,11 +1,9 @@
 package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
+import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
-import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
-import com.mycompany.projetointegradordesktop.Objects.Compra;
-import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.awt.Component;
@@ -73,6 +71,11 @@ public class IFCompra extends javax.swing.JInternalFrame {
             }
         ));
         jTCompra.setMaximumSize(new java.awt.Dimension(100, 80));
+        jTCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTCompraMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTCompra);
 
         jBExcluirCompra.setBackground(new java.awt.Color(153, 51, 0));
@@ -145,9 +148,9 @@ public class IFCompra extends javax.swing.JInternalFrame {
         jPValorTotalLayout.setHorizontalGroup(
             jPValorTotalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPValorTotalLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(13, 13, 13)
                 .addComponent(jLValorCustoMax)
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(jLValorCustoMax5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jFTFValorTotalMin, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,7 +237,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                         .addComponent(jPValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCBoxValorTotal)))
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +301,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                         .addComponent(jBExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -307,6 +310,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
         if (jTCompra.getSelectedRow() != -1) {
+            ItemDAO.deleteCompras(model.getCompras().get(jTCompra.getSelectedRow()));
             CompraDAO.delete(model.getCompras().get(jTCompra.getSelectedRow()));
             model.deleteLinha(jTCompra.getSelectedRow());
         }
@@ -369,6 +373,12 @@ public class IFCompra extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_jCBoxValorTotalActionPerformed
+
+    private void jTCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCompraMouseClicked
+        if (evt.getClickCount() == 2 && jTCompra.getSelectedRow() != -1) {
+            JFDadosCompra JFDadosCompra = new JFDadosCompra(model.getCompras().get(jTCompra.getSelectedRow()));
+        }
+    }//GEN-LAST:event_jTCompraMouseClicked
 
     private void loadTable() {
         jTCompra.setModel(model);

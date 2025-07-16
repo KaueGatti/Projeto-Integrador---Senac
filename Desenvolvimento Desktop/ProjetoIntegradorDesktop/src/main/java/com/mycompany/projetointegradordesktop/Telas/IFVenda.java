@@ -1,6 +1,7 @@
 package com.mycompany.projetointegradordesktop.Telas;
 
 import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
+import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Model.VendaTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
@@ -297,7 +298,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
                         .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -306,6 +307,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
 
     private void jBExcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirVendaActionPerformed
         if (jTVenda.getSelectedRow() != -1) {
+            ItemDAO.deleteVendas(model.getVendas().get(jTVenda.getSelectedRow()));
             VendaDAO.delete(model.getVendas().get(jTVenda.getSelectedRow()));
             model.deleteLinha(jTVenda.getSelectedRow());
         }

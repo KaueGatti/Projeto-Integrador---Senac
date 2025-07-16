@@ -50,7 +50,7 @@ CREATE TABLE venda (
     id_drog INT NOT NULL,
     data_venda DATE NOT NULL,
     data_entrega DATE,
-    nmr_nota_fiscal VARCHAR(30) NOT NULL UNIQUE,
+    nmr_nota_fiscal VARCHAR(30) NOT NULL,
     total_nota DECIMAL(10,2) NOT NULL,
     forma_pagamento VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_venda),
@@ -62,7 +62,7 @@ CREATE TABLE compra (
     id_lab INT NOT NULL,
     data_compra DATE NOT NULL,
     data_entrega DATE,
-    nmr_nota_fiscal VARCHAR(30) NOT NULL UNIQUE,
+    nmr_nota_fiscal VARCHAR(30) NOT NULL,
     total_nota DECIMAL(10,2) NOT NULL,
     forma_pagamento VARCHAR(20) NOT NULL,
     PRIMARY KEY (id_compra),
@@ -75,7 +75,7 @@ CREATE TABLE item_venda (
     id_remedio INT NOT NULL,
     quantidade INT NOT NULL,
     PRIMARY KEY (id_item_venda),
-    CONSTRAINT fk_id_venda FOREIGN KEY (id_venda) REFERENCES venda (id_venda) ON DELETE CASCADE,
+    CONSTRAINT fk_id_venda FOREIGN KEY (id_venda) REFERENCES venda (id_venda),
     CONSTRAINT fk_id_remedio_venda FOREIGN KEY (id_remedio) REFERENCES remedio (id_remedio)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE item_compra (
     id_remedio INT NOT NULL,
     quantidade INT NOT NULL,
     PRIMARY KEY (id_item_compra),
-    CONSTRAINT fk_id_compra FOREIGN KEY (id_compra) REFERENCES compra (id_compra) ON DELETE CASCADE,
+    CONSTRAINT fk_id_compra FOREIGN KEY (id_compra) REFERENCES compra (id_compra),
     CONSTRAINT fk_id_remedio_compra FOREIGN KEY (id_remedio) REFERENCES remedio (id_remedio)
 );
 
@@ -269,10 +269,68 @@ BEGIN
 END $$
 DELIMITER ;
 
-#drop procedure filterVendaDinamico;
+DELIMITER $$
+CREATE PROCEDURE filterLaboratorioDinamico
+(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), orderBy VARCHAR(20), isDesc BOOLEAN)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM laboratorio WHERE ');
+    
+    IF tipo = 0 THEN
+		SET @sql = CONCAT(@sql, 'nome LIKE \'', pesquisa, '\'');
+        ELSEIF tipo = 1 THEN
+			SET @sql = CONCAT(@sql, 'cnpj LIKE \'', pesquisa, '\'');
+		ELSE
+			SET @sql = CONCAT(@sql, 'ie LIKE \'', pesquisa, '\'');
+	END IF;
+    
+    IF estado IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND uf = \'', estado, '\'');
+	END IF;
+    
+    IF orderBy IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
+		IF isDesc THEN
+			SET @sql = CONCAT(@sql, ' DESC');
+		END IF;
+	END IF;
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
 
 DELIMITER $$
-CREATE TRIGGER compra_remedio
+CREATE PROCEDURE filterDrogariaDinamico
+(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), orderBy VARCHAR(20), isDesc BOOLEAN)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM drogaria WHERE ');
+    
+    IF tipo = 0 THEN
+		SET @sql = CONCAT(@sql, 'nome LIKE \'', pesquisa, '\'');
+        ELSE
+			SET @sql = CONCAT(@sql, 'cnpj LIKE \'', pesquisa, '\'');
+	END IF;
+    
+    IF estado IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND uf = \'', estado, '\'');
+	END IF;
+    
+    IF orderBy IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
+		IF isDesc THEN
+			SET @sql = CONCAT(@sql, ' DESC');
+		END IF;
+	END IF;
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER add_compra_remedio
 AFTER INSERT
 ON item_compra
 FOR EACH ROW
@@ -284,7 +342,7 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE TRIGGER venda_remedio
+CREATE TRIGGER add_venda_remedio
 AFTER INSERT
 ON item_venda
 FOR EACH ROW
@@ -294,3 +352,32 @@ BEGIN
     WHERE remedio.id_remedio = NEW.id_remedio;
 END $$
 DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delete_compra_remedio
+AFTER DELETE
+ON item_compra
+FOR EACH ROW
+BEGIN
+	UPDATE remedio
+    SET remedio.qntd_armazenada = remedio.qntd_armazenada - OLD.quantidade
+    WHERE remedio.id_remedio = OLD.id_remedio;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delete_venda_remedio
+AFTER DELETE
+ON item_venda
+FOR EACH ROW
+BEGIN
+	UPDATE remedio
+    SET remedio.qntd_armazenada = remedio.qntd_armazenada + OLD.quantidade
+    WHERE remedio.id_remedio = OLD.id_remedio;
+END $$
+DELIMITER ;
+
+select * from compra;
+select * from item_compra;
+
+#drop trigger delete_compra_remedio;

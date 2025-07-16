@@ -3,7 +3,6 @@ package com.mycompany.projetointegradordesktop.Telas;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Component;
 import java.beans.PropertyVetoException;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;

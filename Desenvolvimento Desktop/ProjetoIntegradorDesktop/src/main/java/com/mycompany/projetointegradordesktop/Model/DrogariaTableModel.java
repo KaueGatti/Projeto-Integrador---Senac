@@ -21,6 +21,15 @@ public class DrogariaTableModel extends AbstractTableModel {
         return colunas.length;
     }
 
+    public void setDrogarias(List<Drogaria> drogarias) {
+        this.drogarias = drogarias;
+        fireTableDataChanged();
+    }
+
+    public String[] getColunas() {
+        return colunas;
+    }
+
     @Override
     public String getColumnName(int column) {
         return colunas[column];
@@ -32,13 +41,13 @@ public class DrogariaTableModel extends AbstractTableModel {
             case 0:
                 return drogarias.get(rowIndex).getNome();
             case 1:
-                return drogarias.get(rowIndex).getCNPJ().replaceFirst("(\\d{2})(\\d{3})(\\d{3})(\\d{4})(\\d{2})", "$1.$2.$3/$4-$5");
+                return drogarias.get(rowIndex).getCNPJ();
             case 2:
                 return drogarias.get(rowIndex).getNumero();
             case 3:
                 return drogarias.get(rowIndex).getRua();
             case 4:
-                return drogarias.get(rowIndex).getCep().replaceFirst("(\\d{5})(\\d{3})", "$1-$2");
+                return drogarias.get(rowIndex).getCep();
             case 5:
                 return drogarias.get(rowIndex).getBairro();
             case 6:

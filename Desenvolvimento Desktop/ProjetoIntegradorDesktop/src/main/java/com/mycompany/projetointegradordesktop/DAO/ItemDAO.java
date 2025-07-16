@@ -1,8 +1,11 @@
+
 package com.mycompany.projetointegradordesktop.DAO;
 
 import com.mycompany.projetointegradordesktop.DB.Conexao;
+import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Item;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
+import com.mycompany.projetointegradordesktop.Objects.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+
 
 public class ItemDAO {
 
@@ -108,4 +112,41 @@ public class ItemDAO {
         }
         return null;
     }
+    
+    public static List<Item> deleteVendas(Venda v) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM item_venda WHERE id_venda = ?");
+            
+            stmt.setInt(1, v.getId());
+            
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir itens vendidos: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+        return null;
+    }
+
+    public static void deleteCompras(Compra c) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("DELETE FROM item_compra WHERE id_compra = ?");
+            
+            stmt.setInt(1, c.getId());
+            
+            stmt.executeUpdate();
+ 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir itens comprados: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt);
+        }
+    }
 }
+

@@ -58,7 +58,7 @@
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="606" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="715" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -86,6 +86,9 @@
               <Dimension value="[100, 80]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTCompraMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -184,7 +187,7 @@
                           <Component id="jCBoxValorTotal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="395" max="32767" attributes="0"/>
+                  <EmptySpace pref="377" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -289,9 +292,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="jLValorCustoMax" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLValorCustoMax5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jFTFValorTotalMin" min="-2" pref="146" max="-2" attributes="0"/>
