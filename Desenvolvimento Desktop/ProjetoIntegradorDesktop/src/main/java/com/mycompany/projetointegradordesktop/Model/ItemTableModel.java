@@ -21,6 +21,11 @@ public class ItemTableModel extends AbstractTableModel {
         return colunas.length;
     }
 
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
+        fireTableDataChanged();
+    }
+
     @Override
     public String getColumnName(int column) {
         return colunas[column];

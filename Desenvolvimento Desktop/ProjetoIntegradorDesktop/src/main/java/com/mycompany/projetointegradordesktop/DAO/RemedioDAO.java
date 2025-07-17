@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class RemedioDAO {
         List<Remedio> remedios = new ArrayList();
 
         try {
-            stmt = con.prepareStatement("SELECT * FROM remedio");
+            stmt = con.prepareStatement("SELECT * FROM remedios");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -63,6 +62,7 @@ public class RemedioDAO {
                 remedio.setValorCusto(rs.getDouble("valor_custo"));
                 remedio.setValorVenda(rs.getDouble("valor_venda"));
                 remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+                remedio.setStatus(rs.getString("_status"));
 
                 remedios.add(remedio);
             }
@@ -106,6 +106,7 @@ public class RemedioDAO {
                 remedio.setValorCusto(rs.getDouble("valor_custo"));
                 remedio.setValorVenda(rs.getDouble("valor_venda"));
                 remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+                remedio.setStatus(rs.getString("_status"));
 
                 remedios.add(remedio);
             }
@@ -149,6 +150,7 @@ public class RemedioDAO {
                 remedio.setValorCusto(rs.getDouble("valor_custo"));
                 remedio.setValorVenda(rs.getDouble("valor_venda"));
                 remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+                remedio.setStatus(rs.getString("_status"));
 
                 remedios.add(remedio);
             }
@@ -165,7 +167,7 @@ public class RemedioDAO {
     public static List<Remedio> readDinamico(String descricao, Laboratorio l,
             double valorCustoMin, double valorCustoMax,
             double valorVendaMin, double valorVendaMax,
-            String orderBy, boolean desc) {
+            String status, String orderBy, boolean desc) {
 
         Connection con = Conexao.getConnection();
         CallableStatement cs = null;
@@ -173,7 +175,7 @@ public class RemedioDAO {
         List<Remedio> remedios = new ArrayList();
 
         try {
-            cs = con.prepareCall("CALL filterRemedioDinamico(?, ?, ?, ?, ?, ?, ?, ?)");
+            cs = con.prepareCall("CALL filterRemedioDinamico(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             cs.setString(1, "%" + descricao + "%");
             
@@ -188,13 +190,19 @@ public class RemedioDAO {
             cs.setDouble(5, valorVendaMin);
             cs.setDouble(6, valorVendaMax);
             
-            if (orderBy != null) {
-                cs.setString(7, orderBy);
+            if (status != null) {
+                cs.setString(7, status);
             } else {
                 cs.setNull(7, Types.VARCHAR);
             }
             
-            cs.setBoolean(8, desc);
+            if (orderBy != null) {
+                cs.setString(8, orderBy);
+            } else {
+                cs.setNull(8, Types.VARCHAR);
+            }
+            
+            cs.setBoolean(9, desc);
 
             rs = cs.executeQuery();
 
@@ -215,6 +223,7 @@ public class RemedioDAO {
                 remedio.setValorCusto(rs.getDouble("valor_custo"));
                 remedio.setValorVenda(rs.getDouble("valor_venda"));
                 remedio.setQuantidade(rs.getInt("qntd_armazenada"));
+                remedio.setStatus(rs.getString("_status"));
 
                 remedios.add(remedio);
             }
@@ -233,13 +242,14 @@ public class RemedioDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_remedio(?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL update_remedio(?, ?, ?, ?, ?, ?)");
 
             stmt.setInt(1, remedio.getId());
             stmt.setInt(2, remedio.getLaboratorio().getId());
             stmt.setString(3, remedio.getDescricao());
             stmt.setDouble(4, remedio.getValorCusto());
             stmt.setDouble(5, remedio.getValorVenda());
+            stmt.setString(6, remedio.getStatus());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

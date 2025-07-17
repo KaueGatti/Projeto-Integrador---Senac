@@ -29,8 +29,6 @@ public class JFLaboratorio extends javax.swing.JFrame {
         labUpdated = lab;
         loadCampos();
         loadUpdate();
-        revalidate();
-        repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +60,8 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jFTFIE = new javax.swing.JFormattedTextField();
         jLErro = new javax.swing.JLabel();
         jCBEstado = new javax.swing.JComboBox<>();
+        jCBStatus = new javax.swing.JComboBox<>();
+        jLStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -144,7 +144,14 @@ public class JFLaboratorio extends javax.swing.JFrame {
 
         jLErro.setForeground(new java.awt.Color(204, 51, 0));
 
+        jCBEstado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+
+        jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
+
+        jLStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLStatus.setText("Status");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,7 +174,11 @@ public class JFLaboratorio extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLStatus)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
@@ -206,7 +217,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
                                 .addComponent(jLabel9)
                                 .addGap(18, 18, 18)
                                 .addComponent(jFTFIE, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(59, Short.MAX_VALUE))))
+                        .addContainerGap(58, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +227,10 @@ public class JFLaboratorio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLStatus)
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -272,6 +286,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
                 labUpdated.setCidade(jTFCidade.getText());
                 labUpdated.setEstado(jCBEstado.getSelectedItem().toString());
                 labUpdated.setComplemento(jTFComplemento.getText());
+                labUpdated.setStatus(jCBStatus.getSelectedItem().toString().toUpperCase());
                 response = 1;
             } else {
                 newLab.setNome(jTFNome.getText());
@@ -340,6 +355,8 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jFTFCNPJ.setEnabled(true);
         jFTFIE.setEnabled(true);
         jBSalvar.setText("Cadastrar");
+        remove(jLStatus);
+        remove(jCBStatus);
     }
 
     private void loadUpdate() {
@@ -353,6 +370,9 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jTFCidade.setText(labUpdated.getCidade());
         jCBEstado.setSelectedItem(labUpdated.getEstado());
         jTFComplemento.setText(labUpdated.getComplemento());
+        if (!labUpdated.getStatus().equalsIgnoreCase("Ativado")) {
+            jCBStatus.setSelectedIndex(1);
+        }
     }
 
     private boolean validarCNPJ() {
@@ -434,10 +454,12 @@ public class JFLaboratorio extends javax.swing.JFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JComboBox<String> jCBEstado;
+    private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JFormattedTextField jFTFCEP;
     private javax.swing.JFormattedTextField jFTFCNPJ;
     private javax.swing.JFormattedTextField jFTFIE;
     private javax.swing.JLabel jLErro;
+    private javax.swing.JLabel jLStatus;
     private javax.swing.JLabel jLTitulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

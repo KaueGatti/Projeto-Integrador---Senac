@@ -11,6 +11,15 @@ public class Remedio {
     private int quantidade;
     private double valorCusto;
     private double valorVenda;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Laboratorio getLaboratorio() {
         return laboratorio;

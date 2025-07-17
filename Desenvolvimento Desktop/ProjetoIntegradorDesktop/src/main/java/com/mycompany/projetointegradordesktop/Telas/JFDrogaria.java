@@ -3,13 +3,15 @@ package com.mycompany.projetointegradordesktop.Telas;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import java.awt.Component;
 import java.text.ParseException;
+import java.util.Locale;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 
 public class JFDrogaria extends javax.swing.JFrame {
-    
+
     private static Drogaria drogariaUpdated = null;
     private static Drogaria newDrogaria = new Drogaria();
     private static int response;
@@ -21,7 +23,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         loadCampos();
         loadCadastro();
     }
-    
+
     public JFDrogaria(Drogaria drogaria) {
         initComponents();
         setLocationRelativeTo(null);
@@ -58,6 +60,8 @@ public class JFDrogaria extends javax.swing.JFrame {
         jBCancelar = new javax.swing.JButton();
         jLErro = new javax.swing.JLabel();
         jCBEstado = new javax.swing.JComboBox<>();
+        jLStatus = new javax.swing.JLabel();
+        jCBStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
@@ -134,7 +138,15 @@ public class JFDrogaria extends javax.swing.JFrame {
 
         jLErro.setForeground(new java.awt.Color(204, 51, 0));
 
+        jCBEstado.setEditable(true);
+        jCBEstado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jCBEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+
+        jLStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLStatus.setText("Status");
+
+        jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,7 +169,11 @@ public class JFDrogaria extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLStatus)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -183,7 +199,7 @@ public class JFDrogaria extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTFRua, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFRua, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel13)
                                 .addGap(18, 18, 18)
@@ -192,7 +208,7 @@ public class JFDrogaria extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
                                 .addComponent(jFTFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(59, Short.MAX_VALUE))))
+                        .addContainerGap(58, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +218,9 @@ public class JFDrogaria extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLStatus)
+                    .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -235,7 +253,7 @@ public class JFDrogaria extends javax.swing.JFrame {
                         .addComponent(jBSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLErro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -249,11 +267,12 @@ public class JFDrogaria extends javax.swing.JFrame {
             if (drogariaUpdated != null) {
                 drogariaUpdated.setNumero(jTFNumero.getText());
                 drogariaUpdated.setRua(jTFRua.getText());
-                drogariaUpdated.setCep(jFTFCEP.getValue().toString());
+                drogariaUpdated.setCep(jFTFCEP.getText());
                 drogariaUpdated.setBairro(jTFBairro.getText());
                 drogariaUpdated.setCidade(jTFCidade.getText());
                 drogariaUpdated.setEstado(jCBEstado.getSelectedItem().toString());
                 drogariaUpdated.setComplemento(jTFComplemento.getText());
+                drogariaUpdated.setStatus(jCBStatus.getSelectedItem().toString().toUpperCase());
                 response = 1;
             } else {
                 newDrogaria.setNome(jTFNumero.getText());
@@ -276,7 +295,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
 
-        private void loadCampos() {
+    private void loadCampos() {
         try {
             MaskFormatter mascaraCNPJ = new MaskFormatter("##.###.###/####-##");
             mascaraCNPJ.setPlaceholderCharacter('_');
@@ -301,8 +320,10 @@ public class JFDrogaria extends javax.swing.JFrame {
         jTFNome.setEnabled(true);
         jFTFCNPJ.setEnabled(true);
         jBSalvar.setText("Cadastrar");
+        remove(jLStatus);
+        remove(jCBStatus);
     }
-    
+
     private void loadUpdate() {
         jTFNome.setText(drogariaUpdated.getNome());
         jFTFCNPJ.setText(drogariaUpdated.getCNPJ());
@@ -313,6 +334,9 @@ public class JFDrogaria extends javax.swing.JFrame {
         jTFCidade.setText(drogariaUpdated.getCidade());
         jCBEstado.setSelectedItem(drogariaUpdated.getEstado());
         jTFComplemento.setText(drogariaUpdated.getComplemento());
+        if (!drogariaUpdated.getStatus().equalsIgnoreCase("Ativado")) {
+            jCBStatus.setSelectedIndex(1);
+        }
     }
 
     private boolean validarCNPJ() {
@@ -344,7 +368,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         }
         return true;
     }
-    
+
     public Drogaria getDrogariaUpdated() {
         return drogariaUpdated;
     }
@@ -356,7 +380,7 @@ public class JFDrogaria extends javax.swing.JFrame {
     public int getResponse() {
         return response;
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -394,9 +418,11 @@ public class JFDrogaria extends javax.swing.JFrame {
     private javax.swing.JButton jBCancelar;
     private javax.swing.JButton jBSalvar;
     private javax.swing.JComboBox<String> jCBEstado;
+    private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JFormattedTextField jFTFCEP;
     private javax.swing.JFormattedTextField jFTFCNPJ;
     private javax.swing.JLabel jLErro;
+    private javax.swing.JLabel jLStatus;
     private javax.swing.JLabel jLTitulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

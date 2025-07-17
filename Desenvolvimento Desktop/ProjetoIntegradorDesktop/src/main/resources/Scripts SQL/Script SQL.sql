@@ -16,6 +16,7 @@ CREATE TABLE laboratorio (
     cidade varchar(20) NOT NULL,
     uf CHAR(2) NOT NULL,
     complemento VARCHAR(20) NOT NULL,
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
     PRIMARY KEY (id_lab)
 );
 
@@ -27,6 +28,7 @@ CREATE TABLE remedio (
 	valor_custo DECIMAL(10,2) NOT NULL,
 	valor_venda DECIMAL(10,2) NOT NULL,
     qntd_armazenada INT NOT NULL DEFAULT 0,
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
     PRIMARY KEY (id_remedio),
     CONSTRAINT fk_id_lab FOREIGN KEY (id_lab) REFERENCES laboratorio (id_lab)
 );
@@ -42,6 +44,7 @@ CREATE TABLE drogaria (
     cidade VARCHAR(20) NOT NULL,
     uf CHAR(2) NOT NULL,
     complemento VARCHAR(20) NOT NULL,
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
     PRIMARY KEY (id_drog)
 );
 
@@ -97,9 +100,9 @@ CREATE PROCEDURE delete_remedio(id_remedio INT)
 DELETE FROM remedio
 WHERE remedio.id_remedio = id_remedio;
 
-CREATE PROCEDURE update_remedio(id_remedio INT, id_lab INT, descricao VARCHAR(20), valor_custo DECIMAL(10,2), valor_venda DECIMAL(10,2))
+CREATE PROCEDURE update_remedio(id_remedio INT, id_lab INT, descricao VARCHAR(20), valor_custo DECIMAL(10,2), valor_venda DECIMAL(10,2), _status VARCHAR(15))
 UPDATE remedio
-SET remedio.id_lab = id_lab, remedio.descricao = descricao, remedio.valor_custo = valor_custo, remedio.valor_venda = valor_venda
+SET remedio.id_lab = id_lab, remedio.descricao = descricao, remedio.valor_custo = valor_custo, remedio.valor_venda = valor_venda, remedio._status = _status
 WHERE remedio.id_remedio = id_remedio;
     
 CREATE PROCEDURE add_lab(nome VARCHAR(20), cnpj VARCHAR(18), ie VARCHAR(15), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20))
@@ -110,9 +113,9 @@ CREATE PROCEDURE delete_lab(id_lab INT)
 DELETE FROM laboratorio
 WHERE laboratorio.id_lab = id_lab;
     
-CREATE PROCEDURE update_lab(id_lab INT, nome VARCHAR(20), cnpj VARCHAR(18), ie VARCHAR(15), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20))
+CREATE PROCEDURE update_lab(id_lab INT, nome VARCHAR(20), cnpj VARCHAR(18), ie VARCHAR(15), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20), _status VARCHAR(15))
 UPDATE laboratorio AS l
-SET l.nome = nome, l.cnpj = cnpj, l.ie = ie,  l.numero = numero, l.rua = rua, l.cep = cep, l.bairro = bairro, l.cidade = cidade, l.uf = uf, l.complemento = complemento
+SET l.nome = nome, l.cnpj = cnpj, l.ie = ie,  l.numero = numero, l.rua = rua, l.cep = cep, l.bairro = bairro, l.cidade = cidade, l.uf = uf, l.complemento = complemento, l._status = _status
 WHERE l.id_lab = id_lab;
     
 CREATE PROCEDURE add_drog(nome VARCHAR(20), cnpj VARCHAR(18), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20))
@@ -123,9 +126,9 @@ CREATE PROCEDURE delete_drog(id_drog INT)
 DELETE FROM drogaria
 WHERE drogaria.id_drog = id_drog;
 
-CREATE PROCEDURE update_drog(id_drog INT, nome VARCHAR(20), cnpj VARCHAR(18), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20))
+CREATE PROCEDURE update_drog(id_drog INT, nome VARCHAR(20), cnpj VARCHAR(18), numero VARCHAR(10), rua VARCHAR(20), cep VARCHAR(9), bairro VARCHAR(20), cidade VARCHAR(20), uf CHAR(2), complemento VARCHAR(20), _status VARCHAR(15))
 UPDATE drogaria AS d
-SET d.nome = nome, d.cnpj = cnpj, d.numero = numero, d.rua = rua, d.cep = cep, d.bairro = bairro, d.cidade = cidade, d.uf = uf, d.complemento = complemento
+SET d.nome = nome, d.cnpj = cnpj, d.numero = numero, d.rua = rua, d.cep = cep, d.bairro = bairro, d.cidade = cidade, d.uf = uf, d.complemento = complemento, d._status = _status
 WHERE d.id_drog = id_drog;
 
 DELIMITER $$
@@ -182,17 +185,21 @@ WHERE item_venda.id_item_venda = id_item_venda;
 
 DELIMITER $$
 CREATE PROCEDURE filterRemedioDinamico
-(descricao VARCHAR(30), id_lab INT, valor_custo_min DOUBLE, valor_custo_max DOUBLE, valor_venda_min DOUBLE, valor_venda_max DOUBLE, orderBy VARCHAR(20), isDesc BOOLEAN)
+(descricao VARCHAR(30), id_lab INT, valor_custo_min DOUBLE, valor_custo_max DOUBLE, valor_venda_min DOUBLE, valor_venda_max DOUBLE, _status VARCHAR(15), orderBy VARCHAR(20), isDesc BOOLEAN)
 BEGIN
-	SET @sql = CONCAT('SELECT * FROM remedio WHERE valor_custo BETWEEN ', valor_custo_min, ' AND ', valor_custo_max, ' AND valor_venda BETWEEN ', valor_venda_min, ' AND ', valor_venda_max);
+	SET @sql = CONCAT('SELECT * FROM remedios WHERE valor_custo BETWEEN ', valor_custo_min, ' AND ', valor_custo_max, ' AND valor_venda BETWEEN ', valor_venda_min, ' AND ', valor_venda_max);
     
     IF descricao IS NOT NULL THEN
-		SET @sql = CONCAT(@sql, ' AND remedio.descricao LIKE \'', descricao, '\'');
+		SET @sql = CONCAT(@sql, ' AND remedios.descricao LIKE \'', descricao, '\'');
 	END IF;
     
     IF id_lab IS NOT NULL THEN
-		SET @sql = CONCAT(@sql, ' AND remedio.id_lab = ', id_lab);
+		SET @sql = CONCAT(@sql, ' AND remedios.id_lab = ', id_lab);
 	END IF;
+    
+    IF _status IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND _status = \'', _status, '\'');
+    END IF;
     
     IF orderBy IS NOT NULL THEN
 		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
@@ -271,7 +278,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE filterLaboratorioDinamico
-(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), orderBy VARCHAR(20), isDesc BOOLEAN)
+(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), _status VARCHAR(15), orderBy VARCHAR(20), isDesc BOOLEAN)
 BEGIN
 	SET @sql = CONCAT('SELECT * FROM laboratorio WHERE ');
     
@@ -286,6 +293,10 @@ BEGIN
     IF estado IS NOT NULL THEN
 		SET @sql = CONCAT(@sql, ' AND uf = \'', estado, '\'');
 	END IF;
+    
+    IF _status IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND _status = \'', _status, '\'');
+    END IF;
     
     IF orderBy IS NOT NULL THEN
 		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
@@ -302,7 +313,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE filterDrogariaDinamico
-(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), orderBy VARCHAR(20), isDesc BOOLEAN)
+(pesquisa VARCHAR(30), tipo INT, estado VARCHAR(2), _status VARCHAR(15), orderBy VARCHAR(20), isDesc BOOLEAN)
 BEGIN
 	SET @sql = CONCAT('SELECT * FROM drogaria WHERE ');
     
@@ -315,6 +326,10 @@ BEGIN
     IF estado IS NOT NULL THEN
 		SET @sql = CONCAT(@sql, ' AND uf = \'', estado, '\'');
 	END IF;
+    
+    IF _status IS NOT NULL THEN
+		SET @sql = CONCAT(@sql, ' AND _status = \'', _status, '\'');
+    END IF;
     
     IF orderBy IS NOT NULL THEN
 		SET @sql = CONCAT(@sql, ' ORDER BY ', orderBy);
@@ -377,7 +392,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-select * from compra;
-select * from item_compra;
-
-#drop trigger delete_compra_remedio;
+CREATE VIEW remedios AS
+SELECT remedio.* FROM remedio
+INNER JOIN laboratorio ON remedio.id_lab = laboratorio.id_lab
+WHERE laboratorio._status = "Ativado";

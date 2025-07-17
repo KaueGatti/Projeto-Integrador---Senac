@@ -13,9 +13,10 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 public class IFNovaVenda extends javax.swing.JInternalFrame {
@@ -31,7 +32,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         loadCampoData();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
-        jTItens.setModel(model);
+        loadTable();
         loadDrogarias();
         loadRemedios();
         jLTotal.setText("Total: R$ " + total);
@@ -139,6 +140,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
         jCBDrogaria.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jTItens.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -150,6 +152,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTItens.setRowHeight(25);
         jScrollPane3.setViewportView(jTItens);
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -323,7 +326,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
                     jLInfoCompra.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "A quantidade em estoque é menor do que a solicitada"
-                            + "\nQuantidade solicitada: " + jTFQuantidade.getText() 
+                            + "\nQuantidade solicitada: " + jTFQuantidade.getText()
                             + "\nQuantidade em estoque: " + remedio.getQuantidade());
                     jTFQuantidade.requestFocus();
                 }
@@ -332,8 +335,8 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
                 jTFQuantidade.requestFocus();
             }
         } else {
-             JOptionPane.showMessageDialog(null, "Digite a quantidade desejada");
-             jTFQuantidade.requestFocus();
+            JOptionPane.showMessageDialog(null, "Digite a quantidade desejada");
+            jTFQuantidade.requestFocus();
         }
     }//GEN-LAST:event_jBAdicionarActionPerformed
 
@@ -397,7 +400,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
     public void loadDrogarias() {
         jCBDrogaria.removeAllItems();
-        for (Drogaria d : DrogariaDAO.read()) {
+        for (Drogaria d : DrogariaDAO.readDinamico("", 0, null, "Ativado", null, false)) {
             jCBDrogaria.addItem(d);
         }
     }
@@ -424,6 +427,15 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar campo data: " + e);
         }
+    }
+
+    private void loadTable() {
+        jTItens.setModel(model);
+        DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
+        centralizador.setHorizontalAlignment(SwingConstants.CENTER);
+        jTItens.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTItens.getColumnModel().getColumn(2).setCellRenderer(centralizador);
+        jTItens.getColumnModel().getColumn(3).setCellRenderer(centralizador);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

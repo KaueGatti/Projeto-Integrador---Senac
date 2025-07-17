@@ -20,7 +20,7 @@ public class DrogariaDAO {
 
         try {
             stmt = con.prepareStatement("CALL add_drog(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            
+
             stmt.setString(1, d.getNome());
             stmt.setString(2, d.getCNPJ());
             stmt.setString(3, d.getNumero());
@@ -30,7 +30,7 @@ public class DrogariaDAO {
             stmt.setString(7, d.getCidade());
             stmt.setString(8, d.getEstado());
             stmt.setString(9, d.getComplemento());
-            
+
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class DrogariaDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
+
     public static List<Drogaria> read() {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
@@ -63,6 +63,7 @@ public class DrogariaDAO {
                 drogaria.setCidade(rs.getString("cidade"));
                 drogaria.setEstado(rs.getString("uf"));
                 drogaria.setComplemento(rs.getString("complemento"));
+                drogaria.setStatus(rs.getString("_status"));
 
                 drogarias.add(drogaria);
             }
@@ -74,16 +75,16 @@ public class DrogariaDAO {
         }
         return null;
     }
-    
-    public static List<Drogaria> readDinamico(String pesquisa, int tipo, String estado, String orderBy, boolean isDesc) {
+
+    public static List<Drogaria> readDinamico(String pesquisa, int tipo, String estado, String status, String orderBy, boolean isDesc) {
         Connection con = Conexao.getConnection();
         CallableStatement cs = null;
         ResultSet rs = null;
         List<Drogaria> drogarias = new ArrayList();
 
         try {
-            cs = con.prepareCall("CALL filterDrogariaDinamico(?, ?, ?, ?, ?)");
-            
+            cs = con.prepareCall("CALL filterDrogariaDinamico(?, ?, ?, ?, ?, ?)");
+
             cs.setString(1, "%" + pesquisa + "%");
             cs.setInt(2, tipo);
 
@@ -93,14 +94,20 @@ public class DrogariaDAO {
                 cs.setNull(3, Types.VARCHAR);
             }
 
-            if (orderBy != null) {
-                cs.setString(4, orderBy);
+            if (status != null) {
+                cs.setString(4, status);
             } else {
                 cs.setNull(4, Types.VARCHAR);
             }
-            
-            cs.setBoolean(5, isDesc);
-            
+
+            if (orderBy != null) {
+                cs.setString(5, orderBy);
+            } else {
+                cs.setNull(5, Types.VARCHAR);
+            }
+
+            cs.setBoolean(6, isDesc);
+
             rs = cs.executeQuery();
 
             while (rs.next()) {
@@ -116,6 +123,7 @@ public class DrogariaDAO {
                 drogaria.setCidade(rs.getString("cidade"));
                 drogaria.setEstado(rs.getString("uf"));
                 drogaria.setComplemento(rs.getString("complemento"));
+                drogaria.setStatus(rs.getString("_status"));
 
                 drogarias.add(drogaria);
             }
@@ -127,14 +135,14 @@ public class DrogariaDAO {
         }
         return null;
     }
-    
+
     public static void update(Drogaria d) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_drog(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            
+            stmt = con.prepareStatement("CALL update_drog(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
             stmt.setInt(1, d.getId());
             stmt.setString(2, d.getNome());
             stmt.setString(3, d.getCNPJ());
@@ -145,7 +153,8 @@ public class DrogariaDAO {
             stmt.setString(8, d.getCidade());
             stmt.setString(9, d.getEstado());
             stmt.setString(10, d.getComplemento());
-            
+            stmt.setString(11, d.getStatus());
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar drogaria: " + e);
@@ -153,16 +162,16 @@ public class DrogariaDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
+
     public static void delete(Drogaria d) {
         Connection con = Conexao.getConnection();
         PreparedStatement stmt = null;
 
         try {
             stmt = con.prepareStatement("CALL delete_drog(?)");
-            
+
             stmt.setInt(1, d.getId());
-            
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao deletar drogaria: " + e);
@@ -170,5 +179,5 @@ public class DrogariaDAO {
             Conexao.closeConnection(con, stmt);
         }
     }
-    
+
 }

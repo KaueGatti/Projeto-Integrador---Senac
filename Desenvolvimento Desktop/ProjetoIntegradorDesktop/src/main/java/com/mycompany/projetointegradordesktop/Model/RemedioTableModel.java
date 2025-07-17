@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 public class RemedioTableModel extends AbstractTableModel {
 
     private List<Remedio> remedios = new ArrayList();
-    private final String[] colunas = {"Laboratório", "Descrição", "Data da última compra", "Valor de custo", "Valor de venda", "Quantidade"};
+    private final String[] colunas = {"Laboratório", "Descrição", "Data da última compra", "Valor de custo", "Valor de venda", "Quantidade", "Status"};
     
     @Override
     public int getRowCount() {
@@ -51,6 +51,8 @@ public class RemedioTableModel extends AbstractTableModel {
                 return FormatadorValor.formatarValor(remedios.get(rowIndex).getValorVenda());
             case 5:
                 return remedios.get(rowIndex).getQuantidade();
+            case 6:
+                return remedios.get(rowIndex).getStatus();
         }
         return null;
     }
@@ -69,6 +71,9 @@ public class RemedioTableModel extends AbstractTableModel {
                 break;
             case 4:
                 remedios.get(rowIndex).setValorVenda((Double) value);
+                break;
+            case 5:
+                remedios.get(rowIndex).setStatus((String) value);
                 break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
@@ -99,7 +104,7 @@ public class RemedioTableModel extends AbstractTableModel {
 
     public void loadTable() {
         remedios.clear();
-        for (Remedio remedio : RemedioDAO.read()) {
+        for (Remedio remedio : RemedioDAO.readDinamico("", null, 0, 1000, 0, 1000, "Ativado", null, false)) {
             remedios.add(remedio);
         }
         fireTableDataChanged();

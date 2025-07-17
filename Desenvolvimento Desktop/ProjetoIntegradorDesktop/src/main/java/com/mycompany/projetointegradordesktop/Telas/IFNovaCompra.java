@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 public class IFNovaCompra extends javax.swing.JInternalFrame {
@@ -22,15 +24,15 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     private double total = 0;
 
     ItemTableModel model = new ItemTableModel();
-    
+
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    
+
     public IFNovaCompra() {
         initComponents();
         loadCampoData();
         ((BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         setVisible(true);
-        jTItens.setModel(model);
+        loadTable();
         loadLaboratorios();
         loadRemedios();
         jLTotal.setText("Total: R$ " + total);
@@ -84,6 +86,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
             }
         });
 
+        jTItens.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jTItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -95,6 +98,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTItens.setRowHeight(25);
         jScrollPane1.setViewportView(jTItens);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -361,14 +365,12 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
 
             int idNovaCompra = CompraDAO.create(compra);
             System.out.println(idNovaCompra);
-            for (Item item: model.getItens()) {
+            for (Item item : model.getItens()) {
                 item.setIdTransacao(idNovaCompra);
             }
-            
+
             ItemDAO.create(model.getItens(), "compra");
-            
-            
-            
+
             this.dispose();
         } else {
             jLInfoCompra.setText("Adicione pelo menos 1 remédio a compra");
@@ -392,7 +394,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
 
     public void loadLaboratorios() {
         jCBLaboratorio.removeAllItems();
-        for (Laboratorio l : LaboratorioDAO.read()) {
+        for (Laboratorio l : LaboratorioDAO.readDinamico("", 0, null, "Ativado", null, false)) {
             jCBLaboratorio.addItem(l);
         }
     }
@@ -419,6 +421,15 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar campo data: " + e);
         }
+    }
+
+    private void loadTable() {
+        jTItens.setModel(model);
+        DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
+        centralizador.setHorizontalAlignment(SwingConstants.CENTER);
+        jTItens.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTItens.getColumnModel().getColumn(2).setCellRenderer(centralizador);
+        jTItens.getColumnModel().getColumn(3).setCellRenderer(centralizador);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

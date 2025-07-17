@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 public class LaboratorioTableModel extends AbstractTableModel {
 
     List<Laboratorio> laboratorios = new ArrayList();
-    String[] colunas = {"Nome", "CNPJ", "Iscrição Estadual", "Número", "Rua", "CEP", "Bairro", "Cidade", "Estado", "Complemento"};
+    String[] colunas = {"Nome", "CNPJ", "Iscrição Estadual", "Número", "Rua", "CEP", "Bairro", "Cidade", "Estado", "Complemento", "Status"};
 
     @Override
     public int getRowCount() {
@@ -58,6 +58,8 @@ public class LaboratorioTableModel extends AbstractTableModel {
                 return laboratorios.get(rowIndex).getEstado();
             case 9:
                 return laboratorios.get(rowIndex).getComplemento();
+            case 10:
+                return laboratorios.get(rowIndex).getStatus();
 
         }
         return null;
@@ -96,6 +98,9 @@ public class LaboratorioTableModel extends AbstractTableModel {
             case 9:
                 laboratorios.get(rowIndex).setComplemento((String) value);
                 break;
+            case 10:
+                laboratorios.get(rowIndex).setStatus((String) value);
+                break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
@@ -116,7 +121,7 @@ public class LaboratorioTableModel extends AbstractTableModel {
     
     public void loadTable() {
         laboratorios.clear();
-        for (Laboratorio lab: LaboratorioDAO.read()) {
+        for (Laboratorio lab: LaboratorioDAO.readDinamico("", 0, null, "Ativado", null, false)) {
             laboratorios.add(lab);
         }
         fireTableDataChanged();

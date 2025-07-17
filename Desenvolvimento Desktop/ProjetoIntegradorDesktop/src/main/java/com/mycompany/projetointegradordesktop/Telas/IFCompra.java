@@ -3,11 +3,16 @@ package com.mycompany.projetointegradordesktop.Telas;
 import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.LaboratorioDAO;
+import com.mycompany.projetointegradordesktop.DAO.RemedioDAO;
 import com.mycompany.projetointegradordesktop.Model.CompraTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
+import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -301,7 +306,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
                         .addComponent(jBExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -310,9 +315,18 @@ public class IFCompra extends javax.swing.JInternalFrame {
 
     private void jBExcluirCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirCompraActionPerformed
         if (jTCompra.getSelectedRow() != -1) {
-            ItemDAO.deleteCompras(model.getCompras().get(jTCompra.getSelectedRow()));
-            CompraDAO.delete(model.getCompras().get(jTCompra.getSelectedRow()));
-            model.deleteLinha(jTCompra.getSelectedRow());
+            JFMensagemExcluir JFMensagemExcluir = new JFMensagemExcluir(new Compra());
+            JFMensagemExcluir.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    if (JFMensagemExcluir.getResponse()) {
+                        ItemDAO.deleteCompras(model.getCompras().get(jTCompra.getSelectedRow()));
+                        CompraDAO.delete(model.getCompras().get(jTCompra.getSelectedRow()));
+                        model.deleteLinha(jTCompra.getSelectedRow());
+                    }
+                }
+            }
+            );
         }
     }//GEN-LAST:event_jBExcluirCompraActionPerformed
 
@@ -342,7 +356,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
         double valorTotalMax = 10000;
         String orderBy = null;
         boolean desc = false;
-        
+
         if (jCBLaboratorio.getSelectedIndex() != 0) {
             l = (Laboratorio) jCBLaboratorio.getSelectedItem();
         }
@@ -375,8 +389,10 @@ public class IFCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jCBoxValorTotalActionPerformed
 
     private void jTCompraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTCompraMouseClicked
-        if (evt.getClickCount() == 2 && jTCompra.getSelectedRow() != -1) {
-            JFDadosCompra JFDadosCompra = new JFDadosCompra(model.getCompras().get(jTCompra.getSelectedRow()));
+        if (jTCompra.getSelectedRow() != -1) {
+            if (evt.getClickCount() == 2) {
+                JFDadosCompra JFDadosCompra = new JFDadosCompra(model.getCompras().get(jTCompra.getSelectedRow()));
+            }
         }
     }//GEN-LAST:event_jTCompraMouseClicked
 
@@ -402,7 +418,7 @@ public class IFCompra extends javax.swing.JInternalFrame {
             jCBLaboratorio.addItem(lab);
         }
     }
-    
+
     private void loadCampos() {
         for (Component comp : jPValorTotal.getComponents()) {
             comp.setEnabled(false);

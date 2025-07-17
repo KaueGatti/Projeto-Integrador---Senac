@@ -77,6 +77,44 @@ public class ItemDAO {
         }
         return null;
     }
+    
+        public static List<Item> readCompras(Compra c) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Item> itens = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM item_compra WHERE id_compra = ?");
+            
+            stmt.setInt(1, c.getId());
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Item item = new Item();
+
+                item.setId(rs.getInt("id_item_compra"));
+                item.setIdTransacao(rs.getInt("id_compra"));
+                for (Remedio remedio : RemedioDAO.read()) {
+                    if (remedio.getId() == rs.getInt("id_remedio")) {
+                        item.setRemedio(remedio);
+                        break;
+                    }
+                }
+                item.setQuantidade(rs.getInt("quantidade"));
+                item.setSubtotal(item.getRemedio().getValorCusto() * item.getQuantidade());
+
+                itens.add(item);
+            }
+            return itens;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar itens comprados: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
 
     public static List<Item> readVendas() {
         Connection con = Conexao.getConnection();
@@ -86,6 +124,44 @@ public class ItemDAO {
 
         try {
             stmt = con.prepareStatement("SELECT * FROM item_venda");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Item item = new Item();
+
+                item.setId(rs.getInt("id_item_venda"));
+                item.setIdTransacao(rs.getInt("id_venda"));
+                for (Remedio remedio : RemedioDAO.read()) {
+                    if (remedio.getId() == rs.getInt("id_remedio")) {
+                        item.setRemedio(remedio);
+                        break;
+                    }
+                }
+                item.setQuantidade(rs.getInt("quantidade"));
+                item.setSubtotal(item.getRemedio().getValorVenda() * item.getQuantidade());
+
+                itens.add(item);
+            }
+            return itens;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar itens vendidos: " + e);
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
+    
+    public static List<Item> readVendas(Venda v) {
+        Connection con = Conexao.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Item> itens = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM item_venda WHERE id_venda = ?");
+            
+            stmt.setInt(1, v.getId());
+            
             rs = stmt.executeQuery();
 
             while (rs.next()) {

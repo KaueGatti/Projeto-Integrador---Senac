@@ -35,7 +35,6 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTDrogaria = new javax.swing.JTable();
         jBCadastrarDrogaria = new javax.swing.JButton();
-        jBExcluirDrogaria = new javax.swing.JButton();
         jBAtualizarDrogaria = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jBPesquisar = new javax.swing.JButton();
@@ -47,6 +46,8 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jCBTipoPesquisa = new javax.swing.JComboBox<>();
         jCBEstado = new javax.swing.JComboBox<>();
         jFTFPesquisa = new javax.swing.JFormattedTextField();
+        jCBStatus = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setBorder(null);
         setClosable(true);
@@ -81,17 +82,6 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jBCadastrarDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarDrogariaActionPerformed(evt);
-            }
-        });
-
-        jBExcluirDrogaria.setBackground(new java.awt.Color(153, 51, 0));
-        jBExcluirDrogaria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBExcluirDrogaria.setForeground(new java.awt.Color(255, 255, 255));
-        jBExcluirDrogaria.setText("Excluir Drogaria");
-        jBExcluirDrogaria.setBorder(null);
-        jBExcluirDrogaria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBExcluirDrogariaActionPerformed(evt);
             }
         });
 
@@ -153,6 +143,13 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jFTFPesquisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jFTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativado", "Desativado" }));
+        jCBStatus.setSelectedIndex(1);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Status");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -179,8 +176,13 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jCBoxDesc)))
-                .addContainerGap(375, Short.MAX_VALUE))
+                        .addComponent(jCBoxDesc))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +200,11 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCBoxDesc))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -212,13 +218,11 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 429, Short.MAX_VALUE)
                         .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBAtualizarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBExcluirDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))
+                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
@@ -235,7 +239,6 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBExcluirDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBAtualizarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -259,13 +262,6 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         openDrogariaWindow(null);
     }//GEN-LAST:event_jBCadastrarDrogariaActionPerformed
 
-    private void jBExcluirDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirDrogariaActionPerformed
-        if (jTDrogaria.getSelectedRow() != -1) {
-            DrogariaDAO.delete(model.getDrogarias().get(jTDrogaria.getSelectedRow()));
-            model.deleteLinha(jTDrogaria.getSelectedRow());
-        }
-    }//GEN-LAST:event_jBExcluirDrogariaActionPerformed
-
     private void jBAtualizarDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAtualizarDrogariaActionPerformed
         if (jTDrogaria.getSelectedRow() != -1) {
             Drogaria drogaria = model.getDrogarias().get(jTDrogaria.getSelectedRow());
@@ -274,18 +270,22 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBAtualizarDrogariaActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        model.setDrogarias(DrogariaDAO.readDinamico(jFTFPesquisa.getText(), jCBTipoPesquisa.getSelectedIndex(), null, null, false));
+        model.setDrogarias(DrogariaDAO.readDinamico(jFTFPesquisa.getText(), jCBTipoPesquisa.getSelectedIndex(), null, "Ativo", null, false));
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
         String pesquisa = jFTFPesquisa.getText();
         int tipoPesquisa = jCBTipoPesquisa.getSelectedIndex();
         String estado = null;
+        String status = null;
         String orderBy = null;
         boolean desc = false;
 
         if (jCBEstado.getSelectedIndex() != 0) {
             estado = jCBEstado.getSelectedItem().toString();
+        }
+        if (jCBStatus.getSelectedIndex() != 0) {
+            status = jCBStatus.getSelectedItem().toString();
         }
         if (jCBOrdenar.getSelectedIndex() != 0) {
             orderBy = getOrdenar();
@@ -293,7 +293,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         if (jCBoxDesc.isSelected()) {
             desc = true;
         }
-        model.setDrogarias(DrogariaDAO.readDinamico(pesquisa, tipoPesquisa, estado, orderBy, desc));
+        model.setDrogarias(DrogariaDAO.readDinamico(pesquisa, tipoPesquisa, estado, status, orderBy, desc));
     }//GEN-LAST:event_jBFiltrarActionPerformed
 
     private void jCBTipoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoPesquisaActionPerformed
@@ -322,8 +322,10 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
         centralizador.setHorizontalAlignment(SwingConstants.CENTER);
         jTDrogaria.getColumnModel().getColumn(1).setCellRenderer(centralizador);
+        jTDrogaria.getColumnModel().getColumn(2).setCellRenderer(centralizador);
         jTDrogaria.getColumnModel().getColumn(4).setCellRenderer(centralizador);
         jTDrogaria.getColumnModel().getColumn(7).setCellRenderer(centralizador);
+        jTDrogaria.getColumnModel().getColumn(9).setCellRenderer(centralizador);
     }
 
     private void openDrogariaWindow(Drogaria drogaria) {
@@ -389,16 +391,17 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarDrogaria;
     private javax.swing.JButton jBCadastrarDrogaria;
-    private javax.swing.JButton jBExcluirDrogaria;
     private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<String> jCBEstado;
     private javax.swing.JComboBox<String> jCBOrdenar;
+    private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JCheckBox jCBoxDesc;
     private javax.swing.JFormattedTextField jFTFPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;

@@ -1,26 +1,26 @@
-INSERT INTO laboratorio (nome, cnpj, ie, numero, rua, cep, bairro, cidade, uf, complemento) VALUES
-('LabVida', '12.345.678/0001-90', '123.456.789.012', '123', 'Av. Saúde', '12345-678', 'Centro', 'São Paulo', 'SP', 'Bloco A'),
-('BioPlus', '98.765.432/0001-01', '234.567.890.123', '456', 'Rua Vital', '87654-321', 'Jardins', 'Campinas', 'SP', 'Sala 2'),
-('ClinLab', '23.456.789/0001-12', '345.678.901.234', '789', 'Rua Bem', '23456-789', 'Liberdade', 'Rio de Janeiro', 'RJ', 'Fundos'),
-('GenéticaSul', '34.567.890/0001-23', '456.789.012.345', '321', 'Av. Genética', '34567-890', 'Zona Sul', 'Porto Alegre', 'RS', 'Térreo'),
-('VidaLab', '45.678.901/0001-34', '567.890.123.456', '654', 'Rua Vida', '45678-901', 'Centro', 'Curitiba', 'PR', 'Loja 1'),
-('LabNorte', '56.789.012/0001-45', '678.901.234.567', '987', 'Av. Norte', '56789-012', 'Santa Maria', 'Manaus', 'AM', 'Ap 201'),
-('LabTec', '67.890.123/0001-56', '789.012.345.678', '159', 'Rua Técnica', '67890-123', 'Tecnologia', 'Recife', 'PE', 'Sala 10'),
-('LabMais', '78.901.234/0001-67', '890.123.456.789', '753', 'Av. Mais Saúde', '78901-234', 'Industrial', 'Belo Horizonte', 'MG', 'Galpão'),
-('ExameFacil', '89.012.345/0001-78', '901.234.567.890', '852', 'Rua Exames', '89012-345', 'Vila Nova', 'Fortaleza', 'CE', '1º Andar'),
-('BioCentro', '90.123.456/0001-89', '012.345.678.901', '963', 'Av. Central', '90123-456', 'Centro', 'Belém', 'PA', 'Anexo B');
+INSERT INTO laboratorio (nome, cnpj, ie, numero, rua, cep, bairro, cidade, uf, complemento, _status) VALUES
+('LabVida', '12.345.678/0001-01', '123.456.789.000', '101', 'Rua das Flores', '12345-678', 'Centro', 'São Paulo', 'SP', 'Sala 2', 'ATIVADO'),
+('Farmatec', '23.456.789/0001-02', '234.567.890.001', '202', 'Av. Brasil', '23456-789', 'Jardins', 'Rio de Janeiro', 'RJ', 'Andar 1', 'ATIVADO'),
+('BioLab', '34.567.890/0001-03', '345.678.901.002', '303', 'Rua Alfa', '34567-890', 'Boa Vista', 'Curitiba', 'PR', 'Bloco B', 'ATIVADO'),
+('MedQuim', '45.678.901/0001-04', '456.789.012.003', '404', 'Av. Central', '45678-901', 'Industrial', 'Belo Horizonte', 'MG', 'Galpão 3', 'ATIVADO'),
+('PharmaPlus', '56.789.012/0001-05', '567.890.123.004', '505', 'Rua Beta', '56789-012', 'Centro', 'Porto Alegre', 'RS', 'Loja 1', 'ATIVADO'),
+('NovaQuímica', '67.890.123/0001-06', '678.901.234.005', '606', 'Av. das Nações', '67890-123', 'Zona Sul', 'Brasília', 'DF', 'Anexo', 'ATIVADO'),
+('VidaLab', '78.901.234/0001-07', '789.012.345.006', '707', 'Rua Gama', '78901-234', 'Jardim América', 'Goiânia', 'GO', 'Prédio A', 'ATIVADO'),
+('Sanitas', '89.012.345/0001-08', '890.123.456.007', '808', 'Rua Zeta', '89012-345', 'São Cristóvão', 'Salvador', 'BA', 'Casa 5', 'ATIVADO'),
+('LabUnião', '90.123.456/0001-09', '901.234.567.008', '909', 'Rua Omega', '90123-456', 'Parque Novo', 'Fortaleza', 'CE', 'Fundos', 'ATIVADO'),
+('TecnoLab', '01.234.567/0001-10', '012.345.678.009', '010', 'Av. Delta', '01234-567', 'Zona Norte', 'Manaus', 'AM', 'Galpão 9', 'ATIVADO');
 
-INSERT INTO drogaria (nome, cnpj, numero, rua, cep, bairro, cidade, uf, complemento) VALUES
-('Drogaria São João', '11.111.111/0001-11', '101', 'Av. Brasil', '11111-111', 'Centro', 'São Paulo', 'SP', 'Perto da praça'),
-('Farmácia Vida', '22.222.222/0001-22', '202', 'Rua da Saúde', '22222-222', 'Jardim', 'Campinas', 'SP', 'Ao lado da igreja'),
-('DrogaMais', '33.333.333/0001-33', '303', 'Av. Boa Vista', '33333-333', 'Zona Norte', 'Recife', 'PE', 'Frente ao mercado'),
-('Farmavida', '44.444.444/0001-44', '404', 'Rua das Flores', '44444-444', 'Flores', 'Fortaleza', 'CE', 'Próx. ao hospital'),
-('Drogaria Central', '55.555.555/0001-55', '505', 'Av. Central', '55555-555', 'Centro', 'Belo Horizonte', 'MG', 'Esquina com Av. A'),
-('Drogaria Popular', '66.666.666/0001-66', '606', 'Rua Popular', '66666-666', 'Popular', 'Rio de Janeiro', 'RJ', 'Anexo ao posto'),
-('Farmácia Econômica', '77.777.777/0001-77', '707', 'Av. Economia', '77777-777', 'Comercial', 'Curitiba', 'PR', 'Ao lado da lotérica'),
-('Drogaria BemEstar', '88.888.888/0001-88', '808', 'Rua Bem Estar', '88888-888', 'Vila Nova', 'Salvador', 'BA', 'Em frente ao banco'),
-('DrogaFácil', '99.999.999/0001-99', '909', 'Av. Fácil', '99999-999', 'Facilidade', 'Manaus', 'AM', 'Atrás da escola'),
-('Drogaria Saúde+', '00.000.000/0001-00', '010', 'Rua Saúde+', '00000-000', 'Saúde', 'Porto Alegre', 'RS', 'Prédio azul');
+INSERT INTO drogaria (nome, cnpj, numero, rua, cep, bairro, cidade, uf, complemento, _status) VALUES
+('DrogaFácil', '11.111.111/0001-11', '12', 'Rua Amapá', '11111-111', 'Centro', 'São Paulo', 'SP', 'Loja 2', 'ATIVADO'),
+('Farmácia São João', '22.222.222/0001-22', '34', 'Av. Atlântica', '22222-222', 'Copacabana', 'Rio de Janeiro', 'RJ', 'Térreo', 'ATIVADO'),
+('Drogaria Brasil', '33.333.333/0001-33', '56', 'Rua Bahia', '33333-333', 'Savassi', 'Belo Horizonte', 'MG', 'Loja 1', 'ATIVADO'),
+('VidaFarma', '44.444.444/0001-44', '78', 'Av. Paraná', '44444-444', 'Jardim Botânico', 'Curitiba', 'PR', 'Subsolo', 'ATIVADO'),
+('SuperFarma', '55.555.555/0001-55', '90', 'Rua Ceará', '55555-555', 'Três Figueiras', 'Porto Alegre', 'RS', 'Loja 3', 'ATIVADO'),
+('DrogaMais', '66.666.666/0001-66', '21', 'Rua Sergipe', '66666-666', 'Setor Sul', 'Goiânia', 'GO', 'Andar 2', 'ATIVADO'),
+('PopularFarma', '77.777.777/0001-77', '43', 'Av. Bahia', '77777-777', 'Asa Norte', 'Brasília', 'DF', 'Box 4', 'ATIVADO'),
+('FarmaCentro', '88.888.888/0001-88', '65', 'Rua Amazonas', '88888-888', 'Pituba', 'Salvador', 'BA', 'Sala 3', 'ATIVADO'),
+('Drogaria Pague Menos', '99.999.999/0001-99', '87', 'Av. Beira Mar', '99999-999', 'Meireles', 'Fortaleza', 'CE', 'Loja A', 'ATIVADO'),
+('BemEstar Farma', '10.101.010/0001-00', '09', 'Rua Rio Negro', '01010-101', 'Centro', 'Manaus', 'AM', 'Quiosque', 'ATIVADO');
 
 INSERT INTO remedio (id_lab, descricao, data_ultima_compra, valor_custo, valor_venda, qntd_armazenada) VALUES
 (1, 'Dipirona 500mg', '2025-06-01', 1.20, 2.50, 150),

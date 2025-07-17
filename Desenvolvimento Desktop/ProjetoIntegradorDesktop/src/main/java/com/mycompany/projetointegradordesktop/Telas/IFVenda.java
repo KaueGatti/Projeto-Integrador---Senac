@@ -1,13 +1,18 @@
 package com.mycompany.projetointegradordesktop.Telas;
 
+import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
 import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Model.VendaTableModel;
+import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
+import com.mycompany.projetointegradordesktop.Objects.Venda;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -71,6 +76,11 @@ public class IFVenda extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTVendaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTVenda);
 
         jBExcluirVenda.setBackground(new java.awt.Color(153, 51, 0));
@@ -298,7 +308,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
                         .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -307,9 +317,18 @@ public class IFVenda extends javax.swing.JInternalFrame {
 
     private void jBExcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirVendaActionPerformed
         if (jTVenda.getSelectedRow() != -1) {
-            ItemDAO.deleteVendas(model.getVendas().get(jTVenda.getSelectedRow()));
-            VendaDAO.delete(model.getVendas().get(jTVenda.getSelectedRow()));
-            model.deleteLinha(jTVenda.getSelectedRow());
+            JFMensagemExcluir JFMensagemExcluir = new JFMensagemExcluir(new Venda());
+            JFMensagemExcluir.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    if (JFMensagemExcluir.getResponse()) {
+                        ItemDAO.deleteVendas(model.getVendas().get(jTVenda.getSelectedRow()));
+                        VendaDAO.delete(model.getVendas().get(jTVenda.getSelectedRow()));
+                        model.deleteLinha(jTVenda.getSelectedRow());
+                    }
+                }
+            }
+            );
         }
     }//GEN-LAST:event_jBExcluirVendaActionPerformed
 
@@ -371,6 +390,14 @@ public class IFVenda extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jCBoxValorTotalActionPerformed
 
+    private void jTVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTVendaMouseClicked
+        if (jTVenda.getSelectedRow() != -1) {
+            if (evt.getClickCount() == 2) {
+                JFDadosVenda JFDadosCompra = new JFDadosVenda(model.getVendas().get(jTVenda.getSelectedRow()));
+            }
+        }
+    }//GEN-LAST:event_jTVendaMouseClicked
+
     private void loadTable() {
         jTVenda.setModel(model);
         model.loadTable();
@@ -383,7 +410,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jTVenda.getColumnModel().getColumn(3).setCellRenderer(centralizador);
         jTVenda.getColumnModel().getColumn(4).setCellRenderer(centralizador);
     }
-    
+
     private void loadCampos() {
         for (Component comp : jPValorTotal.getComponents()) {
             comp.setEnabled(false);
@@ -406,7 +433,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
             jCBDrogaria.addItem(d);
         }
     }
-    
+
     private void loadOrdenar() {
         jCBOrdenar.removeAllItems();
         jCBOrdenar.addItem("Nenhum");

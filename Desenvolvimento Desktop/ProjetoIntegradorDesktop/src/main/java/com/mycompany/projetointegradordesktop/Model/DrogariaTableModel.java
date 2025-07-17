@@ -7,9 +7,9 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 public class DrogariaTableModel extends AbstractTableModel {
-    
+
     List<Drogaria> drogarias = new ArrayList();
-    String[] colunas = {"Nome", "CNPJ", "Número", "Rua", "CEP", "Bairro", "Cidade", "Estado", "Complemento"};
+    String[] colunas = {"Nome", "CNPJ", "Número", "Rua", "CEP", "Bairro", "Cidade", "Estado", "Complemento", "Satus"};
 
     @Override
     public int getRowCount() {
@@ -56,6 +56,8 @@ public class DrogariaTableModel extends AbstractTableModel {
                 return drogarias.get(rowIndex).getEstado();
             case 8:
                 return drogarias.get(rowIndex).getComplemento();
+            case 9:
+                return drogarias.get(rowIndex).getStatus();
         }
         return null;
     }
@@ -89,11 +91,14 @@ public class DrogariaTableModel extends AbstractTableModel {
                 break;
             case 8:
                 drogarias.get(rowIndex).setComplemento((String) value);
-                break;             
+                break;
+            case 9:
+                drogarias.get(rowIndex).setStatus((String) value);
+                break;
         }
         fireTableRowsUpdated(rowIndex, rowIndex);
     }
-    
+
     public void addLinha(Drogaria drogaria) {
         drogarias.add(drogaria);
         fireTableDataChanged();
@@ -103,14 +108,14 @@ public class DrogariaTableModel extends AbstractTableModel {
         drogarias.remove(indexLinha);
         fireTableRowsDeleted(indexLinha, indexLinha);
     }
-    
+
     public List<Drogaria> getDrogarias() {
         return drogarias;
     }
-    
+
     public void loadTable() {
         drogarias.clear();
-        for (Drogaria drogaria: DrogariaDAO.read()) {
+        for (Drogaria drogaria : DrogariaDAO.readDinamico("", 0, null, "Ativado", null, false)) {
             drogarias.add(drogaria);
         }
         fireTableDataChanged();

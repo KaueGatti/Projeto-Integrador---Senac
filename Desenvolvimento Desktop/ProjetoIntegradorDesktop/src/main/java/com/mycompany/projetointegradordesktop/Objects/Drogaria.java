@@ -12,6 +12,15 @@ public class Drogaria {
     private String cidade;
     private String cep;
     private String estado;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

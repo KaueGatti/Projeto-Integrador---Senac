@@ -65,6 +65,7 @@ public class LaboratorioDAO {
                 lab.setCidade(rs.getString("cidade"));
                 lab.setEstado(rs.getString("uf"));
                 lab.setComplemento(rs.getString("complemento"));
+                lab.setStatus(rs.getString("_status"));
 
                 laboratorios.add(lab);
             }
@@ -113,6 +114,7 @@ public class LaboratorioDAO {
                 lab.setCidade(rs.getString("cidade"));
                 lab.setEstado(rs.getString("uf"));
                 lab.setComplemento(rs.getString("complemento"));
+                lab.setStatus(rs.getString("_status"));
 
                 laboratorios.add(lab);
             }
@@ -125,14 +127,14 @@ public class LaboratorioDAO {
         return null;
     }
 
-    public static List<Laboratorio> readDinamico(String pesquisa, int tipo, String estado, String orderBy, boolean isDesc) {
+    public static List<Laboratorio> readDinamico(String pesquisa, int tipo, String estado, String status, String orderBy, boolean isDesc) {
         Connection con = Conexao.getConnection();
         CallableStatement cs = null;
         ResultSet rs = null;
         List<Laboratorio> laboratorios = new ArrayList();
 
         try {
-            cs = con.prepareCall("CALL filterLaboratorioDinamico(?, ?, ?, ?, ?)");
+            cs = con.prepareCall("CALL filterLaboratorioDinamico(?, ?, ?, ?, ?, ?)");
 
             cs.setString(1, "%" + pesquisa + "%");
             cs.setInt(2, tipo);
@@ -142,14 +144,20 @@ public class LaboratorioDAO {
             } else {
                 cs.setNull(3, Types.VARCHAR);
             }
-
-            if (orderBy != null) {
-                cs.setString(4, orderBy);
+            
+            if (status != null) {
+                cs.setString(4, status);
             } else {
                 cs.setNull(4, Types.VARCHAR);
             }
+
+            if (orderBy != null) {
+                cs.setString(5, orderBy);
+            } else {
+                cs.setNull(5, Types.VARCHAR);
+            }
             
-            cs.setBoolean(5, isDesc);
+            cs.setBoolean(6, isDesc);
 
             rs = cs.executeQuery();
 
@@ -167,6 +175,7 @@ public class LaboratorioDAO {
                 lab.setCidade(rs.getString("cidade"));
                 lab.setEstado(rs.getString("uf"));
                 lab.setComplemento(rs.getString("complemento"));
+                lab.setStatus(rs.getString("_status"));
 
                 laboratorios.add(lab);
             }
@@ -184,7 +193,7 @@ public class LaboratorioDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_lab(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL update_lab(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             stmt.setInt(1, l.getId());
             stmt.setString(2, l.getNome());
@@ -197,6 +206,7 @@ public class LaboratorioDAO {
             stmt.setString(9, l.getCidade());
             stmt.setString(10, l.getEstado());
             stmt.setString(11, l.getComplemento());
+            stmt.setString(12, l.getStatus());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

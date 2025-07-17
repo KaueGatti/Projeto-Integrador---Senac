@@ -1,8 +1,5 @@
 package com.mycompany.projetointegradordesktop.Objects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Laboratorio {
 
     private int id;
@@ -16,7 +13,15 @@ public class Laboratorio {
     private String cidade;
     private String estado;
     private String complemento;
-    private List<Remedio> medicamentosFornecidos = new ArrayList();
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -104,14 +109,6 @@ public class Laboratorio {
 
     public void setInscricaoEstadual(String inscricaoEstadual) {
         this.inscricaoEstadual = inscricaoEstadual;
-    }
-
-    public List<Remedio> getMedicamentosFornecidos() {
-        return medicamentosFornecidos;
-    }
-
-    public void setMedicamentosFornecidos(List<Remedio> medicamentosFornecidos) {
-        this.medicamentosFornecidos = medicamentosFornecidos;
     }
 
     @Override

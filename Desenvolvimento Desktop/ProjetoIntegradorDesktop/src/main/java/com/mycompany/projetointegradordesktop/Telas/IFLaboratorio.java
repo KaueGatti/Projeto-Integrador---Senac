@@ -33,10 +33,9 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
 
         jBAtualizarLaboratorio = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane = new javax.swing.JScrollPane();
         jTLaboratorio = new javax.swing.JTable();
         jBCadastrarLaboratorio = new javax.swing.JButton();
-        jBExcluirLaboratorio = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jBPesquisar = new javax.swing.JButton();
         jBFiltrar = new javax.swing.JButton();
@@ -47,6 +46,8 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jCBTipoPesquisa = new javax.swing.JComboBox<>();
         jCBEstado = new javax.swing.JComboBox<>();
         jFTFPesquisa = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jCBStatus = new javax.swing.JComboBox<>();
 
         setBorder(null);
         setClosable(true);
@@ -82,7 +83,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 jTLaboratorioMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTLaboratorio);
+        jScrollPane.setViewportView(jTLaboratorio);
 
         jBCadastrarLaboratorio.setBackground(new java.awt.Color(51, 90, 15));
         jBCadastrarLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -92,17 +93,6 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jBCadastrarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarLaboratorioActionPerformed(evt);
-            }
-        });
-
-        jBExcluirLaboratorio.setBackground(new java.awt.Color(153, 51, 0));
-        jBExcluirLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jBExcluirLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
-        jBExcluirLaboratorio.setText("Excluir Laboratório");
-        jBExcluirLaboratorio.setBorder(null);
-        jBExcluirLaboratorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBExcluirLaboratorioActionPerformed(evt);
             }
         });
 
@@ -153,6 +143,13 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jFTFPesquisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jFTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Status");
+
+        jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativado", "Desativado" }));
+        jCBStatus.setSelectedIndex(1);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -179,8 +176,13 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jCBoxDesc)))
-                .addContainerGap(413, Short.MAX_VALUE))
+                        .addComponent(jCBoxDesc))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +200,11 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jCBOrdenar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCBoxDesc))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -212,15 +218,13 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
                         .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBAtualizarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBExcluirLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25))
+                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane)
                         .addContainerGap())
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
@@ -233,12 +237,11 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBExcluirLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBAtualizarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -264,26 +267,23 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         openLaboratorioWindow(null);
     }//GEN-LAST:event_jBCadastrarLaboratorioActionPerformed
 
-    private void jBExcluirLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirLaboratorioActionPerformed
-        if (jTLaboratorio.getSelectedRow() != -1) {
-            LaboratorioDAO.delete(model.getLaboratorios().get(jTLaboratorio.getSelectedRow()));
-            model.deleteLinha(jTLaboratorio.getSelectedRow());
-        }
-    }//GEN-LAST:event_jBExcluirLaboratorioActionPerformed
-
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        model.setLaboratorios(LaboratorioDAO.readDinamico(jFTFPesquisa.getText(), jCBTipoPesquisa.getSelectedIndex(), null, null, false));
+        model.setLaboratorios(LaboratorioDAO.readDinamico(jFTFPesquisa.getText(), jCBTipoPesquisa.getSelectedIndex(), null, "Ativado", null, false));
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
         String pesquisa = jFTFPesquisa.getText();
         int tipoPesquisa = jCBTipoPesquisa.getSelectedIndex();
         String estado = null;
+        String status = null;
         String orderBy = null;
         boolean desc = false;
 
         if (jCBEstado.getSelectedIndex() != 0) {
             estado = jCBEstado.getSelectedItem().toString();
+        }
+        if (jCBStatus.getSelectedIndex() != 0) {
+            status = jCBStatus.getSelectedItem().toString();
         }
         if (jCBOrdenar.getSelectedIndex() != 0) {
             orderBy = getOrdenar();
@@ -291,7 +291,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         if (jCBoxDesc.isSelected()) {
             desc = true;
         }
-        model.setLaboratorios(LaboratorioDAO.readDinamico(pesquisa, tipoPesquisa, estado, orderBy, desc));
+        model.setLaboratorios(LaboratorioDAO.readDinamico(pesquisa, tipoPesquisa, estado, status, orderBy, desc));
     }//GEN-LAST:event_jBFiltrarActionPerformed
 
     private void jCBTipoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTipoPesquisaActionPerformed
@@ -327,8 +327,10 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         centralizador.setHorizontalAlignment(SwingConstants.CENTER);
         jTLaboratorio.getColumnModel().getColumn(1).setCellRenderer(centralizador);
         jTLaboratorio.getColumnModel().getColumn(2).setCellRenderer(centralizador);
+        jTLaboratorio.getColumnModel().getColumn(4).setCellRenderer(centralizador);
         jTLaboratorio.getColumnModel().getColumn(5).setCellRenderer(centralizador);
         jTLaboratorio.getColumnModel().getColumn(8).setCellRenderer(centralizador);
+        jTLaboratorio.getColumnModel().getColumn(10).setCellRenderer(centralizador);
     }
 
     private void openLaboratorioWindow(Laboratorio lab) {
@@ -358,8 +360,8 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
             }
         });
     }
-    
-        private void loadOrdenar() {
+
+    private void loadOrdenar() {
         jCBOrdenar.removeAllItems();
         jCBOrdenar.addItem("Nenhum");
         for (String coluna : model.getColunas()) {
@@ -396,19 +398,20 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAtualizarLaboratorio;
     private javax.swing.JButton jBCadastrarLaboratorio;
-    private javax.swing.JButton jBExcluirLaboratorio;
     private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JComboBox<String> jCBEstado;
     private javax.swing.JComboBox<String> jCBOrdenar;
+    private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JCheckBox jCBoxDesc;
     private javax.swing.JFormattedTextField jFTFPesquisa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JTable jTLaboratorio;
     // End of variables declaration//GEN-END:variables
 }
