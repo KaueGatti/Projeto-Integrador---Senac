@@ -49,7 +49,7 @@ public class CompraTableModel extends AbstractTableModel {
                 if (compras.get(rowIndex).getDataEntrega() != null) {
                     return compras.get(rowIndex).getDataEntrega();
                 }
-                return "";
+                return "Não entregue";
             case 3:
                 return compras.get(rowIndex).getNmr_nota_fiscal();
             case 4:
@@ -70,7 +70,7 @@ public class CompraTableModel extends AbstractTableModel {
                 compras.get(rowIndex).setDataCompra(LocalDate.parse((String) value));
                 break;
             case 2:
-                compras.get(rowIndex).setDataEntrega(LocalDate.parse((String) value));
+                compras.get(rowIndex).setDataEntrega((LocalDate) value);
                 break;
             case 3:
                 compras.get(rowIndex).setNmr_nota_fiscal((String) value);

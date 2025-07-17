@@ -84,6 +84,7 @@ public class JFRemedio extends javax.swing.JFrame {
         jBCadastrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         jBCadastrar.setText("Cadastrar");
+        jBCadastrar.setBorderPainted(false);
         jBCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarActionPerformed(evt);
@@ -97,6 +98,7 @@ public class JFRemedio extends javax.swing.JFrame {
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBCancelar.setForeground(new java.awt.Color(0, 0, 0));
         jBCancelar.setText("Cancelar");
+        jBCancelar.setBorderPainted(false);
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);

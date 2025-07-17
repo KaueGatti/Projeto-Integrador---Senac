@@ -286,15 +286,10 @@ public class CompraDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_compra(?, ?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL update_compra(?, ?)");
 
             stmt.setInt(1, c.getId());
-            stmt.setInt(2, c.getLaboratorio().getId());
-            stmt.setDate(3, Date.valueOf(c.getDataCompra()));
-            stmt.setDate(4, Date.valueOf(c.getDataEntrega()));
-            stmt.setString(5, c.getNmr_nota_fiscal());
-            stmt.setDouble(6, c.getTotalNota());
-            stmt.setString(7, c.getPagamento());
+            stmt.setDate(2, Date.valueOf(c.getDataEntrega()));
 
             stmt.executeUpdate();
         } catch (SQLException e) {

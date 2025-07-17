@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -25,6 +26,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         setVisible(true);
         loadTable();
         loadOrdenar();
+        jLLaboratorio.setIcon(new ImageIcon(getClass().getResource("/Imagens/Laboratorio Black.png")));
     }
 
     @SuppressWarnings("unchecked")
@@ -32,7 +34,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jBAtualizarLaboratorio = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLLaboratorio = new javax.swing.JLabel();
         jScrollPane = new javax.swing.JScrollPane();
         jTLaboratorio = new javax.swing.JTable();
         jBCadastrarLaboratorio = new javax.swing.JButton();
@@ -58,14 +60,15 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jBAtualizarLaboratorio.setForeground(new java.awt.Color(0, 0, 0));
         jBAtualizarLaboratorio.setText("Atualizar Laboratório");
         jBAtualizarLaboratorio.setBorder(null);
+        jBAtualizarLaboratorio.setBorderPainted(false);
         jBAtualizarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAtualizarLaboratorioActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Laboratórios");
+        jLLaboratorio.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLLaboratorio.setText("Laboratórios");
 
         jTLaboratorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,6 +93,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jBCadastrarLaboratorio.setForeground(new java.awt.Color(255, 255, 255));
         jBCadastrarLaboratorio.setText("Cadastrar Laboratório");
         jBCadastrarLaboratorio.setBorder(null);
+        jBCadastrarLaboratorio.setBorderPainted(false);
         jBCadastrarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarLaboratorioActionPerformed(evt);
@@ -101,6 +105,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jBPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         jBPesquisar.setText("Pesquisar");
         jBPesquisar.setBorder(null);
+        jBPesquisar.setBorderPainted(false);
         jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBPesquisarActionPerformed(evt);
@@ -112,6 +117,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
         jBFiltrar.setText("Filtrar");
         jBFiltrar.setBorder(null);
+        jBFiltrar.setBorderPainted(false);
         jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBFiltrarActionPerformed(evt);
@@ -217,7 +223,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLLaboratorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 377, Short.MAX_VALUE)
                         .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -238,7 +244,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBAtualizarLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
+                    .addComponent(jLLaboratorio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                 .addContainerGap())
@@ -355,8 +361,8 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                     LaboratorioDAO.update(labUpdated);
                 } else if (JFLaboratorio.getResponse() == 2) {
                     LaboratorioDAO.create(JFLaboratorio.getNewLaboratorio());
-                    model.loadTable();
                 }
+                model.loadTable();
             }
         });
     }
@@ -406,7 +412,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JCheckBox jCBoxDesc;
     private javax.swing.JFormattedTextField jFTFPesquisa;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLLaboratorio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

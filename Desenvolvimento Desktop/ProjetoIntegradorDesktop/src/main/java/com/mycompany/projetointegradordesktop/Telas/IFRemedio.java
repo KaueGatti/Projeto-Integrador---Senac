@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -26,6 +27,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         loadLaboratorios();
         loadCampos();
         loadOrdenar();
+        jLRemedio.setIcon(new ImageIcon(getClass().getResource("/Imagens/Remedio Black.png")));
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +38,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jTRemedio = new javax.swing.JTable();
         jBCadastrarRemedio = new javax.swing.JButton();
         jBAtualizarRemedio = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLRemedio = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTFPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -89,6 +91,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jBCadastrarRemedio.setForeground(new java.awt.Color(255, 255, 255));
         jBCadastrarRemedio.setText("Cadastrar Remédio");
         jBCadastrarRemedio.setBorder(null);
+        jBCadastrarRemedio.setBorderPainted(false);
         jBCadastrarRemedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarRemedioActionPerformed(evt);
@@ -100,14 +103,15 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jBAtualizarRemedio.setForeground(new java.awt.Color(0, 0, 0));
         jBAtualizarRemedio.setText("Atualizar Remédio");
         jBAtualizarRemedio.setBorder(null);
+        jBAtualizarRemedio.setBorderPainted(false);
         jBAtualizarRemedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAtualizarRemedioActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Remédios");
+        jLRemedio.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLRemedio.setText("Remédios");
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -116,6 +120,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jBPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         jBPesquisar.setText("Pesquisar");
         jBPesquisar.setBorder(null);
+        jBPesquisar.setBorderPainted(false);
         jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBPesquisarActionPerformed(evt);
@@ -132,6 +137,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
         jBFiltrar.setText("Filtrar");
         jBFiltrar.setBorder(null);
+        jBFiltrar.setBorderPainted(false);
         jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBFiltrarActionPerformed(evt);
@@ -357,7 +363,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLRemedio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 469, Short.MAX_VALUE)
                         .addComponent(jBCadastrarRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -380,7 +386,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBAtualizarRemedio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
+                    .addComponent(jLRemedio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                 .addContainerGap())
@@ -514,6 +520,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                     model.setValueAt(remedioUpdated.getValorCusto(), jTRemedio.getSelectedRow(), 3);
                     model.setValueAt(remedioUpdated.getValorVenda(), jTRemedio.getSelectedRow(), 4);
                     RemedioDAO.update(remedioUpdated);
+                    model.loadTable();
                 }
             }
         });
@@ -588,13 +595,13 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField jFTFValorCustoMin;
     private javax.swing.JFormattedTextField jFTFValorVendaMax;
     private javax.swing.JFormattedTextField jFTFValorVendaMin;
+    private javax.swing.JLabel jLRemedio;
     private javax.swing.JLabel jLValorCustoMax;
     private javax.swing.JLabel jLValorCustoMax1;
     private javax.swing.JLabel jLValorCustoMax2;
     private javax.swing.JLabel jLValorCustoMax3;
     private javax.swing.JLabel jLValorCustoMax4;
     private javax.swing.JLabel jLValorCustoMax5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

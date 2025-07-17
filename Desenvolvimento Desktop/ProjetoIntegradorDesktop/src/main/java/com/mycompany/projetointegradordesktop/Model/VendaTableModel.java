@@ -45,7 +45,10 @@ public class VendaTableModel extends AbstractTableModel {
             case 1:
                 return vendas.get(rowIndex).getDataVenda();
             case 2:
-                return vendas.get(rowIndex).getDataEntrega();
+                if (vendas.get(rowIndex).getDataEntrega() != null) {
+                    return vendas.get(rowIndex).getDataEntrega();
+                }
+                return "Não entregue";
             case 3:
                 return vendas.get(rowIndex).getNmr_nota_fiscal();
             case 4:
@@ -66,7 +69,7 @@ public class VendaTableModel extends AbstractTableModel {
                 vendas.get(rowIndex).setDataVenda(LocalDate.parse((String) value));
                 break;
             case 2:
-                vendas.get(rowIndex).setDataEntrega(LocalDate.parse((String) value));
+                vendas.get(rowIndex).setDataEntrega((LocalDate) value);
                 break;
             case 3:
                 vendas.get(rowIndex).setNmr_nota_fiscal((String) value);

@@ -144,9 +144,9 @@ CREATE PROCEDURE delete_compra(id_compra INT)
 DELETE FROM compra
 WHERE compra.id_compra = id_compra;
 
-CREATE PROCEDURE update_compra(id_compra INT, id_lab INT, data_compra DATE, data_entrega DATE, nmr_nota_fiscal VARCHAR(10), total_nota DECIMAL(10,2), forma_pagamento VARCHAR(20))
+CREATE PROCEDURE update_compra(id_compra INT, data_entrega DATE)
 UPDATE compra AS c
-SET c.id_lab = id_lab, c.data_compra = data_compra, c.data_entrega = data_entrega, c.nmr_nota_fiscal = nmr_nota_fiscal, c.total_nota = total_nota, c.forma_pagamento = forma_pagamento
+SET c.data_entrega = data_entrega
 WHERE c.id_compra = id_compra;
 
 DELIMITER $$
@@ -162,9 +162,9 @@ CREATE PROCEDURE delete_venda(id_venda INT)
 DELETE FROM venda
 WHERE venda.id_venda = id_venda;
 
-CREATE PROCEDURE update_venda(id_venda INT, id_drog INT)
+CREATE PROCEDURE update_venda(id_venda INT, data_entrega DATE)
 UPDATE venda AS v
-SET v.id_drog = id_drog
+SET v.data_entrega = data_entrega
 WHERE v.id_venda = id_venda;
 
 CREATE PROCEDURE add_item_compra(id_compra INT, id_remedio INT, quantidade INT)

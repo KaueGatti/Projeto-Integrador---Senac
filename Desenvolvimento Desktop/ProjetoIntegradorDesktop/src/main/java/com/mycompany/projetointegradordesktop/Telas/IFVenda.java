@@ -1,11 +1,9 @@
 package com.mycompany.projetointegradordesktop.Telas;
 
-import com.mycompany.projetointegradordesktop.DAO.CompraDAO;
 import com.mycompany.projetointegradordesktop.DAO.DrogariaDAO;
 import com.mycompany.projetointegradordesktop.DAO.ItemDAO;
 import com.mycompany.projetointegradordesktop.DAO.VendaDAO;
 import com.mycompany.projetointegradordesktop.Model.VendaTableModel;
-import com.mycompany.projetointegradordesktop.Objects.Compra;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import com.mycompany.projetointegradordesktop.Objects.Venda;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
@@ -13,6 +11,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
@@ -32,6 +31,8 @@ public class IFVenda extends javax.swing.JInternalFrame {
         loadDrogarias();
         loadOrdenar();
         loadCampos();
+        jBConfirmarEntrega.setEnabled(false);
+        jLVenda.setIcon(new ImageIcon(getClass().getResource("/Imagens/Venda Black.png")));
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +43,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jTVenda = new javax.swing.JTable();
         jBExcluirVenda = new javax.swing.JButton();
         jBNovaVenda = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLVenda = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTFPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -62,6 +63,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jCBDrogaria = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jCBPagamento = new javax.swing.JComboBox<>();
+        jBConfirmarEntrega = new javax.swing.JButton();
 
         setBorder(null);
 
@@ -88,6 +90,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jBExcluirVenda.setForeground(new java.awt.Color(255, 255, 255));
         jBExcluirVenda.setText("Excluir Venda");
         jBExcluirVenda.setBorder(null);
+        jBExcluirVenda.setBorderPainted(false);
         jBExcluirVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBExcluirVendaActionPerformed(evt);
@@ -99,14 +102,15 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jBNovaVenda.setForeground(new java.awt.Color(255, 255, 255));
         jBNovaVenda.setText("Nova Venda");
         jBNovaVenda.setBorder(null);
+        jBNovaVenda.setBorderPainted(false);
         jBNovaVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBNovaVendaActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Vendas");
+        jLVenda.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLVenda.setText("Vendas");
 
         jTFPesquisa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -115,6 +119,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jBPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         jBPesquisar.setText("Pesquisar");
         jBPesquisar.setBorder(null);
+        jBPesquisar.setBorderPainted(false);
         jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBPesquisarActionPerformed(evt);
@@ -126,6 +131,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
         jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
         jBFiltrar.setText("Filtrar");
         jBFiltrar.setBorder(null);
+        jBFiltrar.setBorderPainted(false);
         jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBFiltrarActionPerformed(evt);
@@ -277,6 +283,18 @@ public class IFVenda extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jBConfirmarEntrega.setBackground(new java.awt.Color(204, 204, 204));
+        jBConfirmarEntrega.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBConfirmarEntrega.setForeground(new java.awt.Color(0, 0, 0));
+        jBConfirmarEntrega.setText("Confirmar Entrega");
+        jBConfirmarEntrega.setBorder(null);
+        jBConfirmarEntrega.setBorderPainted(false);
+        jBConfirmarEntrega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBConfirmarEntregaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,8 +303,10 @@ public class IFVenda extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLVenda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBConfirmarEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -303,10 +323,11 @@ public class IFVenda extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(jLVenda)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBNovaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBConfirmarEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
@@ -392,11 +413,32 @@ public class IFVenda extends javax.swing.JInternalFrame {
 
     private void jTVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTVendaMouseClicked
         if (jTVenda.getSelectedRow() != -1) {
+            if (model.getValueAt(jTVenda.getSelectedRow(), 2).equals("Não entregue")) {
+                jBConfirmarEntrega.setEnabled(true);
+            } else {
+                jBConfirmarEntrega.setEnabled(false);
+            }
             if (evt.getClickCount() == 2) {
-                JFDadosVenda JFDadosCompra = new JFDadosVenda(model.getVendas().get(jTVenda.getSelectedRow()));
+                JFDadosVenda JFDadosVenda = new JFDadosVenda(model.getVendas().get(jTVenda.getSelectedRow()));
             }
         }
     }//GEN-LAST:event_jTVendaMouseClicked
+
+    private void jBConfirmarEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfirmarEntregaActionPerformed
+        if (jTVenda.getSelectedRow() != -1) {
+            JFEntrega JFEntrega = new JFEntrega();
+            JFEntrega.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    if (JFEntrega.getResponse()) {
+                        model.setValueAt(JFEntrega.getData(), jTVenda.getSelectedRow(), 2);
+                        VendaDAO.update(model.getVendas().get(jTVenda.getSelectedRow()));
+                        jBConfirmarEntrega.setEnabled(false);
+                    }
+                }
+            });
+        }
+    }//GEN-LAST:event_jBConfirmarEntregaActionPerformed
 
     private void loadTable() {
         jTVenda.setModel(model);
@@ -461,6 +503,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBConfirmarEntrega;
     private javax.swing.JButton jBExcluirVenda;
     private javax.swing.JButton jBFiltrar;
     private javax.swing.JButton jBNovaVenda;
@@ -475,7 +518,7 @@ public class IFVenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLValorCustoMax;
     private javax.swing.JLabel jLValorCustoMax1;
     private javax.swing.JLabel jLValorCustoMax5;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLVenda;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;

@@ -119,6 +119,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         jBSalvar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBSalvar.setForeground(new java.awt.Color(255, 255, 255));
         jBSalvar.setText("Salvar");
+        jBSalvar.setBorderPainted(false);
         jBSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSalvarActionPerformed(evt);
@@ -130,6 +131,7 @@ public class JFDrogaria extends javax.swing.JFrame {
 
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBCancelar.setText("Cancelar");
+        jBCancelar.setBorderPainted(false);
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);

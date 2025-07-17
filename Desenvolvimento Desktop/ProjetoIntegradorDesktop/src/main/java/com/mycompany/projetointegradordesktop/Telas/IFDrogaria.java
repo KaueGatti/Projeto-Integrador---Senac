@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
+import javax.swing.ImageIcon;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -25,13 +26,14 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         setVisible(true);
         loadTable();
         loadOrdenar();
+        jLDrogaria.setIcon(new ImageIcon(getClass().getResource("/Imagens/Drogaria Black.png")));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLDrogaria = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTDrogaria = new javax.swing.JTable();
         jBCadastrarDrogaria = new javax.swing.JButton();
@@ -53,8 +55,8 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         setClosable(true);
         setMaximizable(true);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Drogarias");
+        jLDrogaria.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLDrogaria.setText("Drogarias");
 
         jTDrogaria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,6 +81,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jBCadastrarDrogaria.setForeground(new java.awt.Color(255, 255, 255));
         jBCadastrarDrogaria.setText("Cadastrar Drogaria");
         jBCadastrarDrogaria.setBorder(null);
+        jBCadastrarDrogaria.setBorderPainted(false);
         jBCadastrarDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCadastrarDrogariaActionPerformed(evt);
@@ -90,6 +93,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jBAtualizarDrogaria.setForeground(new java.awt.Color(0, 0, 0));
         jBAtualizarDrogaria.setText("Atualizar Drogaria");
         jBAtualizarDrogaria.setBorder(null);
+        jBAtualizarDrogaria.setBorderPainted(false);
         jBAtualizarDrogaria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAtualizarDrogariaActionPerformed(evt);
@@ -101,6 +105,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jBPesquisar.setForeground(new java.awt.Color(255, 255, 255));
         jBPesquisar.setText("Pesquisar");
         jBPesquisar.setBorder(null);
+        jBPesquisar.setBorderPainted(false);
         jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBPesquisarActionPerformed(evt);
@@ -112,6 +117,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
         jBFiltrar.setForeground(new java.awt.Color(255, 255, 255));
         jBFiltrar.setText("Filtrar");
         jBFiltrar.setBorder(null);
+        jBFiltrar.setBorderPainted(false);
         jBFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBFiltrarActionPerformed(evt);
@@ -217,7 +223,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLDrogaria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 429, Short.MAX_VALUE)
                         .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -240,7 +246,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBCadastrarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jBAtualizarDrogaria, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
+                    .addComponent(jLDrogaria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                 .addContainerGap())
@@ -350,8 +356,8 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
                     DrogariaDAO.update(drogariaUpdated);
                 } else if (JFDrogaria.getResponse() == 2) {
                     DrogariaDAO.create(JFDrogaria.getNewDrogaria());
-                    model.loadTable();
                 }
+                model.loadTable();
             }
         });
     }
@@ -399,7 +405,7 @@ public class IFDrogaria extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jCBTipoPesquisa;
     private javax.swing.JCheckBox jCBoxDesc;
     private javax.swing.JFormattedTextField jFTFPesquisa;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLDrogaria;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

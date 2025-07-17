@@ -74,6 +74,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jBSalvar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBSalvar.setForeground(new java.awt.Color(255, 255, 255));
         jBSalvar.setText("Salvar");
+        jBSalvar.setBorderPainted(false);
         jBSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSalvarActionPerformed(evt);
@@ -82,6 +83,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
 
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jBCancelar.setText("Cancelar");
+        jBCancelar.setBorderPainted(false);
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
@@ -225,12 +227,13 @@ public class JFLaboratorio extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLTitulo)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLStatus)
-                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)

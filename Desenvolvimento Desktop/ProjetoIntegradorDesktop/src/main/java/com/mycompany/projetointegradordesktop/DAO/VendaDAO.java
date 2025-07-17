@@ -282,15 +282,10 @@ public class VendaDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("CALL update_venda(?, ?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("CALL update_venda(?, ?)");
 
             stmt.setInt(1, v.getId());
-            stmt.setInt(2, v.getDrogaria().getId());
-            stmt.setDate(3, Date.valueOf(v.getDataVenda()));
-            stmt.setDate(4, Date.valueOf(v.getDataEntrega()));
-            stmt.setString(5, v.getNmr_nota_fiscal());
-            stmt.setDouble(6, v.getTotalNota());
-            stmt.setString(7, v.getPagamento());
+            stmt.setDate(2, Date.valueOf(v.getDataEntrega()));
 
             stmt.executeUpdate();
         } catch (SQLException e) {
