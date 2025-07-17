@@ -9,12 +9,12 @@ import javax.swing.ImageIcon;
 public class JFMensagemExcluir extends javax.swing.JFrame {
 
     private boolean response;
-    
+
     public JFMensagemExcluir() {
         initComponents();
-        
+
     }
-    
+
     public JFMensagemExcluir(Object obj) {
         initComponents();
         setLocationRelativeTo(null);
@@ -38,7 +38,7 @@ public class JFMensagemExcluir extends javax.swing.JFrame {
 
         jLMensagem.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLMensagem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLMensagem.setText("Tem certeza que deseja excluir esse remédio?");
+        jLMensagem.setText("Tem certeza que deseja excluir esse item?");
 
         jBCancelar.setBackground(new java.awt.Color(204, 204, 204));
         jBCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -132,23 +132,14 @@ public class JFMensagemExcluir extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void loadMensagem(Object obj) {
-        if (obj instanceof Remedio) {
-            jLIcon.setIcon(new ImageIcon(getClass().getResource("/Imagens/Remedio Black.png")));
-            jLMensagem.setText("Tem certeza que deseja excluir esse remédio?");
-        } else if (obj instanceof Compra) {
+        if (obj instanceof Compra) {
             jLIcon.setIcon(new ImageIcon(getClass().getResource("/Imagens/Compra Black.png")));
             jLMensagem.setText("Tem certeza que deseja excluir essa compra?");
-        } else if (obj instanceof Venda) {
+        } else {
             jLIcon.setIcon(new ImageIcon(getClass().getResource("/Imagens/Venda Black.png")));
             jLMensagem.setText("Tem certeza que deseja excluir essa venda?");
-        } else if (obj instanceof Laboratorio) {
-            jLIcon.setIcon(new ImageIcon(getClass().getResource("/Imagens/Laboratorio Black.png")));
-            jLMensagem.setText("Tem certeza que deseja excluir esse laboratório?");
-        } else {
-            jLIcon.setIcon(new ImageIcon(getClass().getResource("/Imagens/Drogaria Black.png")));
-            jLMensagem.setText("Tem certeza que deseja excluir essa drogaria?");
         }
     }
     

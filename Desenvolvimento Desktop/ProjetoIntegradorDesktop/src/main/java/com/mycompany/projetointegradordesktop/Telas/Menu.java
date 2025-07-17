@@ -15,6 +15,7 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         loadButtons();
         setExtendedState(MAXIMIZED_BOTH);
+        jLLogo.setIcon(new ImageIcon(getClass().getResource("/Imagens/Logo.jpg")));
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +30,7 @@ public class Menu extends javax.swing.JFrame {
         jBLaboratorio = new javax.swing.JButton();
         jBCompra = new javax.swing.JButton();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -178,15 +180,22 @@ public class Menu extends javax.swing.JFrame {
                 .addContainerGap(235, Short.MAX_VALUE))
         );
 
+        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jDesktopPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jDesktopPane1.setLayer(jLLogo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1844, Short.MAX_VALUE)
+            .addComponent(jLLogo, javax.swing.GroupLayout.DEFAULT_SIZE, 1844, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 897, Short.MAX_VALUE)
+            .addComponent(jLLogo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,6 +226,7 @@ public class Menu extends javax.swing.JFrame {
         IFRemedio IFRemedio = new IFRemedio();
         IFRemedio.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFRemedio);
+        jDesktopPane1.setComponentZOrder(jLLogo, jDesktopPane1.getComponentCount() - 1);
     }//GEN-LAST:event_jBRemedioActionPerformed
 
     private void jBDrogariaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDrogariaActionPerformed
@@ -224,6 +234,7 @@ public class Menu extends javax.swing.JFrame {
         IFDrogaria IFDrogaria = new IFDrogaria();
         IFDrogaria.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFDrogaria);
+        jDesktopPane1.setComponentZOrder(jLLogo, jDesktopPane1.getComponentCount() - 1);
     }//GEN-LAST:event_jBDrogariaActionPerformed
 
     private void jBVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVendaActionPerformed
@@ -231,6 +242,7 @@ public class Menu extends javax.swing.JFrame {
         IFVenda IFVenda = new IFVenda();
         IFVenda.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFVenda);
+        jDesktopPane1.setComponentZOrder(jLLogo, jDesktopPane1.getComponentCount() - 1);
     }//GEN-LAST:event_jBVendaActionPerformed
 
     private void jBLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLaboratorioActionPerformed
@@ -238,6 +250,7 @@ public class Menu extends javax.swing.JFrame {
         IFLaboratorio IFLaboratorio = new IFLaboratorio();
         IFLaboratorio.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFLaboratorio);
+        jDesktopPane1.setComponentZOrder(jLLogo, jDesktopPane1.getComponentCount() - 1);
     }//GEN-LAST:event_jBLaboratorioActionPerformed
 
     private void jBCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCompraActionPerformed
@@ -245,6 +258,7 @@ public class Menu extends javax.swing.JFrame {
         IFCompra IFCompra = new IFCompra();
         IFCompra.setSize(jDesktopPane1.getSize());
         jDesktopPane1.add(IFCompra);
+        jDesktopPane1.setComponentZOrder(jLLogo, jDesktopPane1.getComponentCount() - 1);
     }//GEN-LAST:event_jBCompraActionPerformed
 
     public void closeIF() {
@@ -258,7 +272,7 @@ public class Menu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void loadButtons() {
         jBMenu.setBorder(new EmptyBorder(10, 90, 10, 10));
         jBMenu.setIcon(new ImageIcon(getClass().getResource("/Imagens/Menu.png")));
@@ -272,9 +286,9 @@ public class Menu extends javax.swing.JFrame {
         jBLaboratorio.setIcon(new ImageIcon(getClass().getResource("/Imagens/Laboratorio.png")));
         jBDrogaria.setBorder(new EmptyBorder(10, 90, 10, 10));
         jBDrogaria.setIcon(new ImageIcon(getClass().getResource("/Imagens/Drogaria.png")));
-        
+
     }
-    
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -296,6 +310,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jBRemedio;
     private javax.swing.JButton jBVenda;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLLogo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
