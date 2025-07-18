@@ -356,23 +356,27 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
         if (total > 0) {
-            Venda venda = new Venda();
+            if (!jFTFData.getText().contains("_")) {
+                Venda venda = new Venda();
 
-            venda.setDataVenda(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            venda.setDrogaria((Drogaria) jCBDrogaria.getSelectedItem());
-            venda.setTotalNota(total);
-            venda.setNmr_nota_fiscal(jTFNNF.getText());
-            venda.setPagamento(jCBPagamento.getSelectedItem().toString());
+                venda.setDataVenda(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                venda.setDrogaria((Drogaria) jCBDrogaria.getSelectedItem());
+                venda.setTotalNota(total);
+                venda.setNmr_nota_fiscal(jTFNNF.getText());
+                venda.setPagamento(jCBPagamento.getSelectedItem().toString());
 
-            int idNovaVenda = VendaDAO.create(venda);
-            System.out.println(idNovaVenda);
-            for (Item item : model.getItens()) {
-                item.setIdTransacao(idNovaVenda);
+                int idNovaVenda = VendaDAO.create(venda);
+                System.out.println(idNovaVenda);
+                for (Item item : model.getItens()) {
+                    item.setIdTransacao(idNovaVenda);
+                }
+
+                ItemDAO.create(model.getItens(), "venda");
+
+                this.dispose();
+            } else {
+                jLInfoCompra.setText("Data inválida");
             }
-
-            ItemDAO.create(model.getItens(), "venda");
-
-            this.dispose();
         } else {
             jLInfoCompra.setText("Adicione pelo menos 1 remédio a venda");
         }

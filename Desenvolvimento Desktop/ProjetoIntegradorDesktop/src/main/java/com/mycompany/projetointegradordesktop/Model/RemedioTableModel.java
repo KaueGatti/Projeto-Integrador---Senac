@@ -44,7 +44,7 @@ public class RemedioTableModel extends AbstractTableModel {
                 if (remedios.get(rowIndex).getDataUltimaCompra() != null) {
                     return remedios.get(rowIndex).getDataUltimaCompra().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 }
-                break;
+                return "Não comprado";
             case 3:
                 return FormatadorValor.formatarValor(remedios.get(rowIndex).getValorCusto());
             case 4:

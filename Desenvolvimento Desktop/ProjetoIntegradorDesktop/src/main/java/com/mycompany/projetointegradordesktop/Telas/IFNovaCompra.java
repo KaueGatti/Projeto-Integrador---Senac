@@ -368,24 +368,29 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBRemoverActionPerformed
 
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
-        if (total > 0) {
-            Compra compra = new Compra();
+        if (total > 0 ) {
+            if (!jFTFData.getText().contains("_")) {
+                Compra compra = new Compra();
 
-            compra.setDataCompra(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            compra.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
-            compra.setTotalNota(total);
-            compra.setNmr_nota_fiscal(jTFNNF.getText());
-            compra.setPagamento(jCBPagamento.getSelectedItem().toString());
+                compra.setDataCompra(LocalDate.parse(jFTFData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                compra.setLaboratorio((Laboratorio) jCBLaboratorio.getSelectedItem());
+                compra.setTotalNota(total);
+                compra.setNmr_nota_fiscal(jTFNNF.getText());
+                compra.setPagamento(jCBPagamento.getSelectedItem().toString());
 
-            int idNovaCompra = CompraDAO.create(compra);
-            System.out.println(idNovaCompra);
-            for (Item item : model.getItens()) {
-                item.setIdTransacao(idNovaCompra);
+                int idNovaCompra = CompraDAO.create(compra);
+                System.out.println(idNovaCompra);
+                for (Item item : model.getItens()) {
+                    item.setIdTransacao(idNovaCompra);
+                }
+
+                ItemDAO.create(model.getItens(), "compra");
+
+                this.dispose();
+                
+            } else {
+                jLInfoCompra.setText("Data inválida");
             }
-
-            ItemDAO.create(model.getItens(), "compra");
-
-            this.dispose();
         } else {
             jLInfoCompra.setText("Adicione pelo menos 1 remédio a compra");
         }
