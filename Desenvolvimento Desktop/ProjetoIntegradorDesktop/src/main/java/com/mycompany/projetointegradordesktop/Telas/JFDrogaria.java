@@ -148,7 +148,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         jLStatus.setText("Status");
 
         jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -336,7 +336,7 @@ public class JFDrogaria extends javax.swing.JFrame {
         jTFCidade.setText(drogariaUpdated.getCidade());
         jCBEstado.setSelectedItem(drogariaUpdated.getEstado());
         jTFComplemento.setText(drogariaUpdated.getComplemento());
-        if (!drogariaUpdated.getStatus().equalsIgnoreCase("Ativado")) {
+        if (!drogariaUpdated.getStatus().equalsIgnoreCase("Ativo")) {
             jCBStatus.setSelectedIndex(1);
         }
     }

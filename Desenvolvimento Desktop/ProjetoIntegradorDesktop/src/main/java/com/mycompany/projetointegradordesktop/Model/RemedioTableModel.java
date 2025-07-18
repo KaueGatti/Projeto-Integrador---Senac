@@ -104,7 +104,7 @@ public class RemedioTableModel extends AbstractTableModel {
 
     public void loadTable() {
         remedios.clear();
-        for (Remedio remedio : RemedioDAO.readDinamico("", null, 0, 1000, 0, 1000, "Ativado", null, false)) {
+        for (Remedio remedio : RemedioDAO.readDinamico("", null, 0, 1000, 0, 1000, "Ativo", null, false)) {
             remedios.add(remedio);
         }
         fireTableDataChanged();

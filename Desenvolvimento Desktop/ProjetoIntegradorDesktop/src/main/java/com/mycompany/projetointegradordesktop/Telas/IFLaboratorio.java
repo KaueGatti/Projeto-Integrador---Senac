@@ -153,7 +153,7 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
         jLabel3.setText("Status");
 
         jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativado", "Desativado" }));
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativo", "Inativo" }));
         jCBStatus.setSelectedIndex(1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -187,8 +187,8 @@ public class IFLaboratorio extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(380, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

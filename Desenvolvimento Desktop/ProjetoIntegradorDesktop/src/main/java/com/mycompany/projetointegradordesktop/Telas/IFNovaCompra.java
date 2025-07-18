@@ -408,7 +408,7 @@ public class IFNovaCompra extends javax.swing.JInternalFrame {
 
     public void loadLaboratorios() {
         jCBLaboratorio.removeAllItems();
-        for (Laboratorio l : LaboratorioDAO.readDinamico("", 0, null, "Ativado", null, false)) {
+        for (Laboratorio l : LaboratorioDAO.readDinamico("", 0, null, "Ativo", null, false)) {
             jCBLaboratorio.addItem(l);
         }
     }

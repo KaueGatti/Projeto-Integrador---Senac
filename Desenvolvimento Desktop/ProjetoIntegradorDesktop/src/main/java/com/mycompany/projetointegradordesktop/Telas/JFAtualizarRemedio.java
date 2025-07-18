@@ -142,7 +142,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         jLabel8.setText("Status");
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -343,7 +343,7 @@ public class JFAtualizarRemedio extends javax.swing.JFrame {
         jFTFValorCusto.setValue(remedioUpdated.getValorCusto());
         jFTFValorVenda.setValue(remedioUpdated.getValorVenda());
         jTFQntdEstoque.setText(String.valueOf(remedioUpdated.getQuantidade()));
-        if (!remedioUpdated.getStatus().equalsIgnoreCase("Ativado")) {
+        if (!remedioUpdated.getStatus().equalsIgnoreCase("Ativo")) {
             jComboBox1.setSelectedIndex(1);
         }
     }

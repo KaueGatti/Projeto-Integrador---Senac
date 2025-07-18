@@ -1,26 +1,26 @@
 INSERT INTO laboratorio (nome, cnpj, ie, numero, rua, cep, bairro, cidade, uf, complemento, _status) VALUES
-('LabVida', '12.345.678/0001-01', '123.456.789.000', '101', 'Rua das Flores', '12345-678', 'Centro', 'São Paulo', 'SP', 'Sala 2', 'ATIVADO'),
-('Farmatec', '23.456.789/0001-02', '234.567.890.001', '202', 'Av. Brasil', '23456-789', 'Jardins', 'Rio de Janeiro', 'RJ', 'Andar 1', 'ATIVADO'),
-('BioLab', '34.567.890/0001-03', '345.678.901.002', '303', 'Rua Alfa', '34567-890', 'Boa Vista', 'Curitiba', 'PR', 'Bloco B', 'ATIVADO'),
-('MedQuim', '45.678.901/0001-04', '456.789.012.003', '404', 'Av. Central', '45678-901', 'Industrial', 'Belo Horizonte', 'MG', 'Galpão 3', 'ATIVADO'),
-('PharmaPlus', '56.789.012/0001-05', '567.890.123.004', '505', 'Rua Beta', '56789-012', 'Centro', 'Porto Alegre', 'RS', 'Loja 1', 'ATIVADO'),
-('NovaQuímica', '67.890.123/0001-06', '678.901.234.005', '606', 'Av. das Nações', '67890-123', 'Zona Sul', 'Brasília', 'DF', 'Anexo', 'ATIVADO'),
-('VidaLab', '78.901.234/0001-07', '789.012.345.006', '707', 'Rua Gama', '78901-234', 'Jardim América', 'Goiânia', 'GO', 'Prédio A', 'ATIVADO'),
-('Sanitas', '89.012.345/0001-08', '890.123.456.007', '808', 'Rua Zeta', '89012-345', 'São Cristóvão', 'Salvador', 'BA', 'Casa 5', 'ATIVADO'),
-('LabUnião', '90.123.456/0001-09', '901.234.567.008', '909', 'Rua Omega', '90123-456', 'Parque Novo', 'Fortaleza', 'CE', 'Fundos', 'ATIVADO'),
-('TecnoLab', '01.234.567/0001-10', '012.345.678.009', '010', 'Av. Delta', '01234-567', 'Zona Norte', 'Manaus', 'AM', 'Galpão 9', 'ATIVADO');
+('LabVida', '12.345.678/0001-01', '123.456.789.000', '101', 'Rua das Flores', '12345-678', 'Centro', 'São Paulo', 'SP', 'Sala 2', 'ATIVO'),
+('Farmatec', '23.456.789/0001-02', '234.567.890.001', '202', 'Av. Brasil', '23456-789', 'Jardins', 'Rio de Janeiro', 'RJ', 'Andar 1', 'ATIVO'),
+('BioLab', '34.567.890/0001-03', '345.678.901.002', '303', 'Rua Alfa', '34567-890', 'Boa Vista', 'Curitiba', 'PR', 'Bloco B', 'ATIVO'),
+('MedQuim', '45.678.901/0001-04', '456.789.012.003', '404', 'Av. Central', '45678-901', 'Industrial', 'Belo Horizonte', 'MG', 'Galpão 3', 'ATIVO'),
+('PharmaPlus', '56.789.012/0001-05', '567.890.123.004', '505', 'Rua Beta', '56789-012', 'Centro', 'Porto Alegre', 'RS', 'Loja 1', 'ATIVO'),
+('NovaQuímica', '67.890.123/0001-06', '678.901.234.005', '606', 'Av. das Nações', '67890-123', 'Zona Sul', 'Brasília', 'DF', 'Anexo', 'ATIVO'),
+('VidaLab', '78.901.234/0001-07', '789.012.345.006', '707', 'Rua Gama', '78901-234', 'Jardim América', 'Goiânia', 'GO', 'Prédio A', 'ATIVO'),
+('Sanitas', '89.012.345/0001-08', '890.123.456.007', '808', 'Rua Zeta', '89012-345', 'São Cristóvão', 'Salvador', 'BA', 'Casa 5', 'ATIVO'),
+('LabUnião', '90.123.456/0001-09', '901.234.567.008', '909', 'Rua Omega', '90123-456', 'Parque Novo', 'Fortaleza', 'CE', 'Fundos', 'ATIVO'),
+('TecnoLab', '01.234.567/0001-10', '012.345.678.009', '010', 'Av. Delta', '01234-567', 'Zona Norte', 'Manaus', 'AM', 'Galpão 9', 'ATIVO');
 
 INSERT INTO drogaria (nome, cnpj, numero, rua, cep, bairro, cidade, uf, complemento, _status) VALUES
-('DrogaFácil', '11.111.111/0001-11', '12', 'Rua Amapá', '11111-111', 'Centro', 'São Paulo', 'SP', 'Loja 2', 'ATIVADO'),
-('Farmácia São João', '22.222.222/0001-22', '34', 'Av. Atlântica', '22222-222', 'Copacabana', 'Rio de Janeiro', 'RJ', 'Térreo', 'ATIVADO'),
-('Drogaria Brasil', '33.333.333/0001-33', '56', 'Rua Bahia', '33333-333', 'Savassi', 'Belo Horizonte', 'MG', 'Loja 1', 'ATIVADO'),
-('VidaFarma', '44.444.444/0001-44', '78', 'Av. Paraná', '44444-444', 'Jardim Botânico', 'Curitiba', 'PR', 'Subsolo', 'ATIVADO'),
-('SuperFarma', '55.555.555/0001-55', '90', 'Rua Ceará', '55555-555', 'Três Figueiras', 'Porto Alegre', 'RS', 'Loja 3', 'ATIVADO'),
-('DrogaMais', '66.666.666/0001-66', '21', 'Rua Sergipe', '66666-666', 'Setor Sul', 'Goiânia', 'GO', 'Andar 2', 'ATIVADO'),
-('PopularFarma', '77.777.777/0001-77', '43', 'Av. Bahia', '77777-777', 'Asa Norte', 'Brasília', 'DF', 'Box 4', 'ATIVADO'),
-('FarmaCentro', '88.888.888/0001-88', '65', 'Rua Amazonas', '88888-888', 'Pituba', 'Salvador', 'BA', 'Sala 3', 'ATIVADO'),
-('Drogaria Pague Menos', '99.999.999/0001-99', '87', 'Av. Beira Mar', '99999-999', 'Meireles', 'Fortaleza', 'CE', 'Loja A', 'ATIVADO'),
-('BemEstar Farma', '10.101.010/0001-00', '09', 'Rua Rio Negro', '01010-101', 'Centro', 'Manaus', 'AM', 'Quiosque', 'ATIVADO');
+('DrogaFácil', '11.111.111/0001-11', '12', 'Rua Amapá', '11111-111', 'Centro', 'São Paulo', 'SP', 'Loja 2', 'ATIVO'),
+('Farmácia São João', '22.222.222/0001-22', '34', 'Av. Atlântica', '22222-222', 'Copacabana', 'Rio de Janeiro', 'RJ', 'Térreo', 'ATIVO'),
+('Drogaria Brasil', '33.333.333/0001-33', '56', 'Rua Bahia', '33333-333', 'Savassi', 'Belo Horizonte', 'MG', 'Loja 1', 'ATIVO'),
+('VidaFarma', '44.444.444/0001-44', '78', 'Av. Paraná', '44444-444', 'Jardim Botânico', 'Curitiba', 'PR', 'Subsolo', 'ATIVO'),
+('SuperFarma', '55.555.555/0001-55', '90', 'Rua Ceará', '55555-555', 'Três Figueiras', 'Porto Alegre', 'RS', 'Loja 3', 'ATIVO'),
+('DrogaMais', '66.666.666/0001-66', '21', 'Rua Sergipe', '66666-666', 'Setor Sul', 'Goiânia', 'GO', 'Andar 2', 'ATIVO'),
+('PopularFarma', '77.777.777/0001-77', '43', 'Av. Bahia', '77777-777', 'Asa Norte', 'Brasília', 'DF', 'Box 4', 'ATIVO'),
+('FarmaCentro', '88.888.888/0001-88', '65', 'Rua Amazonas', '88888-888', 'Pituba', 'Salvador', 'BA', 'Sala 3', 'ATIVO'),
+('Drogaria Pague Menos', '99.999.999/0001-99', '87', 'Av. Beira Mar', '99999-999', 'Meireles', 'Fortaleza', 'CE', 'Loja A', 'ATIVO'),
+('BemEstar Farma', '10.101.010/0001-00', '09', 'Rua Rio Negro', '01010-101', 'Centro', 'Manaus', 'AM', 'Quiosque', 'ATIVO');
 
 INSERT INTO remedio (id_lab, descricao, data_ultima_compra, valor_custo, valor_venda, qntd_armazenada) VALUES
 (1, 'Dipirona 500mg', '2025-06-01', 1.20, 2.50, 150),
@@ -114,10 +114,10 @@ INSERT INTO remedio (id_lab, descricao, data_ultima_compra, valor_custo, valor_v
 (9, 'Finasterida', '2025-06-04', 2.10, 4.20, 60),
 (10, 'Minoxidil', '2025-05-31', 2.50, 5.00, 68);
 
-/*select * from laboratorio;
+select * from laboratorio;
 select * from remedio;
 select * from drogaria;
 select * from venda;
 select * from compra;
 select * from item_compra;
-select * from item_venda;*/
+select * from item_venda;

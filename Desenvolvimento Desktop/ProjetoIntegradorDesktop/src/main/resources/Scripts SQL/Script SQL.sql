@@ -16,7 +16,7 @@ CREATE TABLE laboratorio (
     cidade varchar(20) NOT NULL,
     uf CHAR(2) NOT NULL,
     complemento VARCHAR(20) NOT NULL,
-    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVO',
     PRIMARY KEY (id_lab)
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE remedio (
 	valor_custo DECIMAL(10,2) NOT NULL,
 	valor_venda DECIMAL(10,2) NOT NULL,
     qntd_armazenada INT NOT NULL DEFAULT 0,
-    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVO',
     PRIMARY KEY (id_remedio),
     CONSTRAINT fk_id_lab FOREIGN KEY (id_lab) REFERENCES laboratorio (id_lab)
 );
@@ -44,7 +44,7 @@ CREATE TABLE drogaria (
     cidade VARCHAR(20) NOT NULL,
     uf CHAR(2) NOT NULL,
     complemento VARCHAR(20) NOT NULL,
-    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVADO',
+    _status VARCHAR(15) NOT NULL DEFAULT 'ATIVO',
     PRIMARY KEY (id_drog)
 );
 
@@ -395,4 +395,4 @@ DELIMITER ;
 CREATE VIEW remedios AS
 SELECT remedio.* FROM remedio
 INNER JOIN laboratorio ON remedio.id_lab = laboratorio.id_lab
-WHERE laboratorio._status = "Ativado";
+WHERE laboratorio._status = "Ativo";

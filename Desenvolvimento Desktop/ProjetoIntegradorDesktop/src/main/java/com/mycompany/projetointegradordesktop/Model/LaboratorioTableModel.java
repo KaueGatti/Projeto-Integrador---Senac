@@ -121,7 +121,7 @@ public class LaboratorioTableModel extends AbstractTableModel {
     
     public void loadTable() {
         laboratorios.clear();
-        for (Laboratorio lab: LaboratorioDAO.readDinamico("", 0, null, "Ativado", null, false)) {
+        for (Laboratorio lab: LaboratorioDAO.readDinamico("", 0, null, "Ativo", null, false)) {
             laboratorios.add(lab);
         }
         fireTableDataChanged();

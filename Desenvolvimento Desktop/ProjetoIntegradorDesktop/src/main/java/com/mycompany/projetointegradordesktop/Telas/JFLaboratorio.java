@@ -150,7 +150,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jCBEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
 
         jLStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLStatus.setText("Status");
@@ -373,7 +373,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
         jTFCidade.setText(labUpdated.getCidade());
         jCBEstado.setSelectedItem(labUpdated.getEstado());
         jTFComplemento.setText(labUpdated.getComplemento());
-        if (!labUpdated.getStatus().equalsIgnoreCase("Ativado")) {
+        if (!labUpdated.getStatus().equalsIgnoreCase("Ativo")) {
             jCBStatus.setSelectedIndex(1);
         }
     }

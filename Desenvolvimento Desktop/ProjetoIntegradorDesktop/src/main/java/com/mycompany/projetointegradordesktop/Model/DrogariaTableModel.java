@@ -115,7 +115,7 @@ public class DrogariaTableModel extends AbstractTableModel {
 
     public void loadTable() {
         drogarias.clear();
-        for (Drogaria drogaria : DrogariaDAO.readDinamico("", 0, null, "Ativado", null, false)) {
+        for (Drogaria drogaria : DrogariaDAO.readDinamico("", 0, null, "Ativo", null, false)) {
             drogarias.add(drogaria);
         }
         fireTableDataChanged();

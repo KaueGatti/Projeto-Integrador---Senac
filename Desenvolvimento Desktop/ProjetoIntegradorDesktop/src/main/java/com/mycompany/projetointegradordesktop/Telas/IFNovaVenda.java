@@ -414,7 +414,7 @@ public class IFNovaVenda extends javax.swing.JInternalFrame {
 
     public void loadDrogarias() {
         jCBDrogaria.removeAllItems();
-        for (Drogaria d : DrogariaDAO.readDinamico("", 0, null, "Ativado", null, false)) {
+        for (Drogaria d : DrogariaDAO.readDinamico("", 0, null, "Ativo", null, false)) {
             jCBDrogaria.addItem(d);
         }
     }

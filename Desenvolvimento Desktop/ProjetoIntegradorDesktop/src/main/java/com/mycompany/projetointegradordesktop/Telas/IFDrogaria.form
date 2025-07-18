@@ -179,10 +179,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCBStatus" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCBStatus" min="-2" pref="130" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="375" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -374,8 +374,8 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="3">
                 <StringItem index="0" value="Todos"/>
-                <StringItem index="1" value="Ativado"/>
-                <StringItem index="2" value="Desativado"/>
+                <StringItem index="1" value="Ativo"/>
+                <StringItem index="2" value="Inativo"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="1"/>

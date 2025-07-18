@@ -6,6 +6,7 @@ import com.mycompany.projetointegradordesktop.Model.RemedioTableModel;
 import com.mycompany.projetointegradordesktop.Objects.Laboratorio;
 import com.mycompany.projetointegradordesktop.Objects.Remedio;
 import com.mycompany.projetointegradordesktop.Util.FormatadorValor;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
@@ -263,7 +264,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         });
 
         jCBStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativado", "Desativado" }));
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Ativo", "Inativo" }));
         jCBStatus.setSelectedIndex(1);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -312,7 +313,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(392, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -425,7 +426,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBAtualizarRemedioActionPerformed
 
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
-        model.setRemedios(RemedioDAO.readDinamico(jTFPesquisa.getText(), null, 0, 1000, 0, 1000, "Ativado", null, false));
+        model.setRemedios(RemedioDAO.readDinamico(jTFPesquisa.getText(), null, 0, 1000, 0, 1000, "Ativo", null, false));
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jBFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFiltrarActionPerformed
@@ -501,6 +502,7 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         jTRemedio.setRowHeight(24);
         DefaultTableCellRenderer centralizador = new DefaultTableCellRenderer();
         centralizador.setHorizontalAlignment(SwingConstants.CENTER);
+        
         jTRemedio.getColumnModel().getColumn(2).setCellRenderer(centralizador);
         jTRemedio.getColumnModel().getColumn(3).setCellRenderer(centralizador);
         jTRemedio.getColumnModel().getColumn(4).setCellRenderer(centralizador);
@@ -526,12 +528,12 @@ public class IFRemedio extends javax.swing.JInternalFrame {
         });
     }
 
-    public void loadLaboratorios() {
+    private void loadLaboratorios() {
         jCBLaboratorio.removeAllItems();
         Laboratorio l = new Laboratorio();
         l.setNome("Todos");
         jCBLaboratorio.addItem(l);
-        for (Laboratorio lab : LaboratorioDAO.readDinamico("", 0, null, "Ativado", null, false)) {
+        for (Laboratorio lab : LaboratorioDAO.readDinamico("", 0, null, "Ativo", null, false)) {
             jCBLaboratorio.addItem(lab);
         }
     }
