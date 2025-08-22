@@ -406,7 +406,7 @@ public class JFLaboratorio extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        for (Component comp : getComponents()) {
+        for (Component comp : getContentPane().getComponents()) {
             if (comp instanceof JTextField campo) {
                 if (campo.getText().equals("")) {
                     jLErro.setText("Preencha todos os campos");

@@ -3,8 +3,6 @@ package com.mycompany.projetointegradordesktop.Telas;
 import com.mycompany.projetointegradordesktop.Objects.Drogaria;
 import java.awt.Component;
 import java.text.ParseException;
-import java.util.Locale;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatterFactory;
@@ -318,7 +316,7 @@ public class JFDrogaria extends javax.swing.JFrame {
     }
 
     private void loadCadastro() {
-        jLTitulo.setText("Cadastro de Laboratório");
+        jLTitulo.setText("Cadastro de Drogaria");
         jTFNome.setEnabled(true);
         jFTFCNPJ.setEnabled(true);
         jBSalvar.setText("Cadastrar");
@@ -360,7 +358,7 @@ public class JFDrogaria extends javax.swing.JFrame {
     }
 
     private boolean validarCampos() {
-        for (Component comp : getComponents()) {
+        for (Component comp : getContentPane().getComponents()) {
             if (comp instanceof JTextField campo) {
                 if (campo.getText().equals("")) {
                     jLErro.setText("Preencha todos os campos");
