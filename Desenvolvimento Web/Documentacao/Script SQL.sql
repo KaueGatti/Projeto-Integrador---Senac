@@ -1,96 +1,147 @@
+CREATE DATABASE Workether;
+
+USE Workether;
+
+CREATE TABLE Usuario (
+	id VARCHAR(7),
+	email VARCHAR(255),
+	usuario VARCHAR(150),
+	senha VARCHAR(255),
+	status VARCHAR(30),
+	PRIMARY KEY (id)
+);
 
 CREATE TABLE Projeto (
-	id int pk increments unique
-	id_chat int > Chat.id
-	id_responsavel int null > Usuario.id
-	nome varchar(150) unique
-	descricao varchar(255)
-	dataCriacao date
-	dataInicalConclusao date
-	dataAtualConclusao date
-	dataConclusao date
-	status varchar(30)
-)
+	id INT AUTO_INCREMENT,
+	id_chat INT,
+	id_responsavel VARCHAR(7) NULL,
+	nome VARCHAR(150) UNIQUE,
+	descricao VARCHAR(255),
+	dataCriacao DATE,
+	dataInicalConclusao DATE,
+	dataAtualConclusao DATE,
+	dataConclusao DATE,
+	status VARCHAR(30),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_chat) REFERENCES Chat(id),
+	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
+);
 
-Tarefa {
-	id int pk increments unique
-	id_chat int > Chat.id
-	id_projeto int null > Projeto.id
-	id_equipe int null > Equipe.id
-	id_usuario int null > Usuario.id
-	nome varchar(150)
-	descricao varchar(255)
-	dataCriacao date
-	dataIncialConclusao date
-	dataAtualConclusao date
-	dataConclusao date null
-	status varchar(30)
-}
+CREATE TABLE Usuario_Projeto (
+	id_usuario VARCHAR(7) NOT NULL,
+	id_projeto INT NOT NULL,
+	PRIMARY KEY (id_usuario, id_projeto),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+);
 
-Usuario {
-	id int pk increments unique
-	usuario varchar(150)
-	senha varchar(255)
-	status varchar(30)
-}
+CREATE TABLE Equipe (
+	id INT AUTO_INCREMENT,
+	id_chat INT,
+	id_projeto INT,
+	nome VARCHAR(150),
+	descricao VARCHAR(255),
+	dataCriacao DATE,
+	dataDissolucao DATE NULL,
+	status VARCHAR(30),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_chat) REFERENCES Chat(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+);
 
-Equipe {
-	id int pk increments unique
-	id_chat int > Chat.id
-	id_projeto int > Projeto.id
-	nome varchar(150)
-	descricao varchar(255)
-	dataCriacao date
-	dataDissolucao date null
-	status varchar(30)
-}
+CREATE TABLE Usuario_Equipe (
+	id_usuario VARCHAR(7),
+	id_equipe INT,
+	funcao VARCHAR(255) NULL,
+	PRIMARY KEY (id_usuario, id_equipe),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+	FOREIGN KEY (id_equipe) REFERENCES Equipe(id)
+);
 
-Usuario_Equipe {
-	id_usuario int > Usuario.id
-	id_equipe int > Equipe.id
-	funcao varchar(255) null
-}
+CREATE TABLE Tarefa (
+	id INT AUTO_INCREMENT,
+	id_projeto INT NULL,
+	id_equipe INT NULL,
+	id_usuario VARCHAR(7) NULL,
+	nome VARCHAR(150),
+	descricao VARCHAR(255),
+	dataCriacao DATE,
+	dataIncialConclusao DATE,
+	dataAtualConclusao DATE,
+	dataConclusao DATE NULL,
+	status VARCHAR(30),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
+	FOREIGN KEY (id_equipe) REFERENCES Equipe(id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
 
-Comentario {
-	id int pk increments unique
-	id_usuario int *> Usuario.id
-	id_projeto int null *> Projeto.id
-	id_equipe int null *> Equipe.id
-	id_tarefa int null *> Tarefa.id
-	texto varchar(255)
-	data_hora_envio datetime
-}
+CREATE TABLE Comentario (
+	id INT AUTO_INCREMENT,
+	id_usuario VARCHAR(7),
+	id_projeto INT NULL,
+	id_equipe INT NULL,
+	id_tarefa INT NULL,
+	texto VARCHAR(255),
+	data_hora_envio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
+	FOREIGN KEY (id_equipe) REFERENCES Equipe(id),
+	FOREIGN KEY (id_tarefa) REFERENCES Tarefa(id)
+);
 
-Conversa {
-	id integer pk increments unique
-	id_usuarioA int *> Usuario.id
-	id_usuarioB int *> Usuario.id
-}
+CREATE TABLE Conversa (
+	id INT AUTO_INCREMENT,
+	id_usuarioA VARCHAR(7),
+	id_usuarioB VARCHAR(7),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_usuarioA) REFERENCES Usuario(id),
+	FOREIGN KEY (id_usuarioB) REFERENCES Usuario(id)
+);
 
-Chat {
-	id integer pk increments unique
-}
+CREATE TABLE Mensagem_Conversa (
+	id INT AUTO_INCREMENT,
+	id_conversa INT,
+	id_usuario VARCHAR(7),
+	texto VARCHAR(255),
+	data_hora_envio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_conversa) REFERENCES Conversa(id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
 
-Mensagem_Chat {
-	id integer pk increments unique
-	id_chat int > Chat.id
-	id_usuario int > Usuario.id
-	texto varchar
-	data_hora_envio datetime
-}
+CREATE TABLE Chat (
+	id INT AUTO_INCREMENT,
+	PRIMARY KEY (id)
+);
 
-Mensagem_Conversa {
-	id integer pk increments unique
-	id_conversa int > Conversa.id
-	id_usuario int > Usuario.id
-	texto varchar
-	data_hora_envio datetime
-}
+CREATE TABLE Mensagem_Chat (
+	id INT AUTO_INCREMENT,
+	id_chat INT,
+	id_usuario VARCHAR(7),
+	texto VARCHAR(255),
+	data_hora_envio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_chat) REFERENCES Chat(id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
 
-Notificacao {
-	id int pk increments unique
-	id_usuario int > Usuario.id
-	texto varchar(255)
-	assunto varchar(150)
-	status varchar(30)
-}
+DELIMITER $
+CREATE PROCEDURE CREATE_USUARIO (_id VARCHAR (7), _email VARCHAR (255), _usuario VARCHAR (150), _senha VARCHAR (255))
+BEGIN
+	INSERT INTO Usuario (id, email, usuario, senha) VALUES (_id, _email, _usuario, _senha); 
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE UPDATE_USUARIO(_id VARCHAR (7), _email VARCHAR (255), _usuario VARCHAR (150), _senha VARCHAR (255), _status VARCHAR (30))
+BEGIN
+	UPDATE Usuario
+    SET email = _email, usuario = _usuario, senha = _senha, status = _status
+    WHERE id = _id;
+END $
+DELIMITER ;
+
+CREATE VIEW READ_ALL_USUARIO AS
+	SELECT * FROM Usuario;
