@@ -127,6 +127,25 @@ CREATE TABLE Mensagem_Chat (
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
 
+CREATE TABLE Notificacao (
+	id INT AUTO_INCREMENT,
+    id_usuario VARCHAR (7),
+    assunto VARCHAR (150),
+    texto VARCHAR (255),
+    data_hora DATETIME,
+    status VARCHAR (30)
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario (id)
+)
+
+CREATE TABLE Amizades (
+	id_usuarioA VARCHAR (7),
+    id_usuarioB VARCHAR (7),
+    PRIMARY KEY (id_usuarioA, id_usuarioB),
+    FOREIGN KEY (id_usuarioA) REFERENCES Usuario (id),
+    FOREIGN KEY (id_usuarioB) REFERENCES Usuario (id)
+)
+
 DELIMITER $
 CREATE PROCEDURE CREATE_USUARIO (_id VARCHAR (7), _email VARCHAR (255), _usuario VARCHAR (150), _senha VARCHAR (255))
 BEGIN
@@ -145,3 +164,47 @@ DELIMITER ;
 
 CREATE VIEW READ_ALL_USUARIO AS
 	SELECT * FROM Usuario;
+    
+DELIMITER $$
+CREATE PROCEDURE READ_USUARIO_BY_NOME (nome VARCHAR (150))
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM Usuario WHERE usuario LIKE \'', nome, '\'');
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE READ_USUARIO_BY_ID (id VARCHAR (7))
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM Usuario WHERE id =', id);
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (id_projeto INT)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM Usuario_Projeto WHERE id_projeto =', id_projeto);
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE READ_USUARIOS_BY_EQUIPE (id_equipe INT)
+BEGIN
+	SET @sql = CONCAT('SELECT * FROM Usuario_Equipe WHERE id_equipe =', id_equipe);
+    
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
