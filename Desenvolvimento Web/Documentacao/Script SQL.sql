@@ -11,6 +11,42 @@ CREATE TABLE Usuario (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE Conversa (
+	id INT AUTO_INCREMENT,
+	id_usuarioA VARCHAR(7),
+	id_usuarioB VARCHAR(7),
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_usuarioA) REFERENCES Usuario(id),
+	FOREIGN KEY (id_usuarioB) REFERENCES Usuario(id)
+);
+
+CREATE TABLE Mensagem_Conversa (
+	id INT AUTO_INCREMENT,
+	id_conversa INT,
+	id_usuario VARCHAR(7),
+	texto VARCHAR(255),
+	data_hora_envio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_conversa) REFERENCES Conversa(id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
+
+CREATE TABLE Chat (
+	id INT AUTO_INCREMENT,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE Mensagem_Chat (
+	id INT AUTO_INCREMENT,
+	id_chat INT,
+	id_usuario VARCHAR(7),
+	texto VARCHAR(255),
+	data_hora_envio DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_chat) REFERENCES Chat(id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
+
 CREATE TABLE Projeto (
 	id INT AUTO_INCREMENT,
 	id_chat INT,
@@ -18,7 +54,7 @@ CREATE TABLE Projeto (
 	nome VARCHAR(150) UNIQUE,
 	descricao VARCHAR(255),
 	dataCriacao DATE,
-	dataInicalConclusao DATE,
+	dataInicialConclusao DATE,
 	dataAtualConclusao DATE,
 	dataConclusao DATE,
 	status VARCHAR(30),
@@ -65,7 +101,7 @@ CREATE TABLE Tarefa (
 	nome VARCHAR(150),
 	descricao VARCHAR(255),
 	dataCriacao DATE,
-	dataIncialConclusao DATE,
+	dataInicialConclusao DATE,
 	dataAtualConclusao DATE,
 	dataConclusao DATE NULL,
 	status VARCHAR(30),
@@ -90,59 +126,24 @@ CREATE TABLE Comentario (
 	FOREIGN KEY (id_tarefa) REFERENCES Tarefa(id)
 );
 
-CREATE TABLE Conversa (
-	id_usuarioA VARCHAR(7),
-	id_usuarioB VARCHAR(7),
-	PRIMARY KEY (id_usuarioA, id_usuarioB),
-	FOREIGN KEY (id_usuarioA) REFERENCES Usuario(id),
-	FOREIGN KEY (id_usuarioB) REFERENCES Usuario(id)
-);
-
-CREATE TABLE Mensagem_Conversa (
-	id INT AUTO_INCREMENT,
-	id_conversa INT,
-	id_usuario VARCHAR(7),
-	texto VARCHAR(255),
-	data_hora_envio DATETIME,
-	PRIMARY KEY (id),
-	FOREIGN KEY (id_conversa) REFERENCES Conversa(id),
-	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
-);
-
-CREATE TABLE Chat (
-	id INT AUTO_INCREMENT,
-	PRIMARY KEY (id)
-);
-
-CREATE TABLE Mensagem_Chat (
-	id INT AUTO_INCREMENT,
-	id_chat INT,
-	id_usuario VARCHAR(7),
-	texto VARCHAR(255),
-	data_hora_envio DATETIME,
-	PRIMARY KEY (id),
-	FOREIGN KEY (id_chat) REFERENCES Chat(id),
-	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
-);
-
 CREATE TABLE Notificacao (
 	id INT AUTO_INCREMENT,
     id_usuario VARCHAR (7),
     assunto VARCHAR (150),
     texto VARCHAR (255),
     data_hora DATETIME,
-    status VARCHAR (30)
+    status VARCHAR (30),
     PRIMARY KEY (id),
     FOREIGN KEY (id_usuario) REFERENCES Usuario (id)
-)
+);
 
-CREATE TABLE Amizades (
+CREATE TABLE Amizade (
 	id_usuarioA VARCHAR (7),
     id_usuarioB VARCHAR (7),
     PRIMARY KEY (id_usuarioA, id_usuarioB),
     FOREIGN KEY (id_usuarioA) REFERENCES Usuario (id),
     FOREIGN KEY (id_usuarioB) REFERENCES Usuario (id)
-)
+);
 
 DELIMITER $
 CREATE PROCEDURE CREATE_USUARIO (_id VARCHAR (7), _email VARCHAR (255), _usuario VARCHAR (150), _senha VARCHAR (255))
@@ -164,47 +165,47 @@ CREATE VIEW READ_ALL_USUARIO AS
 	SELECT * FROM Usuario;
     
 DELIMITER $$
-CREATE PROCEDURE READ_USUARIO_BY_NOME (nome VARCHAR (150))
+CREATE PROCEDURE READ_USUARIO_BY_NOME (_nome VARCHAR (150))
 BEGIN
-	SELECT * FROM Usuario WHERE usuario LIKE nome;
+	SELECT * FROM Usuario WHERE usuario LIKE _nome;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE READ_USUARIO_BY_ID (id VARCHAR (7))
+CREATE PROCEDURE READ_USUARIO_BY_ID (_id VARCHAR (7))
 BEGIN
-	SELECT * FROM Usuario WHERE id = id;
+	SELECT * FROM Usuario WHERE id = _id;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (id_projeto INT)
+CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (_id_projeto INT)
 BEGIN
-	SELECT * FROM Usuario_Projeto WHERE id_projeto = id_projeto;
+	SELECT * FROM Usuario_Projeto WHERE id_projeto = _id_projeto;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE READ_USUARIOS_BY_EQUIPE (id_equipe INT)
+CREATE PROCEDURE READ_USUARIOS_BY_EQUIPE (_id_equipe INT)
 BEGIN
-	SELECT * FROM Usuario_Equipe WHERE id_equipe = id_equipe;
+	SELECT * FROM Usuario_Equipe WHERE id_equipe = _id_equipe;
 END $$
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_PROJETO (_id_chat INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicalConclusao DATE)
+CREATE PROCEDURE CREATE_PROJETO (_id_chat INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
 BEGIN
-	INSERT INTO Projeto (id_chat, id_responsavel, nome, descricao, dataCriacao, dataInicalConclusao, dataAtualConclusao, dataConclusao, status)
-    VALUES (_id_chat, _id_responsavel, _nome, _descricao, CURDATE(), _dataInicalConclusao, _dataInicalConclusao, NULL, 'Em andamento');
+	INSERT INTO Projeto (id_chat, id_responsavel, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
+    VALUES (_id_chat, _id_responsavel, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
 END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE UPDATE_PROJETO (id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE, _status VARCHAR(30))
+CREATE PROCEDURE UPDATE_PROJETO (_id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE, _dataConclusao DATE, _status VARCHAR(30))
 BEGIN
 	UPDATE Projeto
-    SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao, dataAtualConclusao = dataAtualConclusao, dataConclusao = _dataConclusao, status = _status
-    WHERE Projeto.id = id_projeto;
+    SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao, dataConclusao = _dataConclusao, status = _status
+    WHERE Projeto.id = _id_projeto;
 END $
 DELIMITER ;
 
@@ -212,27 +213,27 @@ CREATE VIEW READ_ALL_PROJETOS AS
 	SELECT * FROM Projeto;
     
 DELIMITER $$
-CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (id_usuario VARCHAR (7))
+CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
-	SELECT DISTINCT * FROM Projeto
+	SELECT * FROM Projeto
 	LEFT JOIN Usuario_Projeto ON Projeto.id = Usuario_Projeto.id_projeto
-	WHERE Usuario_Projeto.id_usuario = id_usuario;
+	WHERE Usuario_Projeto.id_usuario = _id_usuario;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE READ_PROJETOS_BY_RESPONSAVEL (id_usuario VARCHAR (7))
+CREATE PROCEDURE READ_PROJETOS_BY_RESPONSAVEL (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Projeto
-	WHERE Projeto.id_responsavel = id_usuario;
+	WHERE Projeto.id_responsavel = _id_usuario;
 END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE PROCEDURE READ_PROJETOS_BY_NOME (nome VARCHAR (150))
+CREATE PROCEDURE READ_PROJETOS_BY_NOME (_nome VARCHAR (150))
 BEGIN
 	SELECT * FROM Projeto
-	WHERE Projeto.nome LIKE nome;
+	WHERE Projeto.nome LIKE _nome;
 END $$
 DELIMITER ;
 
@@ -320,10 +321,10 @@ DELIMITER ;
 
 DELIMITER $
 CREATE PROCEDURE CREATE_TAREFA (_id_projeto INT, _id_equipe INT, _id_usuario VARCHAR(7), 
-	_nome VARCHAR(150), _descricao VARCHAR(255), _dataIncialConclusao DATE, _status VARCHAR(30))
+	_nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE, _status VARCHAR(30))
 BEGIN
-	INSERT INTO Tarefa (id_projeto, id_equipe, id_usuario, nome, descricao, dataCriacao, dataInicalConclusao, dataAtualConclusao, dataConclusao, status)
-    VALUES (_id_projeto, _id_equipe, _id_usuario, _nome, _descricao, CURDATE(), _dataInicalConclusao, _dataInicalConclusao, NULL, 'Em andamento');
+	INSERT INTO Tarefa (id_projeto, id_equipe, id_usuario, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
+    VALUES (_id_projeto, _id_equipe, _id_usuario, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
 END $
 DELIMITER ;
 
@@ -333,6 +334,30 @@ BEGIN
 	UPDATE Tarefa
     SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao, status = _status
     WHERE Tarefa.id = _id_tarefa;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_TAREFAS_BY_USUARIO (_id_usuario VARCHAR (7))
+BEGIN
+	SELECT * FROM Tarefa
+    WHERE Tarefa.id_usuario = _id_usuario;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_TAREFAS_BY_PROJETO (_id_projeto INT)
+BEGIN
+	SELECT * FROM Tarefa
+    WHERE Tarefa.id_projeto = _id_projeto;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_TAREFAS_BY_EQUIPE (_id_equipe INT)
+BEGIN
+	SELECT * FROM Tarefa
+    WHERE Tarefa.id_equipe = _id_equipe;
 END $
 DELIMITER ;
 
@@ -353,10 +378,51 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE READ_ALL_COMENTARIOS_BY_TAREFA (_id_tarefa INT)
+BEGIN
+	SELECT * FROM Comentario
+    WHERE Comentario.id_tarefa = _id_tarefa;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_COMENTARIOS_BY_PROJETO (_id_projeto INT)
+BEGIN
+	SELECT * FROM Comentario
+    WHERE Comentario.id_projeto = _id_projeto;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_COMENTARIOS_BY_EQUIPE (_id_equipe INT)
+BEGIN
+	SELECT * FROM Comentario
+    WHERE Comentario.id_equipe = _id_equipe;
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE CREATE_CONVERSA (_id_usuarioA VARCHAR(7), _id_usuarioB VARCHAR(7))
 BEGIN
 	INSERT INTO Conversa (id_usuarioA, id_usuarioB)
     VALUES (LEAST(_id_usuarioA, _id_usuarioB), GREATEST(_id_usuarioA, _id_usuarioB));
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_CONVERSAS_BY_USUARIO (_id_usuario VARCHAR (7))
+BEGIN
+	SELECT * FROM Conversa
+    WHERE Conversa.id_usuarioA = _id_usuario OR Conversa.id_usuarioB = _id_usuario;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_CONVERSAS_BY_NOME (_id_usuario VARCHAR (7), _nome VARCHAR (150))
+BEGIN
+	SELECT Conversa.*, Usuario.usuario FROM Conversa
+    LEFT JOIN Usuario ON (Usuario.id IN (Conversa.id_usuarioA, Conversa.id_usuarioB))
+    WHERE (_id_usuario IN (Conversa.id_usuarioA, Conversa.id_usuarioB)) AND Usuario.id != _id_usuario AND Usuario.usuario LIKE _nome;
 END $
 DELIMITER ;
 
@@ -369,9 +435,29 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE READ_ALL_MENSAGENS_BY_CONVERSA (_id_conversa INT)
+BEGIN
+	SELECT * FROM Mensagem_Conversa
+    WHERE Mensagem_Conversa.id_conversa = _id_conversa;
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE CREATE_CHAT()
 BEGIN
-	INSERT INTO Chat VALUES ();
+	INSERT INTO Chat VALUES (NULL);
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_CHATS_BY_USUARIO (_id_usuario VARCHAR (7))
+BEGIN
+	SELECT * FROM Chat
+    LEFT JOIN Projeto ON Chat.id = Projeto.id_chat
+    LEFT JOIN Usuario_Projeto ON Usuario_Projeto.id_projeto = Projeto.id AND Usuario_Projeto.id_usuario = _id_usuario
+    LEFT JOIN Equipe ON Chat.id = Equipe.id_chat
+    LEFT JOIN Usuario_Equipe ON Usuario_Equipe.id_equipe = Equipe.id AND Usuario_Equipe.id_usuario = _id_usuario
+    WHERE Usuario_Equipe.id_usuario IS NOT NULL OR Usuario_Projeto.id_usuario = _id_usuario;
 END $
 DELIMITER ;
 
@@ -384,10 +470,18 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE READ_ALL_MENSAGENS_BY_CHAT (_id_chat INT)
+BEGIN
+	SELECT * FROM Mensagem_Chat
+    WHERE Mensagem_Chat.id_chat = _id_chat;
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE CREATE_NOTIFICACAO(_id_usuario VARCHAR (7), _assunto VARCHAR (150), _texto VARCHAR (255))
 BEGIN
 	INSERT INTO Notificacao (id_usuario, assunto, texto, data_hora, status)
-    VALUES (_id_usuario, _assunto, _texto, NOW(), 'Não Visualizada');
+    VALUES (_id_usuario, _assunto, _texto, NOW(), 'Não visualizada');
 END $
 DELIMITER ;
 
@@ -401,9 +495,25 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE READ_ALL_NOTIFICACOES_BY_USUARIO (_id_usuario VARCHAR (7))
+BEGIN
+	SELECT * FROM Notificacao
+    WHERE Notificacao.id_usuario = _id_usuario AND Notificacao.status = "Não visualizada";
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE CREATE_AMIZADE (_id_usuarioA VARCHAR(7), _id_usuarioB VARCHAR(7))
 BEGIN
 	INSERT INTO Amizade (id_usuarioA, id_usuarioB)
     VALUES (LEAST(_id_usuarioA, _id_usuarioB), GREATEST(_id_usuarioA, _id_usuarioB));
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_ALL_AMIZADES_BY_USER (_id_usuario INT)
+BEGIN
+	SELECT * FROM Amizade
+    WHERE _id_usuario IN (Amizade.id_usuarioA, Amizade.id_usuarioB);
 END $
 DELIMITER ;
