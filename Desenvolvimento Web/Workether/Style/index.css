@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+aside {
+    border-right: 3px solid #c3c3c3;
+    width: 20%;
+    height: 100%;
+}
+
+#divLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 15%;
+}
+
+#divLogo h1 {
+    font-size: 44px;
+    font-weight: 800;
+    height: 15%;
+    text-align: center;
+}
+
+#WORK {
+    color: #37475C;
+}
+
+#ETHER {
+    color: #0568E6;
+}
+
+main {
+    width: 80%;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 30px;
+    height: 10%;
+}
+
+#iconeUserHeader {
+    margin-right: 20px;
+}
+
+header p {
+    font-size: 20px;
+    margin-right: 40px;
+}
+
+#iconeNotificationHeader {
+    border: 3px solid #c3c3c3;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+header img {
+    height: 40px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+section h1 {
+    text-align: center;
+    font-size: 48px;
+    display: inline-block;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(90deg, rgba(5, 104, 230, 1) 45%, rgba(55, 71, 92, 1) 55%);
+    width: 100%;
+}
+
+section article {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.btnBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 190px;
+    width: 190px;
+    border: 3px solid rgba(5, 104, 230, 0.3);
+    border-radius: 10px;
+    margin: 10px;
+    background: white;
+    transition: 0.5s;
+}
+
+.btnBox:hover {
+    transform: scale(1.05);
+    background: rgba(195, 195, 195, 0.2);
+}
+
+.btnBox p {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.btnBox img {
+    height: 100px;
+    margin: 20px;
+}

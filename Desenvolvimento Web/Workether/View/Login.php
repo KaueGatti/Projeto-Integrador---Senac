@@ -19,7 +19,7 @@
             <input type="text" name="usuario" placeholder="Usuário">
             <input type="password" name="senha" placeholder="Senha">
             <p>Não lembra a senha? <a href="" id="redefinirSenha">Refefinir senha</a></p>
-            <p>Não possui cadastro? <a href="" id="cadastrar">Cadastrar</a></p>
+            <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
             <button id="btnEntrar">Entrar</button>
         </form>
     </main>

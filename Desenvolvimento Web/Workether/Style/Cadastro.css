@@ -16,11 +16,19 @@ body {
     width: 100vw;
 }
 
+main {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
 #divLogo {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    height: 100%;
+    width: 50%;
 }
 
 #divLogo h1 {
@@ -34,6 +42,14 @@ body {
 
 #ETHER {
     color: #0568E6;
+}
+
+#divForm {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 100%;
+    width: 50%;
 }
 
 form {
