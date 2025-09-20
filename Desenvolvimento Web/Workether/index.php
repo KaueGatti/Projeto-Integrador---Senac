@@ -14,24 +14,24 @@
         <h1 id="WORK">WORK</h1>
         <h1 id="ETHER">ETHER</h1>
     </div>
-    <button id="btnProjetos">
-        <img src="" alt="">
+    <button class="btnAside" id="btnProjetos">
+        <img src="Icones/Projetos.png" alt="">
         <p>Projetos</p>
     </button>
-    <button id="btnTarefas">
-        <img src="" alt="">
+    <button class="btnAside" id="btnTarefas">
+        <img src="Icones/Tarefas.png" alt="">
         <p>Tarefas</p>
     </button>
-    <button id="btnConversas">
-        <img src="" alt="">
+    <button class="btnAside" id="btnConversas">
+        <img src="Icones/Conversas.png" alt="">
         <p>Conversas</p>
     </button>
-    <button id="btnAmigos">
-        <img src="" alt="">
+    <button class="btnAside" id="btnAmigos">
+        <img src="Icones/Amigos.png" alt="">
         <p>Amigos</p>
     </button>
-    <button id="btnPerfil">
-        <img src="" alt="">
+    <button class="btnAside" id="btnPerfil">
+        <img src="Icones/Perfil.png" alt="">
         <p>Perfil</p>
     </button>
 </aside>
@@ -57,4 +57,5 @@
 </main>
 
 </body>
+<script src="Script/index.js"></script>
 </html>

@@ -15,6 +15,8 @@ body {
 }
 
 aside {
+    display: flex;
+    flex-direction: column;
     border-right: 3px solid #c3c3c3;
     width: 20%;
     height: 100%;
@@ -42,6 +44,36 @@ aside {
 #ETHER {
     color: #0568E6;
 }
+
+aside button:first-of-type {
+    margin-top: 40px;
+}
+
+aside button {
+    display: flex;
+    align-items: center;
+    height: 90px;
+    font-size: 26px;
+    font-weight: 600;
+    background: white;
+    border: none;
+    padding-left: 35px;
+    transition: 0.3s;
+}
+
+aside .btnAside:hover {
+    background-color: rgba(5, 104, 230, 0.1);
+}
+
+aside button img {
+    width: 90px;
+}
+
+.btnAsideSelected {
+    background: rgba(5, 104, 230, 0.25);
+    color: #2457C5;
+}
+
 
 main {
     width: 80%;
