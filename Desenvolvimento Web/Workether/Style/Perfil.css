@@ -1,0 +1,109 @@
+section {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 100%;
+}
+
+div {
+    display: flex;
+    align-items: center;
+}
+
+#divTitulo {
+    width: 200px;
+    margin-left: 30px;
+}
+
+#divTitulo img {
+    width: 70px;
+}
+
+#divTitulo h1 {
+    font-size: 50px;
+    margin-left: 20px;
+}
+
+input {
+        margin-left: 50px;
+        font-size: 18px;
+        border-radius: 8px;
+        border: 2px solid rgba(195, 195, 195, 0.5);
+        width: 120px;
+        padding: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+#inputId {
+    margin-top: 40px;
+}
+
+#inputId:focus {
+    outline: none;
+}
+
+.divInput {
+    margin-top: 20px;
+}
+
+.divInput input {
+    width: 300px;
+}
+
+.divInput img {
+    width: 40px;
+    margin-left: 10px;
+}
+
+.divInput img:hover {
+    cursor: pointer;
+}
+
+#btnAlterarSenha {
+    margin-top: 20px;
+    margin-left: 50px;
+    height: 40px;
+    width: 200px;
+    font-size: 20px;
+    background-color: rgba(5, 104, 230, 0.67);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#btnAlterarSenha:hover {
+    background-color: rgb(5, 104, 230);
+    cursor: pointer;
+}
+
+#divDesativarConta {
+    flex: 1;
+    align-items: end;
+    padding-bottom: 20px;
+}
+
+#divDesativarConta img {
+    width: 40px;
+    margin-left: 10px;
+}
+
+#btnDesativarConta {
+    margin-left: 50px;
+    height: 40px;
+    width: 200px;
+    font-size: 20px;
+    background-color: #E65A55;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#btnDesativarConta:hover {
+    background-color: #e12b26;
+    cursor: pointer;
+}

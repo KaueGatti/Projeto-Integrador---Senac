@@ -1,0 +1,65 @@
+aside {
+    display: flex;
+    flex-direction: column;
+    border-right: 3px solid #c3c3c3;
+    width: 20%;
+    height: 100%;
+}
+
+#divLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 15%;
+}
+
+#divLogo:hover {
+    cursor: pointer;
+}
+
+#divLogo h1 {
+    font-size: 44px;
+    font-weight: 800;
+    height: 15%;
+    text-align: center;
+}
+
+#WORK {
+    color: #37475C;
+}
+
+#ETHER {
+    color: #0568E6;
+}
+
+aside button:first-of-type {
+    margin-top: 40px;
+}
+
+aside button {
+    display: flex;
+    align-items: center;
+    height: 90px;
+    font-size: 26px;
+    font-weight: 600;
+    background: white;
+    border: none;
+    padding-left: 35px;
+    transition: 0.3s;
+}
+
+aside .btnAside:hover {
+    background-color: rgba(5, 104, 230, 0.1);
+    cursor: pointer;
+}
+
+aside button img {
+    width: 90px;
+}
+
+.btnAsideSelected {
+    background: rgba(5, 104, 230, 0.25);
+    color: #2457C5;
+    box-shadow: 2px 0px 0px 0px rgba(0,0,0,1);
+}

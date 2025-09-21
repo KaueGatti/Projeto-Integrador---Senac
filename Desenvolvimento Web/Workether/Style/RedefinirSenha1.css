@@ -1,0 +1,96 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+    border: 3px solid rgba(195, 195, 195, 0.5);
+    border-radius: 20px;
+}
+
+form h1 {
+    margin: 20px;
+    font-size: 40px;
+}
+
+p {
+    font-size: 20px;
+}
+
+form input {
+    margin: 10px;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid rgba(195, 195, 195, 0.5);
+    width: 400px;
+    padding: 10px;
+}
+
+form input:focus {
+    border: 3px solid rgba(5, 104, 230, 0.5);
+    outline: none;
+}
+
+form p {
+    margin: 5px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+form a {
+    text-decoration: none;
+    color: rgba(5, 104, 230, 0.8);
+    font-weight: 800;
+    transition: 0.2s;
+}
+
+form a:hover {
+    color: rgba(5, 104, 230);
+}
+
+form button {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 15px;
+    height: 40px;
+    width: 200px;
+    background-color: #75CE70;
+    transition: 0.3s;
+}
+
+form button:hover {
+    transform: scale(110%);
+    background-color: #46b640;
+    cursor: pointer;
+}
+
+#divTitulo {
+    display: flex;
+    align-items: center;
+}
+
+#divTitulo img {
+    height: 60px;
+}
+
+#divProgresso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#divProgresso div {
+    margin: 5px;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    border: 3px solid #0568E6;
+}
+
+#Etapa1 {
+    background-color: #0568E6;
+}

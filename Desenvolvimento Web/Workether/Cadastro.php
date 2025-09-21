@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Workether - Cadastro</title>
-    <link rel="stylesheet" href="../Style/Cadastro.css">
+    <link rel="stylesheet" href="Style/Cadastro.css">
 </head>
 <body>
 <main>
