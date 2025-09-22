@@ -37,6 +37,7 @@
       <path value="$PROJECT_DIR$/vendor/composer" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.0" />
   <component name="PhpStan">
     <PhpStan_settings>
       <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="83af8937-72ba-4304-8373-a4f5f831d2e0" timeout="60000" />

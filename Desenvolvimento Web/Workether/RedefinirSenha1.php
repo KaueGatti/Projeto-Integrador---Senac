@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="Style/RedefinirSenha1.css">
 
-<form action="">
+<form action="RedefinirSenha.php">
     <div id="divTitulo">
         <img src="Icones/Voltar.png" alt="">
         <h1>Redefinir senha</h1>

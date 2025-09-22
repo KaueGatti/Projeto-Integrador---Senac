@@ -7,13 +7,13 @@
         <img src="Icones/Voltar.png" alt="">
         <h1>Perfil</h1>
     </div>
-    <input type="text" name="id" id="inputId" readonly value="1234567">
+    <input type="text" name="id" id="inputId" readonly value="<?php echo $_SESSION['usuario']->id; ?>">
     <div class="divInput">
-        <input type="text" name="usuario" id="" readonly value="Kaue">
+        <input type="text" name="usuario" id="" readonly value="<?php echo $_SESSION['usuario']->usuario; ?>">
         <img src="Icones/Editar.png" alt="">
     </div>
     <div class="divInput">
-        <input type="email" name="email" id="" readonly value="kaue@gmail.com">
+        <input type="email" name="email" id="" readonly value="<?php echo $_SESSION['usuario']->email; ?>">
         <img src="Icones/Editar.png" alt="">
     </div>
     <button id="btnAlterarSenha">Alterar senha</button>

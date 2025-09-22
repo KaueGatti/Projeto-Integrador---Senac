@@ -7,7 +7,7 @@ CREATE TABLE Usuario (
 	email VARCHAR(255),
 	usuario VARCHAR(150),
 	senha VARCHAR(255),
-	status VARCHAR(30),
+	status VARCHAR(30) DEFAULT 'Ativo',
 	PRIMARY KEY (id)
 );
 

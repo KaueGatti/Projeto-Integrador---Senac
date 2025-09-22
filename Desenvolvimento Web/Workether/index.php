@@ -1,4 +1,8 @@
-<?php ?>
+<?php
+
+include_once 'session.php'
+
+?>
 
 <!doctype html>
 <html lang="pt-br">
@@ -12,7 +16,7 @@
     <?php include_once 'MenuLateral.php'; ?>
 <main>
     <?php include_once 'Header.php'; ?>
-    <?php include_once 'Conversas.php'; ?>
+    <?php include_once 'Perfil.php'; ?>
 </main>
 
 </body>

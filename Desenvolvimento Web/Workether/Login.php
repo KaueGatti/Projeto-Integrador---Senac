@@ -1,4 +1,21 @@
 <?php
+
+require_once __DIR__ . '/Controller/UsuarioController.php';
+
+session_start();
+$usuarioController = new UsuarioController();
+$usuario = null;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["login"])) {
+        $usuario = $usuarioController->loginUsuario($_POST["login"]);
+        if ($usuario != null) {
+            $_SESSION["usuario"] = $usuario;
+            header("Location: index.php");
+        }
+    }
+}
+
 ?>
 
 <!doctype html>
@@ -14,10 +31,11 @@
         <div id="divLogo">
             <h1 id="WORK">WORK</h1><h1 id="ETHER">ETHER</h1>
         </div>
-        <form action="">
+        <form action="Login.php" method="post">
             <h1>Login</h1>
-            <input type="text" name="usuario" placeholder="Usuário">
-            <input type="password" name="senha" placeholder="Senha">
+            <p id="pErro"><?php if ($usuario == null) { echo "Usuario ou senha incorretos"; }?></p>
+            <input type="text" name="login[usuario]" placeholder="Usuário" required>
+            <input type="password" name="login[senha]" placeholder="Senha" required>
             <p>Não lembra a senha? <a href="" id="redefinirSenha">Refefinir senha</a></p>
             <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
             <button id="btnEntrar">Entrar</button>

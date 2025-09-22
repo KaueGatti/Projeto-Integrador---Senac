@@ -81,9 +81,20 @@ form input:focus {
     outline: none;
 }
 
-form p {
+#pJaPossuiCadastro {
     margin: 5px;
     color: rgba(0, 0, 0, 0.5);
+}
+
+#pErroEmail, #pErroUsuario, #pErroSenha {
+    width: 100%;
+    color: rgba(255, 0, 0, 0.8);
+    text-align: start;
+    padding-left: 30px;
+}
+
+#pErroSenha {
+    margin-bottom: 10px;
 }
 
 form a {
