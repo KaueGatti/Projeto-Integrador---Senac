@@ -63,6 +63,9 @@ input:focus {
 }
 
 #btnAlterarSenha {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
     margin-left: 50px;
     height: 40px;
@@ -73,6 +76,7 @@ input:focus {
     border: none;
     border-radius: 10px;
     transition: 0.3s;
+    text-decoration: none;
 }
 
 #btnAlterarSenha:hover {

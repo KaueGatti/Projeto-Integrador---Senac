@@ -159,7 +159,7 @@ BEGIN
     SET email = _email, usuario = _usuario, senha = _senha, status = _status
     WHERE id = _id;
 END $
-DELIMITER ;
+DELIMITER ;	
 
 CREATE VIEW READ_ALL_USUARIO AS
 	SELECT * FROM Usuario;
@@ -168,6 +168,13 @@ DELIMITER $$
 CREATE PROCEDURE READ_USUARIO_BY_NOME (_nome VARCHAR (150))
 BEGIN
 	SELECT * FROM Usuario WHERE usuario LIKE _nome;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE READ_USUARIO_BY_EMAIL (_email VARCHAR (255))
+BEGIN
+	SELECT * FROM Usuario WHERE email LIKE _email;
 END $$
 DELIMITER ;
 

@@ -16,7 +16,7 @@
         <input type="email" name="email" id="" readonly value="<?php echo $_SESSION['usuario']->email; ?>">
         <img src="Icones/Editar.png" alt="">
     </div>
-    <button id="btnAlterarSenha">Alterar senha</button>
+    <a href="RedefinirSenha.php" id="btnAlterarSenha">Alterar senha</a>
     <div id="divDesativarConta">
         <button id="btnDesativarConta">Desativar conta</button>
         <img src="Icones/Atencao.png" alt="">

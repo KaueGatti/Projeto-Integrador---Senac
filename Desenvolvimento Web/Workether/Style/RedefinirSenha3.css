@@ -67,6 +67,15 @@ form button:hover {
     cursor: pointer;
 }
 
+form button:disabled {
+    opacity: 0.5;
+    transform: none;
+}
+
+form button:disabled:hover {
+    background-color: rgba(5, 104, 230, 0.8);
+}
+
 #divTitulo {
     display: flex;
     align-items: center;
@@ -74,6 +83,11 @@ form button:hover {
 
 #divTitulo img {
     height: 60px;
+}
+
+#divTitulo img:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .divInput {
@@ -103,4 +117,8 @@ form button:hover {
 
 #Etapa3 {
     background-color: #0568E6;
+}
+
+#pErro {
+    color: rgba(255, 0, 0, 0.8);
 }

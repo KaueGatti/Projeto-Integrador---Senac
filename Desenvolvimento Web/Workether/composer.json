@@ -1,0 +1,20 @@
+{
+    "name": "kaueg/workether",
+    "autoload": {
+        "psr-4": {
+            "Kaueg\\Workether\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "KaueGatti",
+            "email": "kauegattti@gmail.com"
+        }
+    ],
+    "require": {
+        "google/apiclient": "2.13",
+        "guzzlehttp/guzzle": "7.7",
+      "ext-json": "*",
+      "ext-pdo": "*"
+    }
+}

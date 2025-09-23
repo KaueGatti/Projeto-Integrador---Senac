@@ -1,6 +1,9 @@
 /Desenvolvimento Desktop/ProjetoIntegradorDesktop/target/
 
-/vendor/
+/Desenvolvimento Web/Workether/vendor/
+/Desenvolvimento Web/Workether/.idea/
+/Desenvolvimento Web/Workether/credentials.json
+/Desenvolvimento Web/Workether/token.json
 composer.lock
 
 *.log

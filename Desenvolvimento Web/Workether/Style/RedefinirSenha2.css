@@ -76,6 +76,11 @@ form button:hover {
     height: 60px;
 }
 
+#divTitulo img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
 #divProgresso {
     display: flex;
     justify-content: center;
@@ -93,4 +98,8 @@ form button:hover {
 
 #Etapa2 {
     background-color: #0568E6;
+}
+
+#pErro {
+    color: rgba(250, 0, 0, 0.8);
 }

@@ -6,33 +6,9 @@ class Usuario
     public $usuario;
     public $email;
     public $senha;
+    public $status;
 
     private $con;
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function setSenha($senha)
-    {
-        $this->senha = $senha;
-    }
-
-    public function setCon($con)
-    {
-        $this->con = $con;
-    }
 
     public function __construct($con)
     {
@@ -151,6 +127,30 @@ class Usuario
         } else {
             return null;
         }
+    }
+
+    public function update() {
+
+        $senhaHash = password_hash($this->senha, PASSWORD_DEFAULT);
+
+        $sql = "CALL UPDATE_USUARIO(:id, :email, :usuario, :senha, :status);";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":usuario", $this->usuario);
+        $stmt->bindParam(":senha", $senhaHash);
+        $stmt->bindParam(":status", $this->status);
+
+        return $stmt->execute();
+    }
+
+    public function readByEmail($email)
+    {
+        $sql = "CALL READ_USUARIO_BY_EMAIL(:email);";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
 }

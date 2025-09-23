@@ -94,3 +94,7 @@ form button:hover {
 #Etapa1 {
     background-color: #0568E6;
 }
+
+#pErro {
+    color: rgba(255, 0, 0, 0.8);
+}

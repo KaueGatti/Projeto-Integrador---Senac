@@ -1,15 +1,54 @@
-<?php ?>
+<?php
+
+header('Content-Type: application/json');
+
+use GmailAPI\GmailClient;
+
+require_once __DIR__ . '/Controller/UsuarioController.php';
+require_once __DIR__ . '/GmailAPI/GmailClient.php';
+
+session_start();
+
+$controller = new UsuarioController();
+$response = ["success" => false, "data" => null, "error" => null];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST["email"])) {
+        $response = $controller->readUsuarioByEmail($_POST["email"]);
+        if ($response) {
+            $gmailClient = new GmailClient();
+            $codigo = $controller->gerarCodigo();
+            $_SESSION['codigo'] = $codigo;
+            $gmailClient->sendEmail($response->email, "Codigo de redefinicao de senha", "Código: " . $codigo);
+            $response = [
+                    "success" => true,
+                    "data" => $response,
+                    "error" => null
+            ];
+            $_SESSION["usuarioUpdated"] = $response["data"];
+        } else {
+            $response = [
+                    "success" => false,
+                    "data" => null,
+                    "error" => "E-mail não cadastrado"];
+        }
+    }
+    echo json_encode($response);
+    exit();
+}
+
+?>
 
 <link rel="stylesheet" href="Style/RedefinirSenha1.css">
 
-<form action="RedefinirSenha.php">
+<form id="form-passo1" method="post">
     <div id="divTitulo">
-        <img src="Icones/Voltar.png" alt="">
         <h1>Redefinir senha</h1>
     </div>
     <p>Insira o e-mail cadastrado</p>
-    <input type="email" name="email" placeholder="kaue@gmail.com">
-    <button>Enviar código</button>
+    <p id="pErro"></p>
+    <input type="email" name="email" placeholder="email@gmail.com" id="inputEmail" required>
+    <button id="btnEnviar">Enviar código</button>
     <div id="divProgresso">
         <div id="Etapa1"></div>
         <div id="Etapa2"></div>
