@@ -1,1 +1,26 @@
 /Desenvolvimento Desktop/ProjetoIntegradorDesktop/target/
+
+/vendor/
+composer.lock
+
+*.log
+*.cache
+*.tmp
+*.temp
+
+.cache/
+tmp/
+temp/
+
+.env
+.env.local
+.env.*.local
+
+/.idea/
+/.vscode/
+/nbproject/
+/*.sublime-workspace
+/*.sublime-project
+
+.DS_Store
+Thumbs.db
