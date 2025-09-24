@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p id="pErro"><?php if ($usuario == null) { echo "Usuario ou senha incorretos"; }?></p>
             <input type="text" name="login[usuario]" placeholder="Usuário" required>
             <input type="password" name="login[senha]" placeholder="Senha" required>
-            <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Refefinir senha</a></p>
+            <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
             <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
             <button id="btnEntrar">Entrar</button>
         </form>

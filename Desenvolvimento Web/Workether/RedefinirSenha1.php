@@ -1,7 +1,5 @@
 <?php
 
-header('Content-Type: application/json');
-
 use GmailAPI\GmailClient;
 
 require_once __DIR__ . '/Controller/UsuarioController.php';
@@ -13,13 +11,14 @@ $controller = new UsuarioController();
 $response = ["success" => false, "data" => null, "error" => null];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    header('Content-Type: application/json');
     if (isset($_POST["email"])) {
         $response = $controller->readUsuarioByEmail($_POST["email"]);
         if ($response) {
             $gmailClient = new GmailClient();
             $codigo = $controller->gerarCodigo();
-            $_SESSION['codigo'] = $codigo;
-            $gmailClient->sendEmail($response->email, "Codigo de redefinicao de senha", "Código: " . $codigo);
+            $_SESSION['codigo'] = 1;
+            #$gmailClient->sendEmail($response->email, "Codigo de redefinicao de senha", "Código: " . $codigo);
             $response = [
                     "success" => true,
                     "data" => $response,
@@ -35,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     echo json_encode($response);
     exit();
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_GET["js"])) {
+    header('Location: RedefinirSenha.php');
 }
-
 ?>
 
 <link rel="stylesheet" href="Style/RedefinirSenha1.css">

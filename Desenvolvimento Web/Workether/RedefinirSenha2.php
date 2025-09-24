@@ -2,9 +2,9 @@
 
 header('Content-Type: application/json');
 
-session_start();
-
 $response = ["success" => false, "data" => null, "error" => "Código inválido"];
+
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION["codigo"])) {
@@ -14,8 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     echo json_encode($response);
     exit();
+} if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION["codigo"])) {
+    header("Location: RedefinirSenha.php");
 }
-
 ?>
 
 <link rel="stylesheet" href="Style/RedefinirSenha2.css">
