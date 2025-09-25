@@ -1,10 +1,5 @@
 <?php
 
-use GmailAPI\GmailClient;
-
-require __DIR__ . "/GmailAPI/GmailClient.php";
-require __DIR__ . "/Controller/UsuarioController.php";
-
 session_start();
 
 ?>

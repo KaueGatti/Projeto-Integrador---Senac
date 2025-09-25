@@ -2,22 +2,21 @@
 
 header('Content-Type: application/json');
 
-use GmailAPI\GmailClient;
-
 require_once __DIR__ . '/Controller/UsuarioController.php';
-
-session_start();
 
 $controller = new UsuarioController();
 
 $response = ["success" => false, "data" => null, "error" => "Erro ao redefinir senha"];
+
+session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST["senha"]) && isset($_POST["confirmarSenha"])) {
         if ($_POST["senha"] === $_POST["confirmarSenha"]) {
             $_SESSION["usuarioUpdated"]->senha = $_POST["senha"];
             $controller->updateUsuario($_SESSION["usuarioUpdated"]);
-            $response = ["success" => true, "data" => null, "error" => "Senha alterada com sucesso!"];
+            session_destroy();
+            $response = ["success" => true, "data" => null, "error" => "Senha alterada com sucesso! <br> Você será redirecionado em alguns segundos."];
         } else {
             $response = ["success" => false, "data" => null, "error" => "Senhas diferentes, tente novamente."];
         }
@@ -26,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     echo json_encode($response);
     exit();
+} if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION["usuarioUpdated"])) {
+    header("Location: RedefinirSenha.php");
 }
 
 ?>
