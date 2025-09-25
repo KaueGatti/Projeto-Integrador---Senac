@@ -1,4 +1,8 @@
-<?php ?>
+<?php
+
+session_start();
+
+?>
 
 <link rel="stylesheet" href="Style/Header.css">
 

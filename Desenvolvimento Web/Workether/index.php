@@ -17,9 +17,7 @@ include_once 'session.php'
 <body>
 <?php include_once 'MenuLateral.php'; ?>
 <main>
-    <?php include_once 'Header.php'; ?>
-    <?php include_once 'Conversas.php'; ?>
-
+    <?php include_once 'Tarefas.php'; ?>
 </main>
 
 </body>
