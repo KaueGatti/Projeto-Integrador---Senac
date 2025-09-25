@@ -16,6 +16,8 @@ header p {
 }
 
 #iconeNotificationHeader {
+    height: 40px;
+    transition: 0.2s;
     border: 3px solid #c3c3c3;
     border-radius: 15px;
     padding: 5px;
@@ -23,11 +25,7 @@ header p {
 
 #iconeNotificationHeader:hover {
     background-color: rgba(195, 195, 195, 0.3);
+    transform: scale(1.2);
     cursor: pointer;
-}
-
-header img {
-    height: 40px;
-    transition: 0.2s;
 }
 

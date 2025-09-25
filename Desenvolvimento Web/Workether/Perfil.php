@@ -5,7 +5,7 @@
 <section>
     <div id="divTitulo">
         <img src="Icones/Voltar.png" alt="">
-        <h1>Perfil</h1>
+        <h1 class="mb-0">Perfil</h1>
     </div>
     <input type="text" name="id" id="inputId" readonly value="<?php echo $_SESSION['usuario']->id; ?>">
     <div class="divInput">

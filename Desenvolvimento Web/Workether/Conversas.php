@@ -11,12 +11,87 @@
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
         <button>+ Nova Conversa</button>
     </div>
-    <article class="articleConversa">
-        <h1>Guilherme</h1>
-        <p>Última mensagem enviada...</p>
-        <div class="divHorario">
-            <p>20/02/2020</p>
-            <p>20:20</p>
-        </div>
-    </article>
+    <section class="sectionConversas">
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+        <article class="articleConversa">
+            <h1 class="mb-0">Guilherme</h1>
+            <p class="mb-0">Última mensagem enviada...</p>
+            <div class="divHorario">
+                <p class="mb-0">20/02/2020</p>
+                <p class="mb-0">20:20</p>
+            </div>
+        </article>
+    </section>
+
 </section>
