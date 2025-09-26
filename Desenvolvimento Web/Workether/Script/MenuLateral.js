@@ -1,14 +1,33 @@
-var btnsAside = document.getElementsByClassName("btnAside");
+let btns = document.getElementsByClassName("btnAside");
 
-for (var i = 0; i < btnsAside.length; i++) {
-    btnsAside[i].onclick = function () {
-        var srcImg = this.firstElementChild.getAttribute("src");
+for (let i = 0; i < btns.length; i++) {
+    btns[i].onclick = function () {
+        let btnSelected = btns[i];
+        let srcImgSelected = this.firstElementChild.getAttribute("src");
         if (!this.getAttribute("class").includes("Selected", 0)) {
-            this.setAttribute("class", this.getAttribute("class") + "Selected");
-            this.firstElementChild.setAttribute("src", srcImg.replace(".png", "Selected.png"));
-        } else {
-            this.setAttribute("class", this.getAttribute("class").replace("Selected", ""));
-            this.firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));
+            this.setAttribute("class", this.getAttribute("class") + " Selected");
+            this.firstElementChild.setAttribute("src", srcImgSelected.replace(".png", "Selected.png"));
+            for (let j = 0; j < btns.length; j++) {
+                if (btns[j] !== btnSelected) {
+                    let srcImg = btns[j].firstElementChild.getAttribute("src");
+                    btns[j].setAttribute("class", btns[j].getAttribute("class").replace("Selected", ""));
+                    btns[j].firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));
+                }
+            }
         }
     }
 }
+
+let divLogo = document.getElementById("divLogo");
+
+divLogo.onclick = function () {
+    for (let j = 0; j < btns.length; j++) {
+        let srcImg = btns[j].firstElementChild.getAttribute("src");
+        btns[j].setAttribute("class", btns[j].getAttribute("class").replace("Selected", ""));
+        btns[j].firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));
+    }
+}
+
+
+//this.setAttribute("class", this.getAttribute("class").replace("Selected", ""));
+//this.firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));

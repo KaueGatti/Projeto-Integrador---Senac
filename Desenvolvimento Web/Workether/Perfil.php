@@ -1,10 +1,14 @@
-<?php ?>
+<?php
 
-<link rel="stylesheet" href="Style/Perfil.css">
+session_start();
 
-<section>
+?>
+
+
+<section class="conteudo">
+    <link rel="stylesheet" href="Style/Perfil.css">
     <div id="divTitulo">
-        <img src="Icones/Voltar.png" alt="">
+        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Perfil</h1>
     </div>
     <input type="text" name="id" id="inputId" readonly value="<?php echo $_SESSION['usuario']->id; ?>">

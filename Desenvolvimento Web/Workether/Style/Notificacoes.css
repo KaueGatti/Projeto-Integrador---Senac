@@ -1,23 +1,26 @@
-#sectionPrincipal {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    height: 90%;
-    width: 100%;
-}
-
-#abaNotificacoes {
-    display: flex;
+.abaNotificacoes {
+    display: none;
     flex-direction: column;
     border-radius: 20px 0px 0px 0px;
-    height: 100%;
-    width: 30%;
+    background-color: white;
+    height: 90%;
+    width: 0;
     align-items: center;
     border-left: 3px solid rgba(195, 195, 195, 0.5);
     border-top: 3px solid rgba(195, 195, 195, 0.5);
     overflow: auto;
     padding-bottom: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    transition: 2s;
 }
+
+.open {
+    display: flex;
+    width: 30%;
+}
+
 
 #h1Notificacoes {
     position: sticky;

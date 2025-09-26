@@ -1,4 +1,4 @@
-section {
+.conteudo {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,7 @@ section {
     width: 100%;
 }
 
-section h1 {
+.tituloPaginaInicial {
     text-align: center;
     font-size: 48px;
     display: inline-block;
@@ -17,7 +17,7 @@ section h1 {
     width: 100%;
 }
 
-section article {
+.articleBtns {
     display: flex;
     justify-content: center;
     margin-top: 35px;

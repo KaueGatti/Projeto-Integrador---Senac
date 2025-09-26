@@ -29,19 +29,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="Style/Login.css">
 </head>
 <body>
-    <main>
-        <div id="divLogo">
-            <h1 id="WORK">WORK</h1><h1 id="ETHER">ETHER</h1>
+<main>
+    <div id="divLogo">
+        <h1 id="WORK">WORK</h1>
+        <h1 id="ETHER">ETHER</h1>
+    </div>
+    <form action="Login.php" method="post">
+        <h1>Login</h1>
+        <p id="pErro"><?php if ($usuario == null) {
+                echo "Usuario ou senha incorretos";
+            } ?></p>
+        <div class="input-group">
+            <input type="text" name="login[usuario]" placeholder=" " required>
+            <label for="login[usuario]">Usuario</label>
         </div>
-        <form action="Login.php" method="post">
-            <h1>Login</h1>
-            <p id="pErro"><?php if ($usuario == null) { echo "Usuario ou senha incorretos"; }?></p>
-            <input type="text" name="login[usuario]" placeholder="Usuário" required>
-            <input type="password" name="login[senha]" placeholder="Senha" required>
-            <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
-            <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
-            <button id="btnEntrar">Entrar</button>
-        </form>
-    </main>
+        <div class="input-group">
+            <input type="password" name="login[senha]" placeholder=" " required>
+            <label for="login[senha]">Senha</label>
+        </div>
+        <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
+        <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
+        <button id="btnEntrar">Entrar</button>
+    </form>
+</main>
 </body>
 </html>

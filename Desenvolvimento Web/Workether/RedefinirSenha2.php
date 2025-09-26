@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     echo json_encode($response);
     exit();
-} if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION["codigo"])) {
+}
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && !isset($_SESSION["codigo"])) {
     header("Location: RedefinirSenha.php");
 }
 ?>
@@ -28,7 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <p>Digite o código enviado por email</p>
     <p id="pErro"></p>
-    <input type="text" name="codigo" placeholder="Código">
+    <div class="input-group">
+        <input type="text" name="codigo" placeholder=" ">
+        <label for="codigo">Código</label>
+    </div>
     <button>Enviar</button>
     <div id="divProgresso">
         <div id="Etapa1"></div>

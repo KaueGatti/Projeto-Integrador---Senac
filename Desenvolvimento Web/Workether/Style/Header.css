@@ -29,3 +29,8 @@ header p {
     cursor: pointer;
 }
 
+#btnNotificacoes {
+    border: none;
+    background: transparent;
+}
+

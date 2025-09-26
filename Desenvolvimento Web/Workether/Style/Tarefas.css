@@ -18,10 +18,13 @@ div {
 #divTitulo img {
     width: 70px;
     margin-left: 20px;
+    transition: 0.5s;
 }
 
 #divTitulo img:hover {
     cursor: pointer;
+    transform: scale(0.95);
+    opacity: 0.8;
 }
 
 #divTitulo h1 {
@@ -91,6 +94,7 @@ div {
 
 .articleTarefa:hover {
     background-color: rgba(195, 195, 195, 0.3);
+    transform: scale(1.05);
     cursor: pointer;
 }
 

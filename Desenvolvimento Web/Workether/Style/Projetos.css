@@ -18,10 +18,13 @@ div {
 #divTitulo img {
     width: 70px;
     margin-left: 20px;
+    transition: 0.5s;
 }
 
 #divTitulo img:hover {
     cursor: pointer;
+    transform: scale(0.95);
+    opacity: 0.8;
 }
 
 #divTitulo h1 {
@@ -69,6 +72,7 @@ div {
 
 .sectionProjetos {
     display: flex;
+    justify-content: center;
     overflow: auto;
     width: 100%;
     flex: 1;

@@ -58,7 +58,7 @@ aside button img {
     width: 90px;
 }
 
-.btnAsideSelected {
+.Selected {
     background: rgba(5, 104, 230, 0.25);
     color: #2457C5;
     box-shadow: 2px 0px 0px 0px rgba(0,0,0,1);

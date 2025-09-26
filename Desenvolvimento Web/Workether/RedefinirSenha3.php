@@ -41,11 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <p>Digite sua nova senha</p>
     <p id="pErro"></p>
     <div class="divInput">
-        <input type="password" name="senha" placeholder="Senha">
+        <div class="input-group">
+            <input type="password" name="senha" placeholder=" ">
+            <label for="senha">Senha</label>
+        </div>
         <img src="Icones/VerSenha.png" alt="">
     </div>
     <div class="divInput">
-        <input type="password" name="confirmarSenha" placeholder="Confirmar senha">
+        <div class="input-group">
+            <input type="password" name="confirmarSenha" placeholder=" ">
+            <label for="confirmarSenha">Confirmar senha</label>
+        </div>
         <img src="Icones/VerSenha.png" alt="">
     </div>
     <button id="btnRedefinir">Redefinir</button>

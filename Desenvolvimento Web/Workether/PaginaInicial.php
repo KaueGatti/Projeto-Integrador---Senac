@@ -1,17 +1,16 @@
 <?php ?>
 
-<link rel="stylesheet" href="Style/PaginaInicial.css">
-
-<section>
-    <h1>Vamos projetar</h1>
-    <article>
-        <button class="btnBox">
-            <img src="Icones/NovoProjeto.png" alt="">
-            <p>Novo Projeto +</p>
+<section class="conteudo">
+    <link rel="stylesheet" href="Style/PaginaInicial.css">
+    <h1 class="tituloPaginaInicial">Vamos projetar</h1>
+    <article class="articleBtns">
+        <button class="btnBox" id="btnNovoProjeto">
+            <img class="imgNovoProjeto" src="Icones/NovoProjeto.png" alt="">
+            <p class="pBtnBox">Novo Projeto +</p>
         </button>
         <button class="btnBox">
-            <img src="Icones/NovaTarefa.png" alt="">
-            <p>Nova Tarefa +</p>
+            <img class="imgNovaTarefa" src="Icones/NovaTarefa.png" alt="">
+            <p class="pBtnBox">Nova Tarefa +</p>
         </button>
     </article>
 </section>

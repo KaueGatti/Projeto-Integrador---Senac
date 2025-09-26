@@ -1,10 +1,10 @@
 <?php ?>
 
-<link rel="stylesheet" href="Style/Amigos.css">
 
-<section>
+<section class="conteudo">
+    <link rel="stylesheet" href="Style/Amigos.css">
     <div id="divTitulo">
-        <img src="Icones/Voltar.png" alt="">
+        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Amigos</h1>
     </div>
     <div id="divPesquisa">

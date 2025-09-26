@@ -47,7 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <p>Insira o e-mail cadastrado</p>
     <p id="pErro"></p>
-    <input type="email" name="email" placeholder="email@gmail.com" id="inputEmail" required>
+    <div class="input-group">
+        <input type="email" name="email" placeholder=" " id="inputEmail" required>
+        <label for="email">E-mail</label>
+    </div>
     <button id="btnEnviar">Enviar código</button>
     <div id="divProgresso">
         <div id="Etapa1"></div>
