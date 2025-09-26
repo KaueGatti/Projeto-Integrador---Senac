@@ -11,7 +11,7 @@
         <img src="Icones/Projetos.png" alt="">
         <p class="mb-0">Projetos</p>
     </button>
-    <button class="btnAside" id="btnTarefas" name="Tarefas">
+    <button class="btnAside" id="btnTarefas" name="DetalhesProjeto">
         <img src="Icones/Tarefas.png" alt="">
         <p class="mb-0">Tarefas</p>
     </button>

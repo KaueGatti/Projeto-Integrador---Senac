@@ -1,4 +1,6 @@
-section {
+@import "inputGroup.css";
+
+.conteudo {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,6 +113,85 @@ div {
 
 .articleAmigo p {
     color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 350px;
+    background-color: white;
+    border-radius: 20px;
+    position: absolute;
+    top: 350px;
+    left: 950px;
+    padding: 0 30px 0 30px;
+    box-shadow: 10px 10px 8px 0px rgba(0,0,0,0.1);
+}
+
+.show {
+    display: flex !important;
+}
+
+.onblur {
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.divTitulo {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.divTitulo img {
+    width: 40px;
+    transition: 0.2s;
+}
+
+.divTitulo img:hover {
+    cursor: pointer;
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+.divTitulo h1 {
+    margin-right: 40px;
+}
+
+.modal p {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modal button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    background-color: #E1B669;
+    color: white;
+    padding: 10px;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal button:hover {
+    transform: scale(1.1);
+    background-color: #e3aa4d;
+}
+
+.modal button img {
+    margin-left: 20px;
+    width: 30px;
 }
 
 
