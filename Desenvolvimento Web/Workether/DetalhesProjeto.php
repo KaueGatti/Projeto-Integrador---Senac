@@ -5,15 +5,15 @@
     <link rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
         <img onclick="voltar()" src="Icones/Voltar.png" alt="">
-        <h1 class="mb-0">Tarefas</h1>
+        <h1 class="mb-0">Detalhes do projeto</h1>
     </div>
     <section class="sectionDetalhes">
-        <article class="articleTarefa">
-            <div class="input-group">
+        <article class="articleDetalhes">
+            <div class="input-group" id="divInputNome">
                 <input type="text" id="nome" name="nome" placeholder=" ">
                 <label for="nome">Nome</label>
             </div>
-            <div class="input-group">
+            <div class="input-group" id="divInputDescricao">
                 <input type="text" id="descricao" name="descricao" placeholder=" ">
                 <label for="descricao">Descrição</label>
             </div>
