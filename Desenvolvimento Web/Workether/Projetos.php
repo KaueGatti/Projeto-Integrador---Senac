@@ -12,7 +12,7 @@
         <button>+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">
-        <article class="articleProjeto">
+        <article onclick="detalhes('Projeto')" class="articleProjeto">
             <div class="divTitulo">
                 <h1 class="mb-0">Nome do projeto</h1>
                 <p class="mb-0">Descrição do projeto...</p>
@@ -27,4 +27,5 @@
             </div>
         </article>
     </section>
+
 </section>

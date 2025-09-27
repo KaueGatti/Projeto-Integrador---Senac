@@ -28,8 +28,8 @@
     padding: 0 4px;
 }
 
-.textArea textarea:focus {
-    border: 3px solid rgba(5, 104, 230, 0.7);
+.textArea-group textarea:focus {
+    border-color: rgba(5, 104, 230, 0.7);
 }
 
 .textArea-group textarea:focus + label,

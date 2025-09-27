@@ -27,7 +27,3 @@ divLogo.onclick = function () {
         btns[j].firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));
     }
 }
-
-
-//this.setAttribute("class", this.getAttribute("class").replace("Selected", ""));
-//this.firstElementChild.setAttribute("src", srcImg.replace("Selected", ""));

@@ -1,0 +1,24 @@
+.modal {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    width: 350px;
+    background-color: white;
+    border-radius: 20px;
+    position: absolute;
+    top: 40%;
+    left: 47%;
+    padding: 0 30px 0 30px;
+    box-shadow: 10px 10px 8px 0 rgba(0,0,0,0.1),-10px -10px 8px 0 rgba(0,0,0,0.1);
+}
+
+.show {
+    display: flex !important;
+}
+
+.onblur {
+    filter: blur(10px);
+    pointer-events: none;
+}

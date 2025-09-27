@@ -9,7 +9,7 @@
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button onclick="adicionarAmigo()">+ Adicionar amigo</button>
+        <button onclick="interactModal('modalAmigos', 'sectionAmigos')">+ Adicionar amigo</button>
     </div>
     <section class="sectionAmigos" id="sectionAmigos">
         <article class="articleAmigo">
@@ -56,7 +56,7 @@
     <div class="modal" id="modalAmigos">
         <div class="divTitulo">
             <h1>Adicionar amigo</h1>
-            <img onclick="fecharModal('modalAmigos', 'sectionAmigos')" src="Icones/Fechar.png" alt="">
+            <img onclick="interactModal('modalAmigos', 'sectionAmigos')" src="Icones/Fechar.png" alt="">
         </div>
         <p>Insira o ID do usuário</p>
         <div class="input-group">
