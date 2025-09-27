@@ -47,6 +47,23 @@ function novaTarefa() {
     }).catch(err => console.log("Erro no fetch de: " + "NovaTarefa.php" + "\n" + err));
 }
 
+function novoProjeto() {
+    fetch("NovoProjeto.php").then(res => {
+        if (!res.ok) throw new Error("Response failed in:" + "NovoProjeto.php");
+        return res.text();
+    }).then(conteudo => {
+        if (main.children.length >= 2) {
+            main.children[1].remove();
+        }
+        main.innerHTML += conteudo;
+    }).catch(err => console.log("Erro no fetch de: " + "NovoProjeto.php" + "\n" + err));
+}
+
+function notificacoes() {
+    document.getElementById("notificacoes").classList.toggle("open");
+    document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
+}
+
 let main = document.getElementById('main');
 let logo = document.getElementById("divLogo");
 let btnsAside = document.getElementsByClassName("btnAside");

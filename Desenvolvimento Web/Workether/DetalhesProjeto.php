@@ -7,7 +7,7 @@
         <img onclick="voltar()" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Detalhes do projeto</h1>
     </div>
-    <section class="sectionDetalhes">
+    <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
                 <input type="text" id="nome" name="nome" placeholder=" ">
@@ -22,7 +22,7 @@
                     <input type="text" id="responsavel" name="responsavel" placeholder=" ">
                     <label for="descricao">Responsável</label>
                 </div>
-                <button>Participantes</button>
+                <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')">Participantes</button>
             </div>
             <div class="divDataConclusao_Tarefas">
                 <div class="input-group">
@@ -35,11 +35,28 @@
                 <button id="btnChat">Chat</button>
                 <button id="btnEquipes">Equipes</button>
             </div>
-            <button id="btnComentarios">Comentários</button>
+            <div>
+                <div id="space"></div>
+                <button id="btnComentarios">Comentários</button>
+
+            </div>
             <div class="divEditar_Salvar">
                 <button id="btnEditar">Editar</button>
                 <button id="btnSalvar">Salvar</button>
             </div>
         </article>
     </section>
+    <div class="modal" id="modalParticipantes">
+        <div class="divTitulo">
+            <h1>Participantes</h1>
+            <img onclick="interactModal('modalParticipantes', 'sectionDetalhes')" src="Icones/Fechar.png" alt="">
+        </div>
+        <button class="btnAdicionarParticipantes">+ Adicionar participar</button>
+        <section class="sectionParticipantes">
+            <article class="articleParticipante">
+                <p>Kauê</p>
+                <img src="Icones/Remover.png" alt="">
+            </article>
+        </section>
+    </div>
 </section>

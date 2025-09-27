@@ -9,7 +9,7 @@
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button>+ Novo Projeto</button>
+        <button onclick="novoProjeto()">+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">
         <article onclick="detalhes('Projeto')" class="articleProjeto">

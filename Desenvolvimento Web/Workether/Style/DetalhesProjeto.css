@@ -1,5 +1,6 @@
 @import "inputGroup.css";
 @import "textAreaGroup.css";
+@import "modal.css";
 
 .conteudo {
     display: flex;
@@ -75,7 +76,7 @@ div {
 }
 
 .divProjeto_Comentarios .input-group, .divDataConclusao_Tarefas .input-group, .divResponsavel_Participantes .input-group {
-    width: 40%;
+    width: 30%;
 }
 
 .divProjeto_Comentarios button, .divDataConclusao_Tarefas button, .divResponsavel_Participantes button, #btnEquipes {
@@ -96,7 +97,7 @@ div {
     font-size: 20px;
     font-weight: bold;
     height: 40px;
-    width: 40%;
+    width: 30%;
     border: none;
     border-radius:  10px;
 }
@@ -110,9 +111,12 @@ div {
     width: 300px;
     border: none;
     border-radius:  10px;
-    align-self: end;
-    margin-right: 195px;
     margin-bottom: 30px;
+    margin-left: 20px;
+}
+
+#space {
+    width: 30%;
 }
 
 .divEditar_Salvar {
@@ -148,6 +152,77 @@ button {
 }
 
 button:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+}
+
+#modalParticipantes {
+    justify-content: inherit;
+    height: 500px;
+    top: 25%;
+    padding: 10px;
+    width: 400px;
+}
+
+#modalParticipantes .divTitulo {
+    display: flex;
+    width: 100%;
+}
+
+#modalParticipantes .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+#modalParticipantes .divTitulo img {
+    transition: 0.3s;
+}
+
+#modalParticipantes .divTitulo img:hover {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+
+#modalParticipantes .btnAdicionarParticipantes {
+    align-self: end;
+    margin-top: 10px;
+    height: 35px;
+    width: 200px;
+    border: none;
+    background-color: #75CE70;
+    color: white;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#modalParticipantes .sectionParticipantes {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+#modalParticipantes .articleParticipante {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    border: 2px solid #c3c3c3;
+    width: 95%;
+    margin-bottom: 5px;
+}
+
+#modalParticipantes .articleParticipante p {
+    padding-left: 10px;
+}
+
+#modalParticipantes .articleParticipante img {
+    width: 35px;
+}
+
+#modalParticipantes .articleParticipante img:hover {
     filter: brightness(0.9);
     cursor: pointer;
 }

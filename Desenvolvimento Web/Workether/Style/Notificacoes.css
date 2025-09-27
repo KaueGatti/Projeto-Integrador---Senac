@@ -4,7 +4,7 @@
     border-radius: 20px 0px 0px 0px;
     background-color: white;
     height: 90%;
-    width: 0;
+    width: 30%;
     align-items: center;
     border-left: 3px solid rgba(195, 195, 195, 0.5);
     border-top: 3px solid rgba(195, 195, 195, 0.5);
@@ -13,14 +13,21 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    transition: 2s;
 }
 
 .open {
     display: flex;
-    width: 30%;
+    animation: abrir 0.3s linear;
 }
 
+@keyframes abrir {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
 
 #h1Notificacoes {
     position: sticky;

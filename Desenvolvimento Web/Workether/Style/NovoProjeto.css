@@ -46,7 +46,6 @@ div {
 .articleDetalhes {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     border: 3px solid rgba(195, 195, 195, 0.5);
     height: 90%;
     width: 70%;
@@ -58,6 +57,7 @@ div {
 
 #divInputNome {
     width: 50%;
+    margin-bottom: 20px;
 }
 
 #divInputDescricao {
@@ -71,20 +71,12 @@ div {
     height: 100px;
 }
 
-#divInputDescricao, #divInputNome, .divProjeto_Comentarios, .divDataConclusao_Tarefas, .divChat_Equipes {
-    margin-bottom: 20px;
+.responsavel, .data {
+    width: 300px;
+    margin-top: 20px;
 }
 
-.divProjeto_Comentarios .input-group, .divData, .divResponsavel, .divEquipe {
-    width: 30%;
-}
-
-#inputData, #inputResponsavel, #inputEquipe {
-    margin-bottom: 20px;
-}
-
-.divProjeto_Comentarios button {
-    margin-left: 20px;
+#btnParticipantes, #btnEquipes {
     background-color: #E1B669;
     color: white;
     font-size: 20px;
@@ -92,48 +84,37 @@ div {
     height: 40px;
     width: 300px;
     border: none;
-    border-radius:  10px;
+    border-radius: 10px;
+    margin-top: 20px;
 }
 
-#btnComentarios {
-    background-color: #E1B669;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    height: 40px;
-    width: 300px;
-    border: none;
-    border-radius:  10px;
-    align-self: end;
-    margin-right: 195px;
-    margin-bottom: 30px;
-}
-
-.divEditar_Salvar {
+.divCancelar_Concluir {
     display: flex;
     justify-content: end;
+    align-items: end;
+    flex: 1;
     width: 100%;
 }
 
 
-#btnEditar, #btnSalvar {
+#btnCancelar, #btnConcluir {
     height: 35px;
     width: 150px;
     color: white;
     font-size: 20px;
     font-weight: bold;
     border: none;
-    border-radius:  10px;
+    border-radius: 10px;
     transition: 0.3s;
 }
 
 
-#btnEditar {
+#btnCancelar {
     margin-right: 20px;
-    background-color: rgba(5, 104, 230, 0.75);
+    background-color: #E65A55;
 }
 
-#btnSalvar {
+#btnConcluir {
     background-color: #75CE70;
 }
 
