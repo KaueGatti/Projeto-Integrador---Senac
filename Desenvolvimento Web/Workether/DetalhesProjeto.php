@@ -13,8 +13,8 @@
                 <input type="text" id="nome" name="nome" placeholder=" ">
                 <label for="nome">Nome</label>
             </div>
-            <div class="input-group" id="divInputDescricao">
-                <input type="text" id="descricao" name="descricao" placeholder=" ">
+            <div class="textArea-group" id="divInputDescricao">
+                <textarea type="text" id="descricao" name="descricao" placeholder=" "></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="divResponsavel_Participantes">
@@ -30,6 +30,15 @@
                     <label for="dataConclusao">Data para conclusão</label>
                 </div>
                 <button>Tarefas</button>
+            </div>
+            <div class="divChat_Equipes">
+                <button id="btnChat">Chat</button>
+                <button id="btnEquipes">Equipes</button>
+            </div>
+            <button id="btnComentarios">Comentários</button>
+            <div class="divEditar_Salvar">
+                <button id="btnEditar">Editar</button>
+                <button id="btnSalvar">Salvar</button>
             </div>
         </article>
     </section>

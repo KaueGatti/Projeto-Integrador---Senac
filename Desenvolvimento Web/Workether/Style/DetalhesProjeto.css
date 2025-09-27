@@ -1,4 +1,5 @@
 @import "inputGroup.css";
+@import "textAreaGroup.css";
 
 .conteudo {
     display: flex;
@@ -37,42 +38,120 @@ div {
 .sectionDetalhes {
     display: flex;
     flex: 1;
-    align-items: center;
     justify-content: center;
-    margin-top: 10px;
     width: 100%;
+    overflow: auto;
 }
 
 .articleDetalhes {
     display: flex;
     flex-direction: column;
     border: 3px solid rgba(195, 195, 195, 0.5);
-    height: 80%;
+    height: 90%;
     width: 70%;
-    padding: 40px;
+    padding: 20px 40px 10px 40px;
     border-radius: 30px;
     transition: 0.4s;
+    margin: 10px;
 }
 
 #divInputNome {
     width: 50%;
 }
 
-#divInputDescricao, #divInputNome, .divResponsavel_Participantes, .divDataConclusao_Tarefas {
+#divInputDescricao {
+    display: flex;
+    justify-content: start;
+    width: 100%;
+}
+
+#divInputDescricao textarea {
+    resize: none;
+    height: 100px;
+}
+
+#divInputDescricao, #divInputNome, .divResponsavel_Participantes, .divDataConclusao_Tarefas, .divChat_Equipes {
     margin-bottom: 20px;
 }
 
-#divInputDescricao input {
-    height: 200px;
+.divResponsavel_Participantes .input-group, .divDataConclusao_Tarefas .input-group {
+    width: 40%;
 }
 
-.divResponsavel_Participantes .input-group {
-    width: 30%;
-}
-
-.divResponsavel_Participantes button {
+.divResponsavel_Participantes button, .divDataConclusao_Tarefas button, #btnEquipes {
     margin-left: 20px;
+    background-color: #E1B669;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    width: 300px;
+    border: none;
+    border-radius:  10px;
 }
+
+#btnChat {
+    background-color: rgba(44, 88, 143, 0.57);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    width: 40%;
+    border: none;
+    border-radius:  10px;
+}
+
+#btnComentarios {
+    background-color: #E1B669;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    width: 300px;
+    border: none;
+    border-radius:  10px;
+    align-self: end;
+    margin-right: 195px;
+    margin-bottom: 30px;
+}
+
+.divEditar_Salvar {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+
+#btnEditar, #btnSalvar {
+    height: 35px;
+    width: 150px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius:  10px;
+    transition: 0.3s;
+}
+
+
+#btnEditar {
+    margin-right: 20px;
+    background-color: rgba(5, 104, 230, 0.75);
+}
+
+#btnSalvar {
+    background-color: #75CE70;
+}
+
+button {
+    transition: 0.3s;
+}
+
+button:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+}
+
 
 
 
