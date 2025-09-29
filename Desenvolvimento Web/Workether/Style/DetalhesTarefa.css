@@ -46,11 +46,10 @@ div {
 .articleDetalhes {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     border: 3px solid rgba(195, 195, 195, 0.5);
     height: 90%;
     width: 70%;
-    padding: 20px 40px 10px 40px;
+    padding: 20px 40px 20px 40px;
     border-radius: 30px;
     transition: 0.4s;
     margin: 10px;
@@ -112,6 +111,7 @@ div {
 .divEditar_Salvar {
     display: flex;
     justify-content: end;
+    margin-top: auto;
     width: 100%;
 }
 

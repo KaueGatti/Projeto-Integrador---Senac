@@ -1,0 +1,28 @@
+button {
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: white;
+}
+
+button:hover {
+    filter: brightness(0.8);
+}
+
+.btnBack {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnBack:hover {
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+.buttonGreen {
+    background-color: #75CE70;
+}
+
+.buttonRed {
+    background-color: #E65A55;
+}
