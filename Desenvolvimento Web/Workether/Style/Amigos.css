@@ -116,10 +116,21 @@ div {
     color: rgba(0, 0, 0, 0.5);
 }
 
+/* Modal Adicionar Amigo */
+
+.modal {
+    justify-content: start;
+    padding: 0 10px 0 10px;
+    height: 220px;
+}
+
+.modal .input-group {
+    width: 80%;
+}
+
 .divTitulo {
-    display: flex;
-    justify-content: end;
     width: 100%;
+    margin-top: 10px;
 }
 
 .divTitulo img {
@@ -134,7 +145,8 @@ div {
 }
 
 .divTitulo h1 {
-    margin-right: 40px;
+    width: 95%;
+    text-align: center;
 }
 
 .modal p {

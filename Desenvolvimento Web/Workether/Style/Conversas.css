@@ -1,6 +1,7 @@
 @import "modal.css";
 @import "inputGroup.css";
 
+/* Conversas */
 .conteudo {
     display: flex;
     flex-direction: column;
@@ -124,15 +125,22 @@ div {
     text-align: end;
 }
 
+/* Modal Adicionar Conversa*/
+
+.modal {
+    justify-content: start;
+    padding: 0 10px 0 10px;
+    height: 200px;
+}
+
 .divTitulo {
-    display: flex;
-    justify-content: end;
     width: 100%;
+    margin-top: 10px;
     margin-bottom: 30px;
 }
 
 .divTitulo img {
-    width: 40px;
+    width: 30px;
     transition: 0.2s;
 }
 
@@ -143,8 +151,13 @@ div {
 }
 
 .divTitulo h1 {
-    margin-right: 25px;
+    width: 95%;
+    text-align: center;
     font-size: 28px;
+}
+
+.modal .input-group {
+    width: 90%;
 }
 
 .modal button {
@@ -165,11 +178,11 @@ div {
 }
 
 .modal button:hover {
-    transform: scale(1.1);
-    background-color: #e3aa4d;
+    filter: brightness(0.9);
 }
 
 .modal button img {
     margin-left: 20px;
     width: 30px;
 }
+

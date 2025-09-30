@@ -1,3 +1,5 @@
+let stackModais = {};
+
 function voltar() {
     logo.click();
 }
@@ -45,6 +47,18 @@ function novaTarefa() {
         }
         main.innerHTML += conteudo;
     }).catch(err => console.log("Erro no fetch de: " + "NovaTarefa.php" + "\n" + err));
+}
+
+function loadTarefas() {
+    fetch("Tarefas" + ".php").then(res => {
+        if (!res.ok) throw new Error("Response failed in:" + "Tarefas" + ".php");
+        return res.text();
+    }).then(conteudo => {
+        if (main.children.length >= 2) {
+            main.children[1].remove();
+        }
+        main.innerHTML += conteudo;
+    }).catch(err => console.log("Erro no fetch de: " + "loadTarefas()" + "\n" + err));
 }
 
 function novoProjeto() {

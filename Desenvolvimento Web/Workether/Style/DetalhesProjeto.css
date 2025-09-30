@@ -3,6 +3,8 @@
 @import "modal.css";
 @import "buttons.css";
 
+/* Detalhes do Projeto -------------------------------------- */
+
 .conteudo {
     display: flex;
     flex-direction: column;
@@ -133,7 +135,6 @@ div {
     width: 30%;
 }
 
-
 #btnEditar, #btnSalvar {
     height: 35px;
     width: 150px;
@@ -144,7 +145,6 @@ div {
     border-radius: 10px;
     transition: 0.3s;
 }
-
 
 #btnEditar {
     margin-right: 20px;
@@ -164,25 +164,27 @@ button:hover {
     cursor: pointer;
 }
 
-#modalParticipantes, #modalEquipes {
+/* Modal Participantes -------------------------------------- */
+
+.modalParticipantes {
     height: 500px;
     top: 25%;
     padding: 10px;
     width: 400px;
 }
 
-#modalParticipantes .divTitulo, #modalEquipes .divTitulo {
+.modalParticipantes .divTitulo {
     display: flex;
     width: 100%;
 }
 
-#modalParticipantes .divTitulo h1, #modalEquipes .divTitulo h1 {
+.modalParticipantes .divTitulo h1 {
     width: 95%;
     text-align: center;
     margin-left: 10px;
 }
 
-#modalParticipantes .btnAdicionarParticipantes, #modalEquipes .btnAdicionarEquipe {
+.modalParticipantes .btnAdicionarParticipantes {
     align-self: end;
     height: 35px;
     width: 200px;
@@ -195,13 +197,13 @@ button:hover {
     margin-bottom: 10px;
 }
 
-#modalParticipantes .sectionParticipantes, #modalEquipes .sectionEquipes {
+.modalParticipantes .sectionParticipantes {
     flex: 1;
     width: 100%;
     overflow: auto;
 }
 
-#modalParticipantes .articleParticipante, #modalEquipes .articleEquipes {
+.modalParticipantes .articleParticipante {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -211,25 +213,27 @@ button:hover {
     margin-bottom: 5px;
 }
 
-#modalParticipantes .articleParticipante p, #modalEquipes .articleEquipes p {
+.modalParticipantes .articleParticipante p{
     padding-left: 10px;
 }
 
-#modalParticipantes .articleParticipante img, #modalEquipes .articleEquipes img {
+.modalParticipantes .articleParticipante img{
     width: 35px;
 }
 
-#modalParticipantes .articleParticipante img:hover, #modalEquipes .articleEquipes img:hover {
+.modalParticipantes .articleParticipante img:hover {
     filter: brightness(0.9);
     cursor: pointer;
 }
 
-#modalAdicionarParticipante {
+/* Modal Adicionar Participante -------------------------------------- */
+
+.modalAdicionarParticipante {
     padding: 20px;
     height: 150px;
 }
 
-#modalAdicionarParticipante .divTitulo {
+.modalAdicionarParticipante .divTitulo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -237,17 +241,17 @@ button:hover {
     margin-bottom: 20px;
 }
 
-#modalAdicionarParticipante .divTitulo h1 {
+.modalAdicionarParticipante .divTitulo h1 {
     font-size: 26px;
     width: 95%;
     text-align: center;
 }
 
-#modalAdicionarParticipante img:hover {
+.modalAdicionarParticipante img:hover {
     cursor: pointer;
 }
 
-#modalAdicionarParticipante button {
+.modalAdicionarParticipante button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,19 +268,83 @@ button:hover {
     transition: 0.3s;
 }
 
-#modalAdicionarParticipante button:hover {
+.modalAdicionarParticipante button:hover {
     filter: brightness(0.9);
 }
 
-#modalAdicionarParticipante button img {
+.modalAdicionarParticipante button img {
     margin-left: 20px;
     width: 30px;
 }
 
+/* Modal Equipes -------------------------------------- */
+
+#modalEquipes {
+    height: 500px;
+    top: 25%;
+    padding: 10px;
+    width: 400px;
+}
+
+#modalEquipes .divTitulo {
+    display: flex;
+    width: 100%;
+}
+
+#modalEquipes .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+#modalEquipes .btnAdicionarEquipe {
+    align-self: end;
+    height: 35px;
+    width: 200px;
+    background-color: #75CE70;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#modalEquipes .sectionEquipes {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+#modalEquipes .articleEquipes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    border: 2px solid #c3c3c3;
+    width: 95%;
+    margin-bottom: 5px;
+}
+
+#modalEquipes .articleEquipes p {
+    padding-left: 10px;
+}
+
+#modalEquipes .articleEquipes img {
+    width: 35px;
+}
+
+#modalEquipes .articleEquipes img:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+}
+
+/* Modal Adicionar Equipe -------------------------------------- */
+
 #modalAdicionarEquipe {
     flex-direction: column;
     justify-content: start;
-    height: 600px;
+    height: 500px;
     width: 600px;
     top: 25%;
     left: 40%;
@@ -292,6 +360,18 @@ button:hover {
     width: 100%;
     justify-content: start;
     margin-top: 20px;
+}
+
+#modalAdicionarEquipe .textArea-descricao {
+    width: 100%;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+#modalAdicionarEquipe .textArea-descricao textarea {
+    resize: none;
+    height: 100px;
+    overflow: auto;
 }
 
 #modalAdicionarEquipe .input-nome input {
@@ -320,12 +400,153 @@ button:hover {
 }
 
 #modalAdicionarEquipe .divCancelar_Concluir button {
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: white;
+
+}
+
+#modalAdicionarEquipe .divCancelar_Concluir button:hover {
+    filter: brightness(0.8);
+}
+
+#modalAdicionarEquipe .divCancelar_Concluir button {
     width: 150px;
     height: 35px;
     font-size: 20px;
     font-weight: bold;
     margin-left: 10px;
 }
+
+/* Modal Comentários -------------------------------------- */
+
+#modalComentarios {
+    justify-content: start;
+    height: 500px;
+    width: 500px;
+    top: 25%;
+    left: 40%;
+    padding: 0 20px 10px 20px;
+}
+
+#modalComentarios .divTitulo {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#modalComentarios .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+}
+
+#modalComentarios #btnAdicionarComentario {
+    height: 35px;
+    width: 225px;
+    align-self: end;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#modalComentarios .sectionComentarios {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+#modalComentarios .articleComentario {
+    display: flex;
+    height: 120px;
+    width: 95%;
+    border-radius: 10px;
+    border: 3px solid #c3c3c3;
+    margin-top: 10px;
+}
+
+#modalComentarios .articleComentario .textoComentario {
+    width: 75%;
+    overflow: auto;
+    padding: 5px;
+}
+
+#modalComentarios .articleComentario .divInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 25%;
+}
+
+#modalComentarios .articleComentario .divInfo .imgRemover {
+    width: 35px;
+}
+
+#modalComentarios .articleComentario .divInfo .imgRemover:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
+}
+
+#modalComentarios .articleComentario .divInfo .data {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-right: 5px;
+}
+
+#modalComentarios .articleComentario .divInfo .hora {
+    padding-right: 5px;
+}
+
+#modalComentarios .articleComentario .divInfo .divUser {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 5px;
+}
+
+#modalComentarios .articleComentario .divInfo .divUser img {
+    width: 35px;
+}
+
+/* Modal Adicionar Comentário -------------------------------------- */
+
+#modalAdicionarComentario {
+    height: 350px;
+    width: 500px;
+    top: 30%;
+    justify-content: start;
+}
+
+#modalAdicionarComentario .tituloModal {
+    margin-top: 10px;
+}
+
+#modalAdicionarComentario .textArea-group {
+    width: 90%;
+    margin-top: 10px;
+}
+
+#modalAdicionarComentario textarea {
+    resize: none;
+    height: 200px;
+}
+
+#modalAdicionarComentario .divCancelar_Adicionar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+#modalAdicionarComentario .divCancelar_Adicionar button {
+    height: 35px;
+    width: 150px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
 
 
 
