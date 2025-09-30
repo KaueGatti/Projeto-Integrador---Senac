@@ -21,3 +21,24 @@
     border-radius: 10px;
     border: none;
 }
+
+.buttonOrange {
+    background-color: #E1B669;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.buttonGray {
+    background-color: rgba(44, 88, 143, 0.57);
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.buttonBlue {
+    background-color: rgba(5, 104, 230, 0.75);
+    color: white;
+    border: none;
+    border-radius: 10px;
+}

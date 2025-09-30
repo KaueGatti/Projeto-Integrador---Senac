@@ -1,5 +1,9 @@
 @import "inputGroup.css";
 @import "textAreaGroup.css";
+@import "buttons.css";
+@import "modal.css";
+@import "modais/Participantes.css";
+@import "modais/Equipes.css";
 
 .conteudo {
     display: flex;
@@ -96,7 +100,6 @@ div {
     width: 100%;
 }
 
-
 #btnCancelar, #btnConcluir {
     height: 35px;
     width: 150px;
@@ -107,7 +110,6 @@ div {
     border-radius: 10px;
     transition: 0.3s;
 }
-
 
 #btnCancelar {
     margin-right: 20px;

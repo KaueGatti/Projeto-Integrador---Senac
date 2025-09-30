@@ -47,7 +47,7 @@
         </article>
     </section>
 
-    <!-- Modal Participante -> Projeto -->
+    <!-- Detalhes do Projeto -> Participantes -->
     <div class="modal modalParticipantes" id="modalParticipantes">
         <div class="divTitulo">
             <h1>Participantes</h1>
@@ -77,9 +77,9 @@
         </div>
         <button onclick="adicionarParticipante()">Adicionar</button>
     </div>
-    <!-- Modal Participante -> Projeto -->
+    <!-- Detalhes do Projeto -> Participantes -->
 
-    <!-- Modal Comentário -> Projeto -->
+    <!-- Detalhes do Projeto -> Comentários -->
     <div class="modal modalComentarios" id="modalComentarios">
         <div class="divTitulo">
             <h1>Comentários</h1>
@@ -111,14 +111,15 @@
             <label for="comentario">Comentário</label>
         </div>
         <div class="divCancelar_Adicionar">
-            <button class="buttonRed" onclick="interactModal('modalAdicionarComentario', 'modalComentarios')">Cancelar</button>
+            <button class="buttonRed" onclick="interactModal('modalAdicionarComentario', 'modalComentarios')">Cancelar
+            </button>
             <button class="buttonGreen" onclick="adicionarComentario()">Adicionar</button>
         </div>
     </div>
-    <!-- Modal Comentário -> Projeto -->
+    <!-- Detalhes do Projeto -> Comentários -->
 
-    <!-- Modal Equipe -->
-    <div class="modal" id="modalEquipes">
+    <!-- Detalhes do Projeto -> Equipes -->
+    <div class="modal modalEquipes" id="modalEquipes">
         <div class="divTitulo">
             <h1>Equipes</h1>
             <img class="btnBack" onclick="interactModal('modalEquipes', 'sectionDetalhes')" src="Icones/Fechar.png"
@@ -128,13 +129,13 @@
                 class="btnAdicionarEquipe">+ Adicionar equipe
         </button>
         <section class="sectionEquipes">
-            <article class="articleEquipes">
+            <article onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" class="articleEquipe">
                 <p>Equipe do Kauê</p>
                 <img src="Icones/Remover.png" alt="">
             </article>
         </section>
     </div>
-    <div class="modal" id="modalAdicionarEquipe">
+    <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
         <h1 class="tituloModal">Nova Equipe</h1>
         <div class="input-group input-nome">
             <input type="text" id="nome" placeholder=" ">
@@ -158,9 +159,41 @@
             <button class="buttonGreen" id="btnConcluir">Concluir</button>
         </div>
     </div>
-    <!-- Modal Equipe -->
+    <!-- Detalhes do Projeto -> Equipes -->
 
-    <!-- Modal Participante -> Equipe -->
+    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+    <div class="modal modalDetalhesEquipe" id="modalDetalhesEquipe">
+        <div class="divTitulo">
+            <h1>Detalhes da equipe</h1>
+            <img class="btnBack" onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" src="Icones/Fechar.png"
+                 alt="">
+        </div>
+        <div class="input-group" id="inputNome">
+            <input type="text" name="nome" placeholder=" " readonly>
+            <label for="nome">Nome</label>
+        </div>
+        <div class="textArea-group" id="textArea-descricao">
+            <textarea type="text" name="descricao" placeholder=" " readonly></textarea>
+            <label for="descricao">Descrição</label>
+        </div>
+        <div class="grid">
+            <div class="input-group" id="inputResponsavel">
+                <input type="text" placeholder=" ">
+                <label for="">Responsável</label>
+            </div>
+            <button class="buttonOrange">Participantes</button>
+            <button class="buttonGray">Chat</button>
+            <button class="buttonOrange">Tarefas</button>
+            <button class="buttonOrange" id="btnComentarios">Comentários</button>
+        </div>
+        <div class="divEditar_Salvar">
+            <button class="buttonBlue">Editar</button>
+            <button class="buttonGreen">Salvar</button>
+        </div>
+    </div>
+    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+
+    <!-- Detalhes do Projeto -> Equipes -> Participantes -->
     <div class="modal modalParticipantes" id="modalParticipantesEquipe">
         <div class="divTitulo">
             <h1>Participantes</h1>
@@ -190,5 +223,5 @@
         </div>
         <button onclick="adicionarParticipante()">Adicionar</button>
     </div>
-    <!-- Modal Participante -> Equipe -->
+    <!-- Detalhes do Projeto -> Equipes -> Participantes -->
 </section>

@@ -1,0 +1,233 @@
+/* Modal Equipes -------------------------------------- */
+
+.modalEquipes {
+    height: 500px;
+    top: 25%;
+    padding: 10px;
+    width: 400px;
+}
+
+.modalEquipes .divTitulo {
+    display: flex;
+    width: 100%;
+}
+
+.modalEquipes .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.modalEquipes .btnAdicionarEquipe {
+    align-self: end;
+    height: 35px;
+    width: 200px;
+    background-color: #75CE70;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.modalEquipes .sectionEquipes {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+.modalEquipes .articleEquipe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    border: 2px solid #c3c3c3;
+    width: 95%;
+    margin-bottom: 5px;
+}
+
+.modalEquipes .articleEquipe:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.modalEquipes .articleEquipe p {
+    padding-left: 10px;
+}
+
+.modalEquipes .articleEquipe img {
+    width: 35px;
+}
+
+.modalEquipes .articleEquipe img:hover {
+    filter: brightness(0.9);
+    cursor: pointer;
+}
+
+/* Modal Detalhes da Equipe */
+
+.modalDetalhesEquipe {
+    padding: 0 20px 0 20px;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    height: 500px;
+    width: 600px;
+    top: 25%;
+    left: 40%;
+}
+
+.modalDetalhesEquipe .divTitulo {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modalDetalhesEquipe .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+}
+
+.modalDetalhesEquipe .input-group {
+    width: 100%;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.modalDetalhesEquipe #inputNome {
+    width: 300px;
+}
+
+.modalDetalhesEquipe #textArea-descricao {
+    width: 100%;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.modalDetalhesEquipe #textArea-descricao textarea {
+    resize: none;
+    height: 70px;
+    overflow: auto;
+}
+
+.modalDetalhesEquipe .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+    column-width: 200px;
+    gap: 20px;
+}
+
+.modalDetalhesEquipe .grid button {
+    height: 40px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modalDetalhesEquipe .grid #inputResponsavel {
+    width: 100%;
+    margin-top: 0;
+}
+
+.modalDetalhesEquipe .grid #btnComentarios {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.modalDetalhesEquipe .divEditar_Salvar {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.modalDetalhesEquipe .divEditar_Salvar button {
+    margin-left: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 35px;
+    width: 150px;
+}
+
+/* Modal Adicionar Equipe -------------------------------------- */
+
+.modalAdicionarEquipe {
+    padding: 0 20px 0 20px;
+    flex-direction: column;
+    justify-content: start;
+    height: 500px;
+    width: 600px;
+    top: 25%;
+    left: 40%;
+}
+
+.modalAdicionarEquipe .tituloModal {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.modalAdicionarEquipe .input-group {
+    width: 100%;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.modalAdicionarEquipe .textArea-descricao {
+    width: 100%;
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.modalAdicionarEquipe .textArea-descricao textarea {
+    resize: none;
+    height: 100px;
+    overflow: auto;
+}
+
+.modalAdicionarEquipe .input-nome input {
+    width: 300px;
+}
+
+.modalAdicionarEquipe .btnParticipantes {
+    background-color: #E1B669;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    height: 40px;
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    align-self: start;
+    margin-top: 20px;
+}
+
+.modalAdicionarEquipe .divCancelar_Concluir {
+    display: flex;
+    justify-content: end;
+    margin-top: auto;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.modalAdicionarEquipe .divCancelar_Concluir button {
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    color: white;
+
+}
+
+.modalAdicionarEquipe .divCancelar_Concluir button:hover {
+    filter: brightness(0.8);
+}
+
+.modalAdicionarEquipe .divCancelar_Concluir button {
+    width: 150px;
+    height: 35px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}

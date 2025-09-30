@@ -5,7 +5,7 @@ class Banco
     private $host = "localhost";
     private $banco = "workether";
     private $usuario = "root";
-    private $senha = "";
+    private $senha = "tiger";
     public $con;
 
     public function __construct(){
