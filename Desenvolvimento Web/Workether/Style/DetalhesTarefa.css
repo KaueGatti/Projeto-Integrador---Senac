@@ -1,5 +1,8 @@
 @import "inputGroup.css";
 @import "textAreaGroup.css";
+@import "modal.css";
+@import "modais/Comentarios.css";
+@import "buttons.css";
 
 .conteudo {
     display: flex;

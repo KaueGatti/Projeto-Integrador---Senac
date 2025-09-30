@@ -1,0 +1,126 @@
+/* Modal Comentários -------------------------------------- */
+
+.modalComentarios {
+    justify-content: start;
+    height: 500px;
+    width: 500px;
+    top: 25%;
+    left: 40%;
+    padding: 0 20px 10px 20px;
+}
+
+.modalComentarios .divTitulo {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modalComentarios .divTitulo h1 {
+    width: 95%;
+    text-align: center;
+}
+
+.modalComentarios #btnAdicionarComentario {
+    height: 35px;
+    width: 225px;
+    align-self: end;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.modalComentarios .sectionComentarios {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+}
+
+.modalComentarios .articleComentario {
+    display: flex;
+    height: 120px;
+    width: 95%;
+    border-radius: 10px;
+    border: 3px solid #c3c3c3;
+    margin-top: 10px;
+}
+
+.modalComentarios .articleComentario .textoComentario {
+    width: 75%;
+    overflow: auto;
+    padding: 5px;
+}
+
+.modalComentarios .articleComentario .divInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 25%;
+}
+
+.modalComentarios .articleComentario .divInfo .imgRemover {
+    width: 35px;
+}
+
+.modalComentarios .articleComentario .divInfo .imgRemover:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
+}
+
+.modalComentarios .articleComentario .divInfo .data {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-right: 5px;
+}
+
+.modalComentarios .articleComentario .divInfo .hora {
+    padding-right: 5px;
+}
+
+.modalComentarios .articleComentario .divInfo .divUser {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 5px;
+}
+
+.modalComentarios .articleComentario .divInfo .divUser img {
+    width: 35px;
+}
+
+/* Modal Adicionar Comentário -------------------------------------- */
+
+.modalAdicionarComentario {
+    height: 350px;
+    width: 500px;
+    top: 30%;
+    justify-content: start;
+}
+
+.modalAdicionarComentario .tituloModal {
+    margin-top: 10px;
+}
+
+.modalAdicionarComentario .textArea-group {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.modalAdicionarComentario textarea {
+    resize: none;
+    height: 200px;
+}
+
+.modalAdicionarComentario .divCancelar_Adicionar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 15px;
+}
+
+.modalAdicionarComentario .divCancelar_Adicionar button {
+    height: 35px;
+    width: 150px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
