@@ -44,6 +44,11 @@ class UsuarioController
         return $this->usuario->readByEmail($email);
     }
 
+    public function readUsuarioByID($id)
+    {
+        return $this->usuario->readByID($id);
+    }
+
     function gerarCodigo($tamanho = 8)
     {
         $codigo = '';

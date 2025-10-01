@@ -8,7 +8,7 @@ session_start();
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Perfil.css">
     <div id="divTitulo">
-        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
+        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
         <h1>Perfil</h1>
     </div>
     <div class="input-group" id="divID">

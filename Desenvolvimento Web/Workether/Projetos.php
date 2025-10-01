@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . "/Controller/ProjetoController.php";
+require_once __DIR__ . "/Model/Projeto.php";
 
 $controller = new ProjetoController();
 $warning = false;
@@ -19,7 +20,7 @@ if (count($projects) == 0) {
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Projetos.css">
     <div id="divTitulo">
-        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
+        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
         <h1>Projetos</h1>
     </div>
     <div id="divPesquisa">
@@ -28,8 +29,8 @@ if (count($projects) == 0) {
     </div>
     <section class="sectionProjetos">
         <?php if ($warning) { echo "<p class=\"pWarning\">$warning</p>";} ?>
-        <?php foreach ($projects as $project) : ?>
-            <article onclick="detalhes('Projeto')" class="articleProjeto">
+        <?php foreach ($projects as $project) :?>
+            <article onclick="detalhes('Projeto', '<?= "nome=$project->nome&descricao=$project->descricao&id_responsavel=$project->id_responsavel&dataAtualConclusao=$project->dataAtualConclusao" ?>')" class="articleProjeto">
                 <div class="divTitulo">
                     <h1><?= $project->nome ?></h1>
                     <p><?= $project->descricao ?></p>

@@ -153,6 +153,15 @@ class Usuario
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function readByID($id)
+    {
+        $sql = "CALL READ_USUARIO_BY_ID(:id);";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
 }
 
 ?>

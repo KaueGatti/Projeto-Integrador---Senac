@@ -72,7 +72,8 @@ div {
 
 .sectionProjetos {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     overflow: auto;
     width: 100%;
     flex: 1;

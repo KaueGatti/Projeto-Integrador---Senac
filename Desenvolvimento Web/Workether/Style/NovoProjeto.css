@@ -5,6 +5,7 @@
 @import "modais/Participantes.css";
 @import "modais/Equipes.css";
 @import "modais/Comentarios.css";
+@import "selectGroup.css";
 
 .conteudo {
     display: flex;

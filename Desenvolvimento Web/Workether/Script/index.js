@@ -1,7 +1,15 @@
 let stackModais = {};
 
-function voltar() {
-    logo.click();
+function voltar(url) {
+    fetch(url).then(res => {
+        if (!res.ok) throw new Error("Response failed in back to: " + url);
+        return res.text();
+    }).then(conteudo => {
+        if (main.children.length >= 2) {
+            main.children[1].remove();
+        }
+        main.innerHTML += conteudo;
+    }).catch(err => console.log("Erro no fetch de back to: " + url + "\n" + err));
 }
 
 function abrirConversa_Chat() {
@@ -21,8 +29,8 @@ function interactModal(modal, background) {
     document.getElementById(background).classList.toggle("onblur");
 }
 
-function detalhes(url) {
-    fetch("Detalhes" + url + ".php").then(res => {
+function detalhes(url, valuesGet) {
+    fetch("Detalhes" + url + ".php?" + valuesGet).then(res => {
         if (!res.ok) throw new Error("Response failed in:" + "Detalhes" + url + ".php");
         return res.text();
     }).then(conteudo => {

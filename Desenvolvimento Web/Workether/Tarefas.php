@@ -4,7 +4,7 @@
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Tarefas.css">
     <div id="divTitulo">
-        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
+        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Tarefas</h1>
     </div>
     <div id="divPesquisa">

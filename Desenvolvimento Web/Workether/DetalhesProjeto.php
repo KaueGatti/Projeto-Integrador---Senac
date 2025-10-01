@@ -1,32 +1,40 @@
-<?php ?>
+<?php
+
+require_once __DIR__ . "/Controller/UsuarioController.php";
+
+$usuarioController = new UsuarioController();
+
+$reponsavel = $usuarioController->readUsuarioByID($_GET["id_responsavel"]);
+
+?>
 
 
 <section class="conteudo">
     <link rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
-        <img class="btnBack" onclick="voltar()" src="Icones/Voltar.png" alt="">
+        <img class="btnBack" onclick="voltar('Projetos.php')" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Detalhes do projeto</h1>
     </div>
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="nome" name="nome" placeholder=" ">
+                <input type="text" id="nome" name="nome" placeholder=" " value="<?= $_GET['nome'] ?>" readonly>
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="descricao" name="descricao" placeholder=" "></textarea>
+                <textarea type="text" id="descricao" name="descricao" placeholder=" " readonly><?= $_GET['descricao'] ?></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="divResponsavel_Participantes">
                 <div class="input-group">
-                    <input type="text" id="responsavel" name="responsavel" placeholder=" ">
+                    <input type="text" id="responsavel" name="responsavel" placeholder=" " value="<?= $reponsavel->usuario ?>" readonly>
                     <label for="descricao">Responsável</label>
                 </div>
                 <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')">Participantes</button>
             </div>
             <div class="divDataConclusao_Tarefas">
                 <div class="input-group">
-                    <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" ">
+                    <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" " value="<?= $_GET['dataAtualConclusao'] ?>">
                     <label for="dataConclusao">Data para conclusão</label>
                 </div>
                 <button onclick="loadTarefas()">Tarefas</button>

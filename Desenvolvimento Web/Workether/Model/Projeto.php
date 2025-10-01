@@ -3,8 +3,8 @@
 class Projeto
 {
     public $id;
-    public $idChat;
-    public $idResponsavel;
+    public $id_chat;
+    public $id_responsavel;
     public $nome;
     public $descricao;
     public $dataCriacao;
