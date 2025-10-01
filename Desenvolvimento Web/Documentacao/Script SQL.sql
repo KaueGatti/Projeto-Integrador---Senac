@@ -200,10 +200,10 @@ END $$
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_PROJETO (_id_chat INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
+CREATE PROCEDURE CREATE_PROJETO (_id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
 BEGIN
-	INSERT INTO Projeto (id_chat, id_responsavel, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
-    VALUES (_id_chat, _id_responsavel, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
+	INSERT INTO Projeto (id_responsavel, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
+    VALUES (_id_responsavel, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
 END $
 DELIMITER ;
 
@@ -224,7 +224,7 @@ CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Projeto
 	LEFT JOIN Usuario_Projeto ON Projeto.id = Usuario_Projeto.id_projeto
-	WHERE Usuario_Projeto.id_usuario = _id_usuario;
+	WHERE Usuario_Projeto.id_usuario = _id_usuario OR Projeto.id_responsavel = _id_usuario;
 END $$
 DELIMITER ;
 
@@ -524,3 +524,20 @@ BEGIN
     WHERE _id_usuario IN (Amizade.id_usuarioA, Amizade.id_usuarioB);
 END $
 DELIMITER ;
+
+DELIMITER $
+CREATE TRIGGER NOVO_PROJETO
+BEFORE INSERT ON Projeto
+FOR EACH ROW
+BEGIN
+	DECLARE id_chat INT;
+    
+	CALL CREATE_CHAT();
+    
+    SET id_chat = LAST_INSERT_ID();
+    
+    SET NEW.id_chat = id_chat;
+END $
+DELIMITER ;
+
+CALL CREATE_PROJETO('LHM77Z5', 'Projeto Teste', 'Teste...', now());
