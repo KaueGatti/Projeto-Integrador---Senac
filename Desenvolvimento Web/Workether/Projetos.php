@@ -1,9 +1,16 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/Controller/ProjetoController.php";
 
-if (isset($_SESSION['usuario'])) {
+$controller = new ProjetoController();
+$warning = false;
 
+include_once __DIR__ . "/session.php";
+
+$projects = $controller->readProjectsByUsuario($_SESSION['usuario']->id);
+
+if (count($projects) == 0) {
+    $warning = "Você não tem nenhum projeto no momento";
 }
 
 ?>
@@ -20,20 +27,23 @@ if (isset($_SESSION['usuario'])) {
         <button onclick="novoProjeto()">+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">
-        <article onclick="detalhes('Projeto')" class="articleProjeto">
-            <div class="divTitulo">
-                <h1 class="mb-0">Nome do projeto</h1>
-                <p class="mb-0">Descrição do projeto...</p>
-            </div>
-            <div class="divInfo">
-                <p class="pData mb-0">Data para conclusão: 20/02/2020</p>
-                <div class="divResponsavel">
-                    <img src="Icones/User.png" alt="">
-                    <p class="mb-0">Kauê</p>
+        <?php if ($warning) { echo "<p class=\"pWarning\">$warning</p>";} ?>
+        <?php foreach ($projects as $project) : ?>
+            <article onclick="detalhes('Projeto')" class="articleProjeto">
+                <div class="divTitulo">
+                    <h1><?= $project->nome ?></h1>
+                    <p><?= $project->descricao ?></p>
                 </div>
-                <p class="pEmAndamento pStatus mb-0">Em andamento</p>
-            </div>
-        </article>
+                <div class="divInfo">
+                    <p class="pData">Data para conclusão: <?= $project->dataAtualConclusao ?></p>
+                    <div class="divResponsavel">
+                        <img src="Icones/User.png" alt="">
+                        <p>Kauê</p>
+                    </div>
+                    <p class="pEmAndamento pStatus"><?= $project->status ?></p>
+                </div>
+            </article>
+        <?php endforeach;?>
     </section>
 
 </section>

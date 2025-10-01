@@ -112,10 +112,7 @@ document.addEventListener('DOMContentLoaded', event => {
     });
 
     window.onload = function () {
-        for (let i = 0; i < btnsAside.length; i++) {
-            btnsAside[i].click();
-            logo.click();
-        }
+        logo.click();
     };
 });
 

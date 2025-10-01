@@ -163,3 +163,8 @@ div {
 .pConcluido {
     background-color: #75CE70;
 }
+
+.pWarning {
+    font-size: 36px;
+    align-self: center;
+}
