@@ -16,6 +16,7 @@ include_once 'session.php'
 <?php include_once 'MenuLateral.php'; ?>
 <main id="main">
     <?php include_once 'Header.php'; ?>
+    <?php include_once 'PaginaInicial.php'; ?>
 </main>
 <?php include_once 'Notificacoes.php'; ?>
 </body>

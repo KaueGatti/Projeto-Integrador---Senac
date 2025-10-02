@@ -20,12 +20,12 @@ if (count($projects) == 0) {
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Projetos.css">
     <div id="divTitulo">
-        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
         <h1>Projetos</h1>
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button onclick="novoProjeto()">+ Novo Projeto</button>
+        <button id="btnNovoProjeto">+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">
         <?php if ($warning) { echo "<p class=\"pWarning\">$warning</p>";} ?>
@@ -46,5 +46,4 @@ if (count($projects) == 0) {
             </article>
         <?php endforeach;?>
     </section>
-
 </section>

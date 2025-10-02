@@ -29,6 +29,4 @@
     </button>
 </aside>
 
-<script src="Script/MenuLateral.js"></script>
-
 

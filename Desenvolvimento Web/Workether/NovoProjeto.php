@@ -1,4 +1,14 @@
-<?php ?>
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["novoProjeto"])) {
+
+    }
+}
+
+include_once 'session.php';
+
+?>
 
 
 <section class="conteudo">
@@ -10,22 +20,22 @@
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="nome" name="nome" placeholder=" ">
+                <input type="text" id="inputNome" name="nome" placeholder=" " required>
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="descricao" name="descricao" placeholder=" "></textarea>
+                <textarea type="text" id="inputDescricao" name="descricao" placeholder=" " required></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="select-group responsavel">
-                <select id="responsavel" name="responsavel" required>
+                <select id="select_responsavel" name="responsavel" required>
                     <option disabled selected>Selecione um responsável</option>
-                    <option value="<?= $_SESSION['usuario']->id ?>"><?php echo $_SESSION['usuario']->usuario; ?></option>
+                    <option value="<?= $_SESSION['usuario']->id ?>"><?php echo $_SESSION['usuario']->usuario ?></option>
                 </select>
                 <label for="responsavel">Responsável</label>
             </div>
             <div class="input-group data">
-                <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" ">
+                <input type="date" id="inputDataConclusao" name="dataConclusao" placeholder=" " required>
                 <label for="dataConclusao">Data para conclusão</label>
             </div>
             <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')" id="btnParticipantes">
@@ -33,8 +43,8 @@
             </button>
             <button onclick="interactModal('modalEquipes', 'sectionDetalhes')" id="btnEquipes">Equipes</button>
             <div class="divCancelar_Concluir">
-                <button id="btnCancelar">Cancelar</button>
-                <button id="btnConcluir">Concluir</button>
+                <button onclick="voltar('Projetos.php')" id="btnCancelar">Cancelar</button>
+                <button onclick="novoProjeto()" id="btnConcluir">Concluir</button>
             </div>
         </article>
     </section>
@@ -256,4 +266,5 @@
     </div>
     <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
 
+    <script src="Script/NovoProjeto.js"></script>
 </section>
