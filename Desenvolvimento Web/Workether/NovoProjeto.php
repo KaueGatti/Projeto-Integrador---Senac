@@ -1,10 +1,15 @@
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["novoProjeto"])) {
+require_once __DIR__ . '/Controller/ProjetoController.php';
 
+$controller = new ProjetoController();
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (isset($_POST["novoProjeto"])) {
+        $controller->createProjeto($_POST["novoProjeto"]);
     }
 }
+var_dump($_POST["novoProjeto"]);
 
 include_once 'session.php';
 
@@ -20,22 +25,22 @@ include_once 'session.php';
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="inputNome" name="nome" placeholder=" " required>
+                <input type="text" id="inputNome" name="novoProjeto[nome]" placeholder=" " required>
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="inputDescricao" name="descricao" placeholder=" " required></textarea>
+                <textarea type="text" id="inputDescricao" name="novoProjeto[descricao]" placeholder=" " required></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="select-group responsavel">
-                <select id="select_responsavel" name="responsavel" required>
+                <select id="select_responsavel" name="novoProjeto[id_responsavel]" required>
                     <option disabled selected>Selecione um responsável</option>
                     <option value="<?= $_SESSION['usuario']->id ?>"><?php echo $_SESSION['usuario']->usuario ?></option>
                 </select>
                 <label for="responsavel">Responsável</label>
             </div>
             <div class="input-group data">
-                <input type="date" id="inputDataConclusao" name="dataConclusao" placeholder=" " required>
+                <input type="date" id="inputDataConclusao" name="novoProjeto[dataInicialConclusao]" placeholder=" " required>
                 <label for="dataConclusao">Data para conclusão</label>
             </div>
             <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')" id="btnParticipantes">
@@ -43,8 +48,8 @@ include_once 'session.php';
             </button>
             <button onclick="interactModal('modalEquipes', 'sectionDetalhes')" id="btnEquipes">Equipes</button>
             <div class="divCancelar_Concluir">
-                <button onclick="voltar('Projetos.php')" id="btnCancelar">Cancelar</button>
-                <button onclick="novoProjeto()" id="btnConcluir">Concluir</button>
+                <button id="btnCancelar">Cancelar</button>
+                <button id="btnConcluir">Concluir</button>
             </div>
         </article>
     </section>

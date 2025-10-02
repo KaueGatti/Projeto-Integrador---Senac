@@ -26,5 +26,16 @@ class Projeto
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function create() {
+        $sql = "CALL CREATE_PROJETO(:id_responsavel, :nome, :descricao, :dataInicialConclusao)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id_responsavel", $this->id_responsavel);
+        $stmt->bindParam(":nome", $this->nome);
+        $stmt->bindParam(":descricao", $this->descricao);
+        $stmt->bindParam(":dataInicialConclusao", $this->dataInicialConclusao);
+
+        return $stmt->execute();
+    }
 }
 

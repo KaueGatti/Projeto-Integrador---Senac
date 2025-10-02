@@ -1,4 +1,10 @@
 let main = document.querySelector("#main");
+let btnsAside = document.querySelectorAll(".btnAside");
+let btnProjetos = document.querySelector('#btnProjetos');
+let btnTarefas = document.querySelector('#btnTarefas');
+let btnConversas = document.querySelector('#btnConversas');
+let btnAmigos = document.querySelector('#btnAmigos');
+let btnPerfil = document.querySelector('#btnPerfil');
 
 function carregarComponente(url) {
     return fetch(url).then(res => {
@@ -12,41 +18,90 @@ function carregarComponente(url) {
     }).catch(err => console.log("Erro no carregarComponente(): " + url + "\n" + err));
 }
 
-document.querySelector('#btnProjetos').addEventListener('click', async function () {
-    this.classList.toggle('Selected');
-    this.children[0].src = 'Icones/ProjetosSelected.png';
+Array.from(btnsAside).forEach(btn => {
+    btn.onclick = () => {
+        let btnSelected = btn;
+        let srcImgSelected = btnSelected.firstElementChild.getAttribute('src');
+        if (!btnSelected.classList.contains('Selected')) {
+            btnSelected.classList.toggle('Selected');
+            btnSelected.firstElementChild.setAttribute('src', srcImgSelected.replace(".png", "Selected.png"));
+            Array.from(btnsAside).forEach(btn => {
+                if (btn !== btnSelected && btn.classList.contains('Selected')) {
+                    let srcImg = btn.firstElementChild.getAttribute('src');
+                    btn.classList.toggle('Selected');
+                    btn.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
+                }
+            })
+        }
+    }
+})
+
+btnProjetos.addEventListener('click', async () => {
 
     await carregarComponente('Loading.php');
 
     await carregarComponente('Projetos.php');
 
-    document.querySelector('#btnNovoProjeto').onclick = () => {
-        console.log('Novo projeto');
-    }
-
     document.querySelector('#btnVoltar').onclick = () => {
         carregarComponente('PaginaInicial.php');
-        this.classList.toggle('Selected');
-        this.children[0].src = 'Icones/Projetos.png';
-    };
+        let btnProjetos = document.querySelector('#btnProjetos');
+        let srcImg = btnProjetos.firstElementChild.getAttribute('src');
+        btnProjetos.classList.toggle('Selected');
+        btnProjetos.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
+    }
+
+    document.querySelector('#btnNovoProjeto').onclick = async () => {
+        await carregarComponente("NovoProjeto.php");
+
+        document.querySelector('#btnCancelar').onclick = () => {
+            btnProjetos.click();
+        }
+
+        document.querySelector('#btnConcluir').onclick = () => {
+            let novoProjeto = new FormData;
+            novoProjeto.append('novoProjeto[nome]', document.querySelector('#inputNome').value);
+            novoProjeto.append('novoProjeto[descricao]', document.querySelector('#inputDescricao').value);
+            novoProjeto.append('novoProjeto[dataInicialConclusao]', document.querySelector('#inputDataConclusao').value);
+            novoProjeto.append('novoProjeto[id_responsavel]', document.querySelector('#select_responsavel').value);
+            console.log(novoProjeto);
+            fetch('NovoProjeto.php', { method: 'POST', body: novoProjeto}).then(response => {
+                if (!response.ok) throw new Error('Erro na response do fetch do btnConcluir -> NovoProjeto.php');
+                return response;
+            }).then(response => {
+                console.log(response);
+            }).catch(err => console.log("Erro no fetch do btnConcluir -> NovoProjeto.php" + "\n" + err));
+        }
+    }
 
 
 });
 
-document.querySelector('#btnTarefas').addEventListener('click', function () {
-    carregarComponente('Tarefas.php');
+btnTarefas.addEventListener('click', async function () {
+
+    await carregarComponente('Loading.php');
+
+    await carregarComponente('Tarefas.php');
 });
 
-document.querySelector('#btnConversas').addEventListener('click', function () {
-    carregarComponente('Conversas.php');
+btnConversas.addEventListener('click', async function () {
+
+    await carregarComponente('Loading.php');
+
+    await carregarComponente('Conversas.php');
 });
 
-document.querySelector('#btnAmigos').addEventListener('click', function () {
-    carregarComponente('Amigos.php');
+btnAmigos.addEventListener('click', async function () {
+
+    await carregarComponente('Loading.php');
+
+    await carregarComponente('Amigos.php');
 });
 
-document.querySelector('#btnPerfil').addEventListener('click', function () {
-    carregarComponente('Perfil.php');
+btnPerfil.addEventListener('click', async function () {
+
+    await carregarComponente('Loading.php');
+
+    await carregarComponente('Perfil.php');
 });
 
 function abrirConversa_Chat() {
