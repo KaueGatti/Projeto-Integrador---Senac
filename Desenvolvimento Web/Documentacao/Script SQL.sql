@@ -49,15 +49,15 @@ CREATE TABLE Mensagem_Chat (
 
 CREATE TABLE Projeto (
 	id INT AUTO_INCREMENT,
-	id_chat INT,
-	id_responsavel VARCHAR(7),
-	nome VARCHAR(150) UNIQUE,
-	descricao VARCHAR(255),
-	dataCriacao DATE,
-	dataInicialConclusao DATE,
-	dataAtualConclusao DATE,
+	id_chat INT NOT NULL,
+	id_responsavel VARCHAR(7) NOT NULL,
+	nome VARCHAR(150) UNIQUE NOT NULL,
+	descricao VARCHAR(255) NOT NULL,
+	dataCriacao DATE NOT NULL,
+	dataInicialConclusao DATE NOT NULL,
+	dataAtualConclusao DATE NOT NULL,
 	dataConclusao DATE,
-	status VARCHAR(30),
+	status VARCHAR(30) NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
 	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
@@ -540,4 +540,4 @@ BEGIN
 END $
 DELIMITER ;
 
-CALL CREATE_PROJETO('LHM77Z5', 'Projeto Teste', 'Teste...', now());
+select * from projeto;

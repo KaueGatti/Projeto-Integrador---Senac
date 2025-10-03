@@ -6,10 +6,10 @@ $controller = new ProjetoController();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["novoProjeto"])) {
-        $controller->createProjeto($_POST["novoProjeto"]);
+        echo $controller->createProjeto($_POST["novoProjeto"]);
+        exit();
     }
 }
-var_dump($_POST["novoProjeto"]);
 
 include_once 'session.php';
 
@@ -19,34 +19,35 @@ include_once 'session.php';
 <section class="conteudo">
     <link rel="stylesheet" href="Style/NovoProjeto.css">
     <div id="divTitulo">
-        <img onclick="voltar('Projetos.php')" src="Icones/Voltar.png" alt="">
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Novo projeto</h1>
     </div>
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="inputNome" name="novoProjeto[nome]" placeholder=" " required>
+                <input type="text" id="inputNome" name="novoProjeto[nome]" placeholder=" " >
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="inputDescricao" name="novoProjeto[descricao]" placeholder=" " required></textarea>
+                <textarea type="text" id="inputDescricao" name="novoProjeto[descricao]" placeholder=" "></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="select-group responsavel">
-                <select id="select_responsavel" name="novoProjeto[id_responsavel]" required>
-                    <option disabled selected>Selecione um responsável</option>
+                <select id="select_responsavel" name="novoProjeto[id_responsavel]">
+                    <option value="" disabled selected>Selecione um responsável</option>
                     <option value="<?= $_SESSION['usuario']->id ?>"><?php echo $_SESSION['usuario']->usuario ?></option>
                 </select>
                 <label for="responsavel">Responsável</label>
             </div>
             <div class="input-group data">
-                <input type="date" id="inputDataConclusao" name="novoProjeto[dataInicialConclusao]" placeholder=" " required>
+                <input type="date" id="inputDataConclusao" name="novoProjeto[dataInicialConclusao]" placeholder=" ">
                 <label for="dataConclusao">Data para conclusão</label>
             </div>
             <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')" id="btnParticipantes">
                 Participantes
             </button>
             <button onclick="interactModal('modalEquipes', 'sectionDetalhes')" id="btnEquipes">Equipes</button>
+            <p id="info"></p>
             <div class="divCancelar_Concluir">
                 <button id="btnCancelar">Cancelar</button>
                 <button id="btnConcluir">Concluir</button>

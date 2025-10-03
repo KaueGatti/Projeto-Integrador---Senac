@@ -94,6 +94,14 @@ div {
     margin-top: 20px;
 }
 
+#info {
+    margin-top: 40px;
+    font-size: 28px;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+}
+
 .divCancelar_Concluir {
     display: flex;
     justify-content: end;
@@ -113,6 +121,15 @@ div {
     transition: 0.3s;
 }
 
+#btnCancelar:disabled, #btnConcluir:disabled {
+    opacity: 0.7;
+}
+
+#btnCancelar:disabled:hover, #btnConcluir:disabled:hover {
+    filter: none;
+    cursor: default;
+}
+
 #btnCancelar {
     margin-right: 20px;
     background-color: #E65A55;
@@ -130,6 +147,8 @@ button:hover {
     filter: brightness(0.9);
     cursor: pointer;
 }
+
+
 
 
 

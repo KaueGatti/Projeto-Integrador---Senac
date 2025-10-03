@@ -53,22 +53,34 @@ btnProjetos.addEventListener('click', async () => {
     document.querySelector('#btnNovoProjeto').onclick = async () => {
         await carregarComponente("NovoProjeto.php");
 
+        document.querySelector('#btnVoltar').onclick = () => {
+            btnProjetos.click();
+        }
+
+        document.querySelector('#inputDataConclusao').min = new Date().toISOString().split("T")[0];
+
         document.querySelector('#btnCancelar').onclick = () => {
             btnProjetos.click();
         }
 
         document.querySelector('#btnConcluir').onclick = () => {
-            let novoProjeto = new FormData;
+            let novoProjeto = new FormData();
             novoProjeto.append('novoProjeto[nome]', document.querySelector('#inputNome').value);
             novoProjeto.append('novoProjeto[descricao]', document.querySelector('#inputDescricao').value);
             novoProjeto.append('novoProjeto[dataInicialConclusao]', document.querySelector('#inputDataConclusao').value);
             novoProjeto.append('novoProjeto[id_responsavel]', document.querySelector('#select_responsavel').value);
-            console.log(novoProjeto);
-            fetch('NovoProjeto.php', { method: 'POST', body: novoProjeto}).then(response => {
+            fetch('NovoProjeto.php', {method: 'POST', body: novoProjeto}).then(response => {
                 if (!response.ok) throw new Error('Erro na response do fetch do btnConcluir -> NovoProjeto.php');
-                return response;
-            }).then(response => {
-                console.log(response);
+                return response.json();
+            }).then(data => {
+                document.querySelector('#info').textContent = data.message;
+                if (data.success) {
+                    document.querySelector('#info').style.color = "#75CE70";
+                    document.querySelector('#btnConcluir').disabled = true;
+                    setTimeout(() => {document.querySelector('#btnCancelar').click()}, 3000);
+                } else {
+                    document.querySelector('#info').style.color = "#E65A55";
+                }
             }).catch(err => console.log("Erro no fetch do btnConcluir -> NovoProjeto.php" + "\n" + err));
         }
     }
