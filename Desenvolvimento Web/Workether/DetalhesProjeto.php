@@ -1,10 +1,23 @@
 <?php
 
 require_once __DIR__ . "/Controller/UsuarioController.php";
+require_once __DIR__ . "/Controller/ProjetoController.php";
 
 $usuarioController = new UsuarioController();
+$projetoController = new ProjetoController();
 
-$reponsavel = $usuarioController->readUsuarioByID($_GET["id_responsavel"]);
+$projeto = null;
+$reponsavel = null;
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET["id"])) {
+        $projeto = $projetoController->readProjetoByID($_GET["id"]);
+        $reponsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
+    } else {
+        echo "Não foi possível buscar os detalhes do projeto";
+        die();
+    }
+}
 
 ?>
 
@@ -12,17 +25,17 @@ $reponsavel = $usuarioController->readUsuarioByID($_GET["id_responsavel"]);
 <section class="conteudo">
     <link rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
-        <img class="btnBack" onclick="voltar('Projetos.php')" src="Icones/Voltar.png" alt="">
+        <img id="btnVoltar" class="btnBack" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Detalhes do projeto</h1>
     </div>
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="nome" name="nome" placeholder=" " value="<?= $_GET['nome'] ?>" readonly>
+                <input type="text" id="nome" name="nome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="descricao" name="descricao" placeholder=" " readonly><?= $_GET['descricao'] ?></textarea>
+                <textarea type="text" id="descricao" name="descricao" placeholder=" " readonly><?= $projeto->descricao ?></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="divResponsavel_Participantes">
@@ -34,7 +47,7 @@ $reponsavel = $usuarioController->readUsuarioByID($_GET["id_responsavel"]);
             </div>
             <div class="divDataConclusao_Tarefas">
                 <div class="input-group">
-                    <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" " value="<?= $_GET['dataAtualConclusao'] ?>">
+                    <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" " value="<?= $projeto->dataAtualConclusao ?>">
                     <label for="dataConclusao">Data para conclusão</label>
                 </div>
                 <button onclick="loadTarefas()">Tarefas</button>
@@ -50,7 +63,7 @@ $reponsavel = $usuarioController->readUsuarioByID($_GET["id_responsavel"]);
             </div>
             <div class="divEditar_Salvar">
                 <button id="btnEditar">Editar</button>
-                <button id="btnSalvar">Salvar</button>
+                <button id="btnSalvar" disabled>Salvar</button>
             </div>
         </article>
     </section>

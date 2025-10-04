@@ -6,6 +6,26 @@ let btnConversas = document.querySelector('#btnConversas');
 let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
 
+async function request(url, options = {}) {
+    let res = await fetch(url, options);
+    let text = await res.text();
+
+    let json;
+
+    try {
+        json = JSON.parse(text);
+    } catch (e) {
+        console.error("Erro ao parsear JSON:", e);
+        console.log("Resposta bruta do PHP:", text);
+        throw new Error("Resposta inválida do servidor (não é JSON)");
+    }
+
+    if (!res.ok || json.success === false) {
+        throw new Error(json.message || "Erro desconhecido");
+    }
+
+    return json;
+}
 function carregarComponente(url) {
     return fetch(url).then(res => {
         if (!res.ok) throw new Error("Response failed in carregarComponente():" + url);
@@ -50,7 +70,30 @@ btnProjetos.addEventListener('click', async () => {
         btnProjetos.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
     }
 
+    let projetos = document.querySelectorAll('.articleProjeto');
+
+    projetos.forEach(projeto => {
+        projeto.onclick = async () => {
+
+            await carregarComponente('Loading.php');
+
+            await carregarComponente('DetalhesProjeto.php?id=' + projeto.id);
+
+            let btnEditar = document.querySelector('#btnEditar');
+            let btnSalvar = document.querySelector('#btnSalvar');
+
+            document.querySelector('#btnVoltar').onclick = () => {
+                btnProjetos.click();
+            }
+
+            btnEditar.onclick = () => {
+                btnEditar.disabled = true;
+            }
+        }
+    })
+
     document.querySelector('#btnNovoProjeto').onclick = async () => {
+
         await carregarComponente("NovoProjeto.php");
 
         document.querySelector('#btnVoltar').onclick = () => {
@@ -63,27 +106,34 @@ btnProjetos.addEventListener('click', async () => {
             btnProjetos.click();
         }
 
-        document.querySelector('#btnConcluir').onclick = () => {
+        document.querySelector('#btnConcluir').onclick = async () => {
+            let info = document.querySelector('#info');
+
             let novoProjeto = new FormData();
+
             novoProjeto.append('novoProjeto[nome]', document.querySelector('#inputNome').value);
             novoProjeto.append('novoProjeto[descricao]', document.querySelector('#inputDescricao').value);
             novoProjeto.append('novoProjeto[dataInicialConclusao]', document.querySelector('#inputDataConclusao').value);
             novoProjeto.append('novoProjeto[id_responsavel]', document.querySelector('#select_responsavel').value);
-            fetch('NovoProjeto.php', {method: 'POST', body: novoProjeto}).then(response => {
-                if (!response.ok) throw new Error('Erro na response do fetch do btnConcluir -> NovoProjeto.php');
-                return response.json();
-            }).then(data => {
-                document.querySelector('#info').textContent = data.message;
-                if (data.success) {
-                    document.querySelector('#info').style.color = "#75CE70";
+
+            try {
+                let response = await request("../API/ProjetoAPI.php", { method: "POST", body: novoProjeto} );
+                info.textContent = response.message;
+                if (response.success) {
+                    info.style.color = "#75CE70";
                     document.querySelector('#btnConcluir').disabled = true;
-                    setTimeout(() => {document.querySelector('#btnCancelar').click()}, 3000);
+                    setTimeout(() =>{ btnProjetos.click()}, 3000)
+
                 } else {
-                    document.querySelector('#info').style.color = "#E65A55";
+                    info.style.color = "#E65A55";
                 }
-            }).catch(err => console.log("Erro no fetch do btnConcluir -> NovoProjeto.php" + "\n" + err));
+            } catch (erro) {
+                info.textContent = erro.message;
+                info.style.color = "#E65A55";
+            }
         }
     }
+
 
 
 });

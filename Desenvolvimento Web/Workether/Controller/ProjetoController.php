@@ -16,6 +16,10 @@ class ProjetoController
     public function readProjectsByUsuario($id) {
         return $this->projeto->readByUsuario($id);
     }
+    public function readProjetoByID($id) {
+        $this->projeto->id = $id;
+        return $this->projeto->readByID();
+    }
 
     public function createProjeto($novoProjeto) {
         $this->projeto->nome = $novoProjeto['nome'];

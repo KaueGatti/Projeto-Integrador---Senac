@@ -27,32 +27,57 @@ class Projeto
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+    public function readByID()
+    {
+        $sql = "CALL READ_PROJETO_BY_ID(:id)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
 
     public function create()
     {
         $valid = $this->projetoIsValid();
         if ($valid !== true) {
-            return json_encode($valid);
+            return $valid;
         }
 
-        $sql = "CALL CREATE_PROJETO(:id_responsavel, :nome, :descricao, :dataInicialConclusao)";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(":id_responsavel", $this->id_responsavel);
-        $stmt->bindParam(":nome", $this->nome);
-        $stmt->bindParam(":descricao", $this->descricao);
-        $stmt->bindParam(":dataInicialConclusao", $this->dataInicialConclusao);
+        try {
 
-        if ($stmt->execute()) {
-            return json_encode([
-                "success" => true,
-                "message" => "Projeto cadastrado com sucesso!"
-            ]);
-        } else {
-            return json_encode([
+            $sql = "CALL CREATE_PROJETO(:id_responsavel, :nome, :descricao, :dataInicialConclusao)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_responsavel", $this->id_responsavel);
+            $stmt->bindParam(":nome", $this->nome);
+            $stmt->bindParam(":descricao", $this->descricao);
+            $stmt->bindParam(":dataInicialConclusao", $this->dataInicialConclusao);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Projeto cadastrado com sucesso!"
+                ];
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+
+            if (str_contains($e->getMessage(), "1062 Duplicate entry") ) {
+                return [
+                    "success" => false,
+                    "message" => 'Você já possui um projeto com este nome!'
+                ];
+            }
+
+            return [
                 "success" => false,
-                "message" => "Erro ao cadastrar projeto!"
-            ]);
+                "message" => $e->getMessage()
+            ];
         }
+
+        return [
+            "success" => false,
+            "message" => 'Erro desconhecido!'
+        ];
     }
 
     public function projetoIsValid()

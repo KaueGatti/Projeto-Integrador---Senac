@@ -51,13 +51,14 @@ CREATE TABLE Projeto (
 	id INT AUTO_INCREMENT,
 	id_chat INT NOT NULL,
 	id_responsavel VARCHAR(7) NOT NULL,
-	nome VARCHAR(150) UNIQUE NOT NULL,
+	nome VARCHAR(150) NOT NULL,
 	descricao VARCHAR(255) NOT NULL,
 	dataCriacao DATE NOT NULL,
 	dataInicialConclusao DATE NOT NULL,
 	dataAtualConclusao DATE NOT NULL,
 	dataConclusao DATE,
 	status VARCHAR(30) NOT NULL,
+    UNIQUE (id_responsavel, nome),
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
 	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
@@ -218,6 +219,14 @@ DELIMITER ;
 
 CREATE VIEW READ_ALL_PROJETOS AS
 	SELECT * FROM Projeto;
+    
+DELIMITER $$
+CREATE PROCEDURE READ_PROJETO_BY_ID (_id INT)
+BEGIN
+	SELECT * FROM Projeto
+	WHERE Projeto.id = _id;
+END $$
+DELIMITER ;
     
 DELIMITER $$
 CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR (7))

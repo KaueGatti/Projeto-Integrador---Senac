@@ -30,7 +30,7 @@ if (count($projects) == 0) {
     <section class="sectionProjetos">
         <?php if ($warning) { echo "<p class=\"pWarning\">$warning</p>";} ?>
         <?php foreach ($projects as $project) :?>
-            <article onclick="detalhes('Projeto', '<?= "nome=$project->nome&descricao=$project->descricao&id_responsavel=$project->id_responsavel&dataAtualConclusao=$project->dataAtualConclusao" ?>')" class="articleProjeto">
+            <article class="articleProjeto" id="<?= $project->id ?>">
                 <div class="divTitulo">
                     <h1><?= $project->nome ?></h1>
                     <p><?= $project->descricao ?></p>

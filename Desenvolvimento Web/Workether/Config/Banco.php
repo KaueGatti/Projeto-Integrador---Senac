@@ -2,10 +2,10 @@
 
 class Banco
 {
-    private $host = "localhost:3316";
+    private $host = "localhost";
     private $banco = "workether";
     private $usuario = "root";
-    private $senha = "123456";
+    private $senha = "tiger";
     public $con;
 
     public function __construct(){
@@ -13,6 +13,7 @@ class Banco
 
         try {
             $this->con = new PDO("mysql:host=$this->host;dbname=$this->banco", $this->usuario, $this->senha);
+            $this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "Erro ao conectar: " . $e->getMessage();
         }
