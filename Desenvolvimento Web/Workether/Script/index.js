@@ -79,16 +79,62 @@ btnProjetos.addEventListener('click', async () => {
 
             await carregarComponente('DetalhesProjeto.php?id=' + projeto.id);
 
+            let articleDetalhes = document.querySelector('#articleDetalhes');
+
             let btnEditar = document.querySelector('#btnEditar');
             let btnSalvar = document.querySelector('#btnSalvar');
+
+            let projetoID = document.querySelector('#projetoID').textContent;
+            let inputNome = document.querySelector('#inputNome');
+            let inputDescricao = document.querySelector('#inputDescricao');
+            let selectResponsavel = document.querySelector('#selectResponsavel');
+            let inputDataConclusao = document.querySelector('#inputDataConclusao');
 
             document.querySelector('#btnVoltar').onclick = () => {
                 btnProjetos.click();
             }
 
             btnEditar.onclick = () => {
+
                 btnEditar.disabled = true;
+
+                inputNome.focus();
+
+                inputNome.readOnly = false;
+                inputDescricao.readOnly = false;
+                inputDataConclusao.readOnly = false;
+
+                btnSalvar.disabled = false;
+                articleDetalhes.style.borderColor = "rgba(5, 104, 230, 0.75)";
             }
+
+            btnSalvar.onclick = async () => {
+
+                let editarProjeto = new FormData();
+
+                editarProjeto.append('editarProjeto[id]', projetoID);
+                editarProjeto.append('editarProjeto[nome]', inputNome.value);
+                editarProjeto.append('editarProjeto[descricao]', inputDescricao.value);
+                editarProjeto.append('editarProjeto[dataAtualConclusao]', inputDataConclusao.value);
+                editarProjeto.append('editarProjeto[id_responsavel]', selectResponsavel.value);
+                editarProjeto.append('editarProjeto[dataConclusao]', '');
+                editarProjeto.append('editarProjeto[status]', "Em andamento");
+
+                try {
+                    let response = await request("../API/ProjetoAPI.php", { method: "POST", body: editarProjeto });
+                    console.log(response);
+                    if (response.success) {
+                        articleDetalhes.style.borderColor = "#75CE70";
+                        setTimeout(() => {
+                            articleDetalhes.style.borderColor = "rgba(195, 195, 195, 0.5)";
+                        }, 5000);
+                        btnSalvar.disabled = true;
+                        btnEditar.disabled = false;
+                    }
+                } catch (e) {
+                    console.log(e.message);
+                }
+            };
         }
     })
 

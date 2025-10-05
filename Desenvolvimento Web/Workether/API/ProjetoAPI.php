@@ -11,4 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo json_encode($controller->createProjeto($_POST["novoProjeto"]));
         die();
     }
+
+    if (isset($_POST["editarProjeto"])) {
+        echo json_encode($controller->updateProjeto($_POST["editarProjeto"]));
+        die();
+    }
 }

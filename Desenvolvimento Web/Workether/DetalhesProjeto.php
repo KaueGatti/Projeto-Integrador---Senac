@@ -7,12 +7,12 @@ $usuarioController = new UsuarioController();
 $projetoController = new ProjetoController();
 
 $projeto = null;
-$reponsavel = null;
+$responsavel = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"]);
-        $reponsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
+        $responsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
     } else {
         echo "Não foi possível buscar os detalhes do projeto";
         die();
@@ -29,25 +29,29 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <h1 class="mb-0">Detalhes do projeto</h1>
     </div>
     <section class="sectionDetalhes" id="sectionDetalhes">
-        <article class="articleDetalhes">
+        <article class="articleDetalhes" id="articleDetalhes">
+            <p id="projetoID" hidden=""><?= $projeto->id ?></p>
             <div class="input-group" id="divInputNome">
-                <input type="text" id="nome" name="nome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
+                <input type="text" id="inputNome" name="nome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="descricao" name="descricao" placeholder=" " readonly><?= $projeto->descricao ?></textarea>
+                <textarea type="text" id="inputDescricao" name="descricao" placeholder=" "
+                          readonly><?= $projeto->descricao ?></textarea>
                 <label for="descricao">Descrição</label>
             </div>
             <div class="divResponsavel_Participantes">
-                <div class="input-group">
-                    <input type="text" id="responsavel" name="responsavel" placeholder=" " value="<?= $reponsavel->usuario ?>" readonly>
-                    <label for="descricao">Responsável</label>
+                <div class="select-group">
+                    <select type="text" id="selectResponsavel" name="responsavel" disabled>
+                        <option selected value="<?= $responsavel->id ?>"><?= $responsavel->usuario ?></option>
+                    </select>
                 </div>
                 <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')">Participantes</button>
             </div>
             <div class="divDataConclusao_Tarefas">
                 <div class="input-group">
-                    <input type="text" id="dataConclusao" name="dataConclusao" placeholder=" " value="<?= $projeto->dataAtualConclusao ?>">
+                    <input type="text" id="inputDataConclusao" name="dataConclusao" placeholder=" " readonly
+                           value="<?= $projeto->dataAtualConclusao ?>">
                     <label for="dataConclusao">Data para conclusão</label>
                 </div>
                 <button onclick="loadTarefas()">Tarefas</button>
@@ -202,10 +206,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <input type="text" placeholder=" ">
                 <label for="">Responsável</label>
             </div>
-            <button onclick="interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe')" class="buttonOrange">Participantes</button>
+            <button onclick="interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe')"
+                    class="buttonOrange">Participantes
+            </button>
             <button class="buttonGray">Chat</button>
             <button onclick="loadTarefas()" class="buttonOrange">Tarefas</button>
-            <button onclick="interactModal('modalComentariosDetalhesEquipe', 'modalDetalhesEquipe')" class="buttonOrange" id="btnComentarios">Comentários</button>
+            <button onclick="interactModal('modalComentariosDetalhesEquipe', 'modalDetalhesEquipe')"
+                    class="buttonOrange" id="btnComentarios">Comentários
+            </button>
         </div>
         <div class="divEditar_Salvar">
             <button class="buttonBlue">Editar</button>
@@ -234,7 +242,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteDetalhesEquipe">
         <div class="divTitulo">
             <h1>Adicionar participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe')"
+            <img class="btnBack"
+                 onclick="interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe')"
                  src="Icones/Fechar.png"
                  alt="">
         </div>
@@ -278,7 +287,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <label for="comentario">Comentário</label>
         </div>
         <div class="divCancelar_Adicionar">
-            <button class="buttonRed" onclick="interactModal('modalAdicionarComentarioDetalhesEquipe', 'modalComentariosDetalhesEquipe')">Cancelar
+            <button class="buttonRed"
+                    onclick="interactModal('modalAdicionarComentarioDetalhesEquipe', 'modalComentariosDetalhesEquipe')">
+                Cancelar
             </button>
             <button class="buttonGreen" onclick="adicionarComentario()">Adicionar</button>
         </div>

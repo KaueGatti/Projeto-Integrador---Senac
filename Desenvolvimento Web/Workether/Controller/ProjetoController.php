@@ -21,6 +21,18 @@ class ProjetoController
         return $this->projeto->readByID();
     }
 
+    public function updateProjeto($projeto) {
+        $this->projeto->id = $projeto['id'];
+        $this->projeto->nome = $projeto['nome'];
+        $this->projeto->descricao = $projeto['descricao'];
+        $this->projeto->id_responsavel = $projeto['id_responsavel'];
+        $this->projeto->dataAtualConclusao = $projeto['dataAtualConclusao'];
+        $this->projeto->dataConclusao = $projeto['dataConclusao'] ?: null;
+        $this->projeto->status = $projeto['status'];
+
+        return $this->projeto->update();
+    }
+
     public function createProjeto($novoProjeto) {
         $this->projeto->nome = $novoProjeto['nome'];
         $this->projeto->descricao = $novoProjeto['descricao'];

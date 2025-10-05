@@ -27,6 +27,7 @@ class Projeto
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
     public function readByID()
     {
         $sql = "CALL READ_PROJETO_BY_ID(:id)";
@@ -36,9 +37,61 @@ class Projeto
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
 
+    public function update()
+    {
+        $valid = $this->projetoIsValid("update");
+        if ($valid !== true) {
+            return $valid;
+        }
+        try {
+            $sql = "CALL UPDATE_PROJETO(:id, :id_responsavel, :nome, :descricao, :dataAtualConclusao, :dataConclusao, :status)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id", $this->id);
+            $stmt->bindParam(":id_responsavel", $this->id_responsavel);
+            $stmt->bindParam(":nome", $this->nome);
+            $stmt->bindParam(":descricao", $this->descricao);
+            $stmt->bindParam(":dataAtualConclusao", $this->dataAtualConclusao);
+
+            if ($this->dataConclusao !== null) {
+                $stmt->bindParam(":dataConclusao", $this->dataConclusao);
+            } else {
+                $stmt->bindValue(":dataConclusao", null, PDO::PARAM_NULL);
+            }
+
+            $stmt->bindParam(":status", $this->status);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Projeto atualizado com sucesso!"
+                ];
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+
+            if (str_contains($e->getMessage(), "1062 Duplicate entry")) {
+                return [
+                    "success" => false,
+                    "message" => 'Você já possui um projeto com este nome!'
+                ];
+            }
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => 'Erro desconhecido!'
+        ];
+
+    }
+
     public function create()
     {
-        $valid = $this->projetoIsValid();
+        $valid = $this->projetoIsValid("create");
         if ($valid !== true) {
             return $valid;
         }
@@ -61,7 +114,7 @@ class Projeto
         } catch (Exception $e) {
             http_response_code(500);
 
-            if (str_contains($e->getMessage(), "1062 Duplicate entry") ) {
+            if (str_contains($e->getMessage(), "1062 Duplicate entry")) {
                 return [
                     "success" => false,
                     "message" => 'Você já possui um projeto com este nome!'
@@ -80,7 +133,7 @@ class Projeto
         ];
     }
 
-    public function projetoIsValid()
+    public function projetoIsValid($action)
     {
         if (trim($this->nome) === "") {
             return [
@@ -103,11 +156,22 @@ class Projeto
             ];
         }
 
-        if (trim($this->dataInicialConclusao) === "") {
-            return [
-                "success" => false,
-                "message" => "Selecione uma data para a conclusão do projeto!"
-            ];
+        if ($action === "create") {
+            if (trim($this->dataInicialConclusao) === "") {
+                return [
+                    "success" => false,
+                    "message" => "Selecione uma data para a conclusão do projeto!"
+                ];
+            }
+        }
+
+        if ($action === "update") {
+            if (trim($this->dataAtualConclusao) === "") {
+                return [
+                    "success" => false,
+                    "message" => "Selecione uma data para a conclusão do projeto!"
+                ];
+            }
         }
 
         return true;
