@@ -50,9 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="divDataConclusao_Tarefas">
                 <div class="input-group">
-                    <input type="text" id="inputDataConclusao" name="dataConclusao" placeholder=" " readonly
+                    <input type="date" id="inputDataConclusao" name="dataConclusao" placeholder=" " readonly
                            value="<?= $projeto->dataAtualConclusao ?>">
-                    <label for="dataConclusao">Data para conclusão</label>
+                    <label for="inputDataConclusao">Data para conclusão</label>
                 </div>
                 <button onclick="loadTarefas()">Tarefas</button>
             </div>

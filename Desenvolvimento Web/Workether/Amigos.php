@@ -1,57 +1,35 @@
-<?php ?>
+<?php
+
+require_once __DIR__ . '/Controller/UsuarioController.php';
+
+session_start();
+
+$usuarioController = new UsuarioController();
+
+$amizades = $usuarioController->readAllAmizadesUsuario($_SESSION['usuario']->id);
+
+?>
 
 
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Amigos.css">
     <div id="divTitulo">
-        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
-        <h1 class="mb-0">Amigos</h1>
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
+        <h1>Amigos</h1>
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
         <button onclick="interactModal('modalAmigos', 'sectionAmigos')">+ Adicionar amigo</button>
     </div>
+    <p id="info"><?php if (empty($amizades)) echo "Você ainda não tem nenhum amigo" ?></p>
     <section class="sectionAmigos" id="sectionAmigos">
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
-        <article class="articleAmigo">
-            <img src="Icones/Amigo.png" alt="">
-            <h1 class="mb-0">Gustavo</h1>
-            <p class="pID mb-0">ID: 12DB7Q8</p>
-        </article>
+        <?php foreach ($amizades as $amizade) : ?>
+            <article class="articleAmigo">
+                <img src="Icones/Amigo.png" alt="">
+                <h1><?= $amizade->usuario ?></h1>
+                <p class="pID">ID: <?= $amizade->id ?></p>
+            </article>
+        <?php endforeach; ?>
     </section>
     <div class="modal" id="modalAmigos">
         <div class="divTitulo">

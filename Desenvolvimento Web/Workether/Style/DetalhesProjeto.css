@@ -1,5 +1,6 @@
 @import "inputGroup.css";
 @import "textAreaGroup.css";
+@import "selectGroup.css";
 @import "modal.css";
 @import "buttons.css";
 @import "modais/Equipes.css";
@@ -93,7 +94,7 @@ div {
     align-items: center;
 }
 
-.divDataConclusao_Tarefas .input-group, .divResponsavel_Participantes .input-group {
+.divDataConclusao_Tarefas .input-group, .divResponsavel_Participantes .select-group {
     display: flex;
     width: 30%;
     justify-content: center;

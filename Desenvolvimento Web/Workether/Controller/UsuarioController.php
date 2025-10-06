@@ -49,6 +49,11 @@ class UsuarioController
         return $this->usuario->readByID($id);
     }
 
+    public function readAllAmizadesUsuario($id) {
+        $this->usuario->id = $id;
+        return $this->usuario->readAllAmizades();
+    }
+
     function gerarCodigo($tamanho = 8)
     {
         $codigo = '';

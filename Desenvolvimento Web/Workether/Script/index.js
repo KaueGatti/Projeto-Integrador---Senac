@@ -1,3 +1,4 @@
+let logo = document.querySelector('#divLogo');
 let main = document.querySelector("#main");
 let btnsAside = document.querySelectorAll(".btnAside");
 let btnProjetos = document.querySelector('#btnProjetos');
@@ -5,6 +6,13 @@ let btnTarefas = document.querySelector('#btnTarefas');
 let btnConversas = document.querySelector('#btnConversas');
 let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
+let btnNotificao = document.querySelector('#btnNotificacoes');
+
+btnNotificao.addEventListener('click', function(){
+    document.getElementById("notificacoes").classList.toggle("open");
+    document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
+    console.log(2);
+})
 
 async function request(url, options = {}) {
     let res = await fetch(url, options);
@@ -34,8 +42,13 @@ function carregarComponente(url) {
         if (main.children.length >= 2) {
             main.children[1].remove();
         }
-        main.innerHTML += conteudo;
+        main.insertAdjacentHTML("beforeend", conteudo);
     }).catch(err => console.log("Erro no carregarComponente(): " + url + "\n" + err));
+}
+
+logo.onclick = async () => {
+    await carregarComponente("Loading.php");
+    await carregarComponente('PaginaInicial.php');
 }
 
 Array.from(btnsAside).forEach(btn => {
@@ -90,6 +103,8 @@ btnProjetos.addEventListener('click', async () => {
             let selectResponsavel = document.querySelector('#selectResponsavel');
             let inputDataConclusao = document.querySelector('#inputDataConclusao');
 
+            inputDataConclusao.min = new Date().toISOString().split("T")[0];
+
             document.querySelector('#btnVoltar').onclick = () => {
                 btnProjetos.click();
             }
@@ -103,6 +118,7 @@ btnProjetos.addEventListener('click', async () => {
                 inputNome.readOnly = false;
                 inputDescricao.readOnly = false;
                 inputDataConclusao.readOnly = false;
+                selectResponsavel.disabled = false;
 
                 btnSalvar.disabled = false;
                 articleDetalhes.style.borderColor = "rgba(5, 104, 230, 0.75)";
@@ -128,6 +144,12 @@ btnProjetos.addEventListener('click', async () => {
                         setTimeout(() => {
                             articleDetalhes.style.borderColor = "rgba(195, 195, 195, 0.5)";
                         }, 5000);
+
+                        inputNome.readOnly = true;
+                        inputDescricao.readOnly = true;
+                        inputDataConclusao.readOnly = true;
+                        selectResponsavel.disabled = true;
+
                         btnSalvar.disabled = true;
                         btnEditar.disabled = false;
                     }
@@ -203,6 +225,16 @@ btnAmigos.addEventListener('click', async function () {
     await carregarComponente('Loading.php');
 
     await carregarComponente('Amigos.php');
+
+    document.querySelector('#btnVoltar').onclick = () => {
+        carregarComponente('PaginaInicial.php');
+        let btnAmigos = document.querySelector('#btnAmigos');
+        let srcImg = btnAmigos.firstElementChild.getAttribute('src');
+        btnAmigos.classList.toggle('Selected');
+        btnAmigos.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
+    }
+
+
 });
 
 btnPerfil.addEventListener('click', async function () {
@@ -266,10 +298,5 @@ function loadTarefas() {
         }
         main.innerHTML += conteudo;
     }).catch(err => console.log("Erro no fetch de: " + "loadTarefas()" + "\n" + err));
-}
-
-function notificacoes() {
-    document.getElementById("notificacoes").classList.toggle("open");
-    document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
 }
 

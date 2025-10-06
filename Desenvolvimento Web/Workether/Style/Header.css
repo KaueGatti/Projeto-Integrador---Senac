@@ -25,7 +25,6 @@ header p {
 
 #iconeNotificationHeader:hover {
     background-color: rgba(195, 195, 195, 0.3);
-    transform: scale(1.2);
     cursor: pointer;
 }
 

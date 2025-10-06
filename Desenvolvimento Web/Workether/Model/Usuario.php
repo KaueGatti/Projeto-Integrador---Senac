@@ -111,7 +111,8 @@ class Usuario
         return true;
     }
 
-    public function login($login) {
+    public function login($login)
+    {
         $sql = "CALL READ_USUARIO_BY_NOME(:nome)";
         $stmt = $this->con->prepare($sql);
         $stmt->bindParam(':nome', $login['usuario']);
@@ -129,7 +130,8 @@ class Usuario
         }
     }
 
-    public function update() {
+    public function update()
+    {
 
         $senhaHash = password_hash($this->senha, PASSWORD_DEFAULT);
 
@@ -160,6 +162,16 @@ class Usuario
         $stmt->bindParam(":id", $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function readAllAmizades()
+    {
+        $sql = "CALL READ_ALL_AMIZADES_BY_USER(:id);";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id", $this->id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
 }

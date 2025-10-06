@@ -526,11 +526,15 @@ BEGIN
 END $
 DELIMITER ;
 
+CALL CREATE_AMIZADE('5MFOX49', 'JRSQKHX');
+select * from amizade;
+
 DELIMITER $
-CREATE PROCEDURE READ_ALL_AMIZADES_BY_USER (_id_usuario INT)
+CREATE PROCEDURE READ_ALL_AMIZADES_BY_USER (_id_usuario VARCHAR(7))
 BEGIN
-	SELECT * FROM Amizade
-    WHERE _id_usuario IN (Amizade.id_usuarioA, Amizade.id_usuarioB);
+	SELECT id, usuario FROM Usuario
+    JOIN Amizade ON (Usuario.id = Amizade.id_usuarioA OR Usuario.id = Amizade.id_usuarioB)
+    WHERE _id_usuario IN (Amizade.id_usuarioA, Amizade.id_usuarioB) AND Usuario.id != _id_usuario;
 END $
 DELIMITER ;
 
