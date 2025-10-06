@@ -31,7 +31,9 @@
 
 #h1Notificacoes {
     position: sticky;
+    font-size: 24px;
     padding: 10px 0 10px 0;
+    font-weight: bold;
     width: 100%;
     color: #0568E6;
     background-color: white;
@@ -110,6 +112,7 @@
     border-radius: 5px;
     color: white;
     transition: 0.8s;
+    cursor: pointer;
 }
 
 .btnRecusar {

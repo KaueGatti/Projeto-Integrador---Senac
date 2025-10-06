@@ -12,13 +12,15 @@ include_once 'session.php'
     <title>Workether - Página Inicial</title>
     <link rel="stylesheet" href="Style/index.css">
 </head>
-<body>
+<body id="body">
 <?php include_once 'MenuLateral.php'; ?>
 <main id="main">
     <?php include_once 'Header.php'; ?>
     <?php include_once 'PaginaInicial.php'; ?>
 </main>
-<?php include_once 'Notificacoes.php'; ?>
+<div id="divNotificacoes">
+    <?php include_once 'Notificacoes.php'; ?>
+</div>
 </body>
-<script src="Script/index.js"></script>
+<script id="script" src="Script/index.js"></script>
 </html>

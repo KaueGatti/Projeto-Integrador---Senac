@@ -514,9 +514,12 @@ DELIMITER $
 CREATE PROCEDURE READ_ALL_NOTIFICACOES_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Notificacao
-    WHERE Notificacao.id_usuario = _id_usuario AND Notificacao.status = "Não visualizada";
+    WHERE Notificacao.id_usuario = _id_usuario AND Notificacao.status = "Não visualizada"
+    ORDER BY data_hora DESC;
 END $
 DELIMITER ;
+
+select * from notificacao;
 
 DELIMITER $
 CREATE PROCEDURE CREATE_AMIZADE (_id_usuarioA VARCHAR(7), _id_usuarioB VARCHAR(7))
@@ -525,9 +528,6 @@ BEGIN
     VALUES (LEAST(_id_usuarioA, _id_usuarioB), GREATEST(_id_usuarioA, _id_usuarioB));
 END $
 DELIMITER ;
-
-CALL CREATE_AMIZADE('5MFOX49', 'JRSQKHX');
-select * from amizade;
 
 DELIMITER $
 CREATE PROCEDURE READ_ALL_AMIZADES_BY_USER (_id_usuario VARCHAR(7))
@@ -552,5 +552,3 @@ BEGIN
     SET NEW.id_chat = id_chat;
 END $
 DELIMITER ;
-
-select * from projeto;

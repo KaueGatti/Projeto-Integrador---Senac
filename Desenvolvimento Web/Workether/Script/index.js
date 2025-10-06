@@ -1,4 +1,5 @@
 let logo = document.querySelector('#divLogo');
+let body = document.querySelector("#body");
 let main = document.querySelector("#main");
 let btnsAside = document.querySelectorAll(".btnAside");
 let btnProjetos = document.querySelector('#btnProjetos');
@@ -7,12 +8,6 @@ let btnConversas = document.querySelector('#btnConversas');
 let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
 let btnNotificao = document.querySelector('#btnNotificacoes');
-
-btnNotificao.addEventListener('click', function(){
-    document.getElementById("notificacoes").classList.toggle("open");
-    document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
-    console.log(2);
-})
 
 async function request(url, options = {}) {
     let res = await fetch(url, options);
@@ -34,6 +29,17 @@ async function request(url, options = {}) {
 
     return json;
 }
+
+function carregarNotificacoes() {
+    return fetch('/../Notificacoes.php').then(res => {
+        if (!res.ok) throw new Error("Response failed in carregarNotificacoes()");
+        return res.text();
+    }).then(conteudo => {
+        document.querySelector('#divNotificacoes').children[0].remove();
+        document.querySelector('#divNotificacoes').insertAdjacentHTML('beforeend', conteudo);
+    }).catch(err => console.log("Erro no carregarNotificacoes()" + "\n" + err));
+}
+
 function carregarComponente(url) {
     return fetch(url).then(res => {
         if (!res.ok) throw new Error("Response failed in carregarComponente():" + url);
@@ -46,6 +52,20 @@ function carregarComponente(url) {
     }).catch(err => console.log("Erro no carregarComponente(): " + url + "\n" + err));
 }
 
+btnNotificao.addEventListener('click', async function () {
+
+    let notificacoes = document.querySelector('#notificacoes');
+
+    if (notificacoes.classList.contains('open')) {
+        await carregarNotificacoes();
+        console.log(1);
+    }
+
+    notificacoes.classList.toggle('open');
+    document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
+
+});
+
 logo.onclick = async () => {
     await carregarComponente("Loading.php");
     await carregarComponente('PaginaInicial.php');
@@ -53,6 +73,9 @@ logo.onclick = async () => {
 
 Array.from(btnsAside).forEach(btn => {
     btn.onclick = () => {
+        if (document.querySelector('#notificacoes').classList.contains('open')) {
+            btnNotificao.click();
+        }
         let btnSelected = btn;
         let srcImgSelected = btnSelected.firstElementChild.getAttribute('src');
         if (!btnSelected.classList.contains('Selected')) {
@@ -137,7 +160,7 @@ btnProjetos.addEventListener('click', async () => {
                 editarProjeto.append('editarProjeto[status]', "Em andamento");
 
                 try {
-                    let response = await request("../API/ProjetoAPI.php", { method: "POST", body: editarProjeto });
+                    let response = await request("../API/ProjetoAPI.php", {method: "POST", body: editarProjeto});
                     console.log(response);
                     if (response.success) {
                         articleDetalhes.style.borderColor = "#75CE70";
@@ -185,12 +208,14 @@ btnProjetos.addEventListener('click', async () => {
             novoProjeto.append('novoProjeto[id_responsavel]', document.querySelector('#select_responsavel').value);
 
             try {
-                let response = await request("../API/ProjetoAPI.php", { method: "POST", body: novoProjeto} );
+                let response = await request("../API/ProjetoAPI.php", {method: "POST", body: novoProjeto});
                 info.textContent = response.message;
                 if (response.success) {
                     info.style.color = "#75CE70";
                     document.querySelector('#btnConcluir').disabled = true;
-                    setTimeout(() =>{ btnProjetos.click()}, 3000)
+                    setTimeout(() => {
+                        btnProjetos.click()
+                    }, 3000)
 
                 } else {
                     info.style.color = "#E65A55";
@@ -201,7 +226,6 @@ btnProjetos.addEventListener('click', async () => {
             }
         }
     }
-
 
 
 });
@@ -232,6 +256,36 @@ btnAmigos.addEventListener('click', async function () {
         let srcImg = btnAmigos.firstElementChild.getAttribute('src');
         btnAmigos.classList.toggle('Selected');
         btnAmigos.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
+    }
+
+    document.querySelector('#btnAddAmigo').onclick = () => {
+
+        interactModal('modalAmigos', 'sectionAmigos');
+
+        document.querySelector('#btnModalAmigos').onclick = () => interactModal('modalAmigos', 'sectionAmigos');
+
+        document.querySelector('#btnEnviarConvite').onclick = async () => {
+
+            let novaNotificacao = new FormData();
+
+            let id_usuario = document.querySelector('#id_usuario').textContent;
+            let usuario = document.querySelector('#usuario').textContent;
+
+            novaNotificacao.append('novaNotificacao[id_usuario]', document.querySelector('#inputIdUsuario').value);
+            novaNotificacao.append('novaNotificacao[assunto]', "Pedido de Amizade");
+            novaNotificacao.append('novaNotificacao[texto]', `Você recebeu um pedido de amizade de ${usuario} (id: ${id_usuario})`);
+
+            try {
+                let response = await request('/../API/NotificacaoAPI.php', {method: 'POST', body: novaNotificacao});
+                console.log(response)
+            } catch (erro) {
+                console.error(erro);
+            }
+
+            await carregarNotificacoes();
+
+        }
+
     }
 
 
@@ -273,9 +327,6 @@ function detalhes(url, valuesGet) {
     }).catch(err => console.log("Erro no fetch de: " + "Detalhes" + url + ".php" + "\n" + err));
 }
 
-function enviarConviteAmigo() {
-}
-
 function novaTarefa() {
     fetch("NovaTarefa.php").then(res => {
         if (!res.ok) throw new Error("Response failed in:" + "NovaTarefa.php");
@@ -299,4 +350,3 @@ function loadTarefas() {
         main.innerHTML += conteudo;
     }).catch(err => console.log("Erro no fetch de: " + "loadTarefas()" + "\n" + err));
 }
-

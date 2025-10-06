@@ -19,10 +19,12 @@ $amizades = $usuarioController->readAllAmizadesUsuario($_SESSION['usuario']->id)
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button onclick="interactModal('modalAmigos', 'sectionAmigos')">+ Adicionar amigo</button>
+        <button id="btnAddAmigo">+ Adicionar amigo</button>
     </div>
-    <p id="info"><?php if (empty($amizades)) echo "Você ainda não tem nenhum amigo" ?></p>
     <section class="sectionAmigos" id="sectionAmigos">
+        <p id="id_usuario" hidden><?= $_SESSION['usuario']->id ?></p>
+        <p id="usuario" hidden><?= $_SESSION['usuario']->usuario ?></p>
+        <?php if (empty($amizades)) echo '<p id="info">Você ainda não tem nenhum amigo</p>'?>
         <?php foreach ($amizades as $amizade) : ?>
             <article class="articleAmigo">
                 <img src="Icones/Amigo.png" alt="">
@@ -34,13 +36,13 @@ $amizades = $usuarioController->readAllAmizadesUsuario($_SESSION['usuario']->id)
     <div class="modal" id="modalAmigos">
         <div class="divTitulo">
             <h1>Adicionar amigo</h1>
-            <img onclick="interactModal('modalAmigos', 'sectionAmigos')" src="Icones/Fechar.png" alt="">
+            <img id="btnModalAmigos" src="Icones/Fechar.png" alt="">
         </div>
         <p>Insira o ID do usuário</p>
         <div class="input-group">
-            <input type="text" name="id" placeholder=" ">
+            <input id="inputIdUsuario" type="text" name="id" placeholder=" ">
             <label for="id">ID</label>
         </div>
-        <button onclick="enviarConviteAmigo()">Enviar convite <img src="Icones/Enviar.png" alt=""</button>
+        <button id="btnEnviarConvite">Enviar convite <img src="Icones/Enviar.png" alt=""</button>
     </div>
 </section>
