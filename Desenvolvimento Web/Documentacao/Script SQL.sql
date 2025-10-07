@@ -149,14 +149,14 @@ CREATE TABLE Amizade (
 CREATE TABLE Pedido_Amizade(
 	id INT AUTO_INCREMENT,
     id_notificacao INT NOT NULL,
-    _id_solicitante VARCHAR (7) NOT NULL,
-    _id_receptor VARCHAR (7) NOT NULL,
+    id_solicitante VARCHAR (7) NOT NULL,
+    id_receptor VARCHAR (7) NOT NULL,
     status VARCHAR(30) NOT NULL DEFAULT "Pendente",
     data_hora DATETIME,
     PRIMARY KEY (id),
     FOREIGN KEY (id_notificacao) REFERENCES Notificacao (id),
-    FOREIGN KEY (_id_solicitante) REFERENCES Usuario (id),
-    FOREIGN KEY (_id_receptor) REFERENCES Usuario (id)
+    FOREIGN KEY (id_solicitante) REFERENCES Usuario (id),
+    FOREIGN KEY (id_receptor) REFERENCES Usuario (id)
 );
 
 DELIMITER $
