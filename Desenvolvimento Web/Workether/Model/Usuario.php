@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . "/../Controller/NotificacaoController.php";
+require_once __DIR__ . "/../Controller/PedidoAmizadeController.php";
+
 class Usuario
 {
     public $id;
@@ -163,75 +166,4 @@ class Usuario
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
-
-    public function readAllAmizades()
-    {
-        $sql = "CALL READ_ALL_AMIZADES_BY_USER(:id);";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(":id", $this->id, PDO::PARAM_STR);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public function enviarPedidoAmizade($idNotificacao, $id_receptor)
-    {
-        try {
-
-            $sql = "CALL CREATE_PEDIDO_AMIZADE(:idNotificacao, :id_solicitante, :id_receptor)";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(":idNotificacao", $idNotificacao);
-            $stmt->bindParam(":id_solicitante", $this->id);
-            $stmt->bindParam(":id_receptor", $id_receptor);
-
-            if ($stmt->execute()) {
-                return [
-                    'success' => true,
-                    'message' => 'Pedido enviado com sucesso!'
-                ];
-            }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            return [
-                "success" => false,
-                "message" => $e->getMessage()
-            ];
-        }
-
-        return [
-            "success" => false,
-            "message" => "Erro desconhecido!"
-        ];
-    }
-
-    public function responderPedidoAmizade($respostaPedidoAmizade)
-    {
-        try {
-
-            $sql = "CALL CREATE_PEDIDO_AMIZADE(:idNotificacao, :id_solicitante, :id_receptor)";
-            $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(":idNotificacao", $idNotificacao);
-            $stmt->bindParam(":id_solicitante", $this->id);
-            $stmt->bindParam(":id_receptor", $id_receptor);
-
-            if ($stmt->execute()) {
-                return [
-                    'success' => true,
-                    'message' => 'Pedido enviado com sucesso!'
-                ];
-            }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            return [
-                "success" => false,
-                "message" => $e->getMessage()
-            ];
-        }
-
-        return [
-            "success" => false,
-            "message" => "Erro desconhecido!"
-        ];
-    }
-
 }

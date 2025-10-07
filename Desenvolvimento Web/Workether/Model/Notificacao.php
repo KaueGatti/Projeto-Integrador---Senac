@@ -55,4 +55,31 @@ class Notificacao
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function update()
+    {
+        try {
+            $sql = "UPDATE_NOTIFICACAO(:idNotificacao, :status)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':idNotificacao', $this->id);
+            $stmt->bindParam(':status', $this->status);
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Notificação atualizada com sucesso!"
+                ];
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => "Erro desconhecido!"
+        ];
+    }
 }

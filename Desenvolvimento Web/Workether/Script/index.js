@@ -65,15 +65,18 @@ btnNotificao.addEventListener('click', async function () {
 });
 
 sectionNotificacoes.addEventListener('click', e => {
+
+    let id_notificacao;
+    let resposta;
+
     if (e.target.classList.contains('btnRecusar')) {
         let notificacao = e.target.closest('.articleNotificacao');
-        let idNotificacao = notificacao.querySelector('#idNotificacao').textContent;
-
+        id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
+        resposta = false;
     } else if (e.target.classList.contains('btnAceitar')) {
         let notificacao = e.target.closest('.articleNotificacao');
-        let idNotificacao = notificacao.querySelector('#idNotificacao').textContent;
-
-
+        id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
+        resposta = true;
     }
 
 })

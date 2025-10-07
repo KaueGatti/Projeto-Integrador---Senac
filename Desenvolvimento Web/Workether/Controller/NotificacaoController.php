@@ -25,4 +25,10 @@ class NotificacaoController
         $this->notificacao->id_usuario = $id_usuario;
         return $this->notificacao->readByUsuario();
     }
+
+    public function updateNotificacao($notificacao) {
+        $this->notificacao->id = $notificacao['IdNotificacao'];
+        $this->notificacao->status = $notificacao['status'];
+        return $this->notificacao->update();
+    }
 }

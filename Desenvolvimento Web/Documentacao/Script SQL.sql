@@ -555,8 +555,25 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE CREATE_PEDIDO_AMIZADE(_id_noiificacao INT, _id_solicitante VARCHAR(7), _id_receptor VARCHAR(7))
 BEGIN
-	INSERT INTO Pedido_Amizade (id_notificacao, _id_solicitante, _id_receptor, data_hora)
+	INSERT INTO Pedido_Amizade (id_notificacao, id_solicitante, id_receptor, data_hora)
     VALUES (_id_noiificacao, _id_solicitante, _id_receptor, NOW());
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE UPDATE_PEDIDO_AMIZADE(_id_pedido_amizade INT, _status VARCHAR(30))
+BEGIN
+	UPDATE Pedido_Amizade
+    SET status = _status
+    WHERE id = _id_pedido_amizade;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_PEDIDO_AMIZADE_BY_NOTIFICACAO (_id_notificacao INT)
+BEGIN
+	SELECT * FROM PEDIDO_AMIZADE
+    WHERE id_notificacao = _id_notificacao;
 END $
 DELIMITER ;
 
@@ -573,4 +590,27 @@ BEGIN
     
     SET NEW.id_chat = id_chat;
 END $
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER NOVO_PEDIDO_AMIZADE
+BEFORE INSERT ON Pedido_Amizade
+FOR EACH ROW
+BEGIN
+	
+    DECLARE usuario_solicitante VARCHAR(150);
+    DECLARE id_notificacao INT;
+    
+    SELECT usuario INTO usuario_solicitante
+    FROM Usuario
+    WHERE id = NEW.id_solicitante;
+
+	INSERT INTO Notificacao (id_usuario, assunto, texto)
+    VALUES (NEW.id_receptor, 'Pedido de Amizade', CONCAT('Você recebeu um pedido de amizade de ', usuario_solicitante, ' (ID: ', NEW.id_solicitante, ')'));
+    
+    SET id_notificacao = LAST_INSERT_ID();
+    
+    SET NEW.id_notificacao = id_notificacao;
+    
+END $$
 DELIMITER ;

@@ -54,11 +54,6 @@ class UsuarioController
         return $this->usuario->readAllAmizades();
     }
 
-    public function enviarPedidoAmizade($pedidoAmizade) {
-        $this->usuario->id = $pedidoAmizade['id_solicitante'];
-        return $this->usuario->enviarPedidoAmizade($pedidoAmizade['idNotificacao'], $pedidoAmizade['id_receptor']);
-    }
-
     public function responderPedidoAmizade($respostaPedidoAmizade) {
         return $this->usuario->responderPedidoAmizade($respostaPedidoAmizade);
     }
