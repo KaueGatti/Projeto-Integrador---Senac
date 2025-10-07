@@ -1,6 +1,8 @@
 let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
 let main = document.querySelector("#main");
+let notificacoes = document.querySelector("#notificacoes");
+let sectionNotificacoes = document.querySelector("#sectionNotificacoes");
 let btnsAside = document.querySelectorAll(".btnAside");
 let btnProjetos = document.querySelector('#btnProjetos');
 let btnTarefas = document.querySelector('#btnTarefas');
@@ -30,14 +32,13 @@ async function request(url, options = {}) {
     return json;
 }
 
-function carregarNotificacoes() {
-    return fetch('/../Notificacoes.php').then(res => {
-        if (!res.ok) throw new Error("Response failed in carregarNotificacoes()");
+function atualizarNotificacoes() {
+    return fetch('/../Notificacoes.php', {cache: 'no-store'}).then(res => {
+        if (!res.ok) throw new Error("Erro ao atualizar notificações");
         return res.text();
     }).then(conteudo => {
-        document.querySelector('#divNotificacoes').children[0].remove();
-        document.querySelector('#divNotificacoes').insertAdjacentHTML('beforeend', conteudo);
-    }).catch(err => console.log("Erro no carregarNotificacoes()" + "\n" + err));
+        sectionNotificacoes.innerHTML = conteudo;
+    }).catch(err => console.log("Erro no atualizarNotificacoes()" + "\n" + err));
 }
 
 function carregarComponente(url) {
@@ -54,17 +55,28 @@ function carregarComponente(url) {
 
 btnNotificao.addEventListener('click', async function () {
 
-    let notificacoes = document.querySelector('#notificacoes');
-
-    if (notificacoes.classList.contains('open')) {
-        await carregarNotificacoes();
-        console.log(1);
+    if (!notificacoes.classList.contains('open')) {
+        await atualizarNotificacoes();
     }
 
     notificacoes.classList.toggle('open');
     document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
 
 });
+
+sectionNotificacoes.addEventListener('click', e => {
+    if (e.target.classList.contains('btnRecusar')) {
+        let notificacao = e.target.closest('.articleNotificacao');
+        let idNotificacao = notificacao.querySelector('#idNotificacao').textContent;
+
+    } else if (e.target.classList.contains('btnAceitar')) {
+        let notificacao = e.target.closest('.articleNotificacao');
+        let idNotificacao = notificacao.querySelector('#idNotificacao').textContent;
+
+
+    }
+
+})
 
 logo.onclick = async () => {
     await carregarComponente("Loading.php");
@@ -276,14 +288,22 @@ btnAmigos.addEventListener('click', async function () {
             novaNotificacao.append('novaNotificacao[texto]', `Você recebeu um pedido de amizade de ${usuario} (id: ${id_usuario})`);
 
             try {
-                let response = await request('/../API/NotificacaoAPI.php', {method: 'POST', body: novaNotificacao});
-                console.log(response)
+                let responseNotificacao = await request('/../API/NotificacaoAPI.php', {
+                    method: 'POST',
+                    body: novaNotificacao
+                });
+
+                let pedidoAmizade = new FormData();
+
+                pedidoAmizade.append('pedidoAmizade[idNotificacao]', responseNotificacao.data);
+                pedidoAmizade.append('pedidoAmizade[id_solicitante]', id_usuario);
+                pedidoAmizade.append('pedidoAmizade[id_receptor]', document.querySelector('#inputIdUsuario').value);
+
+                let responsePedido = await request('/../API/UsuarioAPI.php', {method: 'POST', body: pedidoAmizade});
+                console.log(responsePedido);
             } catch (erro) {
                 console.error(erro);
             }
-
-            await carregarNotificacoes();
-
         }
 
     }

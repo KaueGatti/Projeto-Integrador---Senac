@@ -34,14 +34,41 @@
     font-size: 24px;
     padding: 10px 0 10px 0;
     font-weight: bold;
-    width: 100%;
+    width: 90%;
     color: #0568E6;
     background-color: white;
     text-align: center;
     top: 0;
     z-index: 1;
+}
+
+#notificacoes #divTitulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     border-bottom: 3px solid rgba(195, 195, 195, 0.5);
     box-shadow: 0 10px 13px -7px rgba(0,0,0,0.1);
+}
+
+#notificacoes #divTitulo img {
+    width: 35px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition:  0.3s;
+}
+
+#notificacoes #divTitulo img:hover {
+    opacity: 0.8;
+    transform: scale(0.95);
+}
+
+#sectionNotificacoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow: auto;
 }
 
 .articleNotificacao {
@@ -58,7 +85,6 @@
     display: flex;
     justify-content: end;
     width: 100%;
-
 }
 
 .divImg img {

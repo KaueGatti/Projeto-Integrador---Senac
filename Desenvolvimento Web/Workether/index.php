@@ -18,9 +18,15 @@ include_once 'session.php'
     <?php include_once 'Header.php'; ?>
     <?php include_once 'PaginaInicial.php'; ?>
 </main>
-<div id="divNotificacoes">
-    <?php include_once 'Notificacoes.php'; ?>
-</div>
+<section class="abaNotificacoes" id="notificacoes">
+    <link rel="stylesheet" href="Style/Notificacoes.css">
+    <div id="divTitulo">
+        <h1 id="h1Notificacoes">Notificações</h1>
+        <img src="Icones/Refresh.png" alt="">
+    </div>
+    <section id="sectionNotificacoes">
+    </section>
+</section>
 </body>
 <script id="script" src="Script/index.js"></script>
 </html>

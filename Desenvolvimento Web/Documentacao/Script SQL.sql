@@ -146,6 +146,19 @@ CREATE TABLE Amizade (
     FOREIGN KEY (id_usuarioB) REFERENCES Usuario (id)
 );
 
+CREATE TABLE Pedido_Amizade(
+	id INT AUTO_INCREMENT,
+    id_notificacao INT NOT NULL,
+    _id_solicitante VARCHAR (7) NOT NULL,
+    _id_receptor VARCHAR (7) NOT NULL,
+    status VARCHAR(30) NOT NULL DEFAULT "Pendente",
+    data_hora DATETIME,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_notificacao) REFERENCES Notificacao (id),
+    FOREIGN KEY (_id_solicitante) REFERENCES Usuario (id),
+    FOREIGN KEY (_id_receptor) REFERENCES Usuario (id)
+);
+
 DELIMITER $
 CREATE PROCEDURE CREATE_USUARIO (_id VARCHAR (7), _email VARCHAR (255), _usuario VARCHAR (150), _senha VARCHAR (255))
 BEGIN
@@ -498,6 +511,9 @@ CREATE PROCEDURE CREATE_NOTIFICACAO(_id_usuario VARCHAR (7), _assunto VARCHAR (1
 BEGIN
 	INSERT INTO Notificacao (id_usuario, assunto, texto, data_hora, status)
     VALUES (_id_usuario, _assunto, _texto, NOW(), 'Não visualizada');
+    
+    SELECT LAST_INSERT_ID() as id;
+    
 END $
 DELIMITER ;
 
@@ -519,8 +535,6 @@ BEGIN
 END $
 DELIMITER ;
 
-select * from notificacao;
-
 DELIMITER $
 CREATE PROCEDURE CREATE_AMIZADE (_id_usuarioA VARCHAR(7), _id_usuarioB VARCHAR(7))
 BEGIN
@@ -535,6 +549,14 @@ BEGIN
 	SELECT id, usuario FROM Usuario
     JOIN Amizade ON (Usuario.id = Amizade.id_usuarioA OR Usuario.id = Amizade.id_usuarioB)
     WHERE _id_usuario IN (Amizade.id_usuarioA, Amizade.id_usuarioB) AND Usuario.id != _id_usuario;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE CREATE_PEDIDO_AMIZADE(_id_noiificacao INT, _id_solicitante VARCHAR(7), _id_receptor VARCHAR(7))
+BEGIN
+	INSERT INTO Pedido_Amizade (id_notificacao, _id_solicitante, _id_receptor, data_hora)
+    VALUES (_id_noiificacao, _id_solicitante, _id_receptor, NOW());
 END $
 DELIMITER ;
 

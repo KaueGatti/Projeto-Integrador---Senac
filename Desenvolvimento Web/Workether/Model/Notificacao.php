@@ -24,9 +24,12 @@ class Notificacao
             $stmt->bindParam(":assunto", $this->assunto);
             $stmt->bindParam(":texto", $this->texto);
             if ($stmt->execute()) {
+                $idNotificacao = $stmt->fetch(PDO::FETCH_OBJ);
+                $idNotificacao = $idNotificacao->id;
                 return [
                     "success" => true,
-                    "message" => "Notificação criada com sucesso!"
+                    "message" => "Notificação criada com sucesso!",
+                    "data" => $idNotificacao
                 ];
             }
         } catch (Exception $e) {
