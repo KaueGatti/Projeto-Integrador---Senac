@@ -14,7 +14,6 @@ class PedidoAmizadeController
 
     public function createPedidoAmizade($pedidoAmizade)
     {
-        $this->pedidoAmizade->id_notificacao = $pedidoAmizade['id_notificacao'];
         $this->pedidoAmizade->id_solicitante = $pedidoAmizade['id_solicitante'];
         $this->pedidoAmizade->id_receptor = $pedidoAmizade['id_receptor'];
         return $this->pedidoAmizade->create();

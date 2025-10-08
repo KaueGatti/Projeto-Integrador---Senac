@@ -1,12 +1,12 @@
 <?php
 
-require_once __DIR__ . '/Controller/UsuarioController.php';
+require_once __DIR__ . '/Controller/AmizadeController.php';
 
 session_start();
 
-$usuarioController = new UsuarioController();
+$controller = new AmizadeController();
 
-$amizades = $usuarioController->readAllAmizadesUsuario($_SESSION['usuario']->id);
+$amizades = $controller->readAllAmizadesByUsuario($_SESSION['usuario']->id);
 
 ?>
 
@@ -39,6 +39,7 @@ $amizades = $usuarioController->readAllAmizadesUsuario($_SESSION['usuario']->id)
             <img id="btnModalAmigos" src="Icones/Fechar.png" alt="">
         </div>
         <p>Insira o ID do usuário</p>
+        <p id="info"></p>
         <div class="input-group">
             <input id="inputIdUsuario" type="text" name="id" placeholder=" ">
             <label for="id">ID</label>

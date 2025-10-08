@@ -21,7 +21,9 @@ ob_start();
     <article class="articleNotificacao">
         <p id="idNotificacao" hidden><?= $notificacao->id ?></p>
         <div class="divImg">
-            <img src="Icones/Fechar.png" alt="">
+            <?php if ($notificacao->assunto !== 'Pedido de Amizade') : ?>
+                <img src="Icones/Fechar.png" alt="">
+            <?php endif; ?>
         </div>
         <h1><?= $notificacao->assunto ?></h1>
         <p class="pTexto"><?= $notificacao->texto ?></p>

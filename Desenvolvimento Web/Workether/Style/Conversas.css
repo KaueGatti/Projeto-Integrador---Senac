@@ -41,7 +41,6 @@ div {
     justify-content: end;
     align-items: center;
     width: 100%;
-    padding-right: 50px;
 }
 
 #divPesquisa input {
@@ -66,6 +65,7 @@ div {
     background-color: rgba(5, 104, 230, 0.67);
     color: white;
     transition: 0.3s;
+    margin-right: 50px;
 }
 
 #divPesquisa button:hover {

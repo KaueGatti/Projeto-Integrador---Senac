@@ -19,9 +19,8 @@ class PedidoAmizade
     {
         try {
 
-            $sql = "CALL CREATE_PEDIDO_AMIZADE(:id_notificacao, :id_solicitante, :id_receptor)";
+            $sql = "CALL CREATE_PEDIDO_AMIZADE(:id_solicitante, :id_receptor)";
             $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(":id_notificacao", $this->id_notificacao);
             $stmt->bindParam(":id_solicitante", $this->id_solicitante);
             $stmt->bindParam(":id_receptor", $this->id_receptor);
 
@@ -78,12 +77,9 @@ class PedidoAmizade
             $sql = "CALL READ_PEDIDO_AMIZADE_BY_NOTIFICACAO(:id_notificacao)";
             $stmt = $this->con->prepare($sql);
             $stmt->bindParam(":id_notificacao", $this->id_notificacao);
-            if ($stmt->execute()) {
-                return [
-                    'success' => true,
-                    'message' => 'Pedido de amizade encontrado com sucesso!'
-                ];
-            }
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_OBJ);
+
         } catch (PDOException $e) {
             http_response_code(500);
             return [
@@ -91,10 +87,5 @@ class PedidoAmizade
                 "message" => $e->getMessage()
             ];
         }
-
-        return [
-            "success" => false,
-            "message" => "Erro desconhecido!"
-        ];
     }
 }

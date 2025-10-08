@@ -2,6 +2,7 @@ let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
 let main = document.querySelector("#main");
 let notificacoes = document.querySelector("#notificacoes");
+let btnRefreshNotificacoes = document.querySelector('#btn_refresh_notificacoes');
 let sectionNotificacoes = document.querySelector("#sectionNotificacoes");
 let btnsAside = document.querySelectorAll(".btnAside");
 let btnProjetos = document.querySelector('#btnProjetos');
@@ -64,20 +65,44 @@ btnNotificao.addEventListener('click', async function () {
 
 });
 
+btnRefreshNotificacoes.onclick = async () => {
+    await atualizarNotificacoes();
+}
+
 sectionNotificacoes.addEventListener('click', e => {
 
-    let id_notificacao;
-    let resposta;
+    if (e.target.classList.contains('btnRecusar') || e.target.classList.contains('btnAceitar')) {
 
-    if (e.target.classList.contains('btnRecusar')) {
-        let notificacao = e.target.closest('.articleNotificacao');
-        id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
-        resposta = false;
-    } else if (e.target.classList.contains('btnAceitar')) {
-        let notificacao = e.target.closest('.articleNotificacao');
-        id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
-        resposta = true;
+        let id_notificacao;
+        let resposta;
+
+        if (e.target.classList.contains('btnRecusar')) {
+            let notificacao = e.target.closest('.articleNotificacao');
+            id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
+            resposta = "Recusado";
+        } else if (e.target.classList.contains('btnAceitar')) {
+            let notificacao = e.target.closest('.articleNotificacao');
+            id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
+            resposta = "Aceito";
+        }
+
+        let respostaPedidoAmizade = new FormData();
+
+        respostaPedidoAmizade.append('respostaPedidoAmizade[id_notificacao]', id_notificacao);
+        respostaPedidoAmizade.append('respostaPedidoAmizade[resposta]', resposta);
+
+        try {
+            let response = request('/../API/PedidoAmizadeAPI.php', {method: "POST", body: respostaPedidoAmizade});
+        } catch (error) {
+            console.error(error);
+        }
+
+        atualizarNotificacoes();
     }
+
+
+
+
 
 })
 
@@ -231,7 +256,6 @@ btnProjetos.addEventListener('click', async () => {
                     setTimeout(() => {
                         btnProjetos.click()
                     }, 3000)
-
                 } else {
                     info.style.color = "#E65A55";
                 }
@@ -281,32 +305,39 @@ btnAmigos.addEventListener('click', async function () {
 
         document.querySelector('#btnEnviarConvite').onclick = async () => {
 
-            let novaNotificacao = new FormData();
+            let info = document.querySelector('#modalAmigos #info');
 
-            let id_usuario = document.querySelector('#id_usuario').textContent;
-            let usuario = document.querySelector('#usuario').textContent;
+            let id_solicitante = document.querySelector('#id_usuario').textContent;
+            let id_receptor = document.querySelector('#inputIdUsuario').value;
 
-            novaNotificacao.append('novaNotificacao[id_usuario]', document.querySelector('#inputIdUsuario').value);
-            novaNotificacao.append('novaNotificacao[assunto]', "Pedido de Amizade");
-            novaNotificacao.append('novaNotificacao[texto]', `Você recebeu um pedido de amizade de ${usuario} (id: ${id_usuario})`);
+            if (id_solicitante === id_receptor) {
+                info.textContent = "Usuário inválido";
+                info.style.color = "#E65A55";
+                return;
+            }
+
+            let pedidoAmizade = new FormData();
+
+            pedidoAmizade.append('pedidoAmizade[id_solicitante]', id_solicitante);
+            pedidoAmizade.append('pedidoAmizade[id_receptor]', id_receptor);
 
             try {
-                let responseNotificacao = await request('/../API/NotificacaoAPI.php', {
-                    method: 'POST',
-                    body: novaNotificacao
-                });
-
-                let pedidoAmizade = new FormData();
-
-                pedidoAmizade.append('pedidoAmizade[idNotificacao]', responseNotificacao.data);
-                pedidoAmizade.append('pedidoAmizade[id_solicitante]', id_usuario);
-                pedidoAmizade.append('pedidoAmizade[id_receptor]', document.querySelector('#inputIdUsuario').value);
-
-                let responsePedido = await request('/../API/UsuarioAPI.php', {method: 'POST', body: pedidoAmizade});
-                console.log(responsePedido);
-            } catch (erro) {
-                console.error(erro);
+                let response = await request('/../API/PedidoAmizadeAPI.php', {method: "POST", body: pedidoAmizade});
+                if (response.success) {
+                    info.textContent = "Pedido de amizade enviado!";
+                    info.style.color = "#75CE70";
+                } else {
+                }
+            } catch (error) {
+                if (error.message.includes('Integrity constraint violation: 1452')) {
+                    info.textContent = "Usuário não encontrado!";
+                } else {
+                    console.error(error);
+                }
+                    info.style.color = "#E65A55";
             }
+
+
         }
 
     }

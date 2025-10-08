@@ -72,7 +72,6 @@ div {
 .sectionTarefas {
     display: grid;
     flex: 1;
-    padding: 20px;
     justify-items: center;
     grid-template-columns: repeat(2, 1fr);
     margin-top: 30px;

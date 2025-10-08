@@ -22,7 +22,7 @@ include_once 'session.php'
     <link rel="stylesheet" href="Style/Notificacoes.css">
     <div id="divTitulo">
         <h1 id="h1Notificacoes">Notificações</h1>
-        <img src="Icones/Refresh.png" alt="">
+        <img id="btn_refresh_notificacoes" src="Icones/Refresh.png" alt="">
     </div>
     <section id="sectionNotificacoes">
     </section>

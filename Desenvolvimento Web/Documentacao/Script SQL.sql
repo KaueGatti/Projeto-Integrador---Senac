@@ -511,9 +511,6 @@ CREATE PROCEDURE CREATE_NOTIFICACAO(_id_usuario VARCHAR (7), _assunto VARCHAR (1
 BEGIN
 	INSERT INTO Notificacao (id_usuario, assunto, texto, data_hora, status)
     VALUES (_id_usuario, _assunto, _texto, NOW(), 'Não visualizada');
-    
-    SELECT LAST_INSERT_ID() as id;
-    
 END $
 DELIMITER ;
 
@@ -553,10 +550,10 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_PEDIDO_AMIZADE(_id_noiificacao INT, _id_solicitante VARCHAR(7), _id_receptor VARCHAR(7))
+CREATE PROCEDURE CREATE_PEDIDO_AMIZADE(_id_solicitante VARCHAR(7), _id_receptor VARCHAR(7))
 BEGIN
-	INSERT INTO Pedido_Amizade (id_notificacao, id_solicitante, id_receptor, data_hora)
-    VALUES (_id_noiificacao, _id_solicitante, _id_receptor, NOW());
+	INSERT INTO Pedido_Amizade (id_solicitante, id_receptor, data_hora)
+    VALUES (_id_solicitante, _id_receptor, NOW());
 END $
 DELIMITER ;
 
@@ -604,13 +601,27 @@ BEGIN
     SELECT usuario INTO usuario_solicitante
     FROM Usuario
     WHERE id = NEW.id_solicitante;
-
-	INSERT INTO Notificacao (id_usuario, assunto, texto)
-    VALUES (NEW.id_receptor, 'Pedido de Amizade', CONCAT('Você recebeu um pedido de amizade de ', usuario_solicitante, ' (ID: ', NEW.id_solicitante, ')'));
+	
+	CALL CREATE_NOTIFICACAO(NEW.id_receptor, 'Pedido de Amizade', CONCAT('Você recebeu um pedido de amizade de ', usuario_solicitante, ' (ID: ', NEW.id_solicitante, ')'));
     
     SET id_notificacao = LAST_INSERT_ID();
     
     SET NEW.id_notificacao = id_notificacao;
+    
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER RESPOSTA_PEDIDO_AMIZADE
+AFTER UPDATE ON Pedido_Amizade
+FOR EACH ROW
+BEGIN
+    
+    IF NEW.status = 'Aceito' THEN
+		CALL CREATE_AMIZADE(NEW.id_solicitante, NEW.id_receptor);
+	END IF;
+    
+    CALL UPDATE_NOTIFICACAO(NEW.id_notificacao, 'Visualizada');
     
 END $$
 DELIMITER ;
