@@ -228,6 +228,12 @@ btnProjetos.addEventListener('click', async () => {
 
         await carregarComponente("NovoProjeto.php");
 
+        let participantes = [];
+        let equipes = [];
+
+        setInterval(() => {
+            console.log(participantes);}, 3000);
+
         document.querySelector('#btnVoltar').onclick = () => {
             btnProjetos.click();
         }
@@ -244,7 +250,6 @@ btnProjetos.addEventListener('click', async () => {
 
                 interactModal('modalAdicionarParticipante', 'modalParticipantes');
 
-
                 document.querySelector('#modalAdicionarParticipante #btnAdicionar').onclick = () => {
 
                     if (selectParticipante.selectedIndex === 0) {
@@ -258,7 +263,7 @@ btnProjetos.addEventListener('click', async () => {
                     let usuarioParticipante = option.textContent;
 
                     let articleParticpante = '<article class="articleParticipante" id="' + idParticipante + '">\n' +
-                        '                <p>' + usuarioParticipante + '</p>\n' +
+                        '                <p class="usuario_participante">' + usuarioParticipante + '</p>\n' +
                         '                <img class="btnRemover" src="Icones/Remover.png" alt="">\n' +
                         '            </article>';
 
@@ -270,7 +275,9 @@ btnProjetos.addEventListener('click', async () => {
                     info.textContent = 'Participante adicionado';
                     setTimeout(() => {
                         info.textContent = ''
-                    }, 2000);
+                    }, 1000);
+
+                    participantes.unshift({id: idParticipante, usuario: usuarioParticipante});
 
                 }
             };
@@ -279,13 +286,17 @@ btnProjetos.addEventListener('click', async () => {
 
                 if (e.target.classList.contains('btnRemover')) {
                     let idParticipante = e.target.closest('.articleParticipante').id;
+                    let usuarioParticipante = e.target.closest('.articleParticipante').querySelector('.usuario_participante').textContent;
                     e.target.closest('.articleParticipante').remove();
 
                     selectParticipante.querySelectorAll('option').forEach(option => {
-                      if (option.value === idParticipante) {
-                          option.disabled = false;
-                      }
+                        if (option.value === idParticipante) {
+                            option.disabled = false;
+                        }
                     })
+
+                    participantes = participantes.filter(p => p.id !== idParticipante);
+
                 }
 
             });
@@ -293,7 +304,18 @@ btnProjetos.addEventListener('click', async () => {
         };
 
         document.querySelector('.articleDetalhes #btnEquipes').onclick = function () {
+
             interactModal('modalEquipes', 'sectionDetalhes');
+
+            document.querySelector('#modalEquipes #btnAdicionarEquipe').onclick = function () {
+
+                interactModal('modalAdicionarEquipe', 'modalEquipes');
+
+                let inputNome = document.querySelector('#modalAdicionarEquipe #input_nome');
+                let textAreaDescricao = document.querySelector('#modalAdicionarEquipe #textArea_descricao');
+                let inputDescricao = inputNome.value;
+            }
+
         };
 
         document.querySelector('#btnCancelar').onclick = () => {

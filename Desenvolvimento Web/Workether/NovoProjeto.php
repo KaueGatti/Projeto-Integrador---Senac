@@ -93,9 +93,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             <img class="btnBack" onclick="interactModal('modalEquipes', 'sectionDetalhes')" src="Icones/Fechar.png"
                  alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarEquipe', 'modalEquipes')"
-                class="btnAdicionarEquipe">+ Adicionar equipe
-        </button>
+        <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
             <article onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" class="articleEquipe">
                 <p>Equipe do Kauê</p>
@@ -105,17 +103,22 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
         <h1 class="tituloModal">Nova Equipe</h1>
-        <div class="input-group input-nome">
+        <div class="input-group input-nome" id="input_nome">
             <input type="text" id="nome" placeholder=" ">
             <label for="nome">Nome</label>
         </div>
-        <div class="textArea-group textArea-descricao">
+        <div class="textArea-group textArea-descricao" id="textArea_descricao">
             <textarea type="text" id="descricao" placeholder=" "></textarea>
             <label for="nome">Descrição</label>
         </div>
-        <div class="input-group input-responsavel">
-            <input type="text" id="responsavel" placeholder=" ">
-            <label for="nome">Responsável</label>
+        <div class="select-group">
+            <select type="text" id="select_responsavel">
+                <option value="" disabled selected>Selecione um responsável</option>
+                <?php foreach ($amizades as $amizade) : ?>
+                    <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="select_responsavel">Responsável</label>
         </div>
         <button onclick="interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe')" class="btnParticipantes">
             Participantes
