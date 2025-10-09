@@ -28,5 +28,5 @@ include_once 'session.php'
     </section>
 </section>
 </body>
-<script id="script" src="Script/index.js"></script>
+<script type="module" id="script" src="Script/index.js"></script>
 </html>

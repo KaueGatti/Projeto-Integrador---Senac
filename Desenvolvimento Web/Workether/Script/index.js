@@ -1,3 +1,5 @@
+import { initAmigos } from "./Amigos.js";
+
 let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
 let main = document.querySelector("#main");
@@ -12,12 +14,12 @@ let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
 let btnNotificao = document.querySelector('#btnNotificacoes');
 
-function interactModal(modal, background) {
+export function interactModal(modal, background) {
     document.getElementById(modal).classList.toggle("show");
     document.getElementById(background).classList.toggle("onblur");
 }
 
-async function request(url, options = {}) {
+export async function request(url, options = {}) {
     let res = await fetch(url, options);
     let text = await res.text();
 
@@ -47,7 +49,7 @@ function atualizarNotificacoes() {
     }).catch(err => console.log("Erro no atualizarNotificacoes()" + "\n" + err));
 }
 
-function carregarComponente(url) {
+export function carregarComponente(url) {
     return fetch(url).then(res => {
         if (!res.ok) throw new Error("Response failed in carregarComponente():" + url);
         return res.text();
@@ -374,7 +376,9 @@ btnAmigos.addEventListener('click', async function () {
 
     await carregarComponente('Amigos.php');
 
-    document.querySelector('#btnVoltar').onclick = () => {
+    initAmigos();
+
+    /*document.querySelector('#btnVoltar').onclick = () => {
         carregarComponente('PaginaInicial.php');
         let btnAmigos = document.querySelector('#btnAmigos');
         let srcImg = btnAmigos.firstElementChild.getAttribute('src');
@@ -456,7 +460,7 @@ btnAmigos.addEventListener('click', async function () {
             btn.disabled = false;
         }
 
-    }
+    }*/
 
 
 });
