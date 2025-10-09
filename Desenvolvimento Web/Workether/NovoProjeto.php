@@ -57,8 +57,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <div class="modal modalParticipantes" id="modalParticipantes">
         <div class="divTitulo">
             <h1>Participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalParticipantes', 'sectionDetalhes')"
-                 src="Icones/Fechar.png" alt="">
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
         <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
         <section class="sectionParticipantes" id="sectionParticipantes">
@@ -68,7 +67,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipante">
         <div class="divTitulo">
             <h1>Adicionar participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalAdicionarParticipante', 'modalParticipantes')"
+            <img class="btnBack" id="btnFechar"
                  src="Icones/Fechar.png"
                  alt="">
         </div>
@@ -90,15 +89,15 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <div class="modal modalEquipes" id="modalEquipes">
         <div class="divTitulo">
             <h1>Equipes</h1>
-            <img class="btnBack" onclick="interactModal('modalEquipes', 'sectionDetalhes')" src="Icones/Fechar.png"
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png"
                  alt="">
         </div>
         <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
-            <article onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" class="articleEquipe">
+            <!-- <article class="articleEquipe">
                 <p>Equipe do Kauê</p>
                 <img src="Icones/Remover.png" alt="">
-            </article>
+            </article> -->
         </section>
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
@@ -112,21 +111,16 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             <label for="nome">Descrição</label>
         </div>
         <div class="select-group">
-            <select type="text" id="select_responsavel">
+            <select id="select_responsavel">
                 <option value="" disabled selected>Selecione um responsável</option>
-                <?php foreach ($amizades as $amizade) : ?>
-                    <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
-                <?php endforeach; ?>
             </select>
             <label for="select_responsavel">Responsável</label>
         </div>
-        <button onclick="interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe')" class="btnParticipantes">
+        <button id="btnParticipantes" class="btnParticipantes">
             Participantes
         </button>
         <div class="divCancelar_Concluir">
-            <button onclick="interactModal('modalAdicionarEquipe', 'modalEquipes')" class="buttonRed" id="btnCancelar">
-                Cancelar
-            </button>
+            <button class="buttonRed" id="btnCancelar">Cancelar</button>
             <button class="buttonGreen" id="btnConcluir">Concluir</button>
         </div>
     </div>
@@ -136,12 +130,9 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <div class="modal modalParticipantes" id="modalParticipantesEquipe">
         <div class="divTitulo">
             <h1>Participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe')"
-                 src="Icones/Fechar.png" alt="">
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe')"
-                class="btnAdicionarParticipantes">+ Adicionar participante
-        </button>
+        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
         <section class="sectionParticipantes">
             <article class="articleParticipante">
                 <p>Kauê</p>
@@ -152,15 +143,17 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteEquipe">
         <div class="divTitulo">
             <h1>Adicionar participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe')"
+            <img class="btnBack" id="btnFechar"
                  src="Icones/Fechar.png"
                  alt="">
         </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
+        <div class="select-group">
+            <select id="select_participante">
+                <option value="" selected disabled>Selecione um participante</option>
+            </select>
+            <label for="">Participante</label>
         </div>
-        <button onclick="adicionarParticipante()">Adicionar</button>
+        <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Equipes -> Participantes -->
 
@@ -273,6 +266,4 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         </div>
     </div>
     <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
-
-    <script src="Script/NovoProjeto.js"></script>
 </section>

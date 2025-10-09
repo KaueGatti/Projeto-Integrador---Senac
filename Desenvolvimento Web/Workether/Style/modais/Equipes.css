@@ -155,8 +155,7 @@
 
 .modalAdicionarEquipe {
     padding: 0 20px 0 20px;
-    flex-direction: column;
-    justify-content: start;
+    align-items: start;
     height: 500px;
     width: 600px;
     top: 25%;
@@ -170,7 +169,7 @@
 }
 
 .modalAdicionarEquipe .input-group {
-    width: 100%;
+    width: 300px;
     justify-content: start;
     margin-top: 20px;
 }
@@ -187,8 +186,9 @@
     overflow: auto;
 }
 
-.modalAdicionarEquipe .input-nome input {
+.modalAdicionarEquipe .select-group {
     width: 300px;
+    margin-top: 20px;
 }
 
 .modalAdicionarEquipe .btnParticipantes {
