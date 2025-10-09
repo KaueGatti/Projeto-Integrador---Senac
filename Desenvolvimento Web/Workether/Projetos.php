@@ -25,7 +25,7 @@ if (count($projects) == 0) {
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button id="btnNovoProjeto">+ Novo Projeto</button>
+        <button id="btnAdicionarProjeto">+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">
         <?php if ($warning) { echo "<p class=\"pWarning\">$warning</p>";} ?>

@@ -12,6 +12,10 @@ let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
 let btnNotificao = document.querySelector('#btnNotificacoes');
 
+function interactModal(modal, background) {
+    document.getElementById(modal).classList.toggle("show");
+    document.getElementById(background).classList.toggle("onblur");
+}
 
 async function request(url, options = {}) {
     let res = await fetch(url, options);
@@ -107,11 +111,6 @@ sectionNotificacoes.addEventListener('click', async e => {
 
 
 })
-
-logo.onclick = async () => {
-    await carregarComponente("Loading.php");
-    await carregarComponente('PaginaInicial.php');
-}
 
 Array.from(btnsAside).forEach(btn => {
     btn.onclick = () => {
@@ -225,7 +224,7 @@ btnProjetos.addEventListener('click', async () => {
         }
     })
 
-    document.querySelector('#btnNovoProjeto').onclick = async () => {
+    document.querySelector('#btnAdicionarProjeto').onclick = async () => {
 
         await carregarComponente("NovoProjeto.php");
 
@@ -234,6 +233,68 @@ btnProjetos.addEventListener('click', async () => {
         }
 
         document.querySelector('#inputDataConclusao').min = new Date().toISOString().split("T")[0];
+
+        document.querySelector('.articleDetalhes #btnParticipantes').onclick = function () {
+
+            let selectParticipante = document.getElementById('select_participante');
+
+            interactModal('modalParticipantes', 'sectionDetalhes');
+
+            document.querySelector('#btnAdicionarParticipante').onclick = () => {
+
+                interactModal('modalAdicionarParticipante', 'modalParticipantes');
+
+
+                document.querySelector('#modalAdicionarParticipante #btnAdicionar').onclick = () => {
+
+                    if (selectParticipante.selectedIndex === 0) {
+                        return;
+                    }
+
+                    let info = document.querySelector('#modalAdicionarParticipante #info');
+
+                    let option = selectParticipante.options[selectParticipante.selectedIndex];
+                    let idParticipante = option.value;
+                    let usuarioParticipante = option.textContent;
+
+                    let articleParticpante = '<article class="articleParticipante" id="' + idParticipante + '">\n' +
+                        '                <p>' + usuarioParticipante + '</p>\n' +
+                        '                <img class="btnRemover" src="Icones/Remover.png" alt="">\n' +
+                        '            </article>';
+
+                    document.querySelector('#sectionParticipantes').insertAdjacentHTML('afterbegin', articleParticpante);
+
+                    option.disabled = true;
+                    selectParticipante.options[0].selected = true;
+
+                    info.textContent = 'Participante adicionado';
+                    setTimeout(() => {
+                        info.textContent = ''
+                    }, 2000);
+
+                }
+            };
+
+            document.querySelector('#modalParticipantes #sectionParticipantes').addEventListener('click', e => {
+
+                if (e.target.classList.contains('btnRemover')) {
+                    let idParticipante = e.target.closest('.articleParticipante').id;
+                    e.target.closest('.articleParticipante').remove();
+
+                    selectParticipante.querySelectorAll('option').forEach(option => {
+                      if (option.value === idParticipante) {
+                          option.disabled = false;
+                      }
+                    })
+                }
+
+            });
+
+        };
+
+        document.querySelector('.articleDetalhes #btnEquipes').onclick = function () {
+            interactModal('modalEquipes', 'sectionDetalhes');
+        };
 
         document.querySelector('#btnCancelar').onclick = () => {
             btnProjetos.click();
@@ -397,10 +458,6 @@ function abrirConversa_Chat() {
     }).catch(err => console.log("Erro no fetch de: " + "Conversa_Chat.php" + "\n" + err));
 }
 
-function interactModal(modal, background) {
-    document.getElementById(modal).classList.toggle("show");
-    document.getElementById(background).classList.toggle("onblur");
-}
 
 function detalhes(url, valuesGet) {
     fetch("Detalhes" + url + ".php?" + valuesGet).then(res => {
@@ -436,4 +493,17 @@ function loadTarefas() {
         }
         main.innerHTML += conteudo;
     }).catch(err => console.log("Erro no fetch de: " + "loadTarefas()" + "\n" + err));
+}
+
+logo.onclick = async () => {
+    await carregarComponente("Loading.php");
+    await carregarComponente('PaginaInicial.php');
+
+    Array.from(btnsAside).forEach(btn => {
+        let srcImg = btn.firstElementChild.getAttribute('src');
+        if (btn.classList.contains('Selected')) {
+            btn.classList.toggle('Selected');
+            btn.firstElementChild.setAttribute('src', srcImg.replace("Selected", ""));
+        }
+    })
 }

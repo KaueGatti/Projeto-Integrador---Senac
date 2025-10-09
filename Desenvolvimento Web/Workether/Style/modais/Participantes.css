@@ -64,7 +64,7 @@
 
 .modalAdicionarParticipante {
     padding: 20px;
-    height: 150px;
+    height: auto;
 }
 
 .modalAdicionarParticipante .divTitulo {
@@ -83,6 +83,10 @@
 
 .modalAdicionarParticipante img:hover {
     cursor: pointer;
+}
+
+.modalAdicionarParticipante #info {
+    color: #46b640;
 }
 
 .modalAdicionarParticipante button {

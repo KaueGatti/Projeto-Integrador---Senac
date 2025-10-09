@@ -41,10 +41,10 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
                 <input type="date" id="inputDataConclusao" name="novoProjeto[dataInicialConclusao]" placeholder=" ">
                 <label for="dataConclusao">Data para conclusão</label>
             </div>
-            <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')" id="btnParticipantes">
+            <button id="btnParticipantes">
                 Participantes
             </button>
-            <button onclick="interactModal('modalEquipes', 'sectionDetalhes')" id="btnEquipes">Equipes</button>
+            <button id="btnEquipes">Equipes</button>
             <p id="info"></p>
             <div class="divCancelar_Concluir">
                 <button id="btnCancelar">Cancelar</button>
@@ -60,12 +60,9 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             <img class="btnBack" onclick="interactModal('modalParticipantes', 'sectionDetalhes')"
                  src="Icones/Fechar.png" alt="">
         </div>
-        <button class="btnAdicionarParticipantes">+ Adicionar participante</button>
-        <section class="sectionParticipantes">
-            <!-- <article class="articleParticipante">
-                <p>Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article> -->
+        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
+        <section class="sectionParticipantes" id="sectionParticipantes">
+
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipante">
@@ -75,11 +72,17 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
                  src="Icones/Fechar.png"
                  alt="">
         </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
+        <div class="select-group">
+            <select id="select_participante">
+                <option value="" selected disabled>Selecione um participante</option>
+                <?php foreach ($amizades as $amizade) : ?>
+                    <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="select_participante">Participante</label>
         </div>
-        <button onclick="adicionarParticipante()">Adicionar</button>
+        <p id="info"></p>
+        <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Participantes -->
 
