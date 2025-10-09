@@ -38,7 +38,7 @@ div {
     opacity: 0.8;
 }
 
-#divTitulo h1 {
+.conteudo #divTitulo h1 {
     font-size: 50px;
     margin-left: 20px;
 }

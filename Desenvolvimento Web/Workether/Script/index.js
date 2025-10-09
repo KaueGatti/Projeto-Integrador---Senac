@@ -12,6 +12,7 @@ let btnAmigos = document.querySelector('#btnAmigos');
 let btnPerfil = document.querySelector('#btnPerfil');
 let btnNotificao = document.querySelector('#btnNotificacoes');
 
+
 async function request(url, options = {}) {
     let res = await fetch(url, options);
     let text = await res.text();
@@ -69,10 +70,10 @@ btnRefreshNotificacoes.onclick = async () => {
     await atualizarNotificacoes();
 }
 
-sectionNotificacoes.addEventListener('click', e => {
+sectionNotificacoes.addEventListener('click', async e => {
 
     if (e.target.classList.contains('btnRecusar') || e.target.classList.contains('btnAceitar')) {
-
+        let notificacao;
         let id_notificacao;
         let resposta;
 
@@ -80,10 +81,14 @@ sectionNotificacoes.addEventListener('click', e => {
             let notificacao = e.target.closest('.articleNotificacao');
             id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
             resposta = "Recusado";
+            notificacao.innerHTML = "Pedido recusado!";
+            notificacao.classList.toggle('recusado');
         } else if (e.target.classList.contains('btnAceitar')) {
             let notificacao = e.target.closest('.articleNotificacao');
             id_notificacao = notificacao.querySelector('#idNotificacao').textContent;
             resposta = "Aceito";
+            notificacao.innerHTML = "Pedido aceito!";
+            notificacao.classList.toggle('aceito');
         }
 
         let respostaPedidoAmizade = new FormData();
@@ -92,16 +97,13 @@ sectionNotificacoes.addEventListener('click', e => {
         respostaPedidoAmizade.append('respostaPedidoAmizade[resposta]', resposta);
 
         try {
-            let response = request('/../API/PedidoAmizadeAPI.php', {method: "POST", body: respostaPedidoAmizade});
+            await request('/../API/PedidoAmizadeAPI.php', {method: "POST", body: respostaPedidoAmizade});
         } catch (error) {
             console.error(error);
         }
 
         atualizarNotificacoes();
     }
-
-
-
 
 
 })
@@ -301,9 +303,14 @@ btnAmigos.addEventListener('click', async function () {
 
         interactModal('modalAmigos', 'sectionAmigos');
 
-        document.querySelector('#btnModalAmigos').onclick = () => interactModal('modalAmigos', 'sectionAmigos');
+        document.querySelector('.modal #btnFechar').onclick = () => {
+            interactModal('modalAmigos', 'sectionAmigos');
+            document.querySelector('.modal #info').textContent = "";
+        }
 
-        document.querySelector('#btnEnviarConvite').onclick = async () => {
+        document.querySelector('#btnEnviarConvite').onclick = async function () {
+
+            let btn = this;
 
             let info = document.querySelector('#modalAmigos #info');
 
@@ -316,6 +323,31 @@ btnAmigos.addEventListener('click', async function () {
                 return;
             }
 
+            btn.disabled = true;
+
+            btn.querySelector('p').textContent = 'Enviando...';
+            let progressBar = btn.querySelector('#progress_bar');
+            let progresso = 0;
+            let progessoMax = 90;
+            let animating = true;
+
+            function animar() {
+                progresso += (progessoMax - progresso) * 0.02;
+                progressBar.style.width = `${progresso}%`;
+
+                if (animating) {
+                    requestAnimationFrame(animar);
+                } else {
+                    progressBar.style.width = `100%`;
+                    setTimeout(() => {
+                        progressBar.style.width = '0';
+                        btn.querySelector('p').textContent = 'Enviar pedido';
+                    }, 500);
+                }
+            }
+
+            requestAnimationFrame(animar);
+
             let pedidoAmizade = new FormData();
 
             pedidoAmizade.append('pedidoAmizade[id_solicitante]', id_solicitante);
@@ -326,18 +358,19 @@ btnAmigos.addEventListener('click', async function () {
                 if (response.success) {
                     info.textContent = "Pedido de amizade enviado!";
                     info.style.color = "#75CE70";
-                } else {
                 }
             } catch (error) {
                 if (error.message.includes('Integrity constraint violation: 1452')) {
                     info.textContent = "Usuário não encontrado!";
-                } else {
-                    console.error(error);
+                } else if (error.message.includes('[450000]')) {
+                    info.textContent = "Já existe um pedido de amizade ativo entre você e esse usuário.";
+                } else if (error.message.includes('[45001]')) {
+                    info.textContent = "Você e esse usuário já são amigos";
                 }
-                    info.style.color = "#E65A55";
+                info.style.color = "#E65A55";
             }
-
-
+            animating = false;
+            btn.disabled = false;
         }
 
     }

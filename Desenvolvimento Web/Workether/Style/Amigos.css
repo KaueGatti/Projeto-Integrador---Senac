@@ -30,7 +30,7 @@ div {
     opacity: 0.8;
 }
 
-#divTitulo h1 {
+.conteudo #divTitulo h1 {
     font-size: 50px;
     margin-left: 20px;
 }
@@ -162,10 +162,17 @@ div {
     margin-bottom: 10px;
 }
 
+.modal #info {
+    width: 100%;
+    font-size: 18px;
+    margin: 0 0 10px 0;
+}
+
 .modal button {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     margin-top: 20px;
     background-color: #E1B669;
     color: white;
@@ -176,13 +183,30 @@ div {
     border: none;
     font-size: 18px;
     cursor: pointer;
-    transition: 0.3s;
     margin-bottom: 10px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.modal button p, .modal button img {
+    position: relative;
+    z-index: 2;
+}
+
+.modal button p {
+    width: 80%;
 }
 
 .modal button:hover {
-    transform: scale(1.1);
-    background-color: #e3aa4d;
+    background-color: #ecba70;
+}
+
+.modal button #progress_bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: rgb(225, 173, 71);
 }
 
 .modal button img {
@@ -190,11 +214,6 @@ div {
     width: 30px;
 }
 
-.modal #info {
-    width: 100%;
-    font-size: 18px;
-    margin: 0 0 10px 0;
-}
 
 
 

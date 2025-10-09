@@ -36,7 +36,7 @@ $amizades = $controller->readAllAmizadesByUsuario($_SESSION['usuario']->id);
     <div class="modal" id="modalAmigos">
         <div class="divTitulo">
             <h1>Adicionar amigo</h1>
-            <img id="btnModalAmigos" src="Icones/Fechar.png" alt="">
+            <img id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
         <p>Insira o ID do usuário</p>
         <p id="info"></p>
@@ -44,6 +44,10 @@ $amizades = $controller->readAllAmizadesByUsuario($_SESSION['usuario']->id);
             <input id="inputIdUsuario" type="text" name="id" placeholder=" ">
             <label for="id">ID</label>
         </div>
-        <button id="btnEnviarConvite">Enviar convite <img src="Icones/Enviar.png" alt=""</button>
+        <button id="btnEnviarConvite">
+            <p>Enviar convite</p>
+            <img src="Icones/Enviar.png" alt="">
+            <div id="progress_bar"></div>
+        </button>
     </div>
 </section>

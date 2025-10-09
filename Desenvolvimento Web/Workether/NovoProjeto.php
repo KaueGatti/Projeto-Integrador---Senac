@@ -1,6 +1,12 @@
 <?php
 
+require_once __DIR__ . '/Controller/AmizadeController.php';
+
 include_once 'session.php';
+
+$amizadeController = new AmizadeController();
+
+$amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
 
 ?>
 
@@ -14,7 +20,7 @@ include_once 'session.php';
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="inputNome" name="novoProjeto[nome]" placeholder=" " >
+                <input type="text" id="inputNome" name="novoProjeto[nome]" placeholder=" ">
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
@@ -25,6 +31,9 @@ include_once 'session.php';
                 <select id="select_responsavel" name="novoProjeto[id_responsavel]">
                     <option value="" disabled selected>Selecione um responsável</option>
                     <option value="<?= $_SESSION['usuario']->id ?>"><?php echo $_SESSION['usuario']->usuario ?></option>
+                    <?php foreach ($amizades as $amizade) : ?>
+                        <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <label for="responsavel">Responsável</label>
             </div>
@@ -51,14 +60,12 @@ include_once 'session.php';
             <img class="btnBack" onclick="interactModal('modalParticipantes', 'sectionDetalhes')"
                  src="Icones/Fechar.png" alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarParticipante', 'modalParticipantes')"
-                class="btnAdicionarParticipantes">+ Adicionar participante
-        </button>
+        <button class="btnAdicionarParticipantes">+ Adicionar participante</button>
         <section class="sectionParticipantes">
-            <article class="articleParticipante">
+            <!-- <article class="articleParticipante">
                 <p>Kauê</p>
                 <img src="Icones/Remover.png" alt="">
-            </article>
+            </article> -->
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipante">

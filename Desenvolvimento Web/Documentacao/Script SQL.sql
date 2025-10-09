@@ -594,9 +594,35 @@ CREATE TRIGGER NOVO_PEDIDO_AMIZADE
 BEFORE INSERT ON Pedido_Amizade
 FOR EACH ROW
 BEGIN
-	
+
+	DECLARE amigos INT;
+    DECLARE existe INT;
     DECLARE usuario_solicitante VARCHAR(150);
     DECLARE id_notificacao INT;
+    
+    SELECT COUNT(*) INTO amigos
+    FROM Amizade
+    WHERE (id_usuarioA = NEW.id_solicitante AND id_usuarioB = NEW.id_receptor) OR (id_usuarioB = NEW.id_receptor AND id_usuarioA = NEW.id_solicitante);
+
+    IF amigos > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Você e esse usuário já são amigos.'; 
+    END IF;
+
+    SELECT COUNT(*) INTO existe
+    FROM Pedido_Amizade
+    WHERE 
+        (
+            (id_solicitante = NEW.id_solicitante AND id_receptor = NEW.id_receptor)
+            OR
+            (id_solicitante = NEW.id_receptor AND id_receptor = NEW.id_solicitante)
+        )
+        AND status = 'Pendente';
+
+    IF existe > 0 THEN
+        SIGNAL SQLSTATE '45001'
+        SET MESSAGE_TEXT = 'Já existe um pedido de amizade ativo entre você e esse usuário.';
+    END IF;
     
     SELECT usuario INTO usuario_solicitante
     FROM Usuario
