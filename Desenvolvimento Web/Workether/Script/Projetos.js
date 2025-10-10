@@ -12,6 +12,15 @@ export function initProjetos() {
 
     let projetos = document.querySelectorAll('.articleProjeto');
 
+    function articleParticipante(id, usuario) {
+        return '<article class="articleParticipante" id="' + id + '">\n' +
+            '<p class="usuario_participante">' + usuario + '</p>\n' +
+            '<img class="btnRemover" src="Icones/Remover.png" alt="">\n' +
+            '</article>';
+    }
+
+
+
     projetos.forEach(projeto => {
         projeto.onclick = async () => {
 
@@ -94,10 +103,6 @@ export function initProjetos() {
         let participantes = [];
         let equipes = [];
 
-        setInterval(() => {
-            console.log(equipes)
-        }, 5000);
-
         document.querySelector('#btnVoltar').onclick = () => {
             btnProjetos.click();
         }
@@ -134,9 +139,7 @@ export function initProjetos() {
                     let idParticipante = option.value;
                     let usuarioParticipante = option.textContent;
 
-                    let articleParticpante = '<article class="articleParticipante" id="' + idParticipante + '">\n' + '                <p class="usuario_participante">' + usuarioParticipante + '</p>\n' + '                <img class="btnRemover" src="Icones/Remover.png" alt="">\n' + '            </article>';
-
-                    document.querySelector('#sectionParticipantes').insertAdjacentHTML('afterbegin', articleParticpante);
+                    document.querySelector('#sectionParticipantes').insertAdjacentHTML('afterbegin', articleParticipante(idParticipante, usuarioParticipante));
 
                     option.disabled = true;
                     selectParticipante.options[0].selected = true;
@@ -184,21 +187,28 @@ export function initProjetos() {
 
                 interactModal('modalAdicionarEquipe', 'modalEquipes');
 
-                let equipe =  {
-                    nome: '',
-                    descricao: '',
+                let inputNomeEquipe = document.querySelector('#modalAdicionarEquipe #input_nome');
+                let textAreaDescricaoEquipe = document.querySelector('#modalAdicionarEquipe #textArea_descricao');
+                let selectResponsavelEquipe = document.querySelector('#modalAdicionarEquipe #select_responsavel');
+
+                let optionResponsavel = selectResponsavelEquipe.options[selectResponsavelEquipe.selectedIndex];
+
+                let sectionParticipantesEquipe = document.querySelector('#modalParticipantesEquipe .sectionParticipantes');
+
+                let equipe = {
+                    nome: inputNomeEquipe.value,
+                    descricao: textAreaDescricaoEquipe.value,
                     responsavel: {
-                        id: '',
-                        usuario: ''
+                        id: optionResponsavel.id,
+                        usuario: optionResponsavel.textContent,
                     },
                     participantes: []
                 }
 
-                let selectResponsavelEquipe = document.querySelector('#modalAdicionarEquipe #select_responsavel');
+                selectResponsavelEquipe.innerHTML = '<option value="" selected disabled>Selecione um responsável</option>';
 
                 participantes.forEach(p => {
-                    selectResponsavelEquipe.insertAdjacentHTML('beforeend',
-                        '<option value="' + p.id + '">' + p.usuario + '</option>');
+                    selectResponsavelEquipe.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
                 });
 
                 document.querySelector('#modalAdicionarEquipe #btnParticipantes').onclick = () => {
@@ -209,42 +219,80 @@ export function initProjetos() {
                         interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe');
                     }
 
-                    let sectionParticipantesEquipe = document.querySelector('#modalParticipantesEquipe .sectionParticipantes');
+                    let selectParticipanteEquipe = document.querySelector('#modalAdicionarParticipanteEquipe #select_participante');
+
+                    selectParticipanteEquipe.innerHTML = '<option value="" selected disabled>Selecione um participante</option>';
+
+                    participantes.forEach(p => {
+                        selectParticipanteEquipe.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
+                    });
+
+
+                    sectionParticipantesEquipe.addEventListener('click', e => {
+                        if (e.target.classList.contains('btnRemover')) {
+                            let idParticipante = e.target.closest('.articleParticipante').id;
+                            let usuarioParticipante = e.target.closest('.articleParticipante').querySelector('.usuario_participante').textContent;
+                            e.target.closest('.articleParticipante').remove();
+
+                            selectParticipanteEquipe.querySelectorAll('option').forEach(option => {
+                                if (option.value === idParticipante) {
+                                    option.disabled = false;
+                                }
+                            })
+
+                            equipe.participantes.filter(p => p.id !== idParticipante);
+
+                        }
+                    })
 
                     document.querySelector('#modalParticipantesEquipe #btnAdicionarParticipante').onclick = () => {
 
                         interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe');
 
+                        let info = document.querySelector('#modalAdicionarParticipanteEquipe #info');
+
                         document.querySelector('#modalAdicionarParticipanteEquipe #btnFechar').onclick = () => {
                             interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe');
                         }
 
-                        let selectParticipanteEquipe = document.querySelector('#modalAdicionarParticipanteEquipe #select_participante');
+                        document.querySelector('#modalAdicionarParticipanteEquipe #btnAdicionar').onclick = () => {
+                            if (!(selectParticipanteEquipe.selectedIndex === 0)) {
+                                let option = selectParticipanteEquipe.options[selectParticipanteEquipe.selectedIndex];
+                                let id_participante = option.value;
 
-                        participantes.forEach(p => {
-                            selectParticipanteEquipe.insertAdjacentHTML('beforeend',
-                                '<option value="' + p.id + '">' + p.usuario + '</option>');
-                        });
+                                let usuario = option.textContent;
 
-                        if (!(selectParticipanteEquipe.selectedIndex === 0)) {
-                            let id_participante = selectParticipanteEquipe.options[selectParticipanteEquipe.selectedIndex].value;
-                            let usuario = selectParticipanteEquipe.options[selectParticipanteEquipe.selectedIndex].textContent;
-                            document.querySelector('#modalAdicionarParticipanteEquipe #btnAdicionar').onclick = () => {
+                                sectionParticipantesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(id_participante, usuario));
+
+                                option.disabled = true;
+                                selectParticipanteEquipe.options[0].selected = true;
+
+                                info.textContent = 'Participante adicionado';
+                                setTimeout(() => {
+                                    info.textContent = ''
+                                }, 1000);
+
                                 equipe.participantes.unshift({id: id_participante, usuario: usuario});
+
                             }
                         }
-
-
                     }
                 }
 
 
                 document.querySelector('#modalAdicionarEquipe #btnCancelar').onclick = () => {
+
+                    inputNomeEquipe.value = '';
+                    textAreaDescricaoEquipe.value = '';
+                    selectResponsavelEquipe.selectedIndex = 0;
+                    equipe.participantes = [];
+                    sectionParticipantesEquipe.textContent = '';
+
+
                     interactModal('modalAdicionarEquipe', 'modalEquipes');
                 }
 
-                let inputNome = document.querySelector('#modalAdicionarEquipe #input_nome');
-                let textAreaDescricao = document.querySelector('#modalAdicionarEquipe #textArea_descricao');
+
             }
 
         };

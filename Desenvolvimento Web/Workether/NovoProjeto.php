@@ -102,13 +102,13 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
         <h1 class="tituloModal">Nova Equipe</h1>
-        <div class="input-group input-nome" id="input_nome">
-            <input type="text" id="nome" placeholder=" ">
+        <div class="input-group input-nome">
+            <input type="text" id="input_nome" placeholder=" ">
             <label for="nome">Nome</label>
         </div>
-        <div class="textArea-group textArea-descricao" id="textArea_descricao">
-            <textarea type="text" id="descricao" placeholder=" "></textarea>
-            <label for="nome">Descrição</label>
+        <div class="textArea-group textArea-descricao">
+            <textarea type="text" id="textArea_descricao" placeholder=" "></textarea>
+            <label for="textArea_descricao">Descrição</label>
         </div>
         <div class="select-group">
             <select id="select_responsavel">
@@ -134,10 +134,6 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         </div>
         <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
         <section class="sectionParticipantes">
-            <article class="articleParticipante">
-                <p>Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article>
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteEquipe">
@@ -153,6 +149,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             </select>
             <label for="">Participante</label>
         </div>
+        <p id="info"></p>
         <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Equipes -> Participantes -->
