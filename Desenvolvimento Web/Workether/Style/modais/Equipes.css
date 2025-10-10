@@ -98,41 +98,34 @@
     width: 300px;
 }
 
-.modalDetalhesEquipe #textArea-descricao {
+.modalDetalhesEquipe .textArea-group {
     width: 100%;
     justify-content: start;
     margin-top: 20px;
 }
 
-.modalDetalhesEquipe #textArea-descricao textarea {
+.modalDetalhesEquipe #textArea_descricao {
     resize: none;
     height: 70px;
     overflow: auto;
 }
 
-.modalDetalhesEquipe .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+.modalDetalhesEquipe .select-group {
+    width: 300px;
     margin-top: 20px;
-    column-width: 200px;
-    gap: 20px;
 }
 
-.modalDetalhesEquipe .grid button {
-    height: 40px;
-    width: 100%;
+.modalDetalhesEquipe #btnParticipantes {
+    background-color: #E1B669;
+    color: white;
     font-size: 20px;
     font-weight: bold;
-}
-
-.modalDetalhesEquipe .grid #inputResponsavel {
-    width: 100%;
-    margin-top: 0;
-}
-
-.modalDetalhesEquipe .grid #btnComentarios {
-    grid-column-start: 2;
-    grid-column-end: 3;
+    height: 40px;
+    width: 300px;
+    border: none;
+    border-radius: 10px;
+    align-self: start;
+    margin-top: 20px;
 }
 
 .modalDetalhesEquipe .divEditar_Salvar {
@@ -230,4 +223,8 @@
     font-size: 20px;
     font-weight: bold;
     margin-left: 10px;
+}
+
+.adicionada {
+    border: 3px solid #75CE70;
 }

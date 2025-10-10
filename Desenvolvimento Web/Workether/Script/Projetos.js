@@ -12,6 +12,34 @@ export function initProjetos() {
 
     let projetos = document.querySelectorAll('.articleProjeto');
 
+    function novaEquipeValida(novaEquipe) {
+        if (novaEquipe.nome.replace(/ /g, '') === '') {
+            return {
+                success: false,
+                message: 'O nome da equipe não pode estar vázio'
+            };
+        }
+
+        if (novaEquipe.descricao.replace(/ /g, '') === '') {
+            return {
+                success: false,
+                message: 'A descrição da equipe não pode estar vázia'
+            };
+        }
+
+        if (novaEquipe.responsavel.id === '' || novaEquipe.responsavel.usuario === '') {
+            return {
+                success: false,
+                message: 'Selecione um responsável para a equipe'
+            };
+        }
+
+        return {
+            success: true,
+            message: 'Equipe adicionada'
+        };
+    }
+
     function articleParticipante(id, usuario) {
         return '<article class="articleParticipante" id="' + id + '">\n' +
             '<p class="usuario_participante">' + usuario + '</p>\n' +
@@ -19,7 +47,12 @@ export function initProjetos() {
             '</article>';
     }
 
-
+    function articleEquipe(nome) {
+        return '<article class="articleEquipe">' +
+            '<p id="nome_equipe">' + nome + '</p>' +
+            '<img class="btnRemover" src="Icones/Remover.png" alt="">' +
+            '</article>';
+    }
 
     projetos.forEach(projeto => {
         projeto.onclick = async () => {
@@ -103,6 +136,10 @@ export function initProjetos() {
         let participantes = [];
         let equipes = [];
 
+        setInterval(() => {
+            console.log(equipes);
+        }, 5000);
+
         document.querySelector('#btnVoltar').onclick = () => {
             btnProjetos.click();
         }
@@ -183,27 +220,68 @@ export function initProjetos() {
                 interactModal('modalEquipes', 'sectionDetalhes');
             }
 
+            let sectionEquipes = document.querySelector('#modalEquipes .sectionEquipes');
+
+            sectionEquipes.addEventListener('click', e => {
+                if (e.target.classList.contains('btnRemover')) {
+                    let nomeEquipe = e.target.closest('.articleEquipe').querySelector('#nome_equipe').textContent;
+                    e.target.closest('.articleEquipe').remove();
+
+                    equipes = equipes.filter(e => e.nome !== nomeEquipe);
+
+                } else if (e.target.classList.contains('articleEquipe')) {
+
+                    let modalDetalhesEquipe = document.querySelector('#modalDetalhesEquipe');
+
+                    let nomeEquipe = e.target.querySelector('#nome_equipe').textContent;
+
+                    let detalhesEquipe = equipes.find(e => e.nome === nomeEquipe);
+
+                    let inputNomeDetalhesEquipe = modalDetalhesEquipe.querySelector('#inputNome');
+                    let textAreaDescricaoDetalhesEquipe = modalDetalhesEquipe.querySelector('#textArea_descricao');
+                    let selectResposavelDetalhesEquipe = modalDetalhesEquipe.querySelector('#select_responsavel');
+
+                    console.log(e.target);
+
+                    inputNomeDetalhesEquipe.value = detalhesEquipe.nome;
+                    textAreaDescricaoDetalhesEquipe.value = detalhesEquipe.descricao;
+                    selectResposavelDetalhesEquipe.innerHTML = '<option value="' + detalhesEquipe.responsavel.id + '" selected>' + detalhesEquipe.responsavel.nome + '</option>';
+                    participantes.forEach(p => {
+                        selectResposavelDetalhesEquipe.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
+                    });
+
+                    interactModal('modalDetalhesEquipe', 'modalEquipes');
+                }
+            })
+
             document.querySelector('#modalEquipes #btnAdicionarEquipe').onclick = function () {
 
+                let modalAdicionarEquipe = document.querySelector('#modalAdicionarEquipe');
+
                 interactModal('modalAdicionarEquipe', 'modalEquipes');
+
+                let novaEquipe = {
+                    nome: '',
+                    descricao: '',
+                    responsavel: {
+                        id: '',
+                        usuario: '',
+                    },
+                    participantes: []
+                }
 
                 let inputNomeEquipe = document.querySelector('#modalAdicionarEquipe #input_nome');
                 let textAreaDescricaoEquipe = document.querySelector('#modalAdicionarEquipe #textArea_descricao');
                 let selectResponsavelEquipe = document.querySelector('#modalAdicionarEquipe #select_responsavel');
 
-                let optionResponsavel = selectResponsavelEquipe.options[selectResponsavelEquipe.selectedIndex];
+                let infoNovaEquipe = document.querySelector('#modalAdicionarEquipe #info');
 
                 let sectionParticipantesEquipe = document.querySelector('#modalParticipantesEquipe .sectionParticipantes');
 
-                let equipe = {
-                    nome: inputNomeEquipe.value,
-                    descricao: textAreaDescricaoEquipe.value,
-                    responsavel: {
-                        id: optionResponsavel.id,
-                        usuario: optionResponsavel.textContent,
-                    },
-                    participantes: []
-                }
+                inputNomeEquipe.value = '';
+                textAreaDescricaoEquipe.value = '';
+                selectResponsavelEquipe.selectedIndex = 0;
+                infoNovaEquipe.textContent = '';
 
                 selectResponsavelEquipe.innerHTML = '<option value="" selected disabled>Selecione um responsável</option>';
 
@@ -227,7 +305,6 @@ export function initProjetos() {
                         selectParticipanteEquipe.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
                     });
 
-
                     sectionParticipantesEquipe.addEventListener('click', e => {
                         if (e.target.classList.contains('btnRemover')) {
                             let idParticipante = e.target.closest('.articleParticipante').id;
@@ -240,7 +317,7 @@ export function initProjetos() {
                                 }
                             })
 
-                            equipe.participantes.filter(p => p.id !== idParticipante);
+                            novaEquipe.participantes.filter(p => p.id !== idParticipante);
 
                         }
                     })
@@ -272,26 +349,42 @@ export function initProjetos() {
                                     info.textContent = ''
                                 }, 1000);
 
-                                equipe.participantes.unshift({id: id_participante, usuario: usuario});
+                                novaEquipe.participantes.unshift({id: id_participante, usuario: usuario});
 
                             }
                         }
                     }
                 }
 
-
                 document.querySelector('#modalAdicionarEquipe #btnCancelar').onclick = () => {
-
-                    inputNomeEquipe.value = '';
-                    textAreaDescricaoEquipe.value = '';
-                    selectResponsavelEquipe.selectedIndex = 0;
-                    equipe.participantes = [];
-                    sectionParticipantesEquipe.textContent = '';
-
-
                     interactModal('modalAdicionarEquipe', 'modalEquipes');
                 }
 
+                document.querySelector('#modalAdicionarEquipe #btnConcluir').onclick = () => {
+
+                    novaEquipe.nome = inputNomeEquipe.value;
+                    novaEquipe.descricao = textAreaDescricaoEquipe.value;
+                    let optionResponsavel = selectResponsavelEquipe.options[selectResponsavelEquipe.selectedIndex];
+                    novaEquipe.responsavel.id = optionResponsavel.value;
+                    novaEquipe.responsavel.usuario = optionResponsavel.textContent;
+
+                    let validacao = novaEquipeValida(novaEquipe);
+
+                    if (validacao.success) {
+                        equipes.unshift(novaEquipe);
+                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe.nome));
+                        infoNovaEquipe.style.color = '#75CE70';
+                        modalAdicionarEquipe.classList.toogle = 'adicionada';
+                        setTimeout(() => {
+                            modalAdicionarEquipe.classList.toogle = 'adicionada';
+                            interactModal('modalAdicionarEquipe', 'modalEquipes');
+                        }, 2000);
+                    } else {
+                        infoNovaEquipe.style.color = '#E65A55';
+                    }
+                    infoNovaEquipe.textContent = validacao.message;
+
+                }
 
             }
 
@@ -328,6 +421,8 @@ export function initProjetos() {
                 info.style.color = "#E65A55";
             }
         }
+
+
     }
 
 }

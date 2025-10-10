@@ -94,10 +94,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         </div>
         <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
-            <!-- <article class="articleEquipe">
-                <p>Equipe do Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article> -->
+
         </section>
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
@@ -119,6 +116,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         <button id="btnParticipantes" class="btnParticipantes">
             Participantes
         </button>
+        <p id="info"></p>
         <div class="divCancelar_Concluir">
             <button class="buttonRed" id="btnCancelar">Cancelar</button>
             <button class="buttonGreen" id="btnConcluir">Concluir</button>
@@ -154,43 +152,36 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     </div>
     <!-- Novo Projeto -> Equipes -> Participantes -->
 
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->
     <div class="modal modalDetalhesEquipe" id="modalDetalhesEquipe">
         <div class="divTitulo">
             <h1>Detalhes da equipe</h1>
-            <img class="btnBack" onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" src="Icones/Fechar.png"
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png"
                  alt="">
         </div>
-        <div class="input-group" id="inputNome">
-            <input type="text" name="nome" placeholder=" " readonly>
-            <label for="nome">Nome</label>
+        <div class="input-group">
+            <input id="inputNome" type="text" placeholder=" " readonly>
+            <label for="inputNome">Nome</label>
         </div>
-        <div class="textArea-group" id="textArea-descricao">
-            <textarea type="text" name="descricao" placeholder=" " readonly></textarea>
-            <label for="descricao">Descrição</label>
+        <div class="textArea-group">
+            <textarea id="textArea_descricao" placeholder=" " readonly></textarea>
+            <label for="textArea_descricao">Descrição</label>
         </div>
-        <div class="grid">
-            <div class="input-group" id="inputResponsavel">
-                <input type="text" placeholder=" ">
-                <label for="">Responsável</label>
-            </div>
-            <button onclick="interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe')"
-                    class="buttonOrange">Participantes
-            </button>
-            <button class="buttonGray">Chat</button>
-            <button onclick="loadTarefas()" class="buttonOrange">Tarefas</button>
-            <button onclick="interactModal('modalComentariosDetalhesEquipe', 'modalDetalhesEquipe')"
-                    class="buttonOrange" id="btnComentarios">Comentários
-            </button>
+        <div class="select-group">
+            <select id="select_responsavel" disabled>
+
+            </select>
+            <label for="select_responsavel">Responsável</label>
         </div>
+        <button class="buttonOrange" id="btnParticipantes">Participantes</button>
         <div class="divEditar_Salvar">
             <button class="buttonBlue">Editar</button>
             <button class="buttonGreen">Salvar</button>
         </div>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->
 
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
     <div class="modal modalParticipantes" id="modalParticipantesDetalhesEquipe">
         <div class="divTitulo">
             <h1>Participantes</h1>
@@ -221,9 +212,9 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         </div>
         <button onclick="adicionarParticipante()">Adicionar</button>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
 
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
+    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários
     <div class="modal modalComentarios" id="modalComentariosDetalhesEquipe">
         <div class="divTitulo">
             <h1>Comentários</h1>
@@ -262,5 +253,5 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             <button class="buttonGreen" onclick="adicionarComentario()">Adicionar</button>
         </div>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
+     Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
 </section>
