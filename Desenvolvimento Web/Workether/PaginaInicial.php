@@ -8,7 +8,7 @@
             <img class="imgNovoProjeto" src="Icones/NovoProjeto.png" alt="">
             <p class="pBtnBox">Novo Projeto +</p>
         </button>
-        <button class="btnBox">
+        <button class="btnBox" id="btnNovaTarefa">
             <img class="imgNovaTarefa" src="Icones/NovaTarefa.png" alt="">
             <p class="pBtnBox">Nova Tarefa +</p>
         </button>

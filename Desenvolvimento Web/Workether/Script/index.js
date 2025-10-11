@@ -1,5 +1,7 @@
-import { initAmigos } from "./Amigos.js";
-import { initProjetos } from "./Projetos.js";
+import {initAmigos} from "./Amigos.js";
+import {initProjetos} from "./Projetos.js";
+import {initPaginaInicial} from "./PaginaInicial.js";
+import {initPerfil} from "./Perfil.js";
 
 let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
@@ -138,11 +140,7 @@ Array.from(btnsAside).forEach(btn => {
 
 btnProjetos.addEventListener('click', async () => {
 
-    await carregarComponente('Loading.php');
-
-    await carregarComponente('Projetos.php');
-
-    initProjetos();
+    await initProjetos();
 
 });
 
@@ -172,9 +170,7 @@ btnAmigos.addEventListener('click', async function () {
 
 btnPerfil.addEventListener('click', async function () {
 
-    await carregarComponente('Loading.php');
-
-    await carregarComponente('Perfil.php');
+    await initPerfil();
 });
 
 function abrirConversa_Chat() {
@@ -227,8 +223,8 @@ function loadTarefas() {
 }
 
 logo.onclick = async () => {
-    await carregarComponente("Loading.php");
-    await carregarComponente('PaginaInicial.php');
+
+    await initPaginaInicial();
 
     Array.from(btnsAside).forEach(btn => {
         let srcImg = btn.firstElementChild.getAttribute('src');

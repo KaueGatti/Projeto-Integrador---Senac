@@ -50,6 +50,7 @@ CREATE TABLE Mensagem_Chat (
 CREATE TABLE Projeto (
 	id INT AUTO_INCREMENT,
 	id_chat INT NOT NULL,
+    id_criador VARCHAR(7) NOT NULL,
 	id_responsavel VARCHAR(7) NOT NULL,
 	nome VARCHAR(150) NOT NULL,
 	descricao VARCHAR(255) NOT NULL,
@@ -61,6 +62,7 @@ CREATE TABLE Projeto (
     UNIQUE (id_responsavel, nome),
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
+    FOREIGN KEY (id_criador) REFERENCES Usuario(id),
 	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
 );
 
@@ -76,6 +78,7 @@ CREATE TABLE Equipe (
 	id INT AUTO_INCREMENT,
 	id_chat INT,
 	id_projeto INT,
+    id_responsavel VARCHAR(7),
 	nome VARCHAR(150),
 	descricao VARCHAR(255),
 	dataCriacao DATE,
@@ -83,7 +86,8 @@ CREATE TABLE Equipe (
 	status VARCHAR(30),
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
+    FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Usuario_Equipe (
@@ -214,10 +218,10 @@ END $$
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_PROJETO (_id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
+CREATE PROCEDURE CREATE_PROJETO (_id_criador VARCHAR(7), _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
 BEGIN
-	INSERT INTO Projeto (id_responsavel, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
-    VALUES (_id_responsavel, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
+	INSERT INTO Projeto (id_criador, id_responsavel, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
+    VALUES (_id_criador, _id_responsavel, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
 END $
 DELIMITER ;
 
@@ -246,7 +250,7 @@ CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Projeto
 	LEFT JOIN Usuario_Projeto ON Projeto.id = Usuario_Projeto.id_projeto
-	WHERE Usuario_Projeto.id_usuario = _id_usuario OR Projeto.id_responsavel = _id_usuario;
+	WHERE Usuario_Projeto.id_usuario = _id_usuario OR Projeto.id_responsavel = _id_usuario OR Projeto.id_criador = _id_usuario;
 END $$
 DELIMITER ;
 
@@ -291,18 +295,18 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_EQUIPE (_id_chat INT, _id_projeto INT, _nome VARCHAR (150), _descricao VARCHAR (255))
+CREATE PROCEDURE CREATE_EQUIPE (_id_chat INT, _id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR (150), _descricao VARCHAR (255))
 BEGIN
-	INSERT INTO Equipe (id_chat, id_projeto, nome, descricao)
-    VALUES (_id_chat, _id_projeto, _nome, _descricao);
+	INSERT INTO Equipe (id_chat, id_projeto, id_responsavel, nome, descricao)
+    VALUES (_id_chat, _id_projeto, _id_responsavel, _nome, _descricao);
 END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE UPDATE_EQUIPE (_id_equipe INT, _nome VARCHAR(150), _descricao VARCHAR(255), _dataDissolucao DATE, _status VARCHAR(30))
+CREATE PROCEDURE UPDATE_EQUIPE (_id_equipe INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataDissolucao DATE, _status VARCHAR(30))
 BEGIN
 	UPDATE Equipe
-    SET nome = _nome, descricao = _descricao, dataDissolucao = _dataDissolucao, status = _status
+    SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao, dataDissolucao = _dataDissolucao, status = _status
     WHERE Equipe.id = _id_equipe;
 END $
 DELIMITER ;
@@ -344,7 +348,7 @@ CREATE PROCEDURE READ_ALL_EQUIPES_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Equipe
     LEFT JOIN Usuario_Equipe ON Equipe.id = Usuario_Equipe.id_equipe
-    WHERE Usuario_Equipe.id_usuario = _id_usuario;
+    WHERE Usuario_Equipe.id_usuario = _id_usuario OR Equipe.id_responsavel = _id_responsavel;
 END $
 DELIMITER ;
 

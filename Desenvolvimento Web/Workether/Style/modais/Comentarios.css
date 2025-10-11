@@ -46,6 +46,8 @@
     width: 75%;
     overflow: auto;
     padding: 5px;
+    word-wrap: break-word;
+    line-height: 1.5;
 }
 
 .modalComentarios .articleComentario .divInfo {
@@ -88,7 +90,7 @@
 /* Modal Adicionar Comentário -------------------------------------- */
 
 .modalAdicionarComentario {
-    height: 350px;
+    height: auto;
     width: 500px;
     top: 30%;
     justify-content: start;
@@ -106,6 +108,14 @@
 .modalAdicionarComentario textarea {
     resize: none;
     height: 200px;
+}
+
+.modalAdicionarComentario #info {
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #46b640;
+    font-weight: bold;
 }
 
 .modalAdicionarComentario .divCancelar_Adicionar {

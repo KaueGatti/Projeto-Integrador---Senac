@@ -1,4 +1,5 @@
 @import "inputGroup.css";
+@import "buttons.css";
 
 .conteudo {
     display: flex;
@@ -45,13 +46,42 @@
     width: 200px;
 }
 
+.divInput {
+    display: flex;
+    align-items: center;
+}
+
 .divInput img {
-    width: 40px;
+    height: 40px;
     margin-left: 10px;
+}
+
+#btnAtualizarUsuario, #btnCancelar {
+    height: 40px;
+    width: 200px;
+    margin-left: 20px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#btnAtualizarUsuario:hover {
+    background-color: rgb(5, 104, 230);
+}
+
+#btnCancelar:hover {
+    background-color: rgba(225, 43, 38, 0.96);
 }
 
 .divInput img:hover {
     cursor: pointer;
+}
+
+#infoUsuario {
+    margin-left: 60px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #btnAlterarSenha {
@@ -63,8 +93,6 @@
     height: 40px;
     width: 200px;
     font-size: 20px;
-    background-color: rgba(5, 104, 230, 0.67);
-    color: white;
     border: none;
     border-radius: 10px;
     transition: 0.3s;

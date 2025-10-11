@@ -2,9 +2,13 @@
 
 require_once __DIR__ . "/Controller/UsuarioController.php";
 require_once __DIR__ . "/Controller/ProjetoController.php";
+require_once __DIR__ . '/Controller/AmizadeController.php';
+
+include_once 'session.php';
 
 $usuarioController = new UsuarioController();
 $projetoController = new ProjetoController();
+$amizadeController = new AmizadeController();
 
 $projeto = null;
 $responsavel = null;
@@ -13,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"]);
         $responsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
+        $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
     } else {
         echo "Não foi possível buscar os detalhes do projeto";
         die();
@@ -21,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 ?>
 
-
 <section class="conteudo">
-    <link rel="stylesheet" href="Style/DetalhesProjeto.css">
+    <p class="usuarioLogado" id="<?= $_SESSION['usuario']->id?>" hidden><?= $_SESSION['usuario']->usuario?></p>
+    <link id="link" rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
         <img id="btnVoltar" class="btnBack" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Detalhes do projeto</h1>
@@ -36,35 +41,31 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="inputDescricao" name="descricao" placeholder=" "
+                <textarea type="text" id="textArea_descricao" name="descricao" placeholder=" "
                           readonly><?= $projeto->descricao ?></textarea>
-                <label for="descricao">Descrição</label>
+                <label for="textArea_descricao">Descrição</label>
             </div>
-            <div class="divResponsavel_Participantes">
+            <div class="divResponsavel_Participantes_Equipes">
                 <div class="select-group">
-                    <select type="text" id="selectResponsavel" name="responsavel" disabled>
+                    <select id="select_responsavel" disabled>
                         <option selected value="<?= $responsavel->id ?>"><?= $responsavel->usuario ?></option>
                     </select>
+                    <label for="select_responsavel"></label>
                 </div>
-                <button onclick="interactModal('modalParticipantes', 'sectionDetalhes')">Participantes</button>
+                <button class="buttonOrange" id="btnParticipantes">Participantes</button>
+                <button class="buttonOrange" id="btnEquipes">Equipes</button>
             </div>
-            <div class="divDataConclusao_Tarefas">
-                <div class="input-group">
+            <div class="divDataConclusao_Tarefas_Comentarios">
+                <div class="input-group" id="input-groupDataConclusao">
                     <input type="date" id="inputDataConclusao" name="dataConclusao" placeholder=" " readonly
                            value="<?= $projeto->dataAtualConclusao ?>">
                     <label for="inputDataConclusao">Data para conclusão</label>
                 </div>
-                <button onclick="loadTarefas()">Tarefas</button>
-            </div>
-            <div class="divChat_Equipes">
-                <button id="btnChat">Chat</button>
-                <button onclick="interactModal('modalEquipes', 'sectionDetalhes')" id="btnEquipes">Equipes</button>
-            </div>
-            <div>
-                <div id="space"></div>
-                <button onclick="interactModal('modalComentarios', 'sectionDetalhes')" id="btnComentarios">Comentários
+                <button class="buttonOrange" id="btnTarefas">Tarefas</button>
+                <button class="buttonOrange" id="btnComentarios">Comentários
                 </button>
             </div>
+            <button class="buttonGray" id="btnChat">Chat</button>
             <div class="divEditar_Salvar">
                 <button id="btnEditar">Editar</button>
                 <button id="btnSalvar" disabled>Salvar</button>
@@ -72,157 +73,156 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </article>
     </section>
 
-    <!-- Detalhes do Projeto -> Participantes -->
+    <!-- Novo Projeto -> Participantes -->
     <div class="modal modalParticipantes" id="modalParticipantes">
         <div class="divTitulo">
             <h1>Participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalParticipantes', 'sectionDetalhes')"
-                 src="Icones/Fechar.png" alt="">
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarParticipante', 'modalParticipantes')"
-                class="btnAdicionarParticipantes">+ Adicionar participante
-        </button>
-        <section class="sectionParticipantes">
-            <article class="articleParticipante">
-                <p>Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article>
+        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
+        <section class="sectionParticipantes" id="sectionParticipantes">
+
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipante">
         <div class="divTitulo">
             <h1>Adicionar participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalAdicionarParticipante', 'modalParticipantes')"
+            <img class="btnBack" id="btnFechar"
                  src="Icones/Fechar.png"
                  alt="">
         </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
+        <div class="select-group">
+            <select id="select_participante">
+                <option value="" selected disabled>Selecione um participante</option>
+                <?php foreach ($amizades as $amizade) : ?>
+                    <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="select_participante">Participante</label>
         </div>
-        <button onclick="adicionarParticipante()">Adicionar</button>
+        <p id="info"></p>
+        <button id="btnAdicionar">Adicionar</button>
     </div>
-    <!-- Detalhes do Projeto -> Participantes -->
+    <!-- Novo Projeto -> Participantes -->
 
-    <!-- Detalhes do Projeto -> Comentários -->
-    <div class="modal modalComentarios" id="modalComentarios">
-        <div class="divTitulo">
-            <h1>Comentários</h1>
-            <img class="btnBack" onclick="interactModal('modalComentarios', 'sectionDetalhes')"
-                 src="Icones/Fechar.png" alt="">
-        </div>
-        <button onclick="interactModal('modalAdicionarComentario', 'modalComentarios')"
-                class="buttonGreen" id="btnAdicionarComentario">+ Adicionar comentário
-        </button>
-        <section class="sectionComentarios">
-            <article class="articleComentario">
-                <p class="textoComentario">Comentário...</p>
-                <div class="divInfo">
-                    <img class="imgRemover" src="Icones/Remover.png" alt="">
-                    <p class="data">20/02/2020</p>
-                    <p class="hora">18:20</p>
-                    <div class="divUser">
-                        <img src="Icones/User.png" alt="">
-                        <p>Kauê</p>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
-    <div class="modal modalAdicionarComentario" id="modalAdicionarComentario">
-        <h1 class="tituloModal">Novo comentário</h1>
-        <div class="textArea-group">
-            <textarea type="text" name="comentario" placeholder=" "></textArea>
-            <label for="comentario">Comentário</label>
-        </div>
-        <div class="divCancelar_Adicionar">
-            <button class="buttonRed" onclick="interactModal('modalAdicionarComentario', 'modalComentarios')">Cancelar
-            </button>
-            <button class="buttonGreen" onclick="adicionarComentario()">Adicionar</button>
-        </div>
-    </div>
-    <!-- Detalhes do Projeto -> Comentários -->
-
-    <!-- Detalhes do Projeto -> Equipes -->
+    <!-- Novo Projeto -> Equipes -->
     <div class="modal modalEquipes" id="modalEquipes">
         <div class="divTitulo">
             <h1>Equipes</h1>
-            <img class="btnBack" onclick="interactModal('modalEquipes', 'sectionDetalhes')" src="Icones/Fechar.png"
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png"
                  alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarEquipe', 'modalEquipes')"
-                class="btnAdicionarEquipe">+ Adicionar equipe
-        </button>
+        <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
-            <article onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" class="articleEquipe">
-                <p>Equipe do Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article>
+
         </section>
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
         <h1 class="tituloModal">Nova Equipe</h1>
         <div class="input-group input-nome">
-            <input type="text" id="nome" placeholder=" ">
+            <input type="text" id="input_nome" placeholder=" ">
             <label for="nome">Nome</label>
         </div>
         <div class="textArea-group textArea-descricao">
-            <textarea type="text" id="descricao" placeholder=" "></textarea>
-            <label for="nome">Descrição</label>
+            <textarea type="text" id="textArea_descricao" placeholder=" "></textarea>
+            <label for="textArea_descricao">Descrição</label>
         </div>
-        <div class="input-group input-responsavel">
-            <input type="text" id="responsavel" placeholder=" ">
-            <label for="nome">Responsável</label>
+        <div class="select-group">
+            <select id="select_responsavel">
+                <option value="" disabled selected>Selecione um responsável</option>
+            </select>
+            <label for="select_responsavel">Responsável</label>
         </div>
-        <button onclick="interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe')" class="btnParticipantes">
-            Participantes
-        </button>
+        <p id="info"></p>
         <div class="divCancelar_Concluir">
-            <button onclick="interactModal('modalAdicionarEquipe', 'modalEquipes')" class="buttonRed" id="btnCancelar">
-                Cancelar
-            </button>
+            <button class="buttonRed" id="btnCancelar">Cancelar</button>
             <button class="buttonGreen" id="btnConcluir">Concluir</button>
         </div>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -->
+    <!-- Novo Projeto -> Equipes -->
 
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+    <!-- Detalhes do Projeto -> Comentários -->
+    <div class="modal modalComentarios" id="modalComentarios">
+        <div class="divTitulo">
+            <h1>Comentários</h1>
+            <img id="btnFechar" class="btnBack" src="Icones/Fechar.png" alt="">
+        </div>
+        <button class="buttonGreen" id="btnAdicionarComentario">+ Adicionar comentário</button>
+        <section class="sectionComentarios">
+        </section>
+    </div>
+    <div class="modal modalAdicionarComentario" id="modalAdicionarComentario">
+        <h1 class="tituloModal">Novo comentário</h1>
+        <div class="textArea-group">
+            <textarea type="text" id="textArea_comentario" placeholder=" "></textArea>
+            <label for="textArea_comentario">Comentário</label>
+        </div>
+        <p id="info"></p>
+        <div class="divCancelar_Adicionar">
+            <button id="btnCancelar" class="buttonRed">Cancelar</button>
+            <button id="btnAdicionar" class="buttonGreen">Adicionar</button>
+        </div>
+    </div>
+    <!-- Detalhes do Projeto -> Comentários -->
+
+    <!-- Novo Projeto -> Equipes -> Participantes -->
+    <div class="modal modalParticipantes" id="modalParticipantesEquipe">
+        <div class="divTitulo">
+            <h1>Participantes</h1>
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
+        </div>
+        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
+        <section class="sectionParticipantes">
+        </section>
+    </div>
+    <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteEquipe">
+        <div class="divTitulo">
+            <h1>Adicionar participantes</h1>
+            <img class="btnBack" id="btnFechar"
+                 src="Icones/Fechar.png"
+                 alt="">
+        </div>
+        <div class="select-group">
+            <select id="select_participante">
+                <option value="" selected disabled>Selecione um participante</option>
+            </select>
+            <label for="">Participante</label>
+        </div>
+        <p id="info"></p>
+        <button id="btnAdicionar">Adicionar</button>
+    </div>
+    <!-- Novo Projeto -> Equipes -> Participantes -->
+
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->
     <div class="modal modalDetalhesEquipe" id="modalDetalhesEquipe">
         <div class="divTitulo">
             <h1>Detalhes da equipe</h1>
-            <img class="btnBack" onclick="interactModal('modalDetalhesEquipe', 'modalEquipes')" src="Icones/Fechar.png"
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png"
                  alt="">
         </div>
-        <div class="input-group" id="inputNome">
-            <input type="text" name="nome" placeholder=" " readonly>
-            <label for="nome">Nome</label>
+        <div class="input-group">
+            <input id="inputNome" type="text" placeholder=" " readonly>
+            <label for="inputNome">Nome</label>
         </div>
-        <div class="textArea-group" id="textArea-descricao">
-            <textarea type="text" name="descricao" placeholder=" " readonly></textarea>
-            <label for="descricao">Descrição</label>
+        <div class="textArea-group">
+            <textarea id="textArea_descricao" placeholder=" " readonly></textarea>
+            <label for="textArea_descricao">Descrição</label>
         </div>
-        <div class="grid">
-            <div class="input-group" id="inputResponsavel">
-                <input type="text" placeholder=" ">
-                <label for="">Responsável</label>
-            </div>
-            <button onclick="interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe')"
-                    class="buttonOrange">Participantes
-            </button>
-            <button class="buttonGray">Chat</button>
-            <button onclick="loadTarefas()" class="buttonOrange">Tarefas</button>
-            <button onclick="interactModal('modalComentariosDetalhesEquipe', 'modalDetalhesEquipe')"
-                    class="buttonOrange" id="btnComentarios">Comentários
-            </button>
+        <div class="select-group">
+            <select id="select_responsavel" disabled>
+
+            </select>
+            <label for="select_responsavel">Responsável</label>
         </div>
+        <button class="buttonOrange" id="btnParticipantes">Participantes</button>
         <div class="divEditar_Salvar">
             <button class="buttonBlue">Editar</button>
             <button class="buttonGreen">Salvar</button>
         </div>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->
 
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
     <div class="modal modalParticipantes" id="modalParticipantesDetalhesEquipe">
         <div class="divTitulo">
             <h1>Participantes</h1>
@@ -253,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <button onclick="adicionarParticipante()">Adicionar</button>
     </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
+    <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
 
     <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
     <div class="modal modalComentarios" id="modalComentariosDetalhesEquipe">
@@ -295,36 +295,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
     </div>
     <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
-
-    <!-- Detalhes do Projeto -> Equipes -> Participantes -->
-    <div class="modal modalParticipantes" id="modalParticipantesEquipe">
-        <div class="divTitulo">
-            <h1>Participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalParticipantesEquipe', 'modalAdicionarEquipe')"
-                 src="Icones/Fechar.png" alt="">
-        </div>
-        <button onclick="interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe')"
-                class="btnAdicionarParticipantes">+ Adicionar participante
-        </button>
-        <section class="sectionParticipantes">
-            <article class="articleParticipante">
-                <p>Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article>
-        </section>
-    </div>
-    <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteEquipe">
-        <div class="divTitulo">
-            <h1>Adicionar participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalAdicionarParticipanteEquipe', 'modalParticipantesEquipe')"
-                 src="Icones/Fechar.png"
-                 alt="">
-        </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
-        </div>
-        <button onclick="adicionarParticipante()">Adicionar</button>
-    </div>
-    <!-- Detalhes do Projeto -> Equipes -> Participantes -->
 </section>

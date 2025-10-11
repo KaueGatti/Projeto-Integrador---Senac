@@ -85,8 +85,15 @@
     cursor: pointer;
 }
 
+.modalAdicionarParticipante .select-group {
+    width: 85%;
+}
+
 .modalAdicionarParticipante #info {
     color: #46b640;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
 }
 
 .modalAdicionarParticipante button {

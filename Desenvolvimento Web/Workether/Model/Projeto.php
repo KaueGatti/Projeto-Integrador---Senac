@@ -4,6 +4,7 @@ class Projeto
 {
     public $id;
     public $id_chat;
+    public $id_criador;
     public $id_responsavel;
     public $nome;
     public $descricao;
@@ -39,10 +40,6 @@ class Projeto
 
     public function update()
     {
-        $valid = $this->projetoIsValid("update");
-        if ($valid !== true) {
-            return $valid;
-        }
         try {
             $sql = "CALL UPDATE_PROJETO(:id, :id_responsavel, :nome, :descricao, :dataAtualConclusao, :dataConclusao, :status)";
             $stmt = $this->con->prepare($sql);
@@ -91,15 +88,12 @@ class Projeto
 
     public function create()
     {
-        $valid = $this->projetoIsValid("create");
-        if ($valid !== true) {
-            return $valid;
-        }
 
         try {
 
-            $sql = "CALL CREATE_PROJETO(:id_responsavel, :nome, :descricao, :dataInicialConclusao)";
+            $sql = "CALL CREATE_PROJETO(:id_criador, :id_responsavel, :nome, :descricao, :dataInicialConclusao)";
             $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_criador", $this->id_criador);
             $stmt->bindParam(":id_responsavel", $this->id_responsavel);
             $stmt->bindParam(":nome", $this->nome);
             $stmt->bindParam(":descricao", $this->descricao);
@@ -108,7 +102,7 @@ class Projeto
             if ($stmt->execute()) {
                 return [
                     "success" => true,
-                    "message" => "Projeto cadastrado com sucesso!"
+                    "message" => "Projeto criado com sucesso!"
                 ];
             }
         } catch (Exception $e) {
@@ -131,50 +125,6 @@ class Projeto
             "success" => false,
             "message" => 'Erro desconhecido!'
         ];
-    }
-
-    public function projetoIsValid($action)
-    {
-        if (trim($this->nome) === "") {
-            return [
-                "success" => false,
-                "message" => "Nome do projeto não pode estar vazio!"
-            ];
-        }
-
-        if (trim($this->descricao) === "") {
-            return [
-                "success" => false,
-                "message" => "Descrição do projeto não pode estar vazio!"
-            ];
-        }
-
-        if (trim($this->id_responsavel) === "") {
-            return [
-                "success" => false,
-                "message" => "Selecione um responsável para o projeto!"
-            ];
-        }
-
-        if ($action === "create") {
-            if (trim($this->dataInicialConclusao) === "") {
-                return [
-                    "success" => false,
-                    "message" => "Selecione uma data para a conclusão do projeto!"
-                ];
-            }
-        }
-
-        if ($action === "update") {
-            if (trim($this->dataAtualConclusao) === "") {
-                return [
-                    "success" => false,
-                    "message" => "Selecione uma data para a conclusão do projeto!"
-                ];
-            }
-        }
-
-        return true;
     }
 }
 

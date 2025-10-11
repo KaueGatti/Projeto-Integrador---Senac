@@ -36,6 +36,7 @@ class ProjetoController
     public function createProjeto($novoProjeto) {
         $this->projeto->nome = $novoProjeto['nome'];
         $this->projeto->descricao = $novoProjeto['descricao'];
+        $this->projeto->id_criador = $novoProjeto['id_criador'];
         $this->projeto->id_responsavel = $novoProjeto['id_responsavel'];
         $this->projeto->dataInicialConclusao = $novoProjeto['dataInicialConclusao'];
         return $this->projeto->create();

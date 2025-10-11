@@ -78,6 +78,7 @@ div {
     width: 100%;
     row-gap: 20px;
     overflow: auto;
+    padding-top: 10px;
 }
 
 .articleTarefa {
@@ -93,7 +94,7 @@ div {
 
 .articleTarefa:hover {
     background-color: rgba(195, 195, 195, 0.3);
-    transform: scale(1.05);
+    transform: scale(1.02);
     cursor: pointer;
 }
 

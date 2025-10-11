@@ -17,17 +17,19 @@ session_start();
     </div>
     <div class="divInput">
         <div class="input-group">
-            <input type="text" name="usuario" id="" readonly value="<?php echo $_SESSION['usuario']->usuario; ?>">
-            <label for="usuario">Usuário</label>
+            <input type="text" id="input_usuario" readonly value="<?php echo $_SESSION['usuario']->usuario; ?>">
+            <label for="input_usuario">Usuário</label>
         </div>
-        <img src="Icones/Editar.png" alt="">
+        <img id="IconEditarUsuario" src="Icones/Editar.png" alt="">
+        <button class="buttonRed" id="btnCancelar" hidden>Cancelar</button>
+        <button class="buttonBlue" id="btnAtualizarUsuario" hidden>Atualizar</button>
     </div>
+    <p id="infoUsuario"></p>
     <div class="divInput">
         <div class="input-group">
-            <input type="email" name="email" id="" readonly value="<?php echo $_SESSION['usuario']->email; ?>">
-            <label for="email">E-mail</label>
+            <input type="email" id="input_email" readonly value="<?php echo $_SESSION['usuario']->email; ?>">
+            <label for="input_email">E-mail</label>
         </div>
-        <img src="Icones/Editar.png" alt="">
     </div>
-    <a href="RedefinirSenha.php" id="btnAlterarSenha">Alterar senha</a>
+    <a class="buttonBlue" href="RedefinirSenha.php" id="btnAlterarSenha">Alterar senha</a>
 </section>

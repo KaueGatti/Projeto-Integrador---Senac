@@ -55,7 +55,7 @@ div {
     display: flex;
     flex-direction: column;
     border: 3px solid rgba(195, 195, 195, 0.5);
-    height: 90%;
+    height: 85%;
     width: 70%;
     padding: 20px 40px 20px 40px;
     border-radius: 30px;
@@ -75,6 +75,7 @@ div {
 }
 
 #divInputDescricao {
+    margin-top: 20px;
     display: flex;
     justify-content: start;
     width: 100%;
@@ -85,57 +86,33 @@ div {
     height: 100px;
 }
 
-#divInputDescricao, #divInputNome, .divDataConclusao_Tarefas, .divChat_Equipes, .divResponsavel_Participantes {
-    margin-bottom: 20px;
+.divResponsavel_Participantes_Equipes {
+    margin-top: 20px;
 }
 
-.divDataConclusao_Tarefas, .divChat_Equipes, .divResponsavel_Participantes {
-    display: flex;
-    align-items: center;
+.divDataConclusao_Tarefas_Comentarios {
+    margin-top: 20px;
 }
 
-.divDataConclusao_Tarefas .input-group, .divResponsavel_Participantes .select-group {
-    display: flex;
+.select-group, #input-groupDataConclusao {
     width: 30%;
-    justify-content: center;
 }
 
-.divProjeto_Comentarios button, .divDataConclusao_Tarefas button, .divResponsavel_Participantes button, #btnEquipes {
+#btnParticipantes, #btnEquipes, .divDataConclusao_Tarefas_Comentarios #btnTarefas, #btnComentarios {
     margin-left: 20px;
-    background-color: #E1B669;
-    color: white;
     font-size: 20px;
     font-weight: bold;
     height: 40px;
-    width: 300px;
+    width: 270px;
     border: none;
     border-radius: 10px;
 }
 
 #btnChat {
-    background-color: rgba(44, 88, 143, 0.57);
-    color: white;
+    margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
     height: 40px;
-    width: 30%;
-    border: none;
-    border-radius: 10px;
-}
-
-.articleDetalhes #btnComentarios {
-    background-color: #E1B669;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    height: 40px;
-    width: 300px;
-    border: none;
-    border-radius: 10px;
-    margin-left: 20px;
-}
-
-#space {
     width: 30%;
 }
 
