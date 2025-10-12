@@ -2,13 +2,16 @@
 
 session_start();
 
+
+
 ?>
 
 
 <section class="conteudo">
+    <p class="usuarioLogado" id="<?php echo $_SESSION['usuario']->id; ?>" hidden><?php echo $_SESSION['usuario']->usuario; ?></p>
     <link rel="stylesheet" href="Style/Perfil.css">
     <div id="divTitulo">
-        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
+        <img src="Icones/Voltar.png" alt="">
         <h1>Perfil</h1>
     </div>
     <div class="input-group" id="divID">

@@ -39,6 +39,12 @@ class UsuarioController
         return $this->usuario->update();
     }
 
+    public function updateNomeUsuario($usuarioUpdated) {
+        $this->usuario->id = $usuarioUpdated['id'];
+        $this->usuario->usuario = $usuarioUpdated['usuario'];
+        return $this->usuario->updateNome();
+    }
+
     public function readUsuarioByEmail($email)
     {
         return $this->usuario->readByEmail($email);
@@ -48,14 +54,9 @@ class UsuarioController
     {
         return $this->usuario->readByID($id);
     }
-
-    public function readAllAmizadesUsuario($id) {
-        $this->usuario->id = $id;
-        return $this->usuario->readAllAmizades();
-    }
-
-    public function responderPedidoAmizade($respostaPedidoAmizade) {
-        return $this->usuario->responderPedidoAmizade($respostaPedidoAmizade);
+    public function readUsuarioByIDJSON($id)
+    {
+        return $this->usuario->readByIDJSON($id);
     }
 
     function gerarCodigo($tamanho = 8)

@@ -177,7 +177,16 @@ BEGIN
     SET email = _email, usuario = _usuario, senha = _senha, status = _status
     WHERE id = _id;
 END $
-DELIMITER ;	
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE UPDATE_NOME_USUARIO(_id VARCHAR (7), _usuario VARCHAR (150))
+BEGIN
+	UPDATE Usuario
+    SET usuario = _usuario
+    WHERE id = _id;
+END $
+DELIMITER ;
 
 CREATE VIEW READ_ALL_USUARIO AS
 	SELECT * FROM Usuario;

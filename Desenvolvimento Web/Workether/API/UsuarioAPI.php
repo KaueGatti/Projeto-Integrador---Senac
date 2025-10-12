@@ -7,11 +7,15 @@ header('Content-type: application/json');
 $controller = new UsuarioController();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["pedidoAmizade"])) {
-        echo json_encode($controller->enviarPedidoAmizade($_POST["pedidoAmizade"]));
+    if (isset($_POST["atualizarUsuario"])) {
+        echo json_encode($controller->updateNomeUsuario($_POST["atualizarUsuario"]));
         die();
-    } else if (isset($_POST["respostaPedidoAmizade"])) {
-        echo json_encode($controller->responderPedidoAmizade($_POST["respostaPedidoAmizade"]));
+    }
+
+    if (isset($_POST["id"])) {
+        $usuario = $controller->readUsuarioByID($_POST["id"]);
+        $_SESSION["usuario"] = $usuario;
+        echo json_encode($controller->readUsuarioByIDJSON($_POST["id"]));
         die();
     }
 }

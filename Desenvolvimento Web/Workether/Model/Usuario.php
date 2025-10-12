@@ -166,4 +166,47 @@ class Usuario
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }
+
+    public function readByIDJSON($id)
+    {
+        $sql = "CALL READ_USUARIO_BY_ID(:id);";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $usuario =  $stmt->fetch(PDO::FETCH_OBJ);
+
+        return [
+            "id" => $usuario->id,
+            "usuario" => $usuario->usuario
+        ];
+    }
+
+    public function updateNome()
+    {
+
+        try {
+            $sql = "CALL UPDATE_NOME_USUARIO(:id, :usuario)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id", $this->id);
+            $stmt->bindParam(":usuario", $this->usuario);
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Usuario atualizado com sucesso."
+                ];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => "Erro desconhecido."
+        ];
+
+    }
 }

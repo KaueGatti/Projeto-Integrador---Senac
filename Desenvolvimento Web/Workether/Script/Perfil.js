@@ -1,9 +1,14 @@
-import {carregarComponente} from "./index.js";
+import {carregarComponente, request} from "./index.js";
 export async function initPerfil() {
 
     await carregarComponente("Loading.php");
 
     await carregarComponente("Perfil.php");
+
+    let usuarioLogado = {
+        id: document.querySelector(".usuarioLogado").id,
+        usuario: document.querySelector(".usuarioLogado").textContent
+    };
 
     let inputUsuario = document.querySelector("#input_usuario");
 
@@ -26,6 +31,9 @@ export async function initPerfil() {
         btnAtualizarUsuario.hidden = true;
         IconEditarUsuario.hidden = false;
         inputUsuario.readOnly = true;
+        inputUsuario.value = usuarioLogado.usuario;
+        infoUsuario.textContent = '';
+        btnAtualizarUsuario.disabled = false;
     })
 
     btnAtualizarUsuario.addEventListener("click", async e => {
@@ -35,12 +43,37 @@ export async function initPerfil() {
             inputUsuario.focus();
 
         } else {
-            infoUsuario.style.color = '#46b640';
-            infoUsuario.textContent = 'Usuário atualizado';
-            setTimeout(() => {
-                infoUsuario.textContent = '';
-                btnCancelar.click();
-            },2000);
+
+            btnAtualizarUsuario.disabled = true;
+
+            let atualizarUsuario = new FormData();
+
+            atualizarUsuario.append("atualizarUsuario[id]", usuarioLogado.id);
+            atualizarUsuario.append("atualizarUsuario[usuario]", inputUsuario.value);
+
+            try {
+                let response = await request('../API/UsuarioAPI.php', { method: 'POST', body: atualizarUsuario });
+                if (response.success) {
+                    infoUsuario.style.color = '#46b640';
+                    infoUsuario.textContent = 'Usuário atualizado';
+
+                    let usuarioAtualizado = new FormData();
+
+                    usuarioAtualizado.append('id', usuarioLogado.id);
+
+                    let usuario  = await request('../API/UsuarioAPI.php', { method: 'POST', body: usuarioAtualizado });
+
+                    document.querySelector('.usuarioLogado').textContent = usuario.usuario;
+                    usuarioLogado.usuario = usuario.usuario;
+
+                    setTimeout(() => {
+                        btnCancelar.click();
+                    },2000);
+                }
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
         }
     })
 
