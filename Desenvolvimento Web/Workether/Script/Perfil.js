@@ -41,7 +41,6 @@ export async function initPerfil() {
             infoUsuario.style.color = '#E65A55';
             infoUsuario.textContent = 'Usuário inválido';
             inputUsuario.focus();
-
         } else {
 
             btnAtualizarUsuario.disabled = true;
@@ -64,7 +63,10 @@ export async function initPerfil() {
                     let usuario  = await request('../API/UsuarioAPI.php', { method: 'POST', body: usuarioAtualizado });
 
                     document.querySelector('.usuarioLogado').textContent = usuario.usuario;
+
                     usuarioLogado.usuario = usuario.usuario;
+
+                    document.querySelector('#usuario_header').textContent = "Usuário: " + usuarioLogado.usuario;
 
                     setTimeout(() => {
                         btnCancelar.click();
