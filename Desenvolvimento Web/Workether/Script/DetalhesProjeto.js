@@ -33,7 +33,7 @@ function novaEquipeValida(novaEquipe, equipes) {
 
     return {
         success: true,
-        message: 'Equipe adicionada'
+        message: 'Equipe válida'
     };
 }
 
@@ -85,6 +85,7 @@ export async function initDetalhesProjeto(id_projeto) {
     let btnTarefas = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnTarefas');
     let inputDataConclusao = document.querySelector('.divDataConclusao_Tarefas_Comentarios #inputDataConclusao');
     let btnComentarios = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnComentarios');
+    let info = articleDetalhes.querySelector('#info');
     let btnEditar = document.querySelector('.divEditar_Salvar #btnEditar');
     let btnSalvar = document.querySelector('.divEditar_Salvar #btnSalvar');
 
@@ -179,6 +180,150 @@ export async function initDetalhesProjeto(id_projeto) {
                 articleEquipe.remove();
 
                 detalhesProjeto.equipes = detalhesProjeto.equipes.filter(e => e.nome !== articleEquipe.querySelector('#nome_equipe').textContent);
+            } else if (e.target.classList.contains('articleEquipe')) {
+                interactModal('modalDetalhesEquipe', 'modalEquipes');
+
+                modalDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                    interactModal('modalDetalhesEquipe', 'modalEquipes');
+                }
+
+                let nomeEquipe = e.target.querySelector('#nome_equipe').textContent;
+
+                let detalhesEquipe = detalhesProjeto.equipes.find(e => e.nome === nomeEquipe);
+
+                let inputNome = modalDetalhesEquipe.querySelector('#input_nome');
+                let textAreaDescricao = modalDetalhesEquipe.querySelector('#textArea_descricao');
+                let selectResponsavel = modalDetalhesEquipe.querySelector('#select_responsavel');
+                let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
+                let info = modalDetalhesEquipe.querySelector('#info');
+                let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
+                let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
+
+                inputNome.readOnly = true;
+                textAreaDescricao.readOnly = true;
+                selectResponsavel.disabled = true;
+
+                btnEditar.disabled = false;
+                btnSalvar.disabled = true;
+
+                inputNome.value = detalhesEquipe.nome;
+                textAreaDescricao.value = detalhesEquipe.descricao;
+
+                selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
+                selectResponsavel.innerHTML += '<option value="' + detalhesEquipe.responsavel.id + '" selected >' + detalhesEquipe.responsavel.usuario + '</option>';
+                detalhesProjeto.participantes.filter(p => p.id !== detalhesEquipe.responsavel.id).forEach(p => {
+                    selectResponsavel.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
+                });
+
+                btnParticipantes.onclick = async function () {
+                    interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
+
+                    modalParticipantesDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                        interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
+                    }
+
+                    let section_participantes = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
+
+                    section_participantes.addEventListener('click', function (e) {
+                        if (e.target.classList.contains('btnRemover')) {
+                            let articleParticipante = e.target.closest('.articleParticipante');
+
+                            articleParticipante.remove();
+                            detalhesEquipe.participantes = detalhesEquipe.participantes.filter(p => p.id !== articleParticipante.id);
+
+                        }
+                    })
+
+                    modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante').onclick = () => {
+                        interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
+
+                        modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnFechar').onclick = () => {
+                            interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
+                        }
+
+                        let select_participante = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
+                        let info = modalAdicionarParticipanteDetalhesEquipe.querySelector('#info');
+
+                        select_participante.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
+                        select_participante.innerHTML += '<option value="' + usuarioLogado.id + '">' + usuarioLogado.usuario + '</option>';
+                        detalhesProjeto.participantes.forEach(p => {
+                            select_participante.innerHTML += '<option value="' + p.id + '">' + p.usuario + '</option>';
+                        });
+
+                        modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = () => {
+
+                            if (select_participante.selectedIndex !== 0) {
+                                let option = select_participante.options[select_participante.selectedIndex];
+                                let participante = {
+                                    id: option.value, usuario: option.textContent
+                                }
+
+                                detalhesEquipe.participantes.push(participante);
+
+                                select_participante.selectedIndex = 0;
+                                option.disabled = true;
+
+                                section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                                info.textContent = 'Participante adicionado';
+                                setTimeout(() => {
+                                    info.textContent = '';
+                                }, 1500);
+
+                            }
+                        }
+                    }
+
+
+                }
+
+                btnEditar.onclick = () => {
+                    btnEditar.disabled = true;
+                    btnSalvar.disabled = false;
+                    inputNome.readOnly = false;
+                    textAreaDescricao.readOnly = false;
+                    selectResponsavel.disabled = false;
+
+                    inputNome.focus();
+                }
+
+                btnSalvar.onclick = () => {
+
+                    detalhesProjeto.equipes = detalhesProjeto.equipes.filter(e => e.nome !== detalhesEquipe.nome);
+
+                    let validacao = novaEquipeValida(detalhesEquipe, detalhesProjeto.equipes);
+
+                    if (validacao.success) {
+
+                        e.target.remove();
+
+                        detalhesEquipe.nome = inputNome.value;
+                        detalhesEquipe.descricao = textAreaDescricao.value;
+                        detalhesEquipe.responsavel = {
+                            id: selectResponsavel.options[selectResponsavel.selectedIndex].value,
+                            usuario: selectResponsavel.options[selectResponsavel.selectedIndex].textContent,
+                        };
+
+                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(detalhesEquipe.nome));
+                        detalhesProjeto.equipes.push(detalhesEquipe);
+
+                        info.style.color = '#75CE70';
+                        info.textContent = 'Equipe atualizada';
+
+                        setTimeout(() => {
+                            info.textContent = '';
+                        }, 1500);
+
+                        inputNome.readOnly = true;
+                        textAreaDescricao.readOnly = true;
+                        selectResponsavel.disabled = true;
+
+                        btnEditar.disabled = false;
+                        btnSalvar.disabled = true;
+                    } else {
+                        info.style.color = '#E65A55';
+                        info.textContent = validacao.message;
+                    }
+                }
             }
         })
 
@@ -197,7 +342,8 @@ export async function initDetalhesProjeto(id_projeto) {
                 responsavel: {
                     id: '',
                     usuario: ''
-                }
+                },
+                participantes: []
             }
 
             let info = modalAdicionarEquipe.querySelector('#info');
@@ -231,6 +377,7 @@ export async function initDetalhesProjeto(id_projeto) {
                     detalhesProjeto.equipes.push(novaEquipe);
                     sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe.nome));
                     info.style.color = '#46b640';
+                    info.textContent = 'Equipe adicionada';
                     btnCancelar.disabled = true;
                     btnConcluir.disabled = true;
                     setTimeout(() => {
@@ -240,19 +387,14 @@ export async function initDetalhesProjeto(id_projeto) {
                     }, 1500);
                 } else {
                     info.style.color = '#E65A55';
+                    info.textContent = validacao.message;
                 }
-                info.textContent = validacao.message;
             }
         }
     })
 
     btnComentarios.addEventListener('click', async function () {
         interactModal('modalComentarios', 'sectionDetalhes');
-
-        setInterval(() => {
-            console.log(detalhesProjeto.comentarios);
-        }, 5000);
-
 
         modalComentarios.querySelector('#btnFechar').onclick = () => {
             interactModal('modalComentarios', 'sectionDetalhes');
@@ -351,9 +493,9 @@ export async function initDetalhesProjeto(id_projeto) {
 
         let editarProjeto = new FormData();
 
-        editarProjeto.append('editarProjeto[id]', projetoID);
+        editarProjeto.append('editarProjeto[id]', id_projeto);
         editarProjeto.append('editarProjeto[nome]', inputNome.value);
-        editarProjeto.append('editarProjeto[descricao]', inputDescricao.value);
+        editarProjeto.append('editarProjeto[descricao]', textAreaDescricao.value);
         editarProjeto.append('editarProjeto[dataAtualConclusao]', inputDataConclusao.value);
         editarProjeto.append('editarProjeto[id_responsavel]', selectResponsavel.value);
         editarProjeto.append('editarProjeto[dataConclusao]', '');
@@ -364,12 +506,14 @@ export async function initDetalhesProjeto(id_projeto) {
             console.log(response);
             if (response.success) {
                 articleDetalhes.style.borderColor = "#75CE70";
+                info.textContent = 'Projeto atualizado com sucesso!';
                 setTimeout(() => {
                     articleDetalhes.style.borderColor = "rgba(195, 195, 195, 0.5)";
+                    info.textContent = '';
                 }, 5000);
 
                 inputNome.readOnly = true;
-                inputDescricao.readOnly = true;
+                textAreaDescricao.readOnly = true;
                 inputDataConclusao.readOnly = true;
                 selectResponsavel.disabled = true;
 

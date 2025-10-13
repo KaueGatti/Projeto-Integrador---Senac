@@ -66,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 </button>
             </div>
             <button class="buttonGray" id="btnChat">Chat</button>
+            <p id="info"></p>
             <div class="divEditar_Salvar">
                 <button id="btnEditar">Editar</button>
                 <button id="btnSalvar" disabled>Salvar</button>
@@ -114,14 +115,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
-
         </section>
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
         <h1 class="tituloModal">Nova Equipe</h1>
         <div class="input-group input-nome">
             <input type="text" id="input_nome" placeholder=" ">
-            <label for="nome">Nome</label>
+            <label for="input_nome">Nome</label>
         </div>
         <div class="textArea-group textArea-descricao">
             <textarea type="text" id="textArea_descricao" placeholder=" "></textarea>
@@ -201,8 +201,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                  alt="">
         </div>
         <div class="input-group">
-            <input id="inputNome" type="text" placeholder=" " readonly>
-            <label for="inputNome">Nome</label>
+            <input id="input_nome" type="text" placeholder=" " readonly>
+            <label for="input_nome">Nome</label>
         </div>
         <div class="textArea-group">
             <textarea id="textArea_descricao" placeholder=" " readonly></textarea>
@@ -215,9 +215,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <label for="select_responsavel">Responsável</label>
         </div>
         <button class="buttonOrange" id="btnParticipantes">Participantes</button>
+        <p id="info"></p>
         <div class="divEditar_Salvar">
-            <button class="buttonBlue">Editar</button>
-            <button class="buttonGreen">Salvar</button>
+            <button class="buttonBlue" id="btnEditar">Editar</button>
+            <button class="buttonGreen" id="btnSalvar" disabled >Salvar</button>
         </div>
     </div>
     <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->
@@ -226,32 +227,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <div class="modal modalParticipantes" id="modalParticipantesDetalhesEquipe">
         <div class="divTitulo">
             <h1>Participantes</h1>
-            <img class="btnBack" onclick="interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe')"
-                 src="Icones/Fechar.png" alt="">
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <button onclick="interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe')"
-                class="btnAdicionarParticipantes">+ Adicionar participante
-        </button>
+        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
         <section class="sectionParticipantes">
-            <article class="articleParticipante">
-                <p>Kauê</p>
-                <img src="Icones/Remover.png" alt="">
-            </article>
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipanteDetalhesEquipe">
         <div class="divTitulo">
             <h1>Adicionar participantes</h1>
-            <img class="btnBack"
-                 onclick="interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe')"
-                 src="Icones/Fechar.png"
-                 alt="">
+            <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
+        <div class="select-group">
+            <select id="select_participante">
+            </select>
+            <label for="select_participante">Participante</label>
         </div>
-        <button onclick="adicionarParticipante()">Adicionar</button>
+        <p id="info"></p>
+        <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
 
