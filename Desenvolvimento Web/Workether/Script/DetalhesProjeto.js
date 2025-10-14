@@ -224,6 +224,14 @@ export async function initDetalhesProjeto(id_projeto) {
 
                     let section_participantes = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
 
+                    section_participantes.innerHTML = '';
+
+                    if (detalhesEquipe.participantes.length > 0) {
+                        detalhesEquipe.participantes.forEach(p => {
+                            section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(p.id, p.usuario));
+                        });
+                    }
+
                     section_participantes.addEventListener('click', function (e) {
                         if (e.target.classList.contains('btnRemover')) {
                             let articleParticipante = e.target.closest('.articleParticipante');
@@ -391,6 +399,9 @@ export async function initDetalhesProjeto(id_projeto) {
                 }
             }
         }
+    });
+
+    btnTarefas.addEventListener('click', async function () {
     })
 
     btnComentarios.addEventListener('click', async function () {

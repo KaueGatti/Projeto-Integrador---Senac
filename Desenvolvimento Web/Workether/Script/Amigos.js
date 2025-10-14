@@ -1,6 +1,10 @@
 import { request, interactModal, carregarComponente } from "./index.js";
 
-export function initAmigos() {
+export async function initAmigos() {
+
+    await carregarComponente('Loading.php');
+
+    await carregarComponente('Amigos.php');
 
     document.querySelector('#btnVoltar').onclick = async () => {
         await carregarComponente('PaginaInicial.php');

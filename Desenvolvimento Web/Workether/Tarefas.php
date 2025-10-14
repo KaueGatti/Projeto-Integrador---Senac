@@ -1,4 +1,8 @@
-<?php ?>
+<?php
+
+require_once './vendor/autoload.php';
+
+?>
 
 
 <section class="conteudo">

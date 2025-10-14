@@ -363,7 +363,7 @@ DELIMITER ;
 
 DELIMITER $
 CREATE PROCEDURE CREATE_TAREFA (_id_projeto INT, _id_equipe INT, _id_usuario VARCHAR(7), 
-	_nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE, _status VARCHAR(30))
+	_nome VARCHAR(150), _descricao VARCHAR(255), _dataInicialConclusao DATE)
 BEGIN
 	INSERT INTO Tarefa (id_projeto, id_equipe, id_usuario, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
     VALUES (_id_projeto, _id_equipe, _id_usuario, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
