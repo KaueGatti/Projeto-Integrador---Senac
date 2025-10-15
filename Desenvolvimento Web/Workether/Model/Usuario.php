@@ -173,11 +173,40 @@ class Usuario
         $stmt = $this->con->prepare($sql);
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        $usuario =  $stmt->fetch(PDO::FETCH_OBJ);
+        $usuario = $stmt->fetch(PDO::FETCH_OBJ);
 
         return [
             "id" => $usuario->id,
             "usuario" => $usuario->usuario
+        ];
+    }
+
+    public function readAllByProjeto($projeto_id)
+    {
+        try {
+            $sql = 'CALL READ_USUARIOS_BY_PROJETO(:id_projeto)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_projeto', $projeto_id);
+
+            if ($stmt->execute()) {
+                return [
+                    'sucesso' => true,
+                    'message' => 'Usuarios encontrados pelo projeto',
+                    'data' => $stmt->fetchAll(PDO::FETCH_OBJ)
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+               'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido!',
+            'data' => []
         ];
     }
 

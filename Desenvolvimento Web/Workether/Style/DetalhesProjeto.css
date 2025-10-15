@@ -96,6 +96,7 @@ div {
 
 .select-group, #input-groupDataConclusao {
     width: 30%;
+    max-width: none;
 }
 
 #btnParticipantes, #btnEquipes, .divDataConclusao_Tarefas_Comentarios #btnTarefas, #btnComentarios {

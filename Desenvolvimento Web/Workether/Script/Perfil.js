@@ -44,6 +44,7 @@ export async function initPerfil() {
         } else {
 
             btnAtualizarUsuario.disabled = true;
+            btnCancelar.disabled = true;
 
             let atualizarUsuario = new FormData();
 
@@ -69,6 +70,7 @@ export async function initPerfil() {
                     document.querySelector('#usuario_header').textContent = "Usuário: " + usuarioLogado.usuario;
 
                     setTimeout(() => {
+                        btnCancelar.disabled = false;
                         btnCancelar.click();
                     },2000);
                 }

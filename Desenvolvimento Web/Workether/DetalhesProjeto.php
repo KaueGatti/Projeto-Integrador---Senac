@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <label for="nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="textArea_descricao" name="descricao" placeholder=" "
+                <textarea id="textArea_descricao" name="descricao" placeholder=" "
                           readonly><?= $projeto->descricao ?></textarea>
                 <label for="textArea_descricao">Descrição</label>
             </div>

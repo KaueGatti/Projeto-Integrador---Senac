@@ -20,4 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode($controller->readUsuarioByIDJSON($_POST["id"]));
         die();
     }
+
+    if (isset($_POST["id_projeto"])) {
+        echo json_encode($controller->readAllUsuarioByProjeto($_POST["id_projeto"]));
+        die();
+    }
 }

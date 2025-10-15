@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="input_nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="textArea_descricao" placeholder=" "></textarea>
+                <textarea id="textArea_descricao" placeholder=" "></textarea>
                 <label for="textArea_descricao">Descrição</label>
             </div>
             <div id="divProjeto_Equipe">
                 <div class="select-group divProjeto">
-                    <select type="text" id="select_projeto">
+                    <select  id="select_projeto">
                         <option value="" disabled selected>Selecione um projeto</option>
                         <?php foreach ($projetos as $projeto) : ?>
                             <option value="<?= $projeto->id ?>"><?= $projeto->nome ?></option>
@@ -45,14 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="select_projeto">Projeto</label>
                 </div>
                 <div class="select-group divEquipe">
-                    <select type="text" id="select_equipe">
+                    <select id="select_equipe">
                     </select>
                     <label for="select_equipe">Equipe</label>
                 </div>
             </div>
 
             <div class="select-group divResponsavel">
-                <select type="text" id="select_responsavel">
+                <select id="select_responsavel">
+                    <option value="" disabled selected>Selecione um responsável</option>
+                    <option value="<?= $_SESSION['usuario']->id ?>"><?= $_SESSION['usuario']->usuario ?></option>
                 </select>
                 <label for="select_responsavel">Responsável</label>
             </div>

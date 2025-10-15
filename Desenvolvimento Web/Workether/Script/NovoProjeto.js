@@ -73,7 +73,6 @@ export async function initNovoProjeto() {
 
     }
 
-
     let btnCancelar = document.querySelector('#btnCancelar');
     let btnConcluir = document.querySelector('#btnConcluir');
 
@@ -116,6 +115,8 @@ export async function initNovoProjeto() {
             } catch (erro) {
                 info.textContent = erro.message;
                 info.style.color = "#E65A55";
+                btnCancelar.disabled = false;
+                btnConcluir.disabled = false;
             }
         } else {
             info.style.color = "#E65A55";

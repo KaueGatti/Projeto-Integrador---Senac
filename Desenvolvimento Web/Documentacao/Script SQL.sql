@@ -211,11 +211,20 @@ BEGIN
 	SELECT * FROM Usuario WHERE id = _id;
 END $$
 DELIMITER ;
+drop procedure READ_USUARIOS_BY_PROJETO;
 
 DELIMITER $$
-CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (_id_projeto INT)
+CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (_id_projeto VARCHAR(7))
 BEGIN
-	SELECT * FROM Usuario_Projeto WHERE id_projeto = _id_projeto;
+    SELECT u.id, u.usuario FROM Usuario u
+    JOIN Usuario_Projeto up ON up.id_usuario = u.id
+    WHERE up.id_projeto = _id_projeto
+
+    UNION
+
+    SELECT u.id, u.usuario FROM Usuario u
+    JOIN Projeto p ON u.id = p.id_responsavel
+    WHERE p.id = _id_projeto;
 END $$
 DELIMITER ;
 
@@ -253,13 +262,18 @@ BEGIN
 	WHERE Projeto.id = _id;
 END $$
 DELIMITER ;
-    
+
 DELIMITER $$
-CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR (7))
+CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR(7))
 BEGIN
 	SELECT * FROM Projeto
-	LEFT JOIN Usuario_Projeto ON Projeto.id = Usuario_Projeto.id_projeto
-	WHERE Usuario_Projeto.id_usuario = _id_usuario OR Projeto.id_responsavel = _id_usuario OR Projeto.id_criador = _id_usuario;
+	WHERE id IN (
+		SELECT id_projeto FROM Usuario_Projeto WHERE id_usuario = _id_usuario
+		UNION
+		SELECT id FROM Projeto WHERE id_criador = _id_usuario
+		UNION
+		SELECT id FROM Projeto WHERE id_responsavel = _id_usuario
+	);
 END $$
 DELIMITER ;
 
@@ -588,7 +602,7 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE TRIGGER NOVO_PROJETO
+CREATE TRIGGER NOVO_CHAT
 BEFORE INSERT ON Projeto
 FOR EACH ROW
 BEGIN
@@ -599,6 +613,7 @@ BEGIN
     SET id_chat = LAST_INSERT_ID();
     
     SET NEW.id_chat = id_chat;
+    
 END $
 DELIMITER ;
 
