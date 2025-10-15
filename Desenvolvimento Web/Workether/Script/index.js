@@ -2,6 +2,7 @@ import {initAmigos} from "./Amigos.js";
 import {initProjetos} from "./Projetos.js";
 import {initPaginaInicial} from "./PaginaInicial.js";
 import {initPerfil} from "./Perfil.js";
+import {initTarefas} from "./Tarefas.js";
 
 let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
@@ -145,10 +146,7 @@ btnProjetos.addEventListener('click', async () => {
 });
 
 btnTarefas.addEventListener('click', async function () {
-
-    await carregarComponente('Loading.php');
-
-    await carregarComponente('Tarefas.php');
+    await initTarefas();
 });
 
 btnConversas.addEventListener('click', async function () {

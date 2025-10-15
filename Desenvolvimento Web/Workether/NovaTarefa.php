@@ -1,37 +1,64 @@
-<?php ?>
+<?php
+
+require_once __DIR__ . '/Controller/ProjetoController.php';
+
+session_start();
+
+$controllerProjeto = new ProjetoController();
+
+$projetos = [];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST[''])) {
+    }
+} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $projetos = $controllerProjeto->readProjectsByUsuario($_SESSION['usuario']->id);
+}
+
+?>
 
 
 <section class="conteudo">
     <link rel="stylesheet" href="Style/NovaTarefa.css">
     <div id="divTitulo">
-        <img onclick="voltar()" src="Icones/Voltar.png" alt="">
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
         <h1 class="mb-0">Nova tarefa</h1>
     </div>
     <section class="sectionDetalhes">
         <article class="articleDetalhes">
             <div class="input-group" id="divInputNome">
-                <input type="text" id="nome" name="nome" placeholder=" ">
-                <label for="nome">Nome</label>
+                <input type="text" id="input_nome" placeholder=" ">
+                <label for="input_nome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
-                <textarea type="text" id="descricao" name="descricao" placeholder=" "></textarea>
-                <label for="descricao">Descrição</label>
+                <textarea type="text" id="textArea_descricao" placeholder=" "></textarea>
+                <label for="textArea_descricao">Descrição</label>
             </div>
-            <div class="input-group divProjeto">
-                <input type="text" id="projeto" name="projeto" placeholder=" ">
-                <label for="projeto">Projeto</label>
+            <div id="divProjeto_Equipe">
+                <div class="select-group divProjeto">
+                    <select type="text" id="select_projeto">
+                        <option value="" disabled selected>Selecione um projeto</option>
+                        <?php foreach ($projetos as $projeto) : ?>
+                            <option value="<?= $projeto->id ?>"><?= $projeto->nome ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="select_projeto">Projeto</label>
+                </div>
+                <div class="select-group divEquipe">
+                    <select type="text" id="select_equipe">
+                    </select>
+                    <label for="select_equipe">Equipe</label>
+                </div>
             </div>
-            <div class="input-group divEquipe">
-                <input type="text" id="inputEquipe" name="equipe" placeholder=" ">
-                <label for="equipe">Equipe</label>
-            </div>
-            <div class="input-group divResponsavel">
-                <input type="text" id="inputResponsavel" name="responsavel" placeholder=" ">
-                <label for="responsavel">Responsável</label>
+
+            <div class="select-group divResponsavel">
+                <select type="text" id="select_responsavel">
+                </select>
+                <label for="select_responsavel">Responsável</label>
             </div>
             <div class="input-group divData">
-                <input type="text" id="inputData" name="dataConclusao" placeholder=" ">
-                <label for="dataConclusao">Data para conclusão</label>
+                <input type="date" id="inputDataConclusao" placeholder=" ">
+                <label for="inputDataConclusao">Data para conclusão</label>
             </div>
             <div class="divCancelar_Concluir">
                 <button id="btnCancelar">Cancelar</button>

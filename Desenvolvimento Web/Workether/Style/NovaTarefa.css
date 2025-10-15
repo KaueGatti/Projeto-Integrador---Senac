@@ -1,5 +1,6 @@
 @import "inputGroup.css";
 @import "textAreaGroup.css";
+@import "selectGroup.css";
 
 .conteudo {
     display: flex;
@@ -49,7 +50,7 @@ div {
     justify-content: center;
     border: 3px solid rgba(195, 195, 195, 0.5);
     height: 90%;
-    width: 70%;
+    width: 60%;
     padding: 20px 40px 10px 40px;
     border-radius: 30px;
     transition: 0.4s;
@@ -71,19 +72,36 @@ div {
     height: 100px;
 }
 
-#divInputDescricao, #divInputNome {
+#divInputNome {
+    margin-bottom: 20px ;
+}
+
+#divInputDescricao {
+    margin-bottom: 20px ;
+}
+
+.divProjeto {
     margin-bottom: 20px;
 }
 
-.divData, .divResponsavel, .divEquipe, .divProjeto {
-    width: 40%;
+.divEquipe {
     margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.divResponsavel {
+    margin-bottom: 20px;
+}
+
+.divData {
+    width: 300px;
 }
 
 .divCancelar_Concluir {
     display: flex;
     justify-content: end;
     width: 100%;
+    margin-top: auto;
 }
 
 

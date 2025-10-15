@@ -1,7 +1,5 @@
 <?php
 
-require_once './vendor/autoload.php';
-
 ?>
 
 
@@ -13,7 +11,8 @@ require_once './vendor/autoload.php';
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button onclick="novaTarefa()">+ Nova Tarefa</button>
+        <label for="inputPesquisa" hidden></label>
+        <button id="btnNovaTarefa">+ Nova Tarefa</button>
     </div>
     <section class="sectionTarefas">
         <article onclick="detalhes('Tarefa')" class="articleTarefa">
