@@ -126,5 +126,41 @@ class Projeto
             "message" => 'Erro desconhecido!'
         ];
     }
+
+    public function addUsuario($id_usuario) {
+        try {
+
+            $sql = "CALL CREATE_USUARIO_PROJETO(:id_usuario, :id_projeto)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_usuario", $id_usuario);
+            $stmt->bindParam(":id_projeto", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Usuario adicionado ao projeto com sucesso!"
+                ];
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+
+            if (str_contains($e->getMessage(), "1062 Duplicate entry")) {
+                return [
+                    "success" => false,
+                    "message" => 'Esse usuário já está no projeto!'
+                ];
+            }
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => 'Erro desconhecido ao adicionar um usuário ao projeto!'
+        ];
+    }
 }
 

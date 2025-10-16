@@ -138,7 +138,7 @@ export async function initDetalhesProjeto(id_projeto) {
                 interactModal('modalAdicionarParticipante', 'modalParticipantes');
             }
 
-            modalAdicionarParticipante.querySelector('#btnAdicionar').onclick = () => {
+            modalAdicionarParticipante.querySelector('#btnAdicionar').onclick = async () => {
                 let select_participante = modalAdicionarParticipante.querySelector('#select_participante');
                 let info = modalAdicionarParticipante.querySelector('#info');
 
@@ -148,17 +148,25 @@ export async function initDetalhesProjeto(id_projeto) {
                         id: option.value, usuario: option.textContent
                     }
 
-                    detalhesProjeto.participantes.push(participante);
+                    let form = new FormData();
+                    form.append('id_usuario', participante.id);
+                    form.append('id_projeto', id_projeto);
 
-                    select_participante.selectedIndex = 0;
-                    option.disabled = true;
+                    let response = await request('../API/Projeto/addUsuarioProjeto.php', {method: "POST", body: form})
 
-                    section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
-                    info.textContent = 'Participante adicionado';
-                    setTimeout(() => {
-                        info.textContent = '';
-                    }, 1500);
+                    if (response.success) {
+                        detalhesProjeto.participantes.push(participante);
 
+                        select_participante.selectedIndex = 0;
+                        option.disabled = true;
+
+                        section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                        info.textContent = 'Participante adicionado';
+                        setTimeout(() => {
+                            info.textContent = '';
+                        }, 1500);
+                        console.log(response);
+                    }
                 }
             }
         }

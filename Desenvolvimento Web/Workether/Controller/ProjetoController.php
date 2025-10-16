@@ -41,4 +41,9 @@ class ProjetoController
         $this->projeto->dataInicialConclusao = $novoProjeto['dataInicialConclusao'];
         return $this->projeto->create();
     }
+
+    public function addUsuarioProjeto($id_usuario, $id_projeto) {
+        $this->projeto->id = $id_projeto;
+        return $this->projeto->addUsuario($id_usuario);
+    }
 }
