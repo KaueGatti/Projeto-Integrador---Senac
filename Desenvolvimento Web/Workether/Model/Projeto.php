@@ -127,7 +127,8 @@ class Projeto
         ];
     }
 
-    public function addUsuario($id_usuario) {
+    public function addUsuario($id_usuario)
+    {
         try {
 
             $sql = "CALL CREATE_USUARIO_PROJETO(:id_usuario, :id_projeto)";
@@ -160,6 +161,35 @@ class Projeto
         return [
             "success" => false,
             "message" => 'Erro desconhecido ao adicionar um usuário ao projeto!'
+        ];
+    }
+
+    public function deleteUsuario($id_usuario)
+    {
+        try {
+
+            $sql = "CALL DELETE_USUARIO_PROJETO(:id_usuario, :id_projeto)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_usuario", $id_usuario);
+            $stmt->bindParam(":id_projeto", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Usuario removido do projeto com sucesso!"
+                ];
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => 'Erro desconhecido ao remover usuário do projeto!'
         ];
     }
 }

@@ -46,4 +46,9 @@ class ProjetoController
         $this->projeto->id = $id_projeto;
         return $this->projeto->addUsuario($id_usuario);
     }
+
+    public function deleteUsuarioProjeto($id_usuario, $id_projeto) {
+        $this->projeto->id = $id_projeto;
+        return $this->projeto->deleteUsuario($id_usuario);
+    }
 }

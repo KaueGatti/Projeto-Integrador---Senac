@@ -85,10 +85,12 @@ CREATE TABLE Equipe (
 	dataDissolucao DATE NULL,
 	status VARCHAR(30),
 	PRIMARY KEY (id),
+    UNIQUE (id_projeto, nome),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
 	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
     FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
 );
+
 
 CREATE TABLE Usuario_Equipe (
 	id_usuario VARCHAR(7),

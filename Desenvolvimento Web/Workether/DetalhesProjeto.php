@@ -53,8 +53,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <div class="select-group">
                     <select id="select_responsavel" disabled>
                         <option selected value="<?= $responsavel->id ?>"><?= $responsavel->usuario ?></option>
+                        <?php foreach ($participantes as $participante) : ?>
+                            <?php if ($participante->id !== $responsavel->id) : ?>
+                                <option value="<?= $participante->id ?>"><?= $participante->usuario ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     </select>
-                    <label for="select_responsavel"></label>
+                    <label for="select_responsavel">Responsável</label>
                 </div>
                 <button class="buttonOrange" id="btnParticipantes">Participantes</button>
                 <button class="buttonOrange" id="btnEquipes">Equipes</button>
@@ -89,7 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <?php foreach ($participantes as $participante) : ?>
                 <article class="articleParticipante" id="<?= $participante->id ?>">
                     <p class="usuario_participante"><?= $participante->usuario ?></p>
-                    <img class="btnRemover" src="Icones/Remover.png" alt="">
+                    <?php if ($participante->id !== $projeto->id_responsavel) : ?>
+                        <img class="btnRemover" src="Icones/Remover.png" alt="">
+                    <?php endif; ?>
                 </article>
             <?php endforeach; ?>
         </section>
@@ -105,7 +112,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <select id="select_participante">
                 <option value="" selected disabled>Selecione um participante</option>
                 <?php foreach ($amizades as $amizade) : ?>
-                    <option value="<?= $amizade->id ?>"><?php echo $amizade->usuario ?></option>
+                    <option value="<?= $amizade->id ?>" <?php foreach ($participantes as $p) {
+                        if ($amizade->id === $p->id) echo 'disabled';
+                    } ?> ><?php echo $amizade->usuario ?></option>
                 <?php endforeach; ?>
             </select>
             <label for="select_participante">Participante</label>
