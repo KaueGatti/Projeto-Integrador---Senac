@@ -177,6 +177,13 @@ export async function initDetalhesProjeto(id_projeto) {
         sectionEquipes.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
                 let articleEquipe = e.target.closest('.articleEquipe');
+
+                let id_equipe = new FormData();
+                id_equipe.append('id_equipe', articleEquipe.id);
+
+                let response = await request('../API/Equipe/deleteEquipe.php', {method: "POST", body: id_equipe});
+                console.log(response);
+
                 articleEquipe.remove();
 
                 detalhesProjeto.equipes = detalhesProjeto.equipes.filter(e => e.nome !== articleEquipe.querySelector('#nome_equipe').textContent);

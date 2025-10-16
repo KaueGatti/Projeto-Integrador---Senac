@@ -23,6 +23,11 @@ class EquipeController
         return $this->equipe->create();
     }
 
+    public function deleteEquipe($id_equipe) {
+        $this->equipe->id = $id_equipe;
+        return $this->equipe->delete();
+    }
+
     public function updateEquipe($dadosEquipe)
     {
         $this->equipe->id = $dadosEquipe['id'];

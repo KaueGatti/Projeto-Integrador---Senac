@@ -325,6 +325,14 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE DELETE_EQUIPE (_id_equipe INT)
+BEGIN
+	DELETE FROM Equipe
+    WHERE id = _id_equipe;
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE UPDATE_EQUIPE (_id_equipe INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataDissolucao DATE, _status VARCHAR(30))
 BEGIN
 	UPDATE Equipe

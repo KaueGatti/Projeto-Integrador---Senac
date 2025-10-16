@@ -78,6 +78,32 @@ class Equipe
             "message" => "Erro desconhecido ao atualizar equipe."
         ];
     }
+
+    public function delete() {
+        try {
+            $sql = "CALL DELETE_EQUIPE(:id_equipe)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_equipe", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Equipe deletada com sucesso."
+                ];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => "Erro desconhecido ao deletar equipe."
+        ];
+    }
     public function addUsuarioEquipe($id_usuario, $id_equipe)
     {
         try {

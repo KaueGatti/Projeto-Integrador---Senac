@@ -18,6 +18,7 @@ $responsavel = null;
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"]);
+        $participantes = $usuarioController->readAllUsuarioByProjeto($_GET["id"])['data'];
         $equipes = $equipeController->readAllEquipesByProjeto($_GET["id"])['data'];
         $responsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
         $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
@@ -85,7 +86,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
         <section class="sectionParticipantes" id="sectionParticipantes">
-
+            <?php foreach ($participantes as $participante) : ?>
+                <article class="articleParticipante" id="<?= $participante->id ?>">
+                    <p class="usuario_participante"><?= $participante->usuario ?></p>
+                    <img class="btnRemover" src="Icones/Remover.png" alt="">
+                </article>
+            <?php endforeach; ?>
         </section>
     </div>
     <div class="modal modalAdicionarParticipante" id="modalAdicionarParticipante">
@@ -119,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
             <?php foreach ($equipes as $equipe) : ?>
-                <article class="articleEquipe">
+                <article class="articleEquipe" id="<?= $equipe->id ?>">
                     <p id="nome_equipe"><?= $equipe->nome ?></p>
                     <img class="btnRemover" src="Icones/Remover.png" alt="">
                 </article>
