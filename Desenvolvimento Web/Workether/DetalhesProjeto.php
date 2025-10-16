@@ -3,12 +3,14 @@
 require_once __DIR__ . "/Controller/UsuarioController.php";
 require_once __DIR__ . "/Controller/ProjetoController.php";
 require_once __DIR__ . '/Controller/AmizadeController.php';
+require_once __DIR__ . '/Controller/EquipeController.php';
 
 include_once 'session.php';
 
 $usuarioController = new UsuarioController();
 $projetoController = new ProjetoController();
 $amizadeController = new AmizadeController();
+$equipeController = new EquipeController();
 
 $projeto = null;
 $responsavel = null;
@@ -16,6 +18,7 @@ $responsavel = null;
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"]);
+        $equipes = $equipeController->readAllEquipesByProjeto($_GET["id"])['data'];
         $responsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
         $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
     } else {
@@ -27,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 ?>
 
 <section class="conteudo">
-    <p class="usuarioLogado" id="<?= $_SESSION['usuario']->id?>" hidden><?= $_SESSION['usuario']->usuario?></p>
+    <p class="usuarioLogado" id="<?= $_SESSION['usuario']->id ?>" hidden><?= $_SESSION['usuario']->usuario ?></p>
     <link id="link" rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
         <img id="btnVoltar" class="btnBack" src="Icones/Voltar.png" alt="">
@@ -115,6 +118,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
         <section class="sectionEquipes">
+            <?php foreach ($equipes as $equipe) : ?>
+                <article class="articleEquipe">
+                    <p id="nome_equipe"><?= $equipe->nome ?></p>
+                    <img class="btnRemover" src="Icones/Remover.png" alt="">
+                </article>
+            <?php endforeach; ?>
         </section>
     </div>
     <div class="modal modalAdicionarEquipe" id="modalAdicionarEquipe">
@@ -218,7 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <p id="info"></p>
         <div class="divEditar_Salvar">
             <button class="buttonBlue" id="btnEditar">Editar</button>
-            <button class="buttonGreen" id="btnSalvar" disabled >Salvar</button>
+            <button class="buttonGreen" id="btnSalvar" disabled>Salvar</button>
         </div>
     </div>
     <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -->

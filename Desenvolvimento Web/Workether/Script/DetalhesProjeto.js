@@ -373,7 +373,7 @@ export async function initDetalhesProjeto(id_projeto) {
 
             let btnConcluir = modalAdicionarEquipe.querySelector('#btnConcluir')
 
-            btnConcluir.onclick = () => {
+            btnConcluir.onclick = async () => {
                 novaEquipe.nome = inputNome.value;
                 novaEquipe.descricao = textAreaDescricao.value;
                 novaEquipe.responsavel.id = selectResponsavel.options[selectResponsavel.selectedIndex].value;
@@ -382,17 +382,38 @@ export async function initDetalhesProjeto(id_projeto) {
                 let validacao = novaEquipeValida(novaEquipe, detalhesProjeto.equipes);
 
                 if (validacao.success) {
-                    detalhesProjeto.equipes.push(novaEquipe);
-                    sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe.nome));
-                    info.style.color = '#46b640';
-                    info.textContent = 'Equipe adicionada';
+
                     btnCancelar.disabled = true;
                     btnConcluir.disabled = true;
-                    setTimeout(() => {
-                        interactModal('modalAdicionarEquipe', 'modalEquipes');
+
+                    let formNovaEquipe = new FormData();
+
+                    formNovaEquipe.append('novaEquipe', JSON.stringify({
+                        id_projeto: id_projeto,
+                        nome: novaEquipe.nome,
+                        descricao: novaEquipe.descricao,
+                        id_responsavel: novaEquipe.responsavel.id
+                    }));
+
+                    let response = await request('../API/Equipe/createEquipe.php', {
+                        method: "POST",
+                        body: formNovaEquipe
+                    });
+
+                    if (response.success) {
+                        detalhesProjeto.equipes.push(novaEquipe);
+                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe.nome));
+                        info.style.color = '#46b640';
+                        info.textContent = 'Equipe adicionada';
+                        setTimeout(() => {
+                            interactModal('modalAdicionarEquipe', 'modalEquipes');
+                            btnCancelar.disabled = false;
+                            btnConcluir.disabled = false;
+                        }, 1500);
+                    } else {
                         btnCancelar.disabled = false;
                         btnConcluir.disabled = false;
-                    }, 1500);
+                    }
                 } else {
                     info.style.color = '#E65A55';
                     info.textContent = validacao.message;

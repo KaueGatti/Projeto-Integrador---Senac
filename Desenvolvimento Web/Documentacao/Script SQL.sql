@@ -211,7 +211,6 @@ BEGIN
 	SELECT * FROM Usuario WHERE id = _id;
 END $$
 DELIMITER ;
-drop procedure READ_USUARIOS_BY_PROJETO;
 
 DELIMITER $$
 CREATE PROCEDURE READ_USUARIOS_BY_PROJETO (_id_projeto VARCHAR(7))
@@ -318,10 +317,10 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_EQUIPE (_id_chat INT, _id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR (150), _descricao VARCHAR (255))
+CREATE PROCEDURE CREATE_EQUIPE (_id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR (150), _descricao VARCHAR (255))
 BEGIN
-	INSERT INTO Equipe (id_chat, id_projeto, id_responsavel, nome, descricao)
-    VALUES (_id_chat, _id_projeto, _id_responsavel, _nome, _descricao);
+	INSERT INTO Equipe (id_projeto, id_responsavel, nome, descricao, dataCriacao)
+    VALUES (_id_projeto, _id_responsavel, _nome, _descricao, NOW());
 END $
 DELIMITER ;
 
@@ -371,7 +370,7 @@ CREATE PROCEDURE READ_ALL_EQUIPES_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT * FROM Equipe
     LEFT JOIN Usuario_Equipe ON Equipe.id = Usuario_Equipe.id_equipe
-    WHERE Usuario_Equipe.id_usuario = _id_usuario OR Equipe.id_responsavel = _id_responsavel;
+    WHERE Usuario_Equipe.id_usuario = _id_usuario OR Equipe.id_responsavel = _id_usuario;
 END $
 DELIMITER ;
 
@@ -602,8 +601,24 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE TRIGGER NOVO_CHAT
+CREATE TRIGGER NOVO_CHAT_PROJETO
 BEFORE INSERT ON Projeto
+FOR EACH ROW
+BEGIN
+	DECLARE id_chat INT;
+    
+	CALL CREATE_CHAT();
+    
+    SET id_chat = LAST_INSERT_ID();
+    
+    SET NEW.id_chat = id_chat;
+    
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE TRIGGER NOVO_CHAT_EQUIPE
+BEFORE INSERT ON Equipe
 FOR EACH ROW
 BEGIN
 	DECLARE id_chat INT;
