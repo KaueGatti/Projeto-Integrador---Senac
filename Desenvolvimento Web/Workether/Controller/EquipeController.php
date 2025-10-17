@@ -34,8 +34,6 @@ class EquipeController
         $this->equipe->id_responsavel = $dadosEquipe['id_responsavel'];
         $this->equipe->nome = $dadosEquipe['nome'];
         $this->equipe->descricao = $dadosEquipe['descricao'];
-        $this->equipe->dataDissolucao = $dadosEquipe['dataDissolucao'];
-        $this->equipe->status = $dadosEquipe['status'];
 
         return $this->equipe->update();
     }
@@ -58,6 +56,12 @@ class EquipeController
     public function readAllEquipesByProjeto($id_projeto)
     {
         return $this->equipe->readAllByProjeto($id_projeto);
+    }
+
+    public function readEquipeByProjeto($id_projeto, $nome)
+    {
+        $this->equipe->nome = $nome;
+        return $this->equipe->readByProjeto($id_projeto);
     }
 
     public function readAllEquipesByUsuario($id_usuario)

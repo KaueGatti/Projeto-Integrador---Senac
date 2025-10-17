@@ -31,33 +31,34 @@ class Equipe
             if ($stmt->execute()) {
                 return [
                     "success" => true,
-                    "message" => "Equipe criada com sucesso."
+                    "message" => "Equipe criada com sucesso.",
+                    "data" => $stmt->fetch(PDO::FETCH_OBJ)
                 ];
             }
         } catch (PDOException $e) {
             http_response_code(500);
             return [
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => $e->getMessage(),
+                "data" => []
             ];
         }
 
         return [
             "success" => false,
-            "message" => "Erro desconhecido ao criar equipe."
+            "message" => "Erro desconhecido ao criar equipe.",
+            "data" => []
         ];
     }
     public function update()
     {
         try {
-            $sql = "CALL UPDATE_EQUIPE(:id_equipe, :id_responsavel, :nome, :descricao, :dataDissolucao, :status)";
+            $sql = "CALL UPDATE_EQUIPE(:id_equipe, :id_responsavel, :nome, :descricao)";
             $stmt = $this->con->prepare($sql);
             $stmt->bindParam(":id_equipe", $this->id);
             $stmt->bindParam(":id_responsavel", $this->id_responsavel);
             $stmt->bindParam(":nome", $this->nome);
             $stmt->bindParam(":descricao", $this->descricao);
-            $stmt->bindParam(":dataDissolucao", $this->dataDissolucao);
-            $stmt->bindParam(":status", $this->status);
 
             if ($stmt->execute()) {
                 return [
@@ -209,6 +210,35 @@ class Equipe
         return [
             "success" => false,
             "message" => "Erro desconhecido ao buscar equipes por projeto.",
+            "data" => []
+        ];
+    }
+    public function readByProjeto($id_projeto)
+    {
+        try {
+            $sql = "CALL READ_EQUIPE_BY_PROJETO(:id_projeto, :nome)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_projeto", $id_projeto);
+            $stmt->bindParam(":nome", $this->nome);
+
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Equipe encontrada pelo nome e projeto.",
+                    "data" => $stmt->fetch(PDO::FETCH_OBJ)
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                "success" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ];
+        }
+
+        return [
+            "success" => false,
+            "message" => "Erro desconhecido ao buscar equipe pelo nome e projeto.",
             "data" => []
         ];
     }

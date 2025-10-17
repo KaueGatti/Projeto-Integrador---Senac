@@ -323,6 +323,8 @@ CREATE PROCEDURE CREATE_EQUIPE (_id_projeto INT, _id_responsavel VARCHAR(7), _no
 BEGIN
 	INSERT INTO Equipe (id_projeto, id_responsavel, nome, descricao, dataCriacao)
     VALUES (_id_projeto, _id_responsavel, _nome, _descricao, NOW());
+    
+    SELECT LAST_INSERT_ID() AS id;
 END $
 DELIMITER ;
 
@@ -335,10 +337,10 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE UPDATE_EQUIPE (_id_equipe INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataDissolucao DATE, _status VARCHAR(30))
+CREATE PROCEDURE UPDATE_EQUIPE (_id_equipe INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255))
 BEGIN
 	UPDATE Equipe
-    SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao, dataDissolucao = _dataDissolucao, status = _status
+    SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao
     WHERE Equipe.id = _id_equipe;
 END $
 DELIMITER ;
@@ -364,6 +366,15 @@ CREATE PROCEDURE DELETE_USUARIO_EQUIPE (_id_usuario VARCHAR (7), _id_equipe INT)
 BEGIN
 	DELETE FROM Usuario_Equipe
     WHERE Usuario_Equipe.id_usuario = _id_usuario AND Usuario_Equipe.id_equipe = _id_equipe;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_EQUIPE_BY_PROJETO (_id_projeto INT, _nome VARCHAR(150))
+BEGIN
+	SELECT Equipe.*, Usuario.usuario AS usuario_responsavel FROM Equipe
+	JOIN Usuario ON Usuario.id = Equipe.id_responsavel
+	WHERE Equipe.id_projeto = _id_projeto AND Equipe.nome = _nome;
 END $
 DELIMITER ;
 

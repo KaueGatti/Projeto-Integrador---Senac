@@ -30,8 +30,8 @@ function articleParticipante(id, usuario) {
     return '<article class="articleParticipante" id="' + id + '">\n' + '<p class="usuario_participante">' + usuario + '</p>\n' + '<img class="btnRemover" src="Icones/Remover.png" alt="">\n' + '</article>';
 }
 
-function articleEquipe(nome) {
-    return '<article class="articleEquipe">' + '<p id="nome_equipe">' + nome + '</p>' + '<img class="btnRemover" src="Icones/Remover.png" alt="">' + '</article>';
+function articleEquipe(id, nome) {
+    return '<article id="' + id + '" class="articleEquipe">' + '<p id="nome_equipe">' + nome + '</p>' + '<img class="btnRemover" src="Icones/Remover.png" alt="">' + '</article>';
 }
 
 function articleComentario(id, comentario, data, hora, usuario) {
@@ -123,7 +123,6 @@ export async function initDetalhesProjeto(id_projeto) {
         }
 
         let select_participante = modalAdicionarParticipante.querySelector('#select_participante');
-        let options = Array.from(select_participante.options);
 
         section_participantes.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
@@ -138,12 +137,12 @@ export async function initDetalhesProjeto(id_projeto) {
 
                 if (response.success) {
                     articleParticipante.remove();
-                    optionsSelectResponsavel.forEach(o => {
+                    Array.from(selectResponsavel.options).forEach(o => {
                         if (o.value == articleParticipante.id) {
                             o.remove();
                         }
                     });
-                    options.forEach(o => {
+                    Array.from(select_participante.options).forEach(o => {
                         if (o.value == articleParticipante.id) {
                             o.disabled = false;
                         }
@@ -215,148 +214,187 @@ export async function initDetalhesProjeto(id_projeto) {
                     articleEquipe.remove();
                 }
             } else if (e.target.classList.contains('articleEquipe')) {
-                interactModal('modalDetalhesEquipe', 'modalEquipes');
-
-                modalDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
-                    interactModal('modalDetalhesEquipe', 'modalEquipes');
-                }
 
                 let nomeEquipe = e.target.querySelector('#nome_equipe').textContent;
 
-                let detalhesEquipe;
+                let form = new FormData();
+                form.append('id_projeto', id_projeto);
+                form.append('nome', nomeEquipe);
 
-                let inputNome = modalDetalhesEquipe.querySelector('#input_nome');
-                let textAreaDescricao = modalDetalhesEquipe.querySelector('#textArea_descricao');
-                let selectResponsavel = modalDetalhesEquipe.querySelector('#select_responsavel');
-                let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
-                let info = modalDetalhesEquipe.querySelector('#info');
-                let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
-                let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
+                let response = await request('../API/Equipe/readEquipeByProjeto.php', {method: "POST", body: form});
 
-                inputNome.readOnly = true;
-                textAreaDescricao.readOnly = true;
-                selectResponsavel.disabled = true;
+                if (response.success) {
 
-                btnEditar.disabled = false;
-                btnSalvar.disabled = true;
+                    let equipe = {};
+                    equipe.id = response.data.id;
+                    equipe.nome = response.data.nome;
+                    equipe.descricao = response.data.descricao;
+                    equipe.responsavel = {
+                        id: response.data.id_responsavel,
+                        usuario: response.data.usuario_responsavel
+                    };
 
-                inputNome.value = detalhesEquipe.nome;
-                textAreaDescricao.value = detalhesEquipe.descricao;
+                    interactModal('modalDetalhesEquipe', 'modalEquipes');
 
-                selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
-                selectResponsavel.innerHTML += '<option value="' + detalhesEquipe.responsavel.id + '" selected >' + detalhesEquipe.responsavel.usuario + '</option>';
+                    modalDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                        interactModal('modalDetalhesEquipe', 'modalEquipes');
+                    }
 
-                btnParticipantes.onclick = async function () {
-                    interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
+                    let inputNome = modalDetalhesEquipe.querySelector('#input_nome');
+                    let textAreaDescricao = modalDetalhesEquipe.querySelector('#textArea_descricao');
+                    let selectResponsavel = modalDetalhesEquipe.querySelector('#select_responsavel');
+                    let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
+                    let info = modalDetalhesEquipe.querySelector('#info');
+                    let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
+                    let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
 
-                    modalParticipantesDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                    inputNome.readOnly = true;
+                    textAreaDescricao.readOnly = true;
+                    selectResponsavel.disabled = true;
+
+                    btnEditar.disabled = false;
+                    btnSalvar.disabled = true;
+
+                    inputNome.value = response.data.nome;
+                    textAreaDescricao.value = response.data.descricao;
+                    selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
+                    selectResponsavel.innerHTML += '<option value="' + response.data.id_responsavel + '" selected >' + response.data.usuario_responsavel + '</option>';
+
+                    btnParticipantes.onclick = async function () {
                         interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
-                    }
 
-                    let section_participantes = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
-
-                    section_participantes.innerHTML = '';
-
-                    if (detalhesEquipe.participantes.length > 0) {
-                        detalhesEquipe.participantes.forEach(p => {
-                            section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(p.id, p.usuario));
-                        });
-                    }
-
-                    section_participantes.addEventListener('click', function (e) {
-                        if (e.target.classList.contains('btnRemover')) {
-                            let articleParticipante = e.target.closest('.articleParticipante');
-
-                            articleParticipante.remove();
-                            detalhesEquipe.participantes = detalhesEquipe.participantes.filter(p => p.id !== articleParticipante.id);
-
+                        modalParticipantesDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                            interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
                         }
-                    })
 
-                    modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante').onclick = () => {
-                        interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
+                        let section_participantes = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
 
-                        modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnFechar').onclick = () => {
+                        section_participantes.innerHTML = '';
+
+                        if (detalhesEquipe.participantes.length > 0) {
+                            detalhesEquipe.participantes.forEach(p => {
+                                section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(p.id, p.usuario));
+                            });
+                        }
+
+                        section_participantes.addEventListener('click', function (e) {
+                            if (e.target.classList.contains('btnRemover')) {
+                                let articleParticipante = e.target.closest('.articleParticipante');
+
+                                articleParticipante.remove();
+                                detalhesEquipe.participantes = detalhesEquipe.participantes.filter(p => p.id !== articleParticipante.id);
+
+                            }
+                        })
+
+                        modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante').onclick = () => {
                             interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
+
+                            modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnFechar').onclick = () => {
+                                interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
+                            }
+
+                            let select_participante = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
+                            let info = modalAdicionarParticipanteDetalhesEquipe.querySelector('#info');
+
+                            select_participante.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
+                            select_participante.innerHTML += '<option value="' + usuarioLogado.id + '">' + usuarioLogado.usuario + '</option>';
+
+                            modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = () => {
+
+                                if (select_participante.selectedIndex !== 0) {
+                                    let option = select_participante.options[select_participante.selectedIndex];
+                                    let participante = {
+                                        id: option.value, usuario: option.textContent
+                                    }
+
+                                    detalhesEquipe.participantes.push(participante);
+
+                                    select_participante.selectedIndex = 0;
+                                    option.disabled = true;
+
+                                    section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                                    info.textContent = 'Participante adicionado';
+                                    setTimeout(() => {
+                                        info.textContent = '';
+                                    }, 1500);
+
+                                }
+                            }
                         }
 
-                        let select_participante = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
-                        let info = modalAdicionarParticipanteDetalhesEquipe.querySelector('#info');
 
-                        select_participante.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
-                        select_participante.innerHTML += '<option value="' + usuarioLogado.id + '">' + usuarioLogado.usuario + '</option>';
+                    }
 
-                        modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = () => {
+                    btnEditar.onclick = () => {
+                        btnEditar.disabled = true;
+                        btnSalvar.disabled = false;
+                        inputNome.readOnly = false;
+                        textAreaDescricao.readOnly = false;
+                        selectResponsavel.disabled = false;
 
-                            if (select_participante.selectedIndex !== 0) {
-                                let option = select_participante.options[select_participante.selectedIndex];
-                                let participante = {
-                                    id: option.value, usuario: option.textContent
+                        inputNome.focus();
+                    }
+
+                    btnSalvar.onclick = async () => {
+
+                        equipe.nome = inputNome.value;
+                        equipe.descricao = textAreaDescricao.value;
+                        equipe.responsavel.id = selectResponsavel.options[selectResponsavel.selectedIndex].value;
+                        equipe.responsavel.usuario = selectResponsavel.options[selectResponsavel.selectedIndex].textContent;
+
+                        let validacao = novaEquipeValida(equipe);
+
+                        if (validacao.success) {
+
+                            let form = new FormData();
+                            form.append('equipeAtualizada[id]', equipe.id);
+                            form.append('equipeAtualizada[id_responsavel]', equipe.responsavel.id);
+                            form.append('equipeAtualizada[nome]', equipe.nome);
+                            form.append('equipeAtualizada[descricao]', equipe.descricao);
+
+                            try {
+                                let response = await request('../API/Equipe/updateEquipe.php', {
+                                    method: 'POST',
+                                    body: form
+                                });
+                            } catch (e) {
+                                if (e.message.includes('1062 Duplicate entry')) {
+                                    info.style.color = '#E65A55';
+                                    info.textContent = 'Já existe uma equipe com esse nome no projeto';
                                 }
+                            }
 
-                                detalhesEquipe.participantes.push(participante);
+                            if (response.success) {
 
-                                select_participante.selectedIndex = 0;
-                                option.disabled = true;
+                                e.target.remove();
 
-                                section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
-                                info.textContent = 'Participante adicionado';
+                                sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(equipe.nome));
+
+                                info.style.color = '#75CE70';
+                                info.textContent = 'Equipe atualizada';
+
                                 setTimeout(() => {
                                     info.textContent = '';
                                 }, 1500);
 
+                                inputNome.readOnly = true;
+                                textAreaDescricao.readOnly = true;
+                                selectResponsavel.disabled = true;
+
+                                btnEditar.disabled = false;
+                                btnSalvar.disabled = true;
+
                             }
+                        } else {
+                            info.style.color = '#E65A55';
+                            info.textContent = validacao.message;
                         }
                     }
-
-
                 }
 
-                btnEditar.onclick = () => {
-                    btnEditar.disabled = true;
-                    btnSalvar.disabled = false;
-                    inputNome.readOnly = false;
-                    textAreaDescricao.readOnly = false;
-                    selectResponsavel.disabled = false;
+                console.log(response);
 
-                    inputNome.focus();
-                }
-
-                btnSalvar.onclick = () => {
-
-                    let validacao = novaEquipeValida(detalhesEquipe);
-
-                    if (validacao.success) {
-
-                        e.target.remove();
-
-                        detalhesEquipe.nome = inputNome.value;
-                        detalhesEquipe.descricao = textAreaDescricao.value;
-                        detalhesEquipe.responsavel = {
-                            id: selectResponsavel.options[selectResponsavel.selectedIndex].value,
-                            usuario: selectResponsavel.options[selectResponsavel.selectedIndex].textContent,
-                        };
-
-                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(detalhesEquipe.nome));
-
-                        info.style.color = '#75CE70';
-                        info.textContent = 'Equipe atualizada';
-
-                        setTimeout(() => {
-                            info.textContent = '';
-                        }, 1500);
-
-                        inputNome.readOnly = true;
-                        textAreaDescricao.readOnly = true;
-                        selectResponsavel.disabled = true;
-
-                        btnEditar.disabled = false;
-                        btnSalvar.disabled = true;
-                    } else {
-                        info.style.color = '#E65A55';
-                        info.textContent = validacao.message;
-                    }
-                }
             }
         })
 
@@ -413,22 +451,32 @@ export async function initDetalhesProjeto(id_projeto) {
                         id_responsavel: novaEquipe.responsavel.id
                     }));
 
-                    let response = await request('../API/Equipe/createEquipe.php', {
-                        method: "POST", body: formNovaEquipe
-                    });
+                    try {
+                        let response = await request('../API/Equipe/createEquipe.php', {
+                            method: "POST", body: formNovaEquipe
+                        });
 
-                    if (response.success) {
-                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe.nome));
-                        info.style.color = '#46b640';
-                        info.textContent = 'Equipe adicionada';
-                        setTimeout(() => {
-                            interactModal('modalAdicionarEquipe', 'modalEquipes');
+                        if (response.success) {
+                            sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(response.data.id, novaEquipe.nome));
+                            info.style.color = '#46b640';
+                            info.textContent = 'Equipe adicionada';
+                            setTimeout(() => {
+                                interactModal('modalAdicionarEquipe', 'modalEquipes');
+                                btnCancelar.disabled = false;
+                                btnConcluir.disabled = false;
+                            }, 1500);
+                        } else {
                             btnCancelar.disabled = false;
                             btnConcluir.disabled = false;
-                        }, 1500);
-                    } else {
-                        btnCancelar.disabled = false;
-                        btnConcluir.disabled = false;
+                        }
+                    } catch (error) {
+                        if (error.message.includes('1062 Duplicate entry')) {
+                            info.style.color = '#E65A55';
+                            info.textContent = 'Já existe uma equipe com esse nome no projeto';
+                            btnCancelar.disabled = false;
+                            btnConcluir.disabled = false;
+                            inputNome.focus();
+                        }
                     }
                 } else {
                     info.style.color = '#E65A55';
