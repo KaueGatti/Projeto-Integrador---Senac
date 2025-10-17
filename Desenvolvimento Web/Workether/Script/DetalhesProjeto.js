@@ -35,11 +35,15 @@ function articleEquipe(id, nome) {
 }
 
 function articleComentario(comentario) {
-    let horaFormatada = comentario.data_hora.toLocaleTimeString('pt-BR', {
+    let data_horaFormatada = new Date(comentario.data_hora.replace(' ', 'T') + 'Z');
+    let horaFormatada = data_horaFormatada.toLocaleTimeString('pt-BR', {
         hour: '2-digit',
         minute: '2-digit',
+        timeZone: 'America/Sao_Paulo',
     });
-    let dataFormatada = comentario.data_hora.toLocaleDateString('pt-BR');
+    let dataFormatada = data_horaFormatada.toLocaleDateString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+    });
     return '<article class="articleComentario" id="' + comentario.id + '">' + '<p class="textoComentario">' + comentario.texto + '</p>' + '<div class="divInfo">' + '<img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">' + '<p class="data">' + dataFormatada + '</p>' + '<p class="hora">' + horaFormatada + '</p>' + '<div class="divUser">' + '<img src="Icones/User.png" alt="">' + '<p>' + comentario.usuario + '</p>' + '</div>' + '</div>' + '</article>';
 }
 
@@ -113,9 +117,6 @@ export async function initDetalhesProjeto(id_projeto) {
     let modalParticipantesDetalhesEquipe = document.querySelector('#modalParticipantesDetalhesEquipe');
     let modalAdicionarParticipanteDetalhesEquipe = document.querySelector('#modalAdicionarParticipanteDetalhesEquipe');
     let selectParticipanteDetalhesEquipe = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
-
-    let modalComentariosDetalhesEquipe = document.querySelector('#modalComentariosDetalhesEquipe');
-    let modalAdicionarComentarioDetalhesEquipe = document.querySelector('#modalAdicionarComentarioDetalhesEquipe');
 
     let modalComentarios = document.querySelector('#modalComentarios');
     let modalAdicionarComentario = document.querySelector('#modalAdicionarComentario');
@@ -583,7 +584,7 @@ export async function initDetalhesProjeto(id_projeto) {
                     form.append('comentario[id_usuario]', usuarioLogado.id);
                     form.append('comentario[texto]', textAreaComentario.value);
 
-                    let responseAddComentario = await request('../API/Comentario/create.php', { method: 'POST', body: form });
+                    let responseAddComentario = await request('../API/Comentario/addComentarioProjeto.php', { method: 'POST', body: form });
 
                     if (responseAddComentario.success) {
 

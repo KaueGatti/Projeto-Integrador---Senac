@@ -4,6 +4,7 @@ require_once __DIR__ . "/Controller/UsuarioController.php";
 require_once __DIR__ . "/Controller/ProjetoController.php";
 require_once __DIR__ . '/Controller/AmizadeController.php';
 require_once __DIR__ . '/Controller/EquipeController.php';
+require_once __DIR__ . '/Controller/ComentarioController.php';
 
 include_once 'session.php';
 
@@ -11,15 +12,43 @@ $usuarioController = new UsuarioController();
 $projetoController = new ProjetoController();
 $amizadeController = new AmizadeController();
 $equipeController = new EquipeController();
+$comentarioController = new ComentarioController();
 
 $projeto = null;
 $responsavel = null;
+
+function formatarData($data_hora)
+{
+    try {
+        $data = new DateTime($data_hora, new DateTimeZone('UTC'));
+        $data->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+        return $data->format('d/m/Y');
+    } catch (Exception $e) {
+        var_dump($e);
+        die();
+    }
+}
+
+function formatarHora($data_hora)
+{
+    try {
+
+        $hora = new DateTime($data_hora, new DateTimeZone('UTC'));
+        $hora->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+        return $hora->format('H:i');
+    } catch (Exception $e) {
+        var_dump($e);
+        die();
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"]);
         $participantes = $usuarioController->readAllUsuarioByProjeto($_GET["id"])['data'];
         $equipes = $equipeController->readAllEquipesByProjeto($_GET["id"])['data'];
+        $comentarios = $comentarioController->readComentariosByProjeto($_GET["id"])['data'];
         $responsavel = $usuarioController->readUsuarioByID($projeto->id_responsavel);
         $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
     } else {
@@ -173,6 +202,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <button class="buttonGreen" id="btnAdicionarComentario">+ Adicionar comentário</button>
         <section class="sectionComentarios">
+            <?php foreach ($comentarios as $comentario) : ?>
+                <article class="articleComentario" id="<?= $comentario->id ?>">
+                    <p class="textoComentario"><?= $comentario->texto ?></p>
+                    <div class="divInfo">
+                        <img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">
+                        <p class="data"><?= formatarData($comentario->data_hora) ?></p>
+                        <p class="hora"><?= formatarHora($comentario->data_hora) ?></p>
+                        <div class="divUser">
+                            <img src="Icones/User.png" alt="">
+                            <p><?= $comentario->usuario ?></p>
+                        </div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
         </section>
     </div>
     <div class="modal modalAdicionarComentario" id="modalAdicionarComentario">
@@ -275,45 +318,4 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
-
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
-    <div class="modal modalComentarios" id="modalComentariosDetalhesEquipe">
-        <div class="divTitulo">
-            <h1>Comentários</h1>
-            <img class="btnBack" onclick="interactModal('modalComentariosDetalhesEquipe', 'modalDetalhesEquipe')"
-                 src="Icones/Fechar.png" alt="">
-        </div>
-        <button onclick="interactModal('modalAdicionarComentarioDetalhesEquipe', 'modalComentariosDetalhesEquipe')"
-                class="buttonGreen" id="btnAdicionarComentario">+ Adicionar comentário
-        </button>
-        <section class="sectionComentarios">
-            <article class="articleComentario">
-                <p class="textoComentario">Comentário...</p>
-                <div class="divInfo">
-                    <img class="imgRemover" src="Icones/Remover.png" alt="">
-                    <p class="data">20/02/2020</p>
-                    <p class="hora">18:20</p>
-                    <div class="divUser">
-                        <img src="Icones/User.png" alt="">
-                        <p>Kauê</p>
-                    </div>
-                </div>
-            </article>
-        </section>
-    </div>
-    <div class="modal modalAdicionarComentario" id="modalAdicionarComentarioDetalhesEquipe">
-        <h1 class="tituloModal">Novo comentário</h1>
-        <div class="textArea-group">
-            <textarea type="text" name="comentario" placeholder=" "></textArea>
-            <label for="comentario">Comentário</label>
-        </div>
-        <div class="divCancelar_Adicionar">
-            <button class="buttonRed"
-                    onclick="interactModal('modalAdicionarComentarioDetalhesEquipe', 'modalComentariosDetalhesEquipe')">
-                Cancelar
-            </button>
-            <button class="buttonGreen" onclick="adicionarComentario()">Adicionar</button>
-        </div>
-    </div>
-    <!-- Detalhes do Projeto -> Equipes -> Detalhes da Equipe -> Comentários -->
 </section>

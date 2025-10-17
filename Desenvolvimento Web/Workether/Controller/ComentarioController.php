@@ -10,7 +10,7 @@ class ComentarioController
     public function __construct()
     {
         $con = new Banco();
-        $this->usuario = new Comentario($con->conectar());
+        $this->comentario = new Comentario($con->conectar());
     }
 
     public function addComentarioProjeto($comentario)
@@ -20,5 +20,10 @@ class ComentarioController
         $this->comentario->texto = $comentario['texto'];
 
         return $this->comentario->addProjeto();
+    }
+    public function readComentariosByProjeto($id_projeto)
+    {
+        $this->comentario->id_projeto = $id_projeto;
+        return $this->comentario->readByProjeto();
     }
 }

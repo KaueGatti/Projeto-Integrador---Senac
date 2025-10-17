@@ -118,27 +118,12 @@ CREATE TABLE Tarefa (
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
 
-CREATE TABLE Comentario (
-	id INT AUTO_INCREMENT,
-	id_usuario VARCHAR(7),
-	id_projeto INT NULL,
-	id_equipe INT NULL,
-	id_tarefa INT NULL,
-	texto VARCHAR(255),
-	data_hora_envio DATETIME,
-	PRIMARY KEY (id),
-	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
-	FOREIGN KEY (id_equipe) REFERENCES Equipe(id),
-	FOREIGN KEY (id_tarefa) REFERENCES Tarefa(id)
-);
-
 CREATE TABLE Comentario_Projeto (
 	id INT AUTO_INCREMENT,
 	id_usuario VARCHAR(7),
 	id_projeto INT NULL,
 	texto VARCHAR(255),
-	data_hora DATETIME,
+	data_hora TIMESTAMP,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
 	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
@@ -458,7 +443,7 @@ BEGIN
     
     SELECT Comentario_Projeto.*, Usuario.usuario FROM Comentario_Projeto
 	JOIN Usuario ON Usuario.id = Comentario_Projeto.id_usuario
-	WHERE id = LAST_INSERT_ID();
+	WHERE Comentario_Projeto.id = LAST_INSERT_ID();
 END $
 DELIMITER ;
 
@@ -483,8 +468,9 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_COMENTARIOS_BY_PROJETO (_id_projeto INT)
 BEGIN
-	SELECT * FROM Comentario
-    WHERE Comentario.id_projeto = _id_projeto;
+	SELECT Comentario_Projeto.*, Usuario.usuario FROM Comentario_Projeto
+	JOIN Usuario ON Usuario.id = Comentario_Projeto.id_usuario
+	WHERE Comentario_Projeto.id_projeto = _id_projeto;
 END $
 DELIMITER ;
 
