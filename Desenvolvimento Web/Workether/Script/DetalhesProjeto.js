@@ -354,37 +354,39 @@ export async function initDetalhesProjeto(id_projeto) {
                             form.append('equipeAtualizada[descricao]', equipe.descricao);
 
                             try {
+
                                 let response = await request('../API/Equipe/updateEquipe.php', {
                                     method: 'POST',
                                     body: form
                                 });
-                            } catch (e) {
-                                if (e.message.includes('1062 Duplicate entry')) {
+
+                                if (response.success) {
+
+                                    e.target.remove();
+
+                                    sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(equipe.id, equipe.nome));
+
+                                    info.style.color = '#75CE70';
+                                    info.textContent = 'Equipe atualizada';
+
+                                    setTimeout(() => {
+                                        info.textContent = '';
+                                    }, 1500);
+
+                                    inputNome.readOnly = true;
+                                    textAreaDescricao.readOnly = true;
+                                    selectResponsavel.disabled = true;
+
+                                    btnEditar.disabled = false;
+                                    btnSalvar.disabled = true;
+
+                                }
+                            } catch (error) {
+                                if (error.message.includes('1062 Duplicate entry')) {
                                     info.style.color = '#E65A55';
                                     info.textContent = 'Já existe uma equipe com esse nome no projeto';
+                                    btnSalvar.disabled = false;
                                 }
-                            }
-
-                            if (response.success) {
-
-                                e.target.remove();
-
-                                sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(equipe.nome));
-
-                                info.style.color = '#75CE70';
-                                info.textContent = 'Equipe atualizada';
-
-                                setTimeout(() => {
-                                    info.textContent = '';
-                                }, 1500);
-
-                                inputNome.readOnly = true;
-                                textAreaDescricao.readOnly = true;
-                                selectResponsavel.disabled = true;
-
-                                btnEditar.disabled = false;
-                                btnSalvar.disabled = true;
-
                             }
                         } else {
                             info.style.color = '#E65A55';
