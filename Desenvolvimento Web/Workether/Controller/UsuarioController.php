@@ -62,6 +62,9 @@ class UsuarioController
     public function readAllUsuarioByProjeto($id_projeto) {
         return $this->usuario->readAllByProjeto($id_projeto);
     }
+    public function readUsuariosByEquipe($id_equipe) {
+        return $this->usuario->readByEquipe($id_equipe);
+    }
 
     function gerarCodigo($tamanho = 8)
     {

@@ -210,6 +210,35 @@ class Usuario
         ];
     }
 
+    public function readByEquipe($id_equipe)
+    {
+        try {
+            $sql = 'CALL READ_USUARIOS_BY_EQUIPE(:id_equipe)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_equipe', $id_equipe);
+
+            if ($stmt->execute()) {
+                return [
+                    'sucesso' => true,
+                    'message' => 'Usuarios encontrados pela equipe',
+                    'data' => $stmt->fetchAll(PDO::FETCH_OBJ)
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar usuarios pela equipe!',
+            'data' => []
+        ];
+    }
+
     public function updateNome()
     {
 

@@ -133,6 +133,17 @@ CREATE TABLE Comentario (
 	FOREIGN KEY (id_tarefa) REFERENCES Tarefa(id)
 );
 
+CREATE TABLE Comentario_Projeto (
+	id INT AUTO_INCREMENT,
+	id_usuario VARCHAR(7),
+	id_projeto INT NULL,
+	texto VARCHAR(255),
+	data_hora DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+);
+
 CREATE TABLE Notificacao (
 	id INT AUTO_INCREMENT,
     id_usuario VARCHAR (7),
@@ -232,7 +243,9 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE READ_USUARIOS_BY_EQUIPE (_id_equipe INT)
 BEGIN
-	SELECT * FROM Usuario_Equipe WHERE id_equipe = _id_equipe;
+	SELECT Usuario.id, Usuario.usuario FROM Usuario_Equipe
+    JOIN Usuario ON Usuario.id = Usuario_Equipe.id_usuario
+    WHERE id_equipe = _id_equipe;
 END $$
 DELIMITER ;
 
@@ -438,12 +451,18 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_COMENTARIO (_id_usuario VARCHAR(7), _id_projeto INT, _id_equipe INT, _id_tarefa INT, _texto VARCHAR(255))
+CREATE PROCEDURE CREATE_COMENTARIO_PROJETO (_id_usuario VARCHAR(7), _id_projeto INT, _texto VARCHAR(255))
 BEGIN
-	INSERT INTO Comentario (id_usuario, id_projeto, id_equipe, id_tarefa, texto, data_hora_envio)
-    VALUES (_id_usuario, _id_projeto, _id_equipe, _id_tarefa, _texto, NOW());
+	INSERT INTO Comentario_Projeto (id_usuario, id_projeto, texto, data_hora)
+    VALUES (_id_usuario, _id_projeto, _texto, NOW());
+    
+    SELECT Comentario_Projeto.*, Usuario.usuario FROM Comentario_Projeto
+	JOIN Usuario ON Usuario.id = Comentario_Projeto.id_usuario
+	WHERE id = LAST_INSERT_ID();
 END $
 DELIMITER ;
+
+
 
 DELIMITER $
 CREATE PROCEDURE DELETE_COMENTARIO (_id_comentario INT)

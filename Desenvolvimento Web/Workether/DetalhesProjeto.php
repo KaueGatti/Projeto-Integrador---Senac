@@ -264,6 +264,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
         <div class="select-group">
             <select id="select_participante">
+                <option value="" selected disabled>Selecione um participante</option>
+                <?php foreach ($participantes as $participante) : ?>
+                    <option value="<?= $participante->id ?>"><?= $participante->usuario ?></option>
+                <?php endforeach; ?>
             </select>
             <label for="select_participante">Participante</label>
         </div>

@@ -34,8 +34,13 @@ function articleEquipe(id, nome) {
     return '<article id="' + id + '" class="articleEquipe">' + '<p id="nome_equipe">' + nome + '</p>' + '<img class="btnRemover" src="Icones/Remover.png" alt="">' + '</article>';
 }
 
-function articleComentario(id, comentario, data, hora, usuario) {
-    return '<article class="articleComentario" id="' + id + '">' + '<p class="textoComentario">' + comentario + '</p>' + '<div class="divInfo">' + '<img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">' + '<p class="data">' + data + '</p>' + '<p class="hora">' + hora + '</p>' + '<div class="divUser">' + '<img src="Icones/User.png" alt="">' + '<p>' + usuario + '</p>' + '</div>' + '</div>' + '</article>';
+function articleComentario(comentario) {
+    let horaFormatada = comentario.data_hora.toLocaleTimeString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+    let dataFormatada = comentario.data_hora.toLocaleDateString('pt-BR');
+    return '<article class="articleComentario" id="' + comentario.id + '">' + '<p class="textoComentario">' + comentario.texto + '</p>' + '<div class="divInfo">' + '<img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">' + '<p class="data">' + dataFormatada + '</p>' + '<p class="hora">' + horaFormatada + '</p>' + '<div class="divUser">' + '<img src="Icones/User.png" alt="">' + '<p>' + comentario.usuario + '</p>' + '</div>' + '</div>' + '</article>';
 }
 
 export async function initDetalhesProjeto(id_projeto) {
@@ -107,6 +112,7 @@ export async function initDetalhesProjeto(id_projeto) {
 
     let modalParticipantesDetalhesEquipe = document.querySelector('#modalParticipantesDetalhesEquipe');
     let modalAdicionarParticipanteDetalhesEquipe = document.querySelector('#modalAdicionarParticipanteDetalhesEquipe');
+    let selectParticipanteDetalhesEquipe = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
 
     let modalComentariosDetalhesEquipe = document.querySelector('#modalComentariosDetalhesEquipe');
     let modalAdicionarComentarioDetalhesEquipe = document.querySelector('#modalAdicionarComentarioDetalhesEquipe');
@@ -221,19 +227,33 @@ export async function initDetalhesProjeto(id_projeto) {
                 form.append('id_projeto', id_projeto);
                 form.append('nome', nomeEquipe);
 
-                let response = await request('../API/Equipe/readEquipeByProjeto.php', {method: "POST", body: form});
+                let responseEquipe = await request('../API/Equipe/readEquipeByProjeto.php', {
+                    method: "POST",
+                    body: form
+                });
 
-                if (response.success) {
+                if (responseEquipe.success) {
 
                     let equipe = {};
-                    equipe.id = response.data.id;
-                    equipe.nome = response.data.nome;
-                    equipe.descricao = response.data.descricao;
+                    equipe.id = responseEquipe.data.id;
+                    equipe.nome = responseEquipe.data.nome;
+                    equipe.descricao = responseEquipe.data.descricao;
                     equipe.responsavel = {
-                        id: response.data.id_responsavel,
-                        usuario: response.data.usuario_responsavel
+                        id: responseEquipe.data.id_responsavel,
+                        usuario: responseEquipe.data.usuario_responsavel
                     };
 
+                    let form = new FormData();
+                    form.append('id_equipe', equipe.id);
+
+                    let responseUsuariosEquipe = await request('../API/Usuario/readUsuariosByEquipe.php', {
+                        method: "POST",
+                        body: form
+                    });
+
+                    let participantesEquipe = responseUsuariosEquipe.data;
+
+                    console.log(responseUsuariosEquipe);
                     interactModal('modalDetalhesEquipe', 'modalEquipes');
 
                     modalDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
@@ -244,9 +264,20 @@ export async function initDetalhesProjeto(id_projeto) {
                     let textAreaDescricao = modalDetalhesEquipe.querySelector('#textArea_descricao');
                     let selectResponsavel = modalDetalhesEquipe.querySelector('#select_responsavel');
                     let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
+                    let sectionParticipantesDetalhesEquipe = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
                     let info = modalDetalhesEquipe.querySelector('#info');
                     let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
                     let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
+
+                    participantesEquipe.forEach(participante => {
+                        sectionParticipantesDetalhesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                    });
+
+                    Array.from(selectParticipanteDetalhesEquipe.options).forEach(option => {
+                        if (participantesEquipe.find(participante => participante.id == option.value)) {
+                            option.disabled = true;
+                        }
+                    })
 
                     inputNome.readOnly = true;
                     textAreaDescricao.readOnly = true;
@@ -255,10 +286,10 @@ export async function initDetalhesProjeto(id_projeto) {
                     btnEditar.disabled = false;
                     btnSalvar.disabled = true;
 
-                    inputNome.value = response.data.nome;
-                    textAreaDescricao.value = response.data.descricao;
+                    inputNome.value = equipe.nome;
+                    textAreaDescricao.value = equipe.descricao;
                     selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
-                    selectResponsavel.innerHTML += '<option value="' + response.data.id_responsavel + '" selected >' + response.data.usuario_responsavel + '</option>';
+                    selectResponsavel.innerHTML += '<option value="' + equipe.responsavel.id + '" selected >' + equipe.responsavel.usuario + '</option>';
 
                     btnParticipantes.onclick = async function () {
                         interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
@@ -267,22 +298,31 @@ export async function initDetalhesProjeto(id_projeto) {
                             interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
                         }
 
-                        let section_participantes = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
-
-                        section_participantes.innerHTML = '';
-
-                        if (detalhesEquipe.participantes.length > 0) {
-                            detalhesEquipe.participantes.forEach(p => {
-                                section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(p.id, p.usuario));
-                            });
-                        }
-
-                        section_participantes.addEventListener('click', function (e) {
+                        sectionParticipantesDetalhesEquipe.addEventListener('click', async function (e) {
                             if (e.target.classList.contains('btnRemover')) {
+                                e.target.disabled = true;
                                 let articleParticipante = e.target.closest('.articleParticipante');
 
-                                articleParticipante.remove();
-                                detalhesEquipe.participantes = detalhesEquipe.participantes.filter(p => p.id !== articleParticipante.id);
+                                let form = new FormData();
+                                form.append('id_usuario', articleParticipante.id);
+                                form.append('id_equipe', equipe.id);
+
+                                let responseDeleteUsuarioEquipe = await request('../API/Equipe/deleteUsuarioEquipe.php', {
+                                    method: "POST",
+                                    body: form
+                                });
+
+                                if (responseDeleteUsuarioEquipe.success) {
+                                    participantesEquipe = participantesEquipe.filter(p => p.id !== articleParticipante.id);
+                                    articleParticipante.remove();
+                                    Array.from(selectParticipanteDetalhesEquipe.options).forEach(option => {
+                                        if (option.value == articleParticipante.id) {
+                                            option.disabled = false;
+                                        }
+                                    });
+                                }
+
+                                console.log(responseDeleteUsuarioEquipe);
 
                             }
                         })
@@ -294,35 +334,46 @@ export async function initDetalhesProjeto(id_projeto) {
                                 interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
                             }
 
-                            let select_participante = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
                             let info = modalAdicionarParticipanteDetalhesEquipe.querySelector('#info');
 
-                            select_participante.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
-                            select_participante.innerHTML += '<option value="' + usuarioLogado.id + '">' + usuarioLogado.usuario + '</option>';
+                            modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = async function (){
 
-                            modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = () => {
+                                if (selectParticipanteDetalhesEquipe.selectedIndex != 0) {
 
-                                if (select_participante.selectedIndex !== 0) {
-                                    let option = select_participante.options[select_participante.selectedIndex];
+                                    this.disabled = true;
+
+                                    let option = selectParticipanteDetalhesEquipe.options[selectParticipanteDetalhesEquipe.selectedIndex];
                                     let participante = {
                                         id: option.value, usuario: option.textContent
+                                    };
+
+                                    let form = new FormData();
+                                    form.append('id_usuario', participante.id);
+                                    form.append('id_equipe', equipe.id);
+
+                                    let response = await request('../API/Equipe/addUsuarioEquipe.php', {
+                                        method: 'POST',
+                                        body: form
+                                    });
+
+                                    if (response.success) {
+                                        participantesEquipe.push(participante);
+
+                                        selectParticipanteDetalhesEquipe.selectedIndex = 0;
+                                        this.disabled = false;
+                                        option.disabled = true;
+
+                                        sectionParticipantesDetalhesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                                        info.textContent = 'Participante adicionado';
+                                        setTimeout(() => {
+                                            info.textContent = '';
+                                        }, 1500);
                                     }
-
-                                    detalhesEquipe.participantes.push(participante);
-
-                                    select_participante.selectedIndex = 0;
-                                    option.disabled = true;
-
-                                    section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
-                                    info.textContent = 'Participante adicionado';
-                                    setTimeout(() => {
-                                        info.textContent = '';
-                                    }, 1500);
-
                                 }
+
+
                             }
                         }
-
 
                     }
 
@@ -395,7 +446,7 @@ export async function initDetalhesProjeto(id_projeto) {
                     }
                 }
 
-                console.log(response);
+                console.log(responseEquipe);
 
             }
         })
@@ -505,8 +556,6 @@ export async function initDetalhesProjeto(id_projeto) {
                 let articleComentario = e.target.closest('.articleComentario');
 
                 articleComentario.remove();
-
-                detalhesProjeto.comentarios = detalhesProjeto.comentarios.filter(c => c.id !== articleComentario.id);
             }
         })
 
@@ -526,35 +575,35 @@ export async function initDetalhesProjeto(id_projeto) {
 
             let btnAdicionar = modalAdicionarComentario.querySelector('#btnAdicionar');
 
-            btnAdicionar.onclick = () => {
+            btnAdicionar.onclick = async () => {
                 if (!(textAreaComentario.value.replace(/ /g, '') === '')) {
-                    let tempId = crypto.randomUUID();
-                    let comentario = textAreaComentario.value;
-                    let data = new Date().toLocaleDateString('pt-BR');
-                    let hora = new Date().toLocaleTimeString('pt-BR', {
-                        hour: '2-digit', minute: '2-digit', hour12: false
-                    });
-                    let usuario = usuarioLogado.usuario;
 
+                    let form = new FormData();
+                    form.append('comentario[id_projeto]', id_projeto);
+                    form.append('comentario[id_usuario]', usuarioLogado.id);
+                    form.append('comentario[texto]', textAreaComentario.value);
 
-                    detalhesProjeto.comentarios.push({
-                        id: tempId, comentario: comentario, data: data, hora: hora, usuario: usuario
-                    });
+                    let responseAddComentario = await request('../API/Comentario/create.php', { method: 'POST', body: form });
 
-                    sectionComentarios.insertAdjacentHTML('afterbegin', articleComentario(tempId, comentario, data, hora, usuario));
+                    if (responseAddComentario.success) {
 
-                    info.textContent = 'Comentário adicionado';
-                    info.style.color = '#46b640';
-                    btnSalvar.disabled = true;
-                    btnCancelar.disabled = true;
+                        sectionComentarios.insertAdjacentHTML('afterbegin', articleComentario(responseAddComentario.data));
 
-                    setTimeout(() => {
-                        interactModal('modalAdicionarComentario', 'modalComentarios');
-                        info.textContent = '';
-                        textAreaComentario.value = '';
-                        btnSalvar.disabled = false;
-                        btnCancelar.disabled = false;
-                    }, 1500);
+                        info.textContent = 'Comentário adicionado';
+                        info.style.color = '#46b640';
+                        btnAdicionar.disabled = true;
+                        btnCancelar.disabled = true;
+
+                        setTimeout(() => {
+                            interactModal('modalAdicionarComentario', 'modalComentarios');
+                            info.textContent = '';
+                            textAreaComentario.value = '';
+                            btnAdicionar.disabled = false;
+                            btnCancelar.disabled = false;
+                        }, 1500);
+                    }
+                    console.log(responseAddComentario);
+
                 } else {
                     info.textContent = 'O campo de comentário não pode estar vázio';
                     info.style.color = '#E65A55';
