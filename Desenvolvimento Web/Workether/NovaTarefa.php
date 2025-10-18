@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="Style/NovaTarefa.css">
     <div id="divTitulo">
         <img id="btnVoltar" src="Icones/Voltar.png" alt="">
-        <h1 class="mb-0">Nova tarefa</h1>
+        <h1>Nova tarefa</h1>
     </div>
     <section class="sectionDetalhes">
         <article class="articleDetalhes">

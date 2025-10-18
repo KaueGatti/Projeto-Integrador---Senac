@@ -114,7 +114,7 @@ export async function initNovaTarefa() {
             });
 
             if (responseParticipantesEquipe.success) {
-                console.log(1);
+                select_responsavel.selectedIndex = 0;
                 let participantesEquipe = responseParticipantesEquipe.data;
                 Array.from(select_responsavel.options).forEach(option => {
                     if (participantesEquipe.find(p => p.id == option.value)) {
@@ -124,12 +124,10 @@ export async function initNovaTarefa() {
                     }
                 });
             }
-            console.log(responseParticipantesEquipe);
             return;
         }
 
         if (e.target.value == 0) {
-            console.log('caiu aq');
             Array.from(select_responsavel.options).forEach(option => {
                 if (option.value !== '') {
                     option.disabled = false;

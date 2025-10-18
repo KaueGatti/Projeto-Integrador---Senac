@@ -167,7 +167,6 @@ btnAmigos.addEventListener('click', async function () {
 });
 
 btnPerfil.addEventListener('click', async function () {
-
     await initPerfil();
 });
 
@@ -232,3 +231,7 @@ logo.onclick = async () => {
         }
     })
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await initPaginaInicial();
+})

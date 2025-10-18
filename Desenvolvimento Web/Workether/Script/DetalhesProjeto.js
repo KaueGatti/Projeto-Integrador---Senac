@@ -1,5 +1,6 @@
 import {carregarComponente, interactModal, request} from "./index.js";
 import {initProjetos} from "./Projetos.js";
+import {initTarefas} from "./Tarefas";
 
 function novaEquipeValida(novaEquipe) {
 
@@ -546,6 +547,7 @@ export async function initDetalhesProjeto(id_projeto) {
     });
 
     btnTarefas.addEventListener('click', async function () {
+        await initTarefas("Projeto", id_projeto);
     })
 
     btnComentarios.addEventListener('click', async function () {

@@ -26,12 +26,12 @@ class Tarefa
         try {
             $sql = 'CALL READ_ALL_TAREFAS_BY_USUARIO(:id_usuario)';
             $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(':id_usuario', $this->id_usuario);
+            $stmt->bindParam(':id_usuario', $this->id_responsavel);
 
             if ($stmt->execute()) {
                 return [
                     'success' => true,
-                    'message' => 'Tarefas retornadas com sucesso!',
+                    'message' => 'Tarefas buscadas pelo usuário retornadas com sucesso!',
                     'data' => $stmt->fetchAll(\PDO::FETCH_OBJ)
                 ];
             }
@@ -45,7 +45,36 @@ class Tarefa
 
         return [
             'success' => false,
-            'message' => 'Erro desconhecido!',
+            'message' => 'Erro desconhecido ao buscar tarefas pelo usuário!',
+            'data' => []
+        ];
+    }
+
+    public function readAllByProjeto()
+    {
+        try {
+            $sql = 'CALL READ_ALL_TAREFAS_BY_PROJETO(:id_projeto)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_projeto', $this->id_projeto);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Tarefas buscadas pelo projeto retornadas com sucesso!',
+                    'data' => $stmt->fetchAll(\PDO::FETCH_OBJ)
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar tarefas pelo projeto!',
             'data' => []
         ];
     }

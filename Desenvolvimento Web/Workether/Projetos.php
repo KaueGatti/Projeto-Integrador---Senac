@@ -39,7 +39,7 @@ if (count($projects) == 0) {
                     <p class="pData">Data para conclusão: <?= $project->dataAtualConclusao ?></p>
                     <div class="divResponsavel">
                         <img src="Icones/User.png" alt="">
-                        <p>Kauê</p>
+                        <p><?= $project->usuario_responsavel ?></p>
                     </div>
                     <p class="pEmAndamento pStatus"><?= $project->status ?></p>
                 </div>

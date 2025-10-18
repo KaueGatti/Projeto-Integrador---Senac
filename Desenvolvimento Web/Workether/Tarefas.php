@@ -1,5 +1,21 @@
 <?php
 
+require_once __DIR__ . '/Controller/TarefaController.php';
+
+session_start();
+
+$controller = new TarefaController();
+
+$tarefas = [];
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $tarefas = $controller->readTarefasByUsuario($_SESSION['usuario']->id)['data'];
+} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["id_projeto"])) {
+        $tarefas = $controller->readTarefasByProjeto($_POST['id_projeto'])['data'];
+    }
+}
+
 ?>
 
 
@@ -15,15 +31,17 @@
         <button id="btnNovaTarefa">+ Nova Tarefa</button>
     </div>
     <section class="sectionTarefas">
-        <article onclick="detalhes('Tarefa')" class="articleTarefa">
-            <h1 class="mb-0">Tarefa</h1>
-            <p class="pDescricao mb-0">Descrição do projeto</p>
-            <p class="pData mb-0">Data para conclusão: 20/02/2020</p>
-            <div class="divStatus">
-                <img src="Icones/User.png" alt="">
-                <p class="pResponsavel mb-0">Kauê</p>
-                <p class="pStatus mb-0" id="pEmAndamento">Em andamento</p>
-            </div>
-        </article>
+        <?php foreach ($tarefas as $tarefa) : ?>
+            <article class="articleTarefa" id="<?= $tarefa->id ?>">
+                <h1 id="nome_tarefa"><?= $tarefa->nome ?></h1>
+                <p class="pDescricao"><?= $tarefa->descricao ?></p>
+                <p class="pData">Data para conclusão: <?= $tarefa->dataAtualConclusao ?></p>
+                <div class="divStatus">
+                    <img src="Icones/User.png" alt="">
+                    <p class="pResponsavel"><?= $tarefa->usuario_responsavel ?></p>
+                    <p class="pStatus" id="pEmAndamento"><?= $tarefa->status ?></p>
+                </div>
+            </article>
+        <?php endforeach; ?>
     </section>
 </section>

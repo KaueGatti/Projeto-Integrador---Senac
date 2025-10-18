@@ -265,8 +265,9 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE READ_PROJETOS_BY_USUARIO (_id_usuario VARCHAR(7))
 BEGIN
-	SELECT * FROM Projeto
-	WHERE id IN (
+	SELECT Projeto.*, Usuario.usuario AS usuario_responsavel FROM Projeto
+    JOIN Usuario ON Usuario.id = Projeto.id_responsavel
+	WHERE Projeto.id IN (
 		SELECT id_projeto FROM Usuario_Projeto WHERE id_usuario = _id_usuario
 		UNION
 		SELECT id FROM Projeto WHERE id_criador = _id_usuario
@@ -414,7 +415,8 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_TAREFAS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
-	SELECT * FROM Tarefa
+	SELECT Tarefa.*, Usuario.usuario AS usuario_responsavel FROM Tarefa
+    JOIN Usuario ON Usuario.id = Tarefa.id_usuario
     WHERE Tarefa.id_usuario = _id_usuario;
 END $
 DELIMITER ;
@@ -422,7 +424,8 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_TAREFAS_BY_PROJETO (_id_projeto INT)
 BEGIN
-	SELECT * FROM Tarefa
+	SELECT Tarefa.*, Usuario.usuario AS usuario_responsavel FROM Tarefa
+    JOIN Usuario ON Usuario.id = Tarefa.id_usuario
     WHERE Tarefa.id_projeto = _id_projeto;
 END $
 DELIMITER ;
@@ -430,7 +433,8 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_TAREFAS_BY_EQUIPE (_id_equipe INT)
 BEGIN
-	SELECT * FROM Tarefa
+	SELECT Tarefa.*, Usuario.usuario AS usuario_responsavel FROM Tarefa
+    JOIN Usuario ON Usuario.id = Tarefa.id_usuario
     WHERE Tarefa.id_equipe = _id_equipe;
 END $
 DELIMITER ;

@@ -13,8 +13,13 @@ class TarefaController
     }
 
     public function readTarefasByUsuario($id_usuario) {
-        $this->tarefa->id_usuario = $id_usuario;
+        $this->tarefa->id_responsavel = $id_usuario;
         return $this->tarefa->readAllByUser();
+    }
+
+    public function readTarefasByProjeto($id_projeto) {
+        $this->tarefa->id_projeto = $id_projeto;
+        return $this->tarefa->readAllByProjeto();
     }
     public function readTarefaByID($id) {
 
