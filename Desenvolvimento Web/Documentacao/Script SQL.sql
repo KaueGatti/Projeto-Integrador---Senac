@@ -275,7 +275,7 @@ BEGIN
 		SELECT id FROM Projeto WHERE id_responsavel = _id_usuario
 	);
 END $$
-DELIMITER ;
+DELIMITER ;	
 
 DELIMITER $$
 CREATE PROCEDURE READ_PROJETOS_BY_RESPONSAVEL (_id_usuario VARCHAR (7))
