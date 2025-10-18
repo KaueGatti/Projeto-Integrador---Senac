@@ -24,13 +24,13 @@ class TarefaController
 
     }
 
-    public function createTarefa($novaTarefa) {
-        $this->tarefa->id_projeto = $novaTarefa['id_projeto'];
-        $this->tarefa->id_equipe = $novaTarefa['id_equipe'];
-        $this->tarefa->id_usuario = $novaTarefa['id_usuario'];
-        $this->tarefa->nome = $novaTarefa['nome'];
-        $this->tarefa->descricao = $novaTarefa['descricao'];
-        $this->tarefa->dataInicialConclusao = $novaTarefa['data_inicial_conclusao'];
+    public function createTarefa($tarefa) {
+        $this->tarefa->id_projeto = $tarefa['id_projeto'];
+        $this->tarefa->id_equipe = $tarefa['id_equipe'];
+        $this->tarefa->id_responsavel = $tarefa['id_responsavel'];
+        $this->tarefa->nome = $tarefa['nome'];
+        $this->tarefa->descricao = $tarefa['descricao'];
+        $this->tarefa->dataInicialConclusao = $tarefa['data_inicial_conclusao'];
         return $this->tarefa->create();
     }
 }

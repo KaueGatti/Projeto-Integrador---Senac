@@ -447,13 +447,11 @@ BEGIN
 END $
 DELIMITER ;
 
-
-
 DELIMITER $
-CREATE PROCEDURE DELETE_COMENTARIO (_id_comentario INT)
+CREATE PROCEDURE DELETE_COMENTARIO_PROJETO (_id_comentario INT)
 BEGIN
-	DELETE FROM Comentario
-    WHERE Comentario.id = _id_comentario;
+	DELETE FROM Comentario_Projeto
+    WHERE Comentario_Projeto.id = _id_comentario;
 END $
 DELIMITER ;
 

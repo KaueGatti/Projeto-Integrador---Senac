@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div id="divProjeto_Equipe">
                 <div class="select-group divProjeto">
-                    <select  id="select_projeto">
+                    <select id="select_projeto">
                         <option value="" disabled selected>Selecione um projeto</option>
                         <?php foreach ($projetos as $projeto) : ?>
                             <option value="<?= $projeto->id ?>"><?= $projeto->nome ?></option>
@@ -46,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 <div class="select-group divEquipe">
                     <select id="select_equipe">
+                        <option value="" disabled selected>Selecione uma equipe</option>
+                        <option value="0">Sem equipe</option>
                     </select>
                     <label for="select_equipe">Equipe</label>
                 </div>
@@ -62,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="date" id="inputDataConclusao" placeholder=" ">
                 <label for="inputDataConclusao">Data para conclusão</label>
             </div>
+            <p id="info"></p>
             <div class="divCancelar_Concluir">
                 <button id="btnCancelar">Cancelar</button>
                 <button id="btnConcluir">Concluir</button>

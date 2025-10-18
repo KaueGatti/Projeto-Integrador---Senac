@@ -47,6 +47,37 @@ class Comentario
         ];
     }
 
+    public function deleteProjeto(): array
+    {
+        try {
+            $sql = "CALL DELETE_COMENTARIO_PROJETO(:id);";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Comentário removido do projeto com sucesso!',
+                    'data' => []
+                ];
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao remover comentário do projeto.',
+            'data' => []
+        ];
+    }
+
     public function readByProjeto() {
         try {
             $sql = "CALL READ_ALL_COMENTARIOS_BY_PROJETO(:id_projeto);";

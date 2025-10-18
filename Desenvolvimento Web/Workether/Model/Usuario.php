@@ -219,7 +219,7 @@ class Usuario
 
             if ($stmt->execute()) {
                 return [
-                    'sucesso' => true,
+                    'success' => true,
                     'message' => 'Usuarios encontrados pela equipe',
                     'data' => $stmt->fetchAll(PDO::FETCH_OBJ)
                 ];

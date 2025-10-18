@@ -21,6 +21,12 @@ class ComentarioController
 
         return $this->comentario->addProjeto();
     }
+
+    public function deleteComentarioProjeto($id)
+    {
+        $this->comentario->id = $id;
+        return $this->comentario->deleteProjeto();
+    }
     public function readComentariosByProjeto($id_projeto)
     {
         $this->comentario->id_projeto = $id_projeto;

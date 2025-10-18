@@ -5,7 +5,7 @@ class Tarefa
     public $id;
     public $id_projeto;
     public $id_equipe;
-    public $id_usuario;
+    public $id_responsavel;
     public $nome;
     public $descricao;
     public $dataCriacao;
@@ -16,11 +16,13 @@ class Tarefa
 
     public $con;
 
-    public function __construct($con) {
+    public function __construct($con)
+    {
         $this->con = $con;
     }
 
-    public function readAllByUser() {
+    public function readAllByUser()
+    {
         try {
             $sql = 'CALL READ_ALL_TAREFAS_BY_USUARIO(:id_usuario)';
             $stmt = $this->con->prepare($sql);
@@ -48,13 +50,20 @@ class Tarefa
         ];
     }
 
-    public function create() {
+    public function create()
+    {
         try {
-            $sql = 'CALL CREATE_TAREFA(:id_projeto, :id_equipe, :id_usuario, :nome, :descricao, :dataInicialConclusao)';
+            $sql = 'CALL CREATE_TAREFA(:id_projeto, :id_equipe, :id_responsavel, :nome, :descricao, :dataInicialConclusao)';
             $stmt = $this->con->prepare($sql);
             $stmt->bindParam(':id_projeto', $this->id_projeto);
-            $stmt->bindParam(':id_equipe', $this->id_equipe);
-            $stmt->bindParam(':id_usuario', $this->id_usuario);
+
+            if ($this->dataConclusao != 0) {
+                $stmt->bindParam(':id_equipe', $this->id_equipe);
+            } else {
+                $stmt->bindValue(":id_equipe", null, PDO::PARAM_NULL);
+            }
+
+            $stmt->bindParam(':id_responsavel', $this->id_responsavel);
             $stmt->bindParam(':nome', $this->nome);
             $stmt->bindParam(':descricao', $this->descricao);
             $stmt->bindParam(':dataInicialConclusao', $this->dataInicialConclusao);
@@ -62,7 +71,7 @@ class Tarefa
             if ($stmt->execute()) {
                 return [
                     'success' => true,
-                    'message' => 'Tarefas criado com sucesso!'
+                    'message' => 'Tarefa criada com sucesso!'
                 ];
             }
         } catch (PDOException $e) {
@@ -74,7 +83,7 @@ class Tarefa
 
         return [
             'success' => false,
-            'message' => 'Erro desconhecido!'
+            'message' => 'Erro desconhecido ao criar tarefa!'
         ];
     }
 }

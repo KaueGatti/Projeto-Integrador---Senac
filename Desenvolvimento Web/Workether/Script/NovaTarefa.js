@@ -1,4 +1,4 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+import {carregarComponente, request} from "./index.js";
 import {initTarefas} from "./Tarefas.js";
 
 function novaTarefaValida(novaTarefa) {
@@ -30,6 +30,13 @@ function novaTarefaValida(novaTarefa) {
         };
     }
 
+    if (novaTarefa.dataConclusao === '') {
+        return {
+            success: false,
+            message: 'Selecione uma data para a conclusão da tarefa'
+        }
+    }
+
     return {
         success: true,
         message: "Tarefa criada com sucesso"
@@ -51,6 +58,7 @@ export async function initNovaTarefa() {
     let select_equipe = document.querySelector('#select_equipe');
     let select_responsavel = document.querySelector('#select_responsavel');
     let inputDataConclusao = document.querySelector('#inputDataConclusao');
+    let info = document.querySelector('#info');
     let btnCancelar = document.querySelector('#btnCancelar');
     let btnConcluir = document.querySelector('#btnConcluir');
 
@@ -71,16 +79,7 @@ export async function initNovaTarefa() {
 
         id_projeto.append('id_projeto', select_projeto.value);
 
-        let responseEquipe = await request('../API/EquipeAPI.php', { method: "POST", body: id_projeto});
-
-        select_equipe.innerHTML = '<option value="" disabled selected>Selecione uma equipe</option>';
-        responseEquipe.data.forEach(e => {
-            select_equipe.innerHTML +=
-                '<option value="' + e.id + '">' + e.nome + '</option>';
-        });
-
-
-        let responseUsuario = await request('../API/UsuarioAPI.php', { method: "POST", body: id_projeto});
+        let responseUsuario = await request('../API/UsuarioAPI.php', {method: "POST", body: id_projeto});
 
         select_responsavel.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
         responseUsuario.data.forEach(r => {
@@ -88,6 +87,55 @@ export async function initNovaTarefa() {
                 '<option value="' + r.id + '">' + r.usuario + '</option>';
         });
 
+        let responseEquipe = await request('../API/Equipe/readAllEquipesByProjeto.php', {
+            method: "POST",
+            body: id_projeto
+        });
+
+        select_equipe.innerHTML = '<option value="" disabled>Selecione uma equipe</option>';
+        select_equipe.innerHTML += '<option value="0" selected>Sem equipe</option>';
+
+        responseEquipe.data.forEach(e => {
+            select_equipe.innerHTML +=
+                '<option value="' + e.id + '">' + e.nome + '</option>';
+        });
+
+    });
+
+    select_equipe.addEventListener('change', async (e) => {
+        console.log(e.target.value);
+        if (e.target.value != 0 && e.target.value != '') {
+            let id_equipe = new FormData();
+            id_equipe.append('id_equipe', select_equipe.value);
+
+            let responseParticipantesEquipe = await request('../API/Usuario/readUsuariosByEquipe.php', {
+                method: "POST",
+                body: id_equipe
+            });
+
+            if (responseParticipantesEquipe.success) {
+                console.log(1);
+                let participantesEquipe = responseParticipantesEquipe.data;
+                Array.from(select_responsavel.options).forEach(option => {
+                    if (participantesEquipe.find(p => p.id == option.value)) {
+                        option.disabled = false;
+                    } else {
+                        option.disabled = true;
+                    }
+                });
+            }
+            console.log(responseParticipantesEquipe);
+            return;
+        }
+
+        if (e.target.value == 0) {
+            console.log('caiu aq');
+            Array.from(select_responsavel.options).forEach(option => {
+                if (option.value !== '') {
+                    option.disabled = false;
+                }
+            });
+        }
     });
 
     inputDataConclusao.min = new Date().toISOString().split("T")[0];
@@ -103,14 +151,38 @@ export async function initNovaTarefa() {
 
         novaTarefa.id_projeto = select_projeto.value;
         novaTarefa.id_equipe = select_equipe.value;
-        novaTarefa.id_responsavel = select_responsavel.value;
+        novaTarefa.responsavel.id = select_responsavel.value;
+        novaTarefa.responsavel.usuario = select_responsavel.options[select_responsavel.selectedIndex].textContent;
+        novaTarefa.dataConclusao = inputDataConclusao.value;
 
         let validacao = novaTarefaValida(novaTarefa);
 
         if (validacao.success) {
 
-        } else {
+            btnConcluir.disabled = true;
+            btnCancelar.disabled = true;
 
+            let form = new FormData();
+            form.append('tarefa[id_projeto]', novaTarefa.id_projeto);
+            form.append('tarefa[id_equipe]', novaTarefa.id_equipe);
+            form.append('tarefa[id_responsavel]', novaTarefa.responsavel.id);
+            form.append('tarefa[nome]', novaTarefa.nome);
+            form.append('tarefa[descricao]', novaTarefa.descricao);
+            form.append('tarefa[data_inicial_conclusao]', novaTarefa.dataConclusao);
+
+            let responseAddTarefa = await request('../API/Tarefa/createTarefa.php', {method: 'POST', body: form});
+
+            if (responseAddTarefa.success) {
+                info.textContent = 'Tarefa adicionada com sucesso!';
+                info.style.color = '#75CE70';
+                setTimeout(async () => {
+                    await initTarefas();
+                }, 2000);
+            }
+
+        } else {
+            info.style.color = '#E65A55';
+            info.textContent = validacao.message;
         }
     }
 
