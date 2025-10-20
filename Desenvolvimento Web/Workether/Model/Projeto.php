@@ -31,11 +31,34 @@ class Projeto
 
     public function readByID()
     {
-        $sql = "CALL READ_PROJETO_BY_ID(:id)";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(":id", $this->id);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        try {
+
+            $sql = "CALL READ_PROJETO_BY_ID(:id)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Projeto encontrado pelo ID com sucesso!',
+                    'data' => $stmt->fetch(PDO::FETCH_OBJ)
+                ];
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar projeto pelo ID',
+            'data' => []
+        ];
     }
 
     public function update()

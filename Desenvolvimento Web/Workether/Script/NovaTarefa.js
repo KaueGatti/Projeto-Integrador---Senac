@@ -43,7 +43,7 @@ function novaTarefaValida(novaTarefa) {
     };
 }
 
-export async function initNovaTarefa() {
+export async function initNovaTarefa(tipo, id) {
     await carregarComponente('Loading.php');
 
     await carregarComponente('NovaTarefa.php');
@@ -136,6 +136,47 @@ export async function initNovaTarefa() {
         }
     });
 
+    if (tipo == 'Projeto') {
+        select_projeto.disabled = true;
+
+        let form = new FormData();
+        form.append('id_projeto', id);
+
+        let responseProjeto = await request('../API/Projeto/readProjetoByID.php', {method: 'POST', body: form});
+
+        /*let responseUsuario = await request('../API/UsuarioAPI.php', {method: "POST", body: form});*/
+
+        if (responseProjeto.success /*&& responseUsuario.success*/) {
+
+            let projeto = responseProjeto.data;
+            select_projeto.innerHTML = `<option value="${projeto.id}" selected>${projeto.nome}</option>`;
+
+            /*select_responsavel.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
+            responseUsuario.data.forEach(r => {
+                select_responsavel.innerHTML +=
+                    '<option value="' + r.id + '">' + r.usuario + '</option>';
+            });
+
+            let responseEquipe = await request('../API/Equipe/readAllEquipesByProjeto.php', {
+                method: "POST",
+                body: id_projeto
+            });
+
+            select_equipe.innerHTML = '<option value="" disabled>Selecione uma equipe</option>';
+            select_equipe.innerHTML += '<option value="0" selected>Sem equipe</option>';
+
+            responseEquipe.data.forEach(e => {
+                select_equipe.innerHTML +=
+                    '<option value="' + e.id + '">' + e.nome + '</option>';
+            });*/
+
+            select_projeto.dispatchEvent(new Event('change'));
+
+
+        }
+
+    }
+
     inputDataConclusao.min = new Date().toISOString().split("T")[0];
 
     btnCancelar.onclick = async () => {
@@ -174,7 +215,14 @@ export async function initNovaTarefa() {
                 info.textContent = 'Tarefa adicionada com sucesso!';
                 info.style.color = '#75CE70';
                 setTimeout(async () => {
-                    await initTarefas();
+
+                    if (tipo == 'Projeto') {
+                        await initTarefas('Projeto', id);
+                        return;
+                    }
+
+                    await initTarefas('Projeto', id);
+
                 }, 2000);
             }
 

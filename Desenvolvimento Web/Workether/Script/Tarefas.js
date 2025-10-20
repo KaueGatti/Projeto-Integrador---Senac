@@ -1,5 +1,6 @@
 import {request, interactModal, carregarComponente} from "./index.js";
 import {initNovaTarefa} from "./NovaTarefa.js";
+import {initDetalhesTarefa} from "./DetalhesTarefa.js";
 
 function articleTarefa(tarefa) {
     return `<article class="articleTarefa" id="${tarefa.id}">
@@ -26,13 +27,16 @@ export async function initTarefas(tipo, id) {
 
     let sectionTarefas = document.querySelector('.sectionTarefas');
 
-    sectionTarefas.addEventListener('click', async function () {
+    sectionTarefas.addEventListener('click', async function (e) {
         if (e.target.closest('.articleTarefa')) {
-            initDetalhesTarefa();
+            let articleTarefa = e.target.closest('.articleTarefa');
+            await initDetalhesTarefa(articleTarefa.id);
         }
     })
 
     if (tipo == 'Projeto') {
+
+        sectionTarefas.style.display = 'none';
 
         let form = new FormData();
         form.append('id_projeto', id);
@@ -48,7 +52,9 @@ export async function initTarefas(tipo, id) {
             sectionTarefas.innerHTML = '';
             tarefasProjeto.forEach(tarefa => {
                 sectionTarefas.innerHTML += articleTarefa(tarefa);
-            })
+            });
+
+            sectionTarefas.style.display = 'grid';
         }
     }
 }

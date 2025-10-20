@@ -1,6 +1,6 @@
 import {carregarComponente, interactModal, request} from "./index.js";
 import {initProjetos} from "./Projetos.js";
-import {initTarefas} from "./Tarefas";
+import {initTarefas} from "./Tarefas.js";
 
 function novaEquipeValida(novaEquipe) {
 

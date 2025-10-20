@@ -45,7 +45,7 @@ function formatarHora($data_hora)
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
-        $projeto = $projetoController->readProjetoByID($_GET["id"]);
+        $projeto = $projetoController->readProjetoByID($_GET["id"])['data'];
         $participantes = $usuarioController->readAllUsuarioByProjeto($_GET["id"])['data'];
         $equipes = $equipeController->readAllEquipesByProjeto($_GET["id"])['data'];
         $comentarios = $comentarioController->readComentariosByProjeto($_GET["id"])['data'];

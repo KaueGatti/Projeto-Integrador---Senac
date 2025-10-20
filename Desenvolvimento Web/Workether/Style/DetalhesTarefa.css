@@ -3,6 +3,7 @@
 @import "modal.css";
 @import "modais/Comentarios.css";
 @import "buttons.css";
+@import "selectGroup.css";
 
 .conteudo {
     display: flex;

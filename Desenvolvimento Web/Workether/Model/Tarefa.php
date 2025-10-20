@@ -50,6 +50,35 @@ class Tarefa
         ];
     }
 
+    public function readByID()
+    {
+        try {
+            $sql = 'CALL READ_TAREFA_BY_ID(:id_tarefa)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_tarefa', $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Tarefa buscada pelo ID retornada com sucesso!',
+                    'data' => $stmt->fetch(PDO::FETCH_OBJ)
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar tarefa pelo ID!',
+            'data' => []
+        ];
+    }
+
     public function readAllByProjeto()
     {
         try {

@@ -21,8 +21,9 @@ class TarefaController
         $this->tarefa->id_projeto = $id_projeto;
         return $this->tarefa->readAllByProjeto();
     }
-    public function readTarefaByID($id) {
-
+    public function readTarefaByID($id_tarefa) {
+        $this->tarefa->id = $id_tarefa;
+        return $this->tarefa->readByID();
     }
 
     public function updateTarefa($tarefa) {

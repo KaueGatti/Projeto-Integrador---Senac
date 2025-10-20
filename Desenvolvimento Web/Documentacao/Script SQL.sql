@@ -275,7 +275,7 @@ BEGIN
 		SELECT id FROM Projeto WHERE id_responsavel = _id_usuario
 	);
 END $$
-DELIMITER ;	
+DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE READ_PROJETOS_BY_RESPONSAVEL (_id_usuario VARCHAR (7))
@@ -408,6 +408,17 @@ CREATE PROCEDURE UPDATE_TAREFA (_id_tarefa INT, _nome VARCHAR(150), _descricao V
 BEGIN
 	UPDATE Tarefa
     SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao, status = _status
+    WHERE Tarefa.id = _id_tarefa;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_TAREFA_BY_ID (_id_tarefa INT)
+BEGIN
+	SELECT Tarefa.*, Usuario.usuario AS usuario_responsavel, Projeto.nome AS nome_projeto, Equipe.nome as nome_equipe FROM Tarefa
+    JOIN Usuario ON Usuario.id = Tarefa.id_usuario
+    JOIN Projeto ON Projeto.id = Tarefa.id_projeto
+    JOIN Equipe ON Equipe.id = Tarefa.id_equipe
     WHERE Tarefa.id = _id_tarefa;
 END $
 DELIMITER ;
