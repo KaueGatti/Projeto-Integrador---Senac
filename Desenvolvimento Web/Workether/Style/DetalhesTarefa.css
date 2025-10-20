@@ -3,7 +3,6 @@
 @import "modal.css";
 @import "modais/Comentarios.css";
 @import "buttons.css";
-@import "selectGroup.css";
 
 .conteudo {
     display: flex;
@@ -61,12 +60,14 @@ div {
 
 #divInputNome {
     width: 50%;
+    margin-bottom: 20px;
 }
 
 #divInputDescricao {
     display: flex;
     justify-content: start;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 #divInputDescricao textarea {
@@ -74,42 +75,34 @@ div {
     height: 100px;
 }
 
-#divInputDescricao, #divInputNome, .divProjeto_Comentarios, .divDataConclusao_Tarefas, .divChat_Equipes {
+.divProjeto_Equipe {
     margin-bottom: 20px;
 }
 
-.divProjeto_Comentarios .input-group, .divData, .divResponsavel, .divEquipe {
+.divProjeto {
     width: 30%;
 }
 
-#inputData, #inputResponsavel, #inputEquipe {
-    margin-bottom: 20px;
-}
-
-.divProjeto_Comentarios button {
+.divEquipe {
+    width: 30%;
     margin-left: 20px;
-    background-color: #E1B669;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    height: 40px;
-    width: 300px;
-    border: none;
-    border-radius:  10px;
 }
 
-#btnComentarios {
-    background-color: #E1B669;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    height: 40px;
-    width: 300px;
-    border: none;
-    border-radius:  10px;
-    align-self: end;
-    margin-right: 195px;
-    margin-bottom: 30px;
+.divResponsavel {
+    margin-bottom: 20px;
+    width: 30%;
+}
+
+.divData {
+    width: 30%;
+}
+
+#inputDataConclusao {
+    cursor: pointer;
+}
+
+#inputDataConclusao:disabled {
+    cursor: default;
 }
 
 .divEditar_Salvar {

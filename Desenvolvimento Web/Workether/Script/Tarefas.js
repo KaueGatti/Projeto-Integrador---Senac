@@ -1,6 +1,8 @@
 import {request, interactModal, carregarComponente} from "./index.js";
 import {initNovaTarefa} from "./NovaTarefa.js";
 import {initDetalhesTarefa} from "./DetalhesTarefa.js";
+import {initDetalhesProjeto} from "./DetalhesProjeto.js";
+import {initPaginaInicial} from "./PaginaInicial.js";
 
 function articleTarefa(tarefa) {
     return `<article class="articleTarefa" id="${tarefa.id}">
@@ -20,6 +22,12 @@ export async function initTarefas(tipo, id) {
     await carregarComponente('Loading.php');
 
     await carregarComponente('Tarefas.php');
+
+    let btnVoltar = document.querySelector('#btnVoltar');
+
+    btnVoltar.onclick = async () => {
+        await initPaginaInicial();
+    }
 
     document.querySelector('#btnNovaTarefa').onclick = async function () {
         await initNovaTarefa(tipo, id);
@@ -53,6 +61,10 @@ export async function initTarefas(tipo, id) {
             tarefasProjeto.forEach(tarefa => {
                 sectionTarefas.innerHTML += articleTarefa(tarefa);
             });
+
+            btnVoltar.onclick = async () => {
+                await initDetalhesProjeto(id);
+            }
 
             sectionTarefas.style.display = 'grid';
         }

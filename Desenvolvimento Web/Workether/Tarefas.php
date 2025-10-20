@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Tarefas.css">
     <div id="divTitulo">
-        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
-        <h1 class="mb-0">Tarefas</h1>
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
+        <h1>Tarefas</h1>
     </div>
     <div id="divPesquisa">
         <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">

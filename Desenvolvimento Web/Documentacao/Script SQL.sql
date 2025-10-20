@@ -404,10 +404,10 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE UPDATE_TAREFA (_id_tarefa INT, _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE, _status VARCHAR(30))
+CREATE PROCEDURE UPDATE_TAREFA (_id_tarefa INT, _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE)
 BEGIN
 	UPDATE Tarefa
-    SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao, status = _status
+    SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao
     WHERE Tarefa.id = _id_tarefa;
 END $
 DELIMITER ;
@@ -418,7 +418,7 @@ BEGIN
 	SELECT Tarefa.*, Usuario.usuario AS usuario_responsavel, Projeto.nome AS nome_projeto, Equipe.nome as nome_equipe FROM Tarefa
     JOIN Usuario ON Usuario.id = Tarefa.id_usuario
     JOIN Projeto ON Projeto.id = Tarefa.id_projeto
-    JOIN Equipe ON Equipe.id = Tarefa.id_equipe
+    LEFT JOIN Equipe ON Equipe.id = Tarefa.id_equipe
     WHERE Tarefa.id = _id_tarefa;
 END $
 DELIMITER ;
@@ -506,11 +506,18 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_CONVERSAS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
-	SELECT * FROM Conversa
-    WHERE Conversa.id_usuarioA = _id_usuario OR Conversa.id_usuarioB = _id_usuario;
+	SELECT DISTINCT Conversa.*, 
+    CASE 
+        WHEN Conversa.id_usuarioA = 'XHU5EV0' THEN UsuarioB.usuario
+        ELSE UsuarioA.usuario
+    END AS usuario
+	FROM Conversa
+	JOIN Usuario AS UsuarioA ON UsuarioA.id = Conversa.id_usuarioA
+	JOIN Usuario AS UsuarioB ON UsuarioB.id = Conversa.id_usuarioB
+	WHERE 'XHU5EV0' IN (Conversa.id_usuarioA, Conversa.id_usuarioB);
 END $
 DELIMITER ;
-
+    
 DELIMITER $
 CREATE PROCEDURE READ_CONVERSAS_BY_NOME (_id_usuario VARCHAR (7), _nome VARCHAR (150))
 BEGIN

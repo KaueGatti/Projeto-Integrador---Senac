@@ -27,7 +27,12 @@ class TarefaController
     }
 
     public function updateTarefa($tarefa) {
+        $this->tarefa->id = $tarefa['id'];
+        $this->tarefa->nome = $tarefa['nome'];
+        $this->tarefa->descricao = $tarefa['descricao'];
+        $this->tarefa->dataAtualConclusao = $tarefa['dataAtualConclusao'];
 
+        return $this->tarefa->update();
     }
 
     public function createTarefa($tarefa) {

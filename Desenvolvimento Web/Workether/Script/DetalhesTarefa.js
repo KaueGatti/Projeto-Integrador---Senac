@@ -3,6 +3,7 @@ import {initProjetos} from "./Projetos.js";
 import {initTarefas} from "./Tarefas.js";
 
 function novaTarefaValida(novaTarefa) {
+
     if (novaTarefa.nome.replace(/ /g, '') === '') {
         return {
             success: false,
@@ -17,21 +18,7 @@ function novaTarefaValida(novaTarefa) {
         };
     }
 
-    if (novaTarefa.id_projeto === '') {
-        return {
-            success: false,
-            message: 'Selecione um projeto para a tarefa'
-        };
-    }
-
-    if (novaTarefa.responsavel.id === '' || novaTarefa.responsavel.usuario === '') {
-        return {
-            success: false,
-            message: 'Selecione um responsável pela tarefa'
-        };
-    }
-
-    if (novaTarefa.dataConclusao === '') {
+    if (!novaTarefa.dataAtualConclusao || isNaN(new Date(novaTarefa.dataAtualConclusao).getTime())) {
         return {
             success: false,
             message: 'Selecione uma data para a conclusão da tarefa'
@@ -57,7 +44,9 @@ export async function initDetalhesTarefa(id_tarefa) {
 
     let inputNome = document.querySelector('#input_nome');
     let textAreaDescricao = document.querySelector('#textArea_descricao');
-    let selectResponsavel = document.querySelector('#select_responsavel');
+    let inputProjeto = document.querySelector('#input_projeto');
+    let inputEquipe = document.querySelector('#input_equipe');
+    let inputResponsavel = document.querySelector('#input_responsavel');
 
     let inputDataConclusao = document.querySelector('#inputDataConclusao');
     let info = articleDetalhes.querySelector('#info');
@@ -74,62 +63,73 @@ export async function initDetalhesTarefa(id_tarefa) {
     if (responseTarefa.success) {
         let tarefa = responseTarefa.data;
 
-        inputNome.value = tarefa.nome;
-        textAreaDescricao.value = tarefa.descricao;
-
         document.querySelector('#btnVoltar').onclick = async () => {
             await initTarefas('Projeto', tarefa.id_projeto);
         }
+
+        inputNome.value = tarefa.nome;
+        textAreaDescricao.value = tarefa.descricao;
+        inputProjeto.value = tarefa.nome_projeto;
+
+        if (tarefa.nome_equipe != null) {
+            inputEquipe.value = tarefa.nome_equipe;
+        } else {
+            inputEquipe.value = 'Sem equipe';
+        }
+
+        inputResponsavel.value = tarefa.usuario_responsavel;
+
+        inputDataConclusao.value = tarefa.dataAtualConclusao;
     }
 
     btnEditar.onclick = () => {
-
+        inputNome.disabled = false;
+        textAreaDescricao.disabled = false;
+        inputDataConclusao.disabled = false;
+        btnSalvar.disabled = false;
         btnEditar.disabled = true;
 
         inputNome.focus();
 
-        inputNome.readOnly = false;
-        textAreaDescricao.readOnly = false;
-        inputDataConclusao.readOnly = false;
-        selectResponsavel.disabled = false;
-
-        btnSalvar.disabled = false;
-        articleDetalhes.style.borderColor = "rgba(5, 104, 230, 0.75)";
     }
 
     btnSalvar.onclick = async () => {
 
-        /*let editarProjeto = new FormData();
+        let tarefa = {};
+        tarefa.nome = inputNome.value;
+        tarefa.descricao = textAreaDescricao.value;
+        tarefa.dataAtualConclusao = inputDataConclusao.value;
 
-        editarProjeto.append('editarProjeto[id]', id_projeto);
-        editarProjeto.append('editarProjeto[nome]', inputNome.value);
-        editarProjeto.append('editarProjeto[descricao]', textAreaDescricao.value);
-        editarProjeto.append('editarProjeto[dataAtualConclusao]', inputDataConclusao.value);
-        editarProjeto.append('editarProjeto[id_responsavel]', selectResponsavel.value);
-        editarProjeto.append('editarProjeto[dataConclusao]', '');
-        editarProjeto.append('editarProjeto[status]', "Em andamento");
+        let validacao = novaTarefaValida(tarefa);
 
-        try {
-            let response = await request("../API/ProjetoAPI.php", {method: "POST", body: editarProjeto});
-            console.log(response);
-            if (response.success) {
-                articleDetalhes.style.borderColor = "#75CE70";
-                info.textContent = 'Projeto atualizado com sucesso!';
-                setTimeout(() => {
-                    articleDetalhes.style.borderColor = "rgba(195, 195, 195, 0.5)";
-                    info.textContent = '';
-                }, 5000);
+        if (validacao.success) {
 
-                inputNome.readOnly = true;
-                textAreaDescricao.readOnly = true;
-                inputDataConclusao.readOnly = true;
-                selectResponsavel.disabled = true;
+            let form = new FormData();
+            form.append('tarefa[id]', id_tarefa);
+            form.append('tarefa[nome]', tarefa.nome);
+            form.append('tarefa[descricao]', tarefa.descricao);
+            form.append('tarefa[dataAtualConclusao]', tarefa.dataAtualConclusao);
 
+            let responseAtualizacaoTarefa = await request('../API/Tarefa/updateTarefa.php', {method: 'POST', body: form});
+
+            if (responseAtualizacaoTarefa.success) {
+                info.textContent = 'Tarefa atualizada com sucesso!';
+                info.style.color = '#75CE70';
+
+                inputNome.disabled = true;
+                textAreaDescricao.disabled = true;
+                inputDataConclusao.disabled = true;
                 btnSalvar.disabled = true;
                 btnEditar.disabled = false;
+
             }
-        } catch (e) {
-            console.log(e.message);
-        }*/
-    };
+
+            console.log(responseAtualizacaoTarefa);
+        } else {
+            info.textContent = validacao.message;
+            info.style.color = '#E65A55';
+        }
+
+    }
+
 }

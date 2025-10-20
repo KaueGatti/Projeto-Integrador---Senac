@@ -103,8 +103,17 @@ div {
     cursor: pointer;
 }
 
+.articleConversa #divUsuario_Mensagem {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 95%;
+}
+
 .articleConversa h1 {
     padding-right: 20px;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .articleConversa p {
@@ -113,7 +122,7 @@ div {
     align-content: center;
 }
 
-.articleConversa div {
+.articleConversa .divHorario {
     display: flex;
     flex-direction: column;
     justify-content: center;

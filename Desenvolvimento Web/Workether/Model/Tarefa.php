@@ -144,4 +144,33 @@ class Tarefa
             'message' => 'Erro desconhecido ao criar tarefa!'
         ];
     }
+
+    public function update()
+    {
+        try {
+            $sql = 'CALL UPDATE_TAREFA(:id_tarefa, :nome, :descricao, :dataAtualConclusao)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_tarefa', $this->id);
+            $stmt->bindParam(':nome', $this->nome);
+            $stmt->bindParam(':descricao', $this->descricao);
+            $stmt->bindParam(':dataAtualConclusao', $this->dataAtualConclusao);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Tarefa atualizada com sucesso!'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao atualizar tarefa!'
+        ];
+    }
 }
