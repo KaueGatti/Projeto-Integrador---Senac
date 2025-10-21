@@ -25,7 +25,7 @@ CREATE TABLE Mensagem_Conversa (
 	id INT AUTO_INCREMENT,
 	id_conversa INT,
 	id_usuario VARCHAR(7),
-	texto VARCHAR(255),
+	texto TEXT,
 	data_hora TIMESTAMP,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_conversa) REFERENCES Conversa(id),
@@ -548,6 +548,9 @@ CREATE PROCEDURE CREATE_MENSAGEM_CONVERSA (_id_conversa INT, _id_usuario VARCHAR
 BEGIN
 	INSERT INTO Mensagem_Conversa (id_conversa, id_usuario, texto, data_hora)
     VALUES (_id_conversa, _id_usuario, _texto, NOW());
+    
+    SELECT * FROM Mensagem_Conversa
+    WHERE id = LAST_INSERT_ID();
 END $
 DELIMITER ;
 

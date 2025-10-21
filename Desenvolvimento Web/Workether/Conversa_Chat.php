@@ -12,8 +12,8 @@
             <section class="sectionMensagens">
             </section>
             <div class="divInput">
-                <input type="text" class="inputMensagem" placeholder="Escreva uma mensagem...">
-                <button><img src="Icones/Enviar.png" alt=""></button>
+                <input type="text" id="input_mensagem" class="inputMensagem" placeholder="Escreva uma mensagem...">
+                <button id="btnEnviarMensagem"><img src="Icones/Enviar.png" alt=""></button>
             </div>
         </article>
     </section>
