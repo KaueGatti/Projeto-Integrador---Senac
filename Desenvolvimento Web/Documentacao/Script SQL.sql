@@ -8,7 +8,8 @@ CREATE TABLE Usuario (
 	usuario VARCHAR(150),
 	senha VARCHAR(255),
 	status VARCHAR(30) DEFAULT 'Ativo',
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+    UNIQUE (email)
 );
 
 CREATE TABLE Conversa (
@@ -193,14 +194,14 @@ CREATE VIEW READ_ALL_USUARIO AS
 DELIMITER $$
 CREATE PROCEDURE READ_USUARIO_BY_NOME (_nome VARCHAR (150))
 BEGIN
-	SELECT * FROM Usuario WHERE usuario LIKE _nome;
+	SELECT * FROM Usuario WHERE usuario = _nome;
 END $$
 DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE READ_USUARIO_BY_EMAIL (_email VARCHAR (255))
 BEGIN
-	SELECT * FROM Usuario WHERE email LIKE _email;
+	SELECT * FROM Usuario WHERE email = _email;
 END $$
 DELIMITER ;
 
@@ -549,8 +550,9 @@ BEGIN
 	INSERT INTO Mensagem_Conversa (id_conversa, id_usuario, texto, data_hora)
     VALUES (_id_conversa, _id_usuario, _texto, NOW());
     
-    SELECT * FROM Mensagem_Conversa
-    WHERE id = LAST_INSERT_ID();
+    SELECT Mensagem_Conversa.*, Usuario.usuario FROM Mensagem_Conversa
+    JOIN Usuario ON Usuario.id = Mensagem_Conversa.id_usuario
+    WHERE Mensagem_Conversa.id = LAST_INSERT_ID();
 END $
 DELIMITER ;
 

@@ -116,9 +116,9 @@ class Usuario
 
     public function login($login)
     {
-        $sql = "CALL READ_USUARIO_BY_NOME(:nome)";
+        $sql = "CALL READ_USUARIO_BY_EMAIL(:email)";
         $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(':nome', $login['usuario']);
+        $stmt->bindParam(':email', $login['email']);
         $stmt->execute();
         $usuario = $stmt->fetch(PDO::FETCH_OBJ);
 

@@ -33,8 +33,14 @@ function conectar() {
     socket.onopen = () => console.log("Conectado ao WebSocket");
     socket.onclose = () => console.log("Desconectado do WebSocket");
 
-    socket.onmessage = (e) => {
-        document.querySelector('.sectionMensagens').insertAdjacentHTML('beforeend', articleMensagem('', JSON.parse(e.data)));
+    socket.onmessage = async (e) => {
+        let sectionMensagens = document.querySelector('.sectionMensagens');
+        let message = typeof e.data === 'string' ? e.data : await e.data.text();
+        message = JSON.parse(message);
+        if (!(message.id_usuario == document.querySelector('.usuarioLogado').id)) {
+            sectionMensagens.insertAdjacentHTML('beforeend', articleMensagem('', message));
+            sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
+        }
     };
 
     return socket;
@@ -92,9 +98,10 @@ export async function initConversa_Chat(tipo, id) {
                 } else {
                     sectionMensagens.insertAdjacentHTML('beforeend', articleMensagem('', mensagem));
                 }
-            })
+            });
+
+            sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
         }
-        console.log(responseMensagens);
     }
 
     btnEnviarMensagem.onclick = async () => {
@@ -119,11 +126,12 @@ export async function initConversa_Chat(tipo, id) {
 
         if (responseEnviarMensagem.success) {
 
-            socket.send(JSON.stringify(mensagem));
-
             mensagem = responseEnviarMensagem.data;
 
             sectionMensagens.insertAdjacentHTML('beforeend', articleMensagem('Enviada', mensagem));
+            sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
+
+            socket.send(JSON.stringify(mensagem));
 
             inputMensagem.value = '';
         }

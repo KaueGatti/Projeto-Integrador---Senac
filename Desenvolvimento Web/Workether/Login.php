@@ -40,12 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Usuario ou senha incorretos";
             } ?></p>
         <div class="input-group">
-            <input type="text" name="login[usuario]" placeholder=" " required>
-            <label for="login[usuario]">Usuario</label>
+            <input type="email" id="input_email" name="login[email]" placeholder=" " required>
+            <label for="input_email">Usuario</label>
         </div>
         <div class="input-group">
-            <input type="password" name="login[senha]" placeholder=" " required>
-            <label for="login[senha]">Senha</label>
+            <input type="password" id="input_senha" name="login[senha]" placeholder=" " required>
+            <label for="input_senha">Senha</label>
         </div>
         <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
         <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
