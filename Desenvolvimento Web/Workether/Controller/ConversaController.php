@@ -27,4 +27,19 @@ class ConversaController
 
         return $this->conversa->readByUsuario();
     }
+
+    public function readConversaByID($id_conversa, $id_usuario)
+    {
+        $this->conversa->id = $id_conversa;
+        $this->conversa->id_usuarioA = $id_usuario;
+
+        return $this->conversa->readByID();
+    }
+
+    public function readMensagensConversa($id_conversa)
+    {
+        $this->conversa->id = $id_conversa;
+
+        return $this->conversa->readMensagens();
+    }
 }

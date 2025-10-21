@@ -12,6 +12,7 @@ include_once 'session.php';
     <title>Workether - Página Inicial</title>
     <link rel="stylesheet" href="Style/index.css">
 </head>
+<p class="usuarioLogado" id="<?= $_SESSION['usuario']->id ?>" hidden><?= $_SESSION['usuario']->usuario ?></p>
 <body id="body">
 <?php include_once 'MenuLateral.php'; ?>
 <main id="main">

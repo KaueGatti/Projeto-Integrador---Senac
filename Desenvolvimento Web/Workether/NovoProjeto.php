@@ -15,7 +15,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
     <link rel="stylesheet" href="Style/NovoProjeto.css">
     <div id="divTitulo">
         <img id="btnVoltar" src="Icones/Voltar.png" alt="">
-        <h1 class="mb-0">Novo projeto</h1>
+        <h1>Novo projeto</h1>
     </div>
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes">

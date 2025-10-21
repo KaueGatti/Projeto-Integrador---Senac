@@ -1,5 +1,6 @@
 @import "modal.css";
 @import "inputGroup.css";
+@import "selectGroup.css";
 
 /* Conversas */
 .conteudo {
@@ -165,8 +166,12 @@ div {
     font-size: 28px;
 }
 
-.modal .input-group {
-    width: 90%;
+#modalConversas {
+    height: auto;
+}
+
+.modal .select-group {
+    width: 300px;
 }
 
 .modal button {
@@ -178,12 +183,13 @@ div {
     color: white;
     padding: 10px;
     height: 40px;
-    width: 200px;
+    width: 250px;
     border-radius: 10px;
     border: none;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     transition: 0.3s;
+    margin-bottom: 20px;
 }
 
 .modal button:hover {
@@ -193,5 +199,11 @@ div {
 .modal button img {
     margin-left: 20px;
     width: 30px;
+}
+
+#modalConversas #info {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
 }
 

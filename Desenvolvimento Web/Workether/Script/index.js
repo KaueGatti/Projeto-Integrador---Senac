@@ -3,6 +3,7 @@ import {initProjetos} from "./Projetos.js";
 import {initPaginaInicial} from "./PaginaInicial.js";
 import {initPerfil} from "./Perfil.js";
 import {initTarefas} from "./Tarefas.js";
+import {initConversas} from "./Conversas.js";
 
 let logo = document.querySelector('#divLogo');
 let body = document.querySelector("#body");
@@ -151,9 +152,7 @@ btnTarefas.addEventListener('click', async function () {
 
 btnConversas.addEventListener('click', async function () {
 
-    await carregarComponente('Loading.php');
-
-    await carregarComponente('Conversas.php');
+    await initConversas();
 });
 
 btnAmigos.addEventListener('click', async function () {
@@ -169,55 +168,6 @@ btnAmigos.addEventListener('click', async function () {
 btnPerfil.addEventListener('click', async function () {
     await initPerfil();
 });
-
-function abrirConversa_Chat() {
-    fetch("Conversa_Chat.php").then(res => {
-        if (!res.ok) throw new Error("Response failed in:" + "Conversa_Chat.php");
-        return res.text();
-    }).then(conteudo => {
-        if (main.children.length >= 2) {
-            main.children[1].remove();
-        }
-        main.innerHTML += conteudo;
-    }).catch(err => console.log("Erro no fetch de: " + "Conversa_Chat.php" + "\n" + err));
-}
-
-
-function detalhes(url, valuesGet) {
-    fetch("Detalhes" + url + ".php?" + valuesGet).then(res => {
-        if (!res.ok) throw new Error("Response failed in:" + "Detalhes" + url + ".php");
-        return res.text();
-    }).then(conteudo => {
-        if (main.children.length >= 2) {
-            main.children[1].remove();
-        }
-        main.innerHTML += conteudo;
-    }).catch(err => console.log("Erro no fetch de: " + "Detalhes" + url + ".php" + "\n" + err));
-}
-
-function novaTarefa() {
-    fetch("NovaTarefa.php").then(res => {
-        if (!res.ok) throw new Error("Response failed in:" + "NovaTarefa.php");
-        return res.text();
-    }).then(conteudo => {
-        if (main.children.length >= 2) {
-            main.children[1].remove();
-        }
-        main.innerHTML += conteudo;
-    }).catch(err => console.log("Erro no fetch de: " + "NovaTarefa.php" + "\n" + err));
-}
-
-function loadTarefas() {
-    fetch("Tarefas" + ".php").then(res => {
-        if (!res.ok) throw new Error("Response failed in:" + "Tarefas" + ".php");
-        return res.text();
-    }).then(conteudo => {
-        if (main.children.length >= 2) {
-            main.children[1].remove();
-        }
-        main.innerHTML += conteudo;
-    }).catch(err => console.log("Erro no fetch de: " + "loadTarefas()" + "\n" + err));
-}
 
 logo.onclick = async () => {
 

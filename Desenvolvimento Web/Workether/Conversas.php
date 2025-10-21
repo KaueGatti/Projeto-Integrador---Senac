@@ -1,12 +1,15 @@
 <?php
 
 require_once __DIR__ . '/Controller/ConversaController.php';
+require_once __DIR__ . '/Controller/AmizadeController.php';
 
 session_start();
 
 $controller = new ConversaController();
+$amizadeController = new AmizadeController();
 
 $conversas = $controller->readConversasByUsuario($_SESSION['usuario']->id)['data'];
+$amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->id);
 
 ?>
 
@@ -14,12 +17,12 @@ $conversas = $controller->readConversasByUsuario($_SESSION['usuario']->id)['data
 <section class="conteudo">
     <link rel="stylesheet" href="Style/Conversas.css">
     <div id="divTitulo">
-        <img onclick="voltar('PaginaInicial.php')" src="Icones/Voltar.png" alt="">
+        <img id="btnVoltar" src="Icones/Voltar.png" alt="">
         <h1>Conversas</h1>
     </div>
     <div id="divPesquisa">
-        <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <button>+ Nova Conversa</button>
+        <input type="text" id="inputPesquisa" placeholder="Pesquisar">
+        <button id="btnNovaConversa">+ Nova Conversa</button>
     </div>
     <section class="sectionConversas" id="sectionConversas">
         <?php foreach ($conversas as $conversa) : ?>
@@ -38,12 +41,18 @@ $conversas = $controller->readConversasByUsuario($_SESSION['usuario']->id)['data
     <div class="modal" id="modalConversas">
         <div class="divTitulo">
             <h1>Selecione o usuário</h1>
-            <img src="Icones/Fechar.png" alt="">
+            <img id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <div class="input-group">
-            <input type="text" name="usuario" placeholder=" ">
-            <label for="usuario">Usuário</label>
+        <div class="select-group">
+            <select id="select_usuario">
+                <option value="" selected disabled>Selecione um usuário</option>
+                <?php foreach ($amizades as $amizade) : ?>
+                    <option value="<?= $amizade->id ?>"><?= $amizade->usuario ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label for="select_usuario">Usuário</label>
         </div>
-        <button>Enviar convite <img src="Icones/Enviar.png" alt=""></button>
+        <p id="info"></p>
+        <button id="btnAdicionarConversa">Adicionar conversa +</button>
     </div>
 </section>

@@ -16,6 +16,7 @@ CREATE TABLE Conversa (
 	id_usuarioA VARCHAR(7),
 	id_usuarioB VARCHAR(7),
 	PRIMARY KEY (id),
+    UNIQUE (id_usuarioA, id_usuarioB),
 	FOREIGN KEY (id_usuarioA) REFERENCES Usuario(id),
 	FOREIGN KEY (id_usuarioB) REFERENCES Usuario(id)
 );
@@ -25,7 +26,7 @@ CREATE TABLE Mensagem_Conversa (
 	id_conversa INT,
 	id_usuario VARCHAR(7),
 	texto VARCHAR(255),
-	data_hora_envio DATETIME,
+	data_hora TIMESTAMP,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_conversa) REFERENCES Conversa(id),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
@@ -508,13 +509,28 @@ CREATE PROCEDURE READ_ALL_CONVERSAS_BY_USUARIO (_id_usuario VARCHAR (7))
 BEGIN
 	SELECT DISTINCT Conversa.*, 
     CASE 
-        WHEN Conversa.id_usuarioA = 'XHU5EV0' THEN UsuarioB.usuario
+        WHEN Conversa.id_usuarioA = _id_usuario THEN UsuarioB.usuario
         ELSE UsuarioA.usuario
     END AS usuario
 	FROM Conversa
 	JOIN Usuario AS UsuarioA ON UsuarioA.id = Conversa.id_usuarioA
 	JOIN Usuario AS UsuarioB ON UsuarioB.id = Conversa.id_usuarioB
-	WHERE 'XHU5EV0' IN (Conversa.id_usuarioA, Conversa.id_usuarioB);
+	WHERE _id_usuario IN (Conversa.id_usuarioA, Conversa.id_usuarioB);
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE READ_CONVERSA_BY_ID (_id_conversa INT, _id_usuario VARCHAR (7))
+BEGIN
+	SELECT DISTINCT Conversa.*, 
+    CASE 
+        WHEN Conversa.id_usuarioA = _id_usuario THEN UsuarioB.usuario
+        ELSE UsuarioA.usuario
+    END AS usuario
+	FROM Conversa
+	JOIN Usuario AS UsuarioA ON UsuarioA.id = Conversa.id_usuarioA
+	JOIN Usuario AS UsuarioB ON UsuarioB.id = Conversa.id_usuarioB
+	WHERE Conversa.id = _id_conversa;
 END $
 DELIMITER ;
     
@@ -530,7 +546,7 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE CREATE_MENSAGEM_CONVERSA (_id_conversa INT, _id_usuario VARCHAR(7), _texto VARCHAR(255))
 BEGIN
-	INSERT INTO Mensagem_Conversa (id_conversa, id_usuario, texto, data_hora_envio)
+	INSERT INTO Mensagem_Conversa (id_conversa, id_usuario, texto, data_hora)
     VALUES (_id_conversa, _id_usuario, _texto, NOW());
 END $
 DELIMITER ;
@@ -538,8 +554,10 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE READ_ALL_MENSAGENS_BY_CONVERSA (_id_conversa INT)
 BEGIN
-	SELECT * FROM Mensagem_Conversa
-    WHERE Mensagem_Conversa.id_conversa = _id_conversa;
+    SELECT Mensagem_Conversa.*, Usuario.usuario FROM Mensagem_Conversa
+	JOIN Usuario ON Usuario.id = Mensagem_Conversa.id_usuario
+	WHERE Mensagem_Conversa.id_conversa = _id_conversa
+    ORDER BY data_hora;
 END $
 DELIMITER ;
 

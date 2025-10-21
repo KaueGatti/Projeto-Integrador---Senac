@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 ?>
 
 <section class="conteudo">
-    <p class="usuarioLogado" id="<?= $_SESSION['usuario']->id ?>" hidden><?= $_SESSION['usuario']->usuario ?></p>
     <link id="link" rel="stylesheet" href="Style/DetalhesProjeto.css">
     <div id="divTitulo">
         <img id="btnVoltar" class="btnBack" src="Icones/Voltar.png" alt="">

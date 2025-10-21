@@ -73,4 +73,67 @@ class Conversa
             'data' => []
         ];
     }
+    public function readByID() {
+        try {
+
+            $sql = "CALL READ_CONVERSA_BY_ID(:id_conversa, :id_usuario)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_conversa", $this->id);
+            $stmt->bindParam(":id_usuario", $this->id_usuarioA);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Conversas retornadas com sucesso!',
+                    'data' => $stmt->fetch(PDO::FETCH_OBJ)
+                ];
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar conversa pelo id',
+            'data' => []
+        ];
+    }
+
+    public function readMensagens() {
+
+        try {
+
+            $sql = "CALL READ_ALL_MENSAGENS_BY_CONVERSA(:id_conversa)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id_conversa", $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Mensagens retornadas com sucesso!',
+                    'data' => $stmt->fetchAll(PDO::FETCH_OBJ)
+                ];
+            }
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao buscar mensagens da conversa',
+            'data' => []
+        ];
+    }
 }
