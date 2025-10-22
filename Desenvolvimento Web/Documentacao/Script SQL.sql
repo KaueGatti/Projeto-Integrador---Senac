@@ -426,7 +426,7 @@ DELIMITER $
 CREATE PROCEDURE CONCLUIR_TAREFA (_id_tarefa INT, _dataConclusao DATE)
 BEGIN
 	UPDATE Tarefa
-    SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao
+    SET dataConclusao = _dataConclusao, status = 'Concluída'
     WHERE Tarefa.id = _id_tarefa;
 END $
 DELIMITER ;
