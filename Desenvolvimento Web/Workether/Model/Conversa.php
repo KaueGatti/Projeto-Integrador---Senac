@@ -25,7 +25,8 @@ class Conversa
             if ($stmt->execute()) {
                 return [
                     'success' => true,
-                    'message' => 'Conversa cadastrada com sucesso!'
+                    'message' => 'Conversa cadastrada com sucesso!',
+                    'data' => $stmt->fetch(PDO::FETCH_OBJ)
                 ];
             }
 
@@ -33,13 +34,15 @@ class Conversa
             http_response_code(500);
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                'data' => []
             ];
         }
 
         return [
             'success' => false,
-            'message' => 'Erro desconhecido ao criar conversa'
+            'message' => 'Erro desconhecido ao criar conversa',
+            'data' => []
         ];
     }
 

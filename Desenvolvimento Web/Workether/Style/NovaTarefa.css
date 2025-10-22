@@ -82,22 +82,31 @@ div {
 
 .divProjeto {
     margin-bottom: 20px;
-    width: 30%;
+    width: 40%;
 }
 
 .divEquipe {
     margin-bottom: 20px;
     margin-left: 20px;
-    width: 30%;
+    width: 40%;
 }
 
 .divResponsavel {
     margin-bottom: 20px;
-    width: 30%;
+    width: 40%;
 }
 
 .divData {
-    width: 30%;
+    width: 40%;
+}
+
+#info {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    word-break: break-word;
+    font-weight: 700;
+    margin-top: 20px;
 }
 
 .divCancelar_Concluir {

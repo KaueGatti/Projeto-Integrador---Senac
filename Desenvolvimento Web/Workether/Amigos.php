@@ -18,10 +18,12 @@ $amizades = $controller->readAllAmizadesByUsuario($_SESSION['usuario']->id);
         <h1>Amigos</h1>
     </div>
     <div id="divPesquisa">
-        <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
         <button id="btnAddAmigo">+ Adicionar amigo</button>
     </div>
     <section class="sectionAmigos" id="sectionAmigos">
+        <?php if (count($amizades) == 0): ?>
+            <p id="info">Você não possui nenhum amigo</p>
+        <?php endif;?>
         <p id="id_usuario" hidden><?= $_SESSION['usuario']->id ?></p>
         <p id="usuario" hidden><?= $_SESSION['usuario']->usuario ?></p>
         <?php if (empty($amizades)) echo '<p id="info">Você ainda não tem nenhum amigo</p>'?>

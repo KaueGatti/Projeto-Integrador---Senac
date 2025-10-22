@@ -21,10 +21,12 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         <h1>Conversas</h1>
     </div>
     <div id="divPesquisa">
-        <input type="text" id="inputPesquisa" placeholder="Pesquisar">
         <button id="btnNovaConversa">+ Nova Conversa</button>
     </div>
     <section class="sectionConversas" id="sectionConversas">
+        <?php if (count($conversas) == 0): ?>
+            <p id="info">Você não possui nenhuma conversa</p>
+        <?php endif; ?>
         <?php foreach ($conversas as $conversa) : ?>
             <article class="articleConversa" id="<?= $conversa->id ?>">
                 <div id="divUsuario_Mensagem">
@@ -43,6 +45,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             <h1>Selecione o usuário</h1>
             <img id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
+        <p id="infoModal"></p>
         <div class="select-group">
             <select id="select_usuario">
                 <option value="" selected disabled>Selecione um usuário</option>
@@ -52,7 +55,6 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
             </select>
             <label for="select_usuario">Usuário</label>
         </div>
-        <p id="info"></p>
         <button id="btnAdicionarConversa">Adicionar conversa +</button>
     </div>
 </section>

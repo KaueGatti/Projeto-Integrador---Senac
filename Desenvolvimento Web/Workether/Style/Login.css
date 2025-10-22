@@ -37,7 +37,7 @@ body {
     color: #0568E6;
 }
 
-form {
+#form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,19 +48,17 @@ form {
     width: 400px;
 }
 
-form h1 {
+#form h1 {
     margin: 20px;
     font-size: 40px;
 }
 
-#pErro {
-    color: rgba(255, 0, 0, 0.8);
+#info {
+    color: #E65A55;
     font-size: 20px;
-}
-
-form p {
-    margin: 5px;
-    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    font-weight: 700;
+    height: 10px;
 }
 
 .input-group {
@@ -68,18 +66,23 @@ form p {
     width: 80%;
 }
 
-form a {
+.labelLink {
+    margin: 5px;
+    color: #888888;
+}
+
+#form a {
     text-decoration: none;
     color: rgba(5, 104, 230, 0.8);
     font-weight: 800;
     transition: 0.2s;
 }
 
-form a:hover {
+#form a:hover {
     color: rgba(5, 104, 230);
 }
 
-form button {
+#form button {
     cursor: pointer;
     font-size: 20px;
     font-weight: 700;
@@ -93,7 +96,7 @@ form button {
     transition: 0.3s;
 }
 
-form button:hover {
-    transform: scale(110%);
+#form button:hover {
+    transform: scale(95%);
     background-color: rgb(5, 104, 230);
 }

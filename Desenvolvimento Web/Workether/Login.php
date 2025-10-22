@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: index.php");
         }
     }
+} else if (isset($_GET["sair"])) {
+    unset($_SESSION["usuario"]);
 }
 
 ?>
@@ -34,23 +36,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 id="WORK">WORK</h1>
         <h1 id="ETHER">ETHER</h1>
     </div>
-    <form action="Login.php" method="post">
+    <div id="form">
         <h1>Login</h1>
-        <p id="pErro"><?php if ($usuario == null) {
-                echo "Usuario ou senha incorretos";
-            } ?></p>
+        <p id="info"></p>
         <div class="input-group">
-            <input type="email" id="input_email" name="login[email]" placeholder=" " required>
-            <label for="input_email">Usuario</label>
+            <input type="email" id="input_email" placeholder=" " required>
+            <label for="input_email">E-mail</label>
         </div>
         <div class="input-group">
-            <input type="password" id="input_senha" name="login[senha]" placeholder=" " required>
+            <input type="password" id="input_senha" placeholder=" " required>
             <label for="input_senha">Senha</label>
         </div>
-        <p>Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
-        <p>Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
+        <p class="labelLink">Não lembra a senha? <a href="RedefinirSenha.php" id="redefinirSenha">Redefinir senha</a></p>
+        <p class="labelLink">Não possui cadastro? <a href="Cadastro.php" id="cadastrar">Cadastrar</a></p>
         <button id="btnEntrar">Entrar</button>
-    </form>
+    </div>
 </main>
 </body>
+<script src="./Script/Login.js" type="module"></script>
 </html>

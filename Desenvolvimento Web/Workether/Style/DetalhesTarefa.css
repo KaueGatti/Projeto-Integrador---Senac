@@ -105,6 +105,15 @@ div {
     cursor: default;
 }
 
+#info {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    word-break: break-word;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
 .divEditar_Salvar {
     display: flex;
     justify-content: end;

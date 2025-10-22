@@ -82,6 +82,14 @@ div {
     padding-bottom: 10px;
 }
 
+#info {
+    margin-top: 20px;
+    font-size: 36px;
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+}
+
 .articleTarefa {
     display: flex;
     flex-direction: column;

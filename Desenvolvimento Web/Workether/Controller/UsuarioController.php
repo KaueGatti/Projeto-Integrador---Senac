@@ -18,14 +18,15 @@ class UsuarioController
         $this->usuario->usuario = $usuario['usuario'];
         $this->usuario->email = $usuario['email'];
         $this->usuario->senha = $usuario['senha'];
-        $this->usuario->confirmarSenha = $usuario['confirmarSenha'];
 
         return $this->usuario->create();
     }
 
     public function loginUsuario($login)
     {
-        return $this->usuario->login($login);
+        $this->usuario->email = $login['email'];
+        $this->usuario->senha = $login['senha'];
+        return $this->usuario->login();
     }
 
     public function updateUsuario($usuarioUpdated)

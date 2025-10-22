@@ -113,7 +113,9 @@ sectionNotificacoes.addEventListener('click', async e => {
             console.error(error);
         }
 
-        atualizarNotificacoes();
+        setTimeout(async () => {
+            atualizarNotificacoes();
+        }, 1000);
     }
 
 
@@ -147,7 +149,7 @@ btnProjetos.addEventListener('click', async () => {
 });
 
 btnTarefas.addEventListener('click', async function () {
-    await initTarefas();
+    await initTarefas('', null);
 });
 
 btnConversas.addEventListener('click', async function () {

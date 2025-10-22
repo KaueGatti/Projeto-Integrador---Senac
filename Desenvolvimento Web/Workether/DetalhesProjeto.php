@@ -182,6 +182,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <div class="select-group">
             <select id="select_responsavel">
                 <option value="" disabled selected>Selecione um responsável</option>
+                <option selected value="<?= $responsavel->id ?>"><?= $responsavel->usuario ?></option>
+                <?php foreach ($participantes as $participante) : ?>
+                    <?php if ($participante->id !== $responsavel->id) : ?>
+                        <option value="<?= $participante->id ?>"><?= $participante->usuario ?></option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </select>
             <label for="select_responsavel">Responsável</label>
         </div>

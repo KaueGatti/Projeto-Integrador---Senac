@@ -144,31 +144,10 @@ export async function initNovaTarefa(tipo, id) {
 
         let responseProjeto = await request('../API/Projeto/readProjetoByID.php', {method: 'POST', body: form});
 
-        /*let responseUsuario = await request('../API/UsuarioAPI.php', {method: "POST", body: form});*/
-
         if (responseProjeto.success /*&& responseUsuario.success*/) {
 
             let projeto = responseProjeto.data;
             select_projeto.innerHTML = `<option value="${projeto.id}" selected>${projeto.nome}</option>`;
-
-            /*select_responsavel.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
-            responseUsuario.data.forEach(r => {
-                select_responsavel.innerHTML +=
-                    '<option value="' + r.id + '">' + r.usuario + '</option>';
-            });
-
-            let responseEquipe = await request('../API/Equipe/readAllEquipesByProjeto.php', {
-                method: "POST",
-                body: id_projeto
-            });
-
-            select_equipe.innerHTML = '<option value="" disabled>Selecione uma equipe</option>';
-            select_equipe.innerHTML += '<option value="0" selected>Sem equipe</option>';
-
-            responseEquipe.data.forEach(e => {
-                select_equipe.innerHTML +=
-                    '<option value="' + e.id + '">' + e.nome + '</option>';
-            });*/
 
             select_projeto.dispatchEvent(new Event('change'));
 
@@ -221,9 +200,9 @@ export async function initNovaTarefa(tipo, id) {
                         return;
                     }
 
-                    await initTarefas('Projeto', id);
+                    await initTarefas('', null);
 
-                }, 2000);
+                }, 1000);
             }
 
         } else {

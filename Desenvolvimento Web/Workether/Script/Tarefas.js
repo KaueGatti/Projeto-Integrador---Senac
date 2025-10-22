@@ -30,7 +30,7 @@ export async function initTarefas(tipo, id) {
     }
 
     document.querySelector('#btnNovaTarefa').onclick = async function () {
-        await initNovaTarefa(tipo, id);
+        await initNovaTarefa('', null);
     }
 
     let sectionTarefas = document.querySelector('.sectionTarefas');
@@ -67,6 +67,10 @@ export async function initTarefas(tipo, id) {
             }
 
             sectionTarefas.style.display = 'grid';
+
+            document.querySelector('#btnNovaTarefa').onclick = async function () {
+                await initNovaTarefa(tipo, id);
+            }
         }
     }
 }

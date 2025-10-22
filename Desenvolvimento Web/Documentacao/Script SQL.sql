@@ -502,6 +502,16 @@ CREATE PROCEDURE CREATE_CONVERSA (_id_usuarioA VARCHAR(7), _id_usuarioB VARCHAR(
 BEGIN
 	INSERT INTO Conversa (id_usuarioA, id_usuarioB)
     VALUES (LEAST(_id_usuarioA, _id_usuarioB), GREATEST(_id_usuarioA, _id_usuarioB));
+    
+    SELECT DISTINCT Conversa.*, 
+    CASE 
+        WHEN Conversa.id_usuarioA = _id_usuario THEN UsuarioB.usuario
+        ELSE UsuarioA.usuario
+    END AS usuario
+	FROM Conversa
+	JOIN Usuario AS UsuarioA ON UsuarioA.id = Conversa.id_usuarioA
+	JOIN Usuario AS UsuarioB ON UsuarioB.id = Conversa.id_usuarioB
+	WHERE Conversa.id = LAST_INSERT_ID(); 
 END $
 DELIMITER ;
 

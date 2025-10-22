@@ -1,19 +1,5 @@
 <?php
 
-require_once __DIR__ . '/Controller/UsuarioController.php';
-
-$usuarioController = new UsuarioController();
-$erros = [];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["usuario"])) {
-        $erros = $usuarioController->createUsuario($_POST["usuario"]);
-        if (empty($erros)) {
-            header("Location: Login.php");
-        }
-    }
-}
-
 ?>
 
 <!doctype html>
@@ -31,19 +17,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1 id="ETHER">ETHER</h1>
     </div>
     <div id="divForm">
-        <form action="Cadastro.php" method="post">
+        <div id="form">
             <h1>Cadastro</h1>
-            <input type="text" name="usuario[usuario]" placeholder="Usuário" required>
-            <p id="pErroUsuario"><?php if (isset($erros['usuario'])) { echo $erros['usuario']; } ?></p>
-            <input type="email" name="usuario[email]" placeholder="E-mail" required>
-            <p id="pErroEmail"><?php if (isset($erros['email'])) { echo $erros['email']; } ?></p>
-            <input type="password" name="usuario[senha]" placeholder="Senha" required>
-            <input type="password" name="usuario[confirmarSenha]" placeholder="Confirmar senha" required>
-            <p id="pErroSenha"><?php if (isset($erros['senha'])) { echo $erros['senha']; } ?></p>
+            <div class="input-group divUsuario">
+                <input id="input_usuario" type="text" placeholder=" " required>
+                <label for="input_usuario">Usuário</label>
+            </div>
+            <div class="input-group divEmail">
+                <input id="input_email" type="email" placeholder=" " required>
+                <label for="input_email">E-mail</label>
+            </div>
+            <div class="input-group divSenha">
+                <input id="input_senha" type="password" placeholder=" " required>
+                <label for="input_senha">Senha</label>
+            </div>
+            <div class="input-group divConfirmarSenha">
+                <input id="input_confirmar_senha" type="password" placeholder=" " required>
+                <label for="input_confirmar_senha">Confirmar senha</label>
+            </div>
+            <p id="info">Texto teste para testar</p>
             <p id="pJaPossuiCadastro">Já possui cadastro? <a href="Login.php" id="login">Login</a></p>
             <button id="btnCadastrar">Cadastrar</button>
-        </form>
+        </div>
     </div>
 </main>
 </body>
+<script src="./Script/Cadastro.js" type="module"></script>
 </html>

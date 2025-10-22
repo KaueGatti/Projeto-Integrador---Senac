@@ -26,10 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <h1>Tarefas</h1>
     </div>
     <div id="divPesquisa">
-        <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
-        <label for="inputPesquisa" hidden></label>
         <button id="btnNovaTarefa">+ Nova Tarefa</button>
     </div>
+    <?php if (count($tarefas) == 0): ?>
+        <p id="info">Você não possui nenhuma tarefa</p>
+    <?php endif;?>
     <section class="sectionTarefas">
         <?php foreach ($tarefas as $tarefa) : ?>
             <article class="articleTarefa" id="<?= $tarefa->id ?>">

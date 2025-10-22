@@ -1,6 +1,19 @@
 import {carregarComponente, interactModal, request} from "./index.js";
 import {initConversa_Chat} from "./Conversa_Chat.js";
 
+function articleConversa(conversa) {
+    return `<article class="articleConversa" id="${conversa.id}">
+                <div id="divUsuario_Mensagem">
+                    <h1>${conversa.usuario}</h1>
+                    <p>Última mensagem enviada...</p>
+                </div>
+                <div class="divHorario">
+                    <p>20/02/2020</p>
+                    <p>20:20</p>
+                </div>
+            </article>`;
+}
+
 export async function initConversas() {
 
     await carregarComponente('Loading.php');
@@ -9,9 +22,15 @@ export async function initConversas() {
 
     let usuarioLogado = document.querySelector('.usuarioLogado');
 
+    document.querySelector('#btnVoltar').onclick = async () => {
+        await initConversas();
+    };
+
     let btnNovaConversa = document.querySelector('#btnNovaConversa');
 
     let sectionConversas = document.querySelector('.sectionConversas');
+
+    let info = document.querySelector('#info');
 
     sectionConversas.addEventListener('click', async (e) => {
         if (e.target.closest('.articleConversa')) {
@@ -30,7 +49,7 @@ export async function initConversas() {
 
         let selectUsuario = document.querySelector('#select_usuario');
 
-        let info = document.querySelector('#info');
+        let infoModal = document.querySelector('#infoModal');
 
         let btnAdicionarConversa = document.querySelector('#btnAdicionarConversa');
 
@@ -39,7 +58,9 @@ export async function initConversas() {
 
                 try {
 
-                let form = new FormData();
+                    btnAdicionarConversa.disabled = true;
+
+                    let form = new FormData();
                     form.append('conversa[id_usuarioA]', selectUsuario.value);
                     form.append('conversa[id_usuarioB]', usuarioLogado.id);
 
@@ -49,8 +70,16 @@ export async function initConversas() {
                     });
 
                     if (responseAdicionarConversa.success) {
-                        info.textContent = 'Conversa adicionada com sucesso!';
-                        info.style.color = '#75CE70';
+
+                        let conversa = responseAdicionarConversa.data;
+
+                        info.remove();
+
+                        sectionConversas.insertAdjacentHTML('afterbegin', articleConversa(conversa));
+
+
+                        infoModal.textContent = 'Conversa adicionada com sucesso!';
+                        infoModal.style.color = '#75CE70';
                         selectUsuario.options[selectUsuario.selectedIndex].disabled = true;
                         selectUsuario.selectedIndex = 0;
                         setTimeout(() => {
@@ -59,12 +88,14 @@ export async function initConversas() {
                     }
                 } catch (error) {
                     if (error.message.includes('1062 Duplicate entry')) {
-                        info.textContent = 'Você já possui uma conversa com esse usuário';
-                        info.style.color = '#E65A55';
+                        infoModal.textContent = 'Você já possui uma conversa com esse usuário';
+                        infoModal.style.color = '#E65A55';
                     } else {
                         console.error(error);
                     }
                 }
+
+                btnAdicionarConversa.disabled = false;
 
             }
         };

@@ -31,4 +31,5 @@ session_start();
         </div>
     </div>
     <a class="buttonBlue" href="RedefinirSenha.php" id="btnAlterarSenha">Alterar senha</a>
+    <a class="buttonRed" href="Login.php?sair=" id="btnSair">Sair</a>
 </section>

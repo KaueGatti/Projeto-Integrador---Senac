@@ -134,6 +134,7 @@ export async function initDetalhesProjeto(id_projeto) {
 
         section_participantes.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
+                e.stopPropagation();
                 let articleParticipante = e.target.closest('.articleParticipante');
 
                 let form = new FormData();
@@ -155,9 +156,14 @@ export async function initDetalhesProjeto(id_projeto) {
                             o.disabled = false;
                         }
                     });
+                    Array.from(modalAdicionarEquipe.querySelector('#select_responsavel').options).forEach(o => {
+                        if (o.value == articleParticipante.id) {
+                            o.remove();
+                        }
+                    });
                 }
             }
-        })
+        });
 
         modalParticipantes.querySelector('#btnAdicionarParticipante').onclick = () => {
             interactModal('modalAdicionarParticipante', 'modalParticipantes');
@@ -166,10 +172,15 @@ export async function initDetalhesProjeto(id_projeto) {
                 interactModal('modalAdicionarParticipante', 'modalParticipantes');
             }
 
-            modalAdicionarParticipante.querySelector('#btnAdicionar').onclick = async () => {
+            let btnAdicionar = modalAdicionarParticipante.querySelector('#btnAdicionar');
+
+            btnAdicionar.onclick = async () => {
                 let info = modalAdicionarParticipante.querySelector('#info');
 
                 if (select_participante.selectedIndex !== 0) {
+
+                    btnAdicionar.disabled = true;
+
                     let option = select_participante.options[select_participante.selectedIndex];
                     let participante = {
                         id: option.value, usuario: option.textContent
@@ -184,9 +195,12 @@ export async function initDetalhesProjeto(id_projeto) {
                     if (response.success) {
 
                         select_participante.selectedIndex = 0;
+                        btnAdicionar.disabled = false;
                         option.disabled = true;
 
                         selectResponsavel.insertAdjacentHTML('beforeend', '<option value="' + participante.id + '">' + participante.usuario + '</option>');
+                        modalAdicionarEquipe.querySelector('#select_responsavel').insertAdjacentHTML('beforeend',
+                            '<option value="' + participante.id + '">' + participante.usuario + '</option>');
                         section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
                         info.textContent = 'Participante adicionado';
                         setTimeout(() => {
@@ -477,15 +491,12 @@ export async function initDetalhesProjeto(id_projeto) {
 
             let inputNome = modalAdicionarEquipe.querySelector('#input_nome');
             let textAreaDescricao = modalAdicionarEquipe.querySelector('#textArea_descricao');
-            let selectResponsavel = modalAdicionarEquipe.querySelector('#select_responsavel');
+            let selectResponsavelEquipe = modalAdicionarEquipe.querySelector('#select_responsavel');
 
             inputNome.value = '';
             textAreaDescricao.value = '';
-            selectResponsavel.selectedIndex = 0;
+            selectResponsavelEquipe.selectedIndex = 0;
             info.textContent = '';
-
-            selectResponsavel.innerHTML = '<option value="" disabled selected>Selecione um responsável</option>';
-            selectResponsavel.innerHTML += '<option value="' + usuarioLogado.id + '">' + usuarioLogado.usuario + '</option>';
 
             let btnConcluir = modalAdicionarEquipe.querySelector('#btnConcluir')
 
@@ -651,7 +662,7 @@ export async function initDetalhesProjeto(id_projeto) {
 
         btnSalvar.disabled = false;
         articleDetalhes.style.borderColor = "rgba(5, 104, 230, 0.75)";
-    }
+    };
 
     btnSalvar.onclick = async () => {
 

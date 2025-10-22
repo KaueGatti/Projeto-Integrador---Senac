@@ -20,36 +20,34 @@ class Usuario
 
     public function create(): array
     {
-        $erros = [];
+        try {
+            $senhaHash = password_hash($this->senha, PASSWORD_DEFAULT);
+            $id = $this->gerarIdUnico();
+            $sql = "CALL CREATE_USUARIO(:id, :email, :usuario, :senha);";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":email", $this->email);
+            $stmt->bindParam(":usuario", $this->usuario);
+            $stmt->bindParam(":senha", $senhaHash);
 
-        if (!$this->usuarioIsValido($this)) {
-            $erros['usuario'] = "Usuário inválido";
+            if ($stmt->execute()) {
+                return [
+                    "success" => true,
+                    "message" => "Usuario cadastrado com sucesso!"
+                ];
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
         }
 
-        if (!$this->emailIsValido($this)) {
-            $erros['email'] = "E-mail já cadastrado";
-        }
-
-        if (!$this->senhaIsValido($this)) {
-            $erros['senha'] = "Senhas diferentes, tente novamente.";
-        }
-
-        if (!empty($erros)) {
-            return $erros;
-        }
-
-        $senhaHash = password_hash($this->senha, PASSWORD_DEFAULT);
-        $id = $this->gerarIdUnico();
-        $sql = "CALL CREATE_USUARIO(:id, :email, :usuario, :senha);";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":usuario", $this->usuario);
-        $stmt->bindParam(":senha", $senhaHash);
-
-        $stmt->execute();
-
-        return [];
+        return [
+            "success" => false,
+            "message" => 'Erro desconhecido ao cadastrar usuario!'
+        ];
     }
 
     function gerarId(): string
@@ -114,23 +112,42 @@ class Usuario
         return true;
     }
 
-    public function login($login)
+    public function login()
     {
-        $sql = "CALL READ_USUARIO_BY_EMAIL(:email)";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindParam(':email', $login['email']);
-        $stmt->execute();
-        $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+        try {
 
-        if (!$usuario) {
-            return null;
+            $sql = "CALL READ_USUARIO_BY_EMAIL(:email)";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':email', $this->email);
+
+            $stmt->execute();
+
+            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if ($usuario) {
+                if (password_verify($this->senha, $usuario->senha)) {
+                    session_start();
+                    $_SESSION['usuario'] = $usuario;
+                    return [
+                        "sucesso" => true,
+                        "message" => 'Usuario logado com sucesso!'
+                    ];
+                }
+            }
+
+            return [
+                "sucesso" => false,
+                "message" => 'Email ou senha incorretos!'
+            ];
+
+        } catch (PDOException $e) {
+            http_response_code(500);
+            return [
+                "sucesso" => false,
+                "message" => $e->getMessage()
+            ];
         }
 
-        if (password_verify($login['senha'], $usuario->senha)) {
-            return $usuario;
-        } else {
-            return null;
-        }
     }
 
     public function update()
@@ -197,7 +214,7 @@ class Usuario
             }
         } catch (PDOException $e) {
             return [
-               'success' => false,
+                'success' => false,
                 'message' => $e->getMessage(),
                 'data' => []
             ];

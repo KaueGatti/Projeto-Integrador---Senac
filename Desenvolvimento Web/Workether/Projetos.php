@@ -24,7 +24,6 @@ if (count($projects) == 0) {
         <h1>Projetos</h1>
     </div>
     <div id="divPesquisa">
-        <input type="text" name="pesquisa" id="inputPesquisa" placeholder="Pesquisar">
         <button id="btnAdicionarProjeto">+ Novo Projeto</button>
     </div>
     <section class="sectionProjetos">

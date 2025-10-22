@@ -37,10 +37,10 @@ function conectar() {
         let sectionMensagens = document.querySelector('.sectionMensagens');
         let message = typeof e.data === 'string' ? e.data : await e.data.text();
         message = JSON.parse(message);
-        if (!(message.id_usuario == document.querySelector('.usuarioLogado').id)) {
+        if (message.id_usuario != document.querySelector('.usuarioLogado').id) {
             sectionMensagens.insertAdjacentHTML('beforeend', articleMensagem('', message));
-            sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
         }
+        sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
     };
 
     return socket;

@@ -84,7 +84,7 @@
     font-weight: bold;
 }
 
-#btnAlterarSenha {
+#btnAlterarSenha, #btnSair {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,4 +102,9 @@
 #btnAlterarSenha:hover {
     background-color: rgb(5, 104, 230);
     cursor: pointer;
+}
+
+#btnSair:hover {
+    cursor: pointer;
+    background-color: rgba(225, 43, 38, 0.96);
 }

@@ -83,6 +83,13 @@ div {
     flex: 1;
 }
 
+#info {
+    font-size: 36px;
+    align-self: center;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
 .articleConversa:first-of-type {
     margin-top: 30px;
 }
@@ -146,7 +153,7 @@ div {
 .divTitulo {
     width: 100%;
     margin-top: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .divTitulo img {
@@ -196,14 +203,25 @@ div {
     filter: brightness(0.9);
 }
 
+.modal button:disabled:hover {
+    filter: none;
+    cursor: default;
+}
+
+.modal button:disabled {
+    opacity: 0.7;
+}
+
 .modal button img {
     margin-left: 20px;
     width: 30px;
 }
 
-#modalConversas #info {
-    width: 100%;
+#modalConversas #infoModal {
+    font-size: 18px;
     text-align: center;
-    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    font-weight: 700;
 }
 
