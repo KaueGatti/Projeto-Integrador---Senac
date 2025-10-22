@@ -50,8 +50,19 @@ export async function initDetalhesTarefa(id_tarefa) {
 
     let inputDataConclusao = document.querySelector('#inputDataConclusao');
     let info = articleDetalhes.querySelector('#info');
+    let btnExcluir = document.querySelector('#btnExcluir');
+    let btnConcluir = document.querySelector('#btnConcluir');
     let btnEditar = document.querySelector('#btnEditar');
     let btnSalvar = document.querySelector('#btnSalvar');
+
+    let modalExcluir = document.querySelector('#modalExcluir');
+    let btnCancelarModalExcluir = modalExcluir.querySelector('#btnCancelarModalExcluir');
+    let btnExcluirModalExcluir = modalExcluir.querySelector('#btnExcluirModalExcluir');
+
+    let modalConcluir = document.querySelector('#modalConcluir');
+    let inputDataModalConcluir = document.querySelector('#inputDataModalConcluir');
+    let btnCancelarModalConcluir = modalConcluir.querySelector('#btnCancelarModalConcluir');
+    let btnConcluirModalConcluir = modalConcluir.querySelector('#btnConcluirModalConcluir');
 
     inputDataConclusao.min = new Date().toISOString().split("T")[0];
 
@@ -80,14 +91,68 @@ export async function initDetalhesTarefa(id_tarefa) {
         inputResponsavel.value = tarefa.usuario_responsavel;
 
         inputDataConclusao.value = tarefa.dataAtualConclusao;
+
+        inputDataModalConcluir.min = tarefa.dataCriacao;
+
+        console.log(tarefa.status);
+
+        if (tarefa.status == 'Concluida') {
+            btnConcluir.style.display = 'none';
+            btnEditar.style.display = 'none';
+            btnSalvar.style.display = 'none';
+        }
+    }
+
+    btnExcluir.onclick = () => {
+        interactModal('modalExcluir', 'sectionDetalhes');
+
+        btnCancelarModalExcluir.onclick = () => {
+            interactModal('modalExcluir', 'sectionDetalhes');
+        }
+
+        btnExcluirModalExcluir.onclick = async () => {
+            let form = new FormData();
+
+            form.append('id_tarefa', id_tarefa);
+
+            let responseExcluir = await request('../API/Tarefa/deleteTarefa.php', {method: 'POST', body: form});
+
+            if (responseExcluir.success) {
+                await initTarefas('', null);
+            }
+
+            console.log(responseExcluir);
+        }
+    }
+
+    btnConcluir.onclick = () => {
+        interactModal('modalConcluir', 'sectionDetalhes');
+
+        btnCancelarModalConcluir.onclick = () => {
+            interactModal('modalConcluir', 'sectionDetalhes');
+        }
+
+        btnConcluirModalConcluir.onclick = async () => {
+            let form = new FormData();
+            form.append('id_tarefa', id_tarefa);
+            form.append('dataConclusao', inputDataModalConcluir.value);
+
+            let responseConcluir = await request('../API/Tarefa/concluirTarefa.php', {method: 'POST', body: form});
+
+            if (responseConcluir.success) {
+                await initTarefas('', null);
+            }
+        }
     }
 
     btnEditar.onclick = () => {
         inputNome.disabled = false;
         textAreaDescricao.disabled = false;
         inputDataConclusao.disabled = false;
-        btnSalvar.disabled = false;
+        btnExcluir.disabled = true;
+        btnConcluir.disabled = true;
         btnEditar.disabled = true;
+        btnSalvar.disabled = false;
 
         inputNome.focus();
 
@@ -110,7 +175,10 @@ export async function initDetalhesTarefa(id_tarefa) {
             form.append('tarefa[descricao]', tarefa.descricao);
             form.append('tarefa[dataAtualConclusao]', tarefa.dataAtualConclusao);
 
-            let responseAtualizacaoTarefa = await request('../API/Tarefa/updateTarefa.php', {method: 'POST', body: form});
+            let responseAtualizacaoTarefa = await request('../API/Tarefa/updateTarefa.php', {
+                method: 'POST',
+                body: form
+            });
 
             if (responseAtualizacaoTarefa.success) {
                 info.textContent = 'Tarefa atualizada com sucesso!';
@@ -119,8 +187,10 @@ export async function initDetalhesTarefa(id_tarefa) {
                 inputNome.disabled = true;
                 textAreaDescricao.disabled = true;
                 inputDataConclusao.disabled = true;
-                btnSalvar.disabled = true;
+                btnExcluir.disabled = false;
+                btnConcluir.disabled = false;
                 btnEditar.disabled = false;
+                btnSalvar.disabled = true;
 
             }
 

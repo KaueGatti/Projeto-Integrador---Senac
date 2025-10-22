@@ -36,10 +36,30 @@
                 <label for="inputDataConclusao">Data para conclusão</label>
             </div>
             <p id="info"></p>
-            <div class="divEditar_Salvar">
+            <div class="divExcluir_Concluir_Editar_Salvar">
+                <button class="buttonRed" id="btnExcluir">Excluir</button>
+                <button class="buttonGreen" id="btnConcluir">Concluir</button>
                 <button id="btnEditar">Editar</button>
                 <button id="btnSalvar" disabled>Salvar</button>
             </div>
         </article>
     </section>
+    <div class="modal" id="modalExcluir">
+        <h1>Tem certeza que deseja excluir essa tarefa?</h1>
+        <div class="divCancelar_Excluir">
+            <button class="buttonBlue" id="btnCancelarModalExcluir">Cancelar</button>
+            <button class="buttonRed" id="btnExcluirModalExcluir">Excluir</button>
+        </div>
+    </div>
+    <div class="modal" id="modalConcluir">
+        <h1>Qual a data de conclusão dessa tarefa?</h1>
+        <div class="input-group" id="divDataModalConcluir">
+            <input type="date" id="inputDataModalConcluir">
+            <label for="inputDataModalConcluir">Data de conclusão</label>
+        </div>
+        <div class="divCancelar_Concluir">
+            <button class="buttonBlue" id="btnCancelarModalConcluir">Cancelar</button>
+            <button class="buttonGreen" id="btnConcluirModalConcluir">Concluir</button>
+        </div>
+    </div>
 </section>

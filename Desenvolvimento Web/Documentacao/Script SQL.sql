@@ -403,10 +403,27 @@ BEGIN
 	INSERT INTO Tarefa (id_projeto, id_equipe, id_usuario, nome, descricao, dataCriacao, dataInicialConclusao, dataAtualConclusao, dataConclusao, status)
     VALUES (_id_projeto, _id_equipe, _id_usuario, _nome, _descricao, CURDATE(), _dataInicialConclusao, _dataInicialConclusao, NULL, 'Em andamento');
 END $
+DELIMITER ; 
+
+DELIMITER $
+CREATE PROCEDURE DELETE_TAREFA (_id_tarefa INT)
+BEGIN
+	DELETE FROM Tarefa
+    WHERE id = _id_tarefa;
+END $
 DELIMITER ;
 
 DELIMITER $
 CREATE PROCEDURE UPDATE_TAREFA (_id_tarefa INT, _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE)
+BEGIN
+	UPDATE Tarefa
+    SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao
+    WHERE Tarefa.id = _id_tarefa;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE CONCLUIR_TAREFA (_id_tarefa INT, _dataConclusao DATE)
 BEGIN
 	UPDATE Tarefa
     SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao
@@ -451,6 +468,8 @@ BEGIN
     WHERE Tarefa.id_equipe = _id_equipe;
 END $
 DELIMITER ;
+
+
 
 DELIMITER $
 CREATE PROCEDURE CREATE_COMENTARIO_PROJETO (_id_usuario VARCHAR(7), _id_projeto INT, _texto VARCHAR(255))

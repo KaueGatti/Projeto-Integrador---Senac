@@ -6,13 +6,29 @@ session_start();
 
 $controller = new TarefaController();
 
-$tarefas = [];
+$tarefasEmAndamento = [];
+$tarefasConcluidas = [];
+$tarefasAtrasadas = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $tarefas = $controller->readTarefasByUsuario($_SESSION['usuario']->id)['data'];
 } else if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["id_projeto"])) {
         $tarefas = $controller->readTarefasByProjeto($_POST['id_projeto'])['data'];
+    }
+}
+
+foreach ($tarefas as $tarefa) {
+    if ($tarefa->status == 'Concluída') {
+        array_push($tarefasConcluidas, $tarefa);
+    }
+
+    if ($tarefa->status == 'Atrasada') {
+        array_push($tarefasAtrasadas, $tarefa);
+    }
+
+    if ($tarefa->status == 'Em andamento') {
+        array_push($tarefasEmAndamento, $tarefa);
     }
 }
 
@@ -32,15 +48,39 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <p id="info">Você não possui nenhuma tarefa</p>
     <?php endif;?>
     <section class="sectionTarefas">
-        <?php foreach ($tarefas as $tarefa) : ?>
+        <?php foreach ($tarefasAtrasadas as $tarefa) : ?>
             <article class="articleTarefa" id="<?= $tarefa->id ?>">
                 <h1 id="nome_tarefa"><?= $tarefa->nome ?></h1>
                 <p class="pDescricao"><?= $tarefa->descricao ?></p>
-                <p class="pData">Data para conclusão: <?= $tarefa->dataAtualConclusao ?></p>
+                <p class="pData">Data para conclusão: <?= DateTime::createFromFormat('Y-m-d', $tarefa->dataAtualConclusao)->format('d/m/Y'); ?></p>
+                <div class="divStatus">
+                    <img src="Icones/User.png" alt="">
+                    <p class="pResponsavel"><?= $tarefa->usuario_responsavel ?></p>
+                    <p class="pStatus" id="pAtrasado"><?= $tarefa->status ?></p>
+                </div>
+            </article>
+        <?php endforeach; ?>
+        <?php foreach ($tarefasEmAndamento as $tarefa) : ?>
+            <article class="articleTarefa" id="<?= $tarefa->id ?>">
+                <h1 id="nome_tarefa"><?= $tarefa->nome ?></h1>
+                <p class="pDescricao"><?= $tarefa->descricao ?></p>
+                <p class="pData">Data para conclusão: <?= DateTime::createFromFormat('Y-m-d', $tarefa->dataAtualConclusao)->format('d/m/Y'); ?></p>
                 <div class="divStatus">
                     <img src="Icones/User.png" alt="">
                     <p class="pResponsavel"><?= $tarefa->usuario_responsavel ?></p>
                     <p class="pStatus" id="pEmAndamento"><?= $tarefa->status ?></p>
+                </div>
+            </article>
+        <?php endforeach; ?>
+        <?php foreach ($tarefasConcluidas as $tarefa) : ?>
+            <article class="articleTarefa" id="<?= $tarefa->id ?>">
+                <h1 id="nome_tarefa"><?= $tarefa->nome ?></h1>
+                <p class="pDescricao"><?= $tarefa->descricao ?></p>
+                <p class="pData">Data de conclusão: <?= DateTime::createFromFormat('Y-m-d', $tarefa->dataConclusao)->format('d/m/Y'); ?></p>
+                <div class="divStatus">
+                    <img src="Icones/User.png" alt="">
+                    <p class="pResponsavel"><?= $tarefa->usuario_responsavel ?></p>
+                    <p class="pStatus" id="pConcluido"><?= $tarefa->status ?></p>
                 </div>
             </article>
         <?php endforeach; ?>

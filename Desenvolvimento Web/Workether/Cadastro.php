@@ -35,7 +35,7 @@
                 <input id="input_confirmar_senha" type="password" placeholder=" " required>
                 <label for="input_confirmar_senha">Confirmar senha</label>
             </div>
-            <p id="info">Texto teste para testar</p>
+            <p id="info"></p>
             <p id="pJaPossuiCadastro">Já possui cadastro? <a href="Login.php" id="login">Login</a></p>
             <button id="btnCadastrar">Cadastrar</button>
         </div>

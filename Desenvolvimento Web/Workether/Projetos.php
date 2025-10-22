@@ -35,7 +35,7 @@ if (count($projects) == 0) {
                     <p><?= $project->descricao ?></p>
                 </div>
                 <div class="divInfo">
-                    <p class="pData">Data para conclusão: <?= $project->dataAtualConclusao ?></p>
+                    <p class="pData">Data para conclusão: <?= DateTime::createFromFormat('Y-m-d', $project->dataAtualConclusao)->format('d/m/Y'); ?></p>
                     <div class="divResponsavel">
                         <img src="Icones/User.png" alt="">
                         <p><?= $project->usuario_responsavel ?></p>

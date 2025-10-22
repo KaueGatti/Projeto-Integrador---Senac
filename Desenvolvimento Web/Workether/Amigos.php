@@ -26,7 +26,6 @@ $amizades = $controller->readAllAmizadesByUsuario($_SESSION['usuario']->id);
         <?php endif;?>
         <p id="id_usuario" hidden><?= $_SESSION['usuario']->id ?></p>
         <p id="usuario" hidden><?= $_SESSION['usuario']->usuario ?></p>
-        <?php if (empty($amizades)) echo '<p id="info">Você ainda não tem nenhum amigo</p>'?>
         <?php foreach ($amizades as $amizade) : ?>
             <article class="articleAmigo">
                 <img src="Icones/Amigo.png" alt="">

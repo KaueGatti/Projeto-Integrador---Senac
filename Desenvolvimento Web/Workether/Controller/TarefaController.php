@@ -44,4 +44,15 @@ class TarefaController
         $this->tarefa->dataInicialConclusao = $tarefa['data_inicial_conclusao'];
         return $this->tarefa->create();
     }
+
+    public function deleteTarefa($id_tarefa) {
+        $this->tarefa->id = $id_tarefa;
+        return $this->tarefa->delete();
+    }
+
+    public function concluirTarefa($id_tarefa, $dataConclusao) {
+        $this->tarefa->id = $id_tarefa;
+        $this->tarefa->dataConclusao = $dataConclusao;
+        return $this->tarefa->concluir();
+    }
 }

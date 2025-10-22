@@ -145,6 +145,32 @@ class Tarefa
         ];
     }
 
+    public function delete()
+    {
+        try {
+            $sql = 'CALL DELETE_TAREFA(:id_tarefa)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_tarefa', $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Tarefa deletada com sucesso!'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao deletar tarefa!'
+        ];
+    }
+
     public function update()
     {
         try {
@@ -171,6 +197,32 @@ class Tarefa
         return [
             'success' => false,
             'message' => 'Erro desconhecido ao atualizar tarefa!'
+        ];
+    }
+
+    public function concluir() {
+        try {
+            $sql = 'CALL CONCLUIR_TAREFA(:id_tarefa, :dataConclusao)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_tarefa', $this->id);
+            $stmt->bindParam(':dataConclusao', $this->dataConclusao);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Tarefa concluida com sucesso!'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao concluir tarefa!'
         ];
     }
 }

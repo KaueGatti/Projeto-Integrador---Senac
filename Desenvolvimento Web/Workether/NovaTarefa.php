@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="date" id="inputDataConclusao" placeholder=" ">
                 <label for="inputDataConclusao">Data para conclusão</label>
             </div>
-            <p id="info">Texto teste para testar no teste</p>
+            <p id="info"></p>
             <div class="divCancelar_Concluir">
                 <button id="btnCancelar">Cancelar</button>
                 <button id="btnConcluir">Concluir</button>
