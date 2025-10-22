@@ -3,14 +3,7 @@ import {initConversa_Chat} from "./Conversa_Chat.js";
 
 function articleConversa(conversa) {
     return `<article class="articleConversa" id="${conversa.id}">
-                <div id="divUsuario_Mensagem">
                     <h1>${conversa.usuario}</h1>
-                    <p>Última mensagem enviada...</p>
-                </div>
-                <div class="divHorario">
-                    <p>20/02/2020</p>
-                    <p>20:20</p>
-                </div>
             </article>`;
 }
 

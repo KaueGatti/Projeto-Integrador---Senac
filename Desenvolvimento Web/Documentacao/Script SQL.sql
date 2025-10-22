@@ -505,13 +505,13 @@ BEGIN
     
     SELECT DISTINCT Conversa.*, 
     CASE 
-        WHEN Conversa.id_usuarioA = _id_usuario THEN UsuarioB.usuario
+        WHEN Conversa.id_usuarioA = _id_usuarioB THEN UsuarioB.usuario
         ELSE UsuarioA.usuario
     END AS usuario
 	FROM Conversa
 	JOIN Usuario AS UsuarioA ON UsuarioA.id = Conversa.id_usuarioA
 	JOIN Usuario AS UsuarioB ON UsuarioB.id = Conversa.id_usuarioB
-	WHERE Conversa.id = LAST_INSERT_ID(); 
+	WHERE Conversa.id = LAST_INSERT_ID();
 END $
 DELIMITER ;
 

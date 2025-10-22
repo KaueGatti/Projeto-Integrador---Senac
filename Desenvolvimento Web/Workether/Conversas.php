@@ -29,14 +29,7 @@ $amizades = $amizadeController->readAllAmizadesByUsuario($_SESSION['usuario']->i
         <?php endif; ?>
         <?php foreach ($conversas as $conversa) : ?>
             <article class="articleConversa" id="<?= $conversa->id ?>">
-                <div id="divUsuario_Mensagem">
-                    <h1><?= $conversa->usuario ?></h1>
-                    <p>Última mensagem enviada...</p>
-                </div>
-                <div class="divHorario">
-                    <p>20/02/2020</p>
-                    <p>20:20</p>
-                </div>
+                <h1><?= $conversa->usuario ?></h1>
             </article>
         <?php endforeach; ?>
     </section>
