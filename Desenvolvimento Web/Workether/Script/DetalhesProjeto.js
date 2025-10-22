@@ -86,6 +86,8 @@ export async function initDetalhesProjeto(id_projeto) {
     let inputDataConclusao = document.querySelector('.divDataConclusao_Tarefas_Comentarios #inputDataConclusao');
     let btnComentarios = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnComentarios');
     let info = articleDetalhes.querySelector('#info');
+    let btnExcluir = document.querySelector('#btnExcluir');
+    let btnConcluir = document.querySelector('#btnConcluir');
     let btnEditar = document.querySelector('.divEditar_Salvar #btnEditar');
     let btnSalvar = document.querySelector('.divEditar_Salvar #btnSalvar');
 
@@ -121,6 +123,27 @@ export async function initDetalhesProjeto(id_projeto) {
 
     let modalComentarios = document.querySelector('#modalComentarios');
     let modalAdicionarComentario = document.querySelector('#modalAdicionarComentario');
+
+    let modalExcluir = document.querySelector('#modalExcluir');
+    let btnCancelarModalExcluir = modalExcluir.querySelector('#btnCancelarModalExcluir');
+    let btnExcluirModalExcluir = modalExcluir.querySelector('#btnExcluirModalExcluir');
+
+    let modalConcluir = document.querySelector('#modalConcluir');
+    let inputDataModalConcluir = document.querySelector('#inputDataModalConcluir');
+    let btnCancelarModalConcluir = modalConcluir.querySelector('#btnCancelarModalConcluir');
+    let btnConcluirModalConcluir = modalConcluir.querySelector('#btnConcluirModalConcluir');
+
+    inputDataModalConcluir.min = document.querySelector('#dataCriacao').textContent;
+
+    if (document.querySelector('#status').textContent == 'Concluido') {
+        btnConcluir.style.display = 'none';
+        btnEditar.style.display = 'none';
+        btnSalvar.style.display = 'none';
+
+        if (document.querySelector('#id_responsavel').textContent == usuarioLogado.id) {
+            btnExcluir.style.display = 'none';
+        }
+    }
 
     btnParticipantes.addEventListener('click', async function () {
 
@@ -648,6 +671,54 @@ export async function initDetalhesProjeto(id_projeto) {
     });
 
     inputDataConclusao.min = new Date().toISOString().split("T")[0];
+
+    btnExcluir.onclick = () => {
+        interactModal('modalExcluir', 'sectionDetalhes');
+
+        btnCancelarModalExcluir.onclick = () => {
+            interactModal('modalExcluir', 'sectionDetalhes');
+        }
+
+        btnExcluirModalExcluir.onclick = async () => {
+            let form = new FormData();
+
+            form.append('id_projeto', id_projeto);
+
+            let responseExcluir = await request('../API/Projeto/deleteProjeto.php', {method: 'POST', body: form});
+
+            if (responseExcluir.success) {
+                await initProjetos('', null);
+            }
+        }
+    }
+
+    btnConcluir.onclick = () => {
+        interactModal('modalConcluir', 'sectionDetalhes');
+
+        btnCancelarModalConcluir.onclick = () => {
+            interactModal('modalConcluir', 'sectionDetalhes');
+        }
+
+        btnConcluirModalConcluir.onclick = async () => {
+
+            inputDataModalConcluir.required = true;
+
+            if (!inputDataModalConcluir.checkValidity() || inputDataModalConcluir.value === '') {
+                inputDataModalConcluir.reportValidity();
+                return;
+            }
+
+            let form = new FormData();
+            form.append('id_projeto', id_projeto);
+            form.append('dataConclusao', inputDataModalConcluir.value);
+
+            let responseConcluir = await request('../API/Projeto/concluirProjeto.php', {method: 'POST', body: form});
+
+            if (responseConcluir.success) {
+                await initProjetos('', null);
+            }
+        }
+    }
 
     btnEditar.onclick = () => {
 

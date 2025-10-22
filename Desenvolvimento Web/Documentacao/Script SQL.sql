@@ -245,10 +245,35 @@ END $
 DELIMITER ;
 
 DELIMITER $
+CREATE PROCEDURE DELETE_PROJETO (_id_projeto INT)
+BEGIN
+
+	DELETE FROM Tarefa
+	WHERE id_projeto = _id_projeto;
+
+	DELETE FROM Usuario_Projeto
+    WHERE id_projeto = _id_projeto;
+
+	DELETE FROM Projeto
+    WHERE id = _id_projeto;
+    
+END $
+DELIMITER ;
+
+DELIMITER $
 CREATE PROCEDURE UPDATE_PROJETO (_id_projeto INT, _id_responsavel VARCHAR(7), _nome VARCHAR(150), _descricao VARCHAR(255), _dataAtualConclusao DATE, _dataConclusao DATE, _status VARCHAR(30))
 BEGIN
 	UPDATE Projeto
     SET id_responsavel = _id_responsavel, nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao, dataConclusao = _dataConclusao, status = _status
+    WHERE Projeto.id = _id_projeto;
+END $
+DELIMITER ;
+
+DELIMITER $
+CREATE PROCEDURE CONCLUIR_PROJETO (_id_projeto INT, _dataConclusao DATE)
+BEGIN
+	UPDATE Projeto
+    SET dataConclusao = _dataConclusao, status = 'Concluido'
     WHERE Projeto.id = _id_projeto;
 END $
 DELIMITER ;
@@ -426,7 +451,7 @@ DELIMITER $
 CREATE PROCEDURE CONCLUIR_TAREFA (_id_tarefa INT, _dataConclusao DATE)
 BEGIN
 	UPDATE Tarefa
-    SET nome = _nome, descricao = _descricao, dataAtualConclusao = _dataAtualConclusao
+    SET dataConclusao = _dataConclusao, status = 'Concluida'
     WHERE Tarefa.id = _id_tarefa;
 END $
 DELIMITER ;

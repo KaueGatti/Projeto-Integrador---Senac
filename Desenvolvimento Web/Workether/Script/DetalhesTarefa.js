@@ -40,6 +40,8 @@ export async function initDetalhesTarefa(id_tarefa) {
 
     let articleDetalhes = document.querySelector('.articleDetalhes');
 
+    let usuarioLogado = document.querySelector('.usuarioLogado');
+
     // Inputs
 
     let inputNome = document.querySelector('#input_nome');
@@ -94,12 +96,14 @@ export async function initDetalhesTarefa(id_tarefa) {
 
         inputDataModalConcluir.min = tarefa.dataCriacao;
 
-        console.log(tarefa.status);
-
         if (tarefa.status == 'Concluida') {
             btnConcluir.style.display = 'none';
             btnEditar.style.display = 'none';
             btnSalvar.style.display = 'none';
+
+            if (tarefa.id_responsavel == usuarioLogado.id) {
+                btnExcluir.style.display = 'none';
+            }
         }
     }
 
@@ -133,6 +137,14 @@ export async function initDetalhesTarefa(id_tarefa) {
         }
 
         btnConcluirModalConcluir.onclick = async () => {
+
+            inputDataModalConcluir.required = true;
+
+            if (!inputDataModalConcluir.checkValidity() || inputDataModalConcluir.value === '') {
+                inputDataModalConcluir.reportValidity();
+                return;
+            }
+
             let form = new FormData();
             form.append('id_tarefa', id_tarefa);
             form.append('dataConclusao', inputDataModalConcluir.value);

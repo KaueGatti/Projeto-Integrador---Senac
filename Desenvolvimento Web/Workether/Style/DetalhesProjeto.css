@@ -117,19 +117,33 @@ div {
     width: 30%;
 }
 
-#btnEditar, #btnSalvar {
+.divExcluir_Concluir_Editar_Salvar {
+    display: flex;
+    justify-content: end;
+    margin-top: auto;
+    width: 100%;
+}
+
+
+#btnEditar, #btnSalvar, #btnExcluir, #btnConcluir {
     height: 35px;
     width: 150px;
     color: white;
     font-size: 20px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius:  10px;
     transition: 0.3s;
 }
 
+#btnConcluir{
+    margin-left: 20px;
+}
+
+
 #btnEditar {
     margin-right: 20px;
+    margin-left: auto;
     background-color: rgba(5, 104, 230, 0.75);
 }
 
@@ -144,6 +158,60 @@ button {
 button:hover {
     filter: brightness(0.9);
     cursor: pointer;
+}
+
+#modalExcluir {
+    width: 300px;
+    height: auto;
+    padding: 30px;
+}
+
+#modalExcluir h1 {
+    font-size: 20px;
+    text-align: center;
+    word-break: break-word;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#btnExcluirModalExcluir, #btnCancelarModalExcluir {
+    height: 40px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#btnExcluirModalExcluir {
+    margin-left: 20px;
+}
+
+#modalConcluir {
+    width: 450px;
+    height: auto;
+    padding: 30px;
+}
+
+#modalConcluir h1 {
+    font-size: 22px;
+    text-align: center;
+    word-break: break-word;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#modalConcluir #divDataModalConcluir {
+    margin-bottom: 20px;
+}
+
+#btnConcluirModalConcluir, #btnCancelarModalConcluir {
+    height: 40px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#btnConcluirModalConcluir {
+    margin-left: 20px;
 }
 
 

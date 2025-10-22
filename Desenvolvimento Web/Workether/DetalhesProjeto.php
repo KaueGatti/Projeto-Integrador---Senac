@@ -68,6 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <section class="sectionDetalhes" id="sectionDetalhes">
         <article class="articleDetalhes" id="articleDetalhes">
             <p id="projetoID" hidden=""><?= $projeto->id ?></p>
+            <p id="dataCriacao" hidden=""><?= $projeto->dataCriacao ?></p>
+            <p id="status" hidden=""><?= $projeto->status ?></p>
+            <p id="id_responsavel" hidden=""><?= $projeto->id_responsavel ?></p>
             <div class="input-group" id="divInputNome">
                 <input type="text" id="inputNome" name="nome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
                 <label for="nome">Nome</label>
@@ -104,7 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <button class="buttonGray" id="btnChat">Chat</button>
             <p id="info"></p>
-            <div class="divEditar_Salvar">
+            <div class="divExcluir_Concluir_Editar_Salvar">
+                <button class="buttonRed" id="btnExcluir">Excluir</button>
+                <button class="buttonGreen" id="btnConcluir">Concluir</button>
                 <button id="btnEditar">Editar</button>
                 <button id="btnSalvar" disabled>Salvar</button>
             </div>
@@ -323,4 +328,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <button id="btnAdicionar">Adicionar</button>
     </div>
     <!-- Novo Projeto -> Equipes -> Detalhes da Equipe -> Participantes -->
+
+    <div class="modal" id="modalExcluir">
+        <h1>Tem certeza que deseja excluir esse projeto?</h1>
+        <div class="divCancelar_Excluir">
+            <button class="buttonBlue" id="btnCancelarModalExcluir">Cancelar</button>
+            <button class="buttonRed" id="btnExcluirModalExcluir">Excluir</button>
+        </div>
+    </div>
+    <div class="modal" id="modalConcluir">
+        <h1>Qual a data de conclusão desse projeto?</h1>
+        <div class="input-group" id="divDataModalConcluir">
+            <input type="date" id="inputDataModalConcluir">
+            <label for="inputDataModalConcluir">Data de conclusão</label>
+        </div>
+        <div class="divCancelar_Concluir">
+            <button class="buttonBlue" id="btnCancelarModalConcluir">Cancelar</button>
+            <button class="buttonGreen" id="btnConcluirModalConcluir">Concluir</button>
+        </div>
+    </div>
 </section>

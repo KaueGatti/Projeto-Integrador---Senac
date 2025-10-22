@@ -215,5 +215,57 @@ class Projeto
             "message" => 'Erro desconhecido ao remover usuário do projeto!'
         ];
     }
+
+    public function concluir() {
+        try {
+            $sql = 'CALL CONCLUIR_PROJETO(:id_projeto, :dataConclusao)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_projeto', $this->id);
+            $stmt->bindParam(':dataConclusao', $this->dataConclusao);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Projeto concluido com sucesso!'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao concluir projeto!'
+        ];
+    }
+
+    public function delete()
+    {
+        try {
+            $sql = 'CALL DELETE_PROJETO(:id_projeto)';
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_projeto', $this->id);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'message' => 'Projeto deletado com sucesso!'
+                ];
+            }
+        } catch (PDOException $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'Erro desconhecido ao deletar projeto!'
+        ];
+    }
 }
 
