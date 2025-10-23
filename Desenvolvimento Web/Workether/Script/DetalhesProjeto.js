@@ -235,6 +235,12 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         }
 
+        Array.from(modalParticipantes.querySelectorAll('.articleParticipante')).forEach(p => {
+            if (p.id == document.querySelector('#id_responsavel').textContent) {
+                p.querySelector('.btnRemover').style.display = 'none';
+            }
+        })
+
     });
 
     btnEquipes.addEventListener('click', async function () {
@@ -313,6 +319,11 @@ export async function initDetalhesProjeto(id_projeto) {
                         let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
                         let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
 
+                        if (usuarioLogado.id != equipe.responsavel.id) {
+                            btnEditar.style.display = 'none';
+                            btnSalvar.style.display = 'none';
+                        }
+
                         participantesEquipe.forEach(participante => {
                             sectionParticipantesDetalhesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
                         });
@@ -342,6 +353,15 @@ export async function initDetalhesProjeto(id_projeto) {
                                 interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
                             }
 
+                            let btnAdicionarParticipante = modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante');
+
+                            if (usuarioLogado.id != equipe.responsavel.id) {
+                                btnAdicionarParticipante.style.display = 'none';
+                                Array.from(modalParticipantesDetalhesEquipe.querySelectorAll('.btnRemover')).forEach(btn => {
+                                    btnAdicionarParticipante.style.display = 'none';
+                                });
+                            }
+
                             sectionParticipantesDetalhesEquipe.addEventListener('click', async function (e) {
                                 if (e.target.classList.contains('btnRemover')) {
                                     e.target.disabled = true;
@@ -369,9 +389,9 @@ export async function initDetalhesProjeto(id_projeto) {
                                     console.log(responseDeleteUsuarioEquipe);
 
                                 }
-                            })
+                            });
 
-                            modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante').onclick = () => {
+                            btnAdicionarParticipante.onclick = () => {
                                 interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
 
                                 modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnFechar').onclick = () => {

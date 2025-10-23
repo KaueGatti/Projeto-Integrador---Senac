@@ -16,6 +16,7 @@ $comentarioController = new ComentarioController();
 
 $projeto = null;
 $responsavel = null;
+$isResponsavel = false;
 
 function formatarData($data_hora)
 {
@@ -46,6 +47,9 @@ function formatarHora($data_hora)
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET["id"])) {
         $projeto = $projetoController->readProjetoByID($_GET["id"])['data'];
+        if ($projeto->id_responsavel == $_SESSION["usuario"]->id) {
+            $isResponsavel = true;
+        }
         $participantes = $usuarioController->readAllUsuarioByProjeto($_GET["id"])['data'];
         $equipes = $equipeController->readAllEquipesByProjeto($_GET["id"])['data'];
         $comentarios = $comentarioController->readComentariosByProjeto($_GET["id"])['data'];
@@ -108,10 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <!-- /*<button class="buttonGray" id="btnChat">Chat</button> -->
             <p id="info"></p>
             <div class="divExcluir_Concluir_Editar_Salvar">
-                <button class="buttonRed" id="btnExcluir">Excluir</button>
-                <button class="buttonGreen" id="btnConcluir">Concluir</button>
-                <button id="btnEditar">Editar</button>
-                <button id="btnSalvar" disabled>Salvar</button>
+                <button class="buttonRed" id="btnExcluir" <?php if (!$isResponsavel) echo 'hidden' ?>>Excluir
+                </button>
+                <button class="buttonGreen" id="btnConcluir" <?php if (!$isResponsavel) echo 'hidden' ?>>Concluir
+                </button>
+                <button id="btnEditar" <?php if (!$isResponsavel) echo 'hidden' ?>>Editar</button>
+                <button id="btnSalvar" disabled <?php if (!$isResponsavel) echo 'hidden' ?>>Salvar</button>
             </div>
         </article>
     </section>
@@ -122,14 +128,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <h1>Participantes</h1>
             <img class="btnBack" id="btnFechar" src="Icones/Fechar.png" alt="">
         </div>
-        <button class="btnAdicionarParticipantes" id="btnAdicionarParticipante">+ Adicionar participante</button>
+        <button class="btnAdicionarParticipantes"
+                id="btnAdicionarParticipante" <?php if (!$isResponsavel) echo 'hidden' ?>>+ Adicionar participante
+        </button>
         <section class="sectionParticipantes" id="sectionParticipantes">
             <?php foreach ($participantes as $participante) : ?>
                 <article class="articleParticipante" id="<?= $participante->id ?>">
                     <p class="usuario_participante"><?= $participante->usuario ?></p>
-                    <?php if ($participante->id !== $projeto->id_responsavel) : ?>
-                        <img class="btnRemover" src="Icones/Remover.png" alt="">
-                    <?php endif; ?>
+                    <img class="btnRemover" src="Icones/Remover.png" alt="" <?php if (!$isResponsavel) echo 'hidden' ?>>
                 </article>
             <?php endforeach; ?>
         </section>
@@ -164,12 +170,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <img class="btnBack" id="btnFechar" src="Icones/Fechar.png"
                  alt="">
         </div>
-        <button class="btnAdicionarEquipe" id="btnAdicionarEquipe">+ Adicionar equipe</button>
+        <button class="btnAdicionarEquipe" id="btnAdicionarEquipe" <?php if (!$isResponsavel) echo 'hidden' ?>>+
+            Adicionar equipe
+        </button>
         <section class="sectionEquipes">
             <?php foreach ($equipes as $equipe) : ?>
                 <article class="articleEquipe" id="<?= $equipe->id ?>">
                     <p id="nome_equipe"><?= $equipe->nome ?></p>
-                    <img class="btnRemover" src="Icones/Remover.png" alt="">
+                    <img class="btnRemover" src="Icones/Remover.png" alt="" <?php if (!$isResponsavel) echo 'hidden' ?>>
                 </article>
             <?php endforeach; ?>
         </section>
@@ -210,13 +218,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <h1>Comentários</h1>
             <img id="btnFechar" class="btnBack" src="Icones/Fechar.png" alt="">
         </div>
-        <button class="buttonGreen" id="btnAdicionarComentario">+ Adicionar comentário</button>
+        <button class="buttonGreen" id="btnAdicionarComentario" <?php if (!$isResponsavel) echo 'hidden' ?>>+ Adicionar
+            comentário
+        </button>
         <section class="sectionComentarios">
             <?php foreach ($comentarios as $comentario) : ?>
                 <article class="articleComentario" id="<?= $comentario->id ?>">
                     <p class="textoComentario"><?= $comentario->texto ?></p>
                     <div class="divInfo">
-                        <img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">
+                        <img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png"
+                             alt="" <?php if (!$isResponsavel) echo 'hidden' ?>>
                         <p class="data"><?= formatarData($comentario->data_hora) ?></p>
                         <p class="hora"><?= formatarHora($comentario->data_hora) ?></p>
                         <div class="divUser">
