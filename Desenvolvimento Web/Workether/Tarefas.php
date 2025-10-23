@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 foreach ($tarefas as $tarefa) {
-    if ($tarefa->status == 'Concluída') {
+    if ($tarefa->status == 'Concluida') {
         array_push($tarefasConcluidas, $tarefa);
     }
 

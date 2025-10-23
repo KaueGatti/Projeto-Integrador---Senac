@@ -51,4 +51,15 @@ class ProjetoController
         $this->projeto->id = $id_projeto;
         return $this->projeto->deleteUsuario($id_usuario);
     }
+
+    public function deleteProjeto($id_projeto) {
+        $this->projeto->id = $id_projeto;
+        return $this->projeto->delete();
+    }
+
+    public function concluirProjeto($id_projeto, $dataConclusao) {
+        $this->projeto->id = $id_projeto;
+        $this->projeto->dataConclusao = $dataConclusao;
+        return $this->projeto->concluir();
+    }
 }
