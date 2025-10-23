@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 <button class="buttonOrange" id="btnComentarios">Comentários
                 </button>
             </div>
-            <button class="buttonGray" id="btnChat">Chat</button>
+            <!-- /*<button class="buttonGray" id="btnChat">Chat</button> -->
             <p id="info"></p>
             <div class="divExcluir_Concluir_Editar_Salvar">
                 <button class="buttonRed" id="btnExcluir">Excluir</button>
