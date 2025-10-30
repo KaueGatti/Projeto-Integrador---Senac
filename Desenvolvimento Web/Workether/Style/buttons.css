@@ -9,35 +9,35 @@
 }
 
 .buttonGreen {
-    background-color: #75CE70;
+    background-color: var(--green);
     color: white;
     border-radius: 10px;
     border: none;
 }
 
 .buttonRed {
-    background-color: #E65A55;
+    background-color: var(--red);
     color: white;
     border-radius: 10px;
     border: none;
 }
 
 .buttonOrange {
-    background-color: #E1B669;
+    background-color: var(--orange);
     color: white;
     border: none;
     border-radius: 10px;
 }
 
 .buttonGray {
-    background-color: rgba(44, 88, 143, 0.57);
+    background-color: var(--gray);
     color: white;
     border: none;
     border-radius: 10px;
 }
 
 .buttonBlue {
-    background-color: rgba(5, 104, 230, 0.75);
+    background-color: var(--blue);
     color: white;
     border: none;
     border-radius: 10px;

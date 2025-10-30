@@ -119,7 +119,7 @@ sectionNotificacoes.addEventListener('click', async e => {
     }
 
 
-})
+});
 
 Array.from(btnsAside).forEach(btn => {
     btn.onclick = () => {
@@ -186,4 +186,4 @@ logo.onclick = async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initPaginaInicial();
-})
+});

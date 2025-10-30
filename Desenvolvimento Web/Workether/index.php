@@ -10,6 +10,7 @@ include_once 'session.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Workether - Página Inicial</title>
+    <link rel="stylesheet" href="Style/colors.css">
     <link rel="stylesheet" href="Style/index.css">
 </head>
 <p class="usuarioLogado" id="<?= $_SESSION['usuario']->id ?>" hidden><?= $_SESSION['usuario']->usuario ?></p>
