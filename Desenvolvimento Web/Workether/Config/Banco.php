@@ -2,10 +2,10 @@
 
 class Banco
 {
-    private $host = "localhost:3316";
+    private $host = "localhost";
     private $banco = "workether";
     private $usuario = "root";
-    private $senha = "123456";
+    private $senha = "KaueLamp123";
     public $con;
 
     public function __construct(){
