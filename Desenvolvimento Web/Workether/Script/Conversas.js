@@ -1,4 +1,5 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+import {carregarComponente, interactModal, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 import {initConversa_Chat} from "./Conversa_Chat.js";
 
 function articleConversa(conversa) {
@@ -12,8 +13,6 @@ export async function initConversas() {
     await carregarComponente('Loading.php');
 
     await carregarComponente('Conversas.php');
-
-    let usuarioLogado = document.querySelector('.usuarioLogado');
 
     document.querySelector('#btnVoltar').onclick = async () => {
         await initConversas();

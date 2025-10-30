@@ -1,14 +1,10 @@
-import {carregarComponente, request} from "./index.js";
+import {carregarComponente, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 export async function initPerfil() {
 
     await carregarComponente("Loading.php");
 
     await carregarComponente("Perfil.php");
-
-    let usuarioLogado = {
-        id: document.querySelector(".usuarioLogado").id,
-        usuario: document.querySelector(".usuarioLogado").textContent
-    };
 
     let inputUsuario = document.querySelector("#input_usuario");
 
@@ -62,8 +58,6 @@ export async function initPerfil() {
                     usuarioAtualizado.append('id', usuarioLogado.id);
 
                     let usuario  = await request('../API/UsuarioAPI.php', { method: 'POST', body: usuarioAtualizado });
-
-                    document.querySelector('.usuarioLogado').textContent = usuario.usuario;
 
                     usuarioLogado.usuario = usuario.usuario;
 

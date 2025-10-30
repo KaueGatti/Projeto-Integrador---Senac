@@ -76,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <p id="status" hidden=""><?= $projeto->status ?></p>
             <p id="id_responsavel" hidden=""><?= $projeto->id_responsavel ?></p>
             <div class="input-group" id="divInputNome">
-                <input type="text" id="inputNome" name="nome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
-                <label for="nome">Nome</label>
+                <input type="text" id="inputNome" placeholder=" " value="<?= $projeto->nome ?>" readonly>
+                <label for="inputNome">Nome</label>
             </div>
             <div class="textArea-group" id="divInputDescricao">
                 <textarea id="textArea_descricao" name="descricao" placeholder=" "
@@ -305,7 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <button class="buttonOrange" id="btnParticipantes">Participantes</button>
         <p id="info"></p>
         <div class="divEditar_Salvar">
-            <button class="buttonBlue" id="btnEditar">Editar</button>
+            <button class="buttonBlue" id="btnEditarEquipe">Editar</button>
             <button class="buttonGreen" id="btnSalvar" disabled>Salvar</button>
         </div>
     </div>

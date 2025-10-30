@@ -1,4 +1,5 @@
-import {carregarComponente, request} from "./index.js";
+import {carregarComponente} from "./index.js";
+import {request} from "./request.js";
 import {initTarefas} from "./Tarefas.js";
 
 function novaTarefaValida(novaTarefa) {

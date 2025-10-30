@@ -1,4 +1,4 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+import {carregarComponente} from "./index.js";
 import {initNovoProjeto} from "./NovoProjeto.js";
 import {initDetalhesProjeto} from "./DetalhesProjeto.js";
 

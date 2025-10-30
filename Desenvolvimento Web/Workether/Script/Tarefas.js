@@ -1,4 +1,5 @@
-import {request, interactModal, carregarComponente} from "./index.js";
+import {carregarComponente} from "./index.js";
+import {request} from "./request.js";
 import {initNovaTarefa} from "./NovaTarefa.js";
 import {initDetalhesTarefa} from "./DetalhesTarefa.js";
 import {initDetalhesProjeto} from "./DetalhesProjeto.js";

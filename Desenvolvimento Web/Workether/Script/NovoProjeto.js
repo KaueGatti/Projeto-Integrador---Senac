@@ -1,4 +1,5 @@
-import {carregarComponente, request} from "./index.js";
+import {carregarComponente, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 import {initProjetos} from "./Projetos.js";
 import {Colors} from "./../assets/constants.js";
 
@@ -7,11 +8,6 @@ export async function initNovoProjeto() {
     await carregarComponente("Loading.php");
 
     await carregarComponente("NovoProjeto.php");
-
-    let usuarioLogado = {
-        id: document.querySelector(".usuarioLogado").id,
-        usuario: document.querySelector(".usuarioLogado").textContent
-    }
 
     let dataAtual = new Date().toISOString().split("T")[0];
 

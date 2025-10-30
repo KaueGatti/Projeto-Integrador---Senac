@@ -1,5 +1,5 @@
-import { request, interactModal, carregarComponente } from "./index.js";
-
+import {carregarComponente, interactModal, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 export async function initAmigos() {
 
     await carregarComponente('Loading.php');

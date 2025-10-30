@@ -1,6 +1,8 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+import {carregarComponente, interactModal, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 import {initProjetos} from "./Projetos.js";
 import {initTarefas} from "./Tarefas.js";
+import {Colors} from "../assets/constants.js";
 
 function novaEquipeValida(novaEquipe) {
 
@@ -58,11 +60,6 @@ export async function initDetalhesProjeto(id_projeto) {
         await initProjetos();
     }
 
-    let usuarioLogado = {
-        id: document.querySelector('.usuarioLogado').id,
-        usuario: document.querySelector('.usuarioLogado').textContent
-    };
-
     let detalhesProjeto = {
         nome: '', descricao: '', responsavel: {
             id: '', usuario: '',
@@ -76,6 +73,7 @@ export async function initDetalhesProjeto(id_projeto) {
     let inputNome = document.querySelector('#inputNome');
     let textAreaDescricao = document.querySelector('#textArea_descricao');
     let selectResponsavel = document.querySelector('.divResponsavel_Participantes_Equipes #select_responsavel');
+    let inputDataConclusao = document.querySelector('.divDataConclusao_Tarefas_Comentarios #inputDataConclusao');
     let optionsSelectResponsavel = Array.from(selectResponsavel.options);
 
     // Buttons
@@ -83,13 +81,12 @@ export async function initDetalhesProjeto(id_projeto) {
     let btnParticipantes = document.querySelector('.divResponsavel_Participantes_Equipes #btnParticipantes');
     let btnEquipes = document.querySelector('.divResponsavel_Participantes_Equipes #btnEquipes');
     let btnTarefas = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnTarefas');
-    let inputDataConclusao = document.querySelector('.divDataConclusao_Tarefas_Comentarios #inputDataConclusao');
     let btnComentarios = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnComentarios');
     let info = articleDetalhes.querySelector('#info');
     let btnExcluir = document.querySelector('#btnExcluir');
     let btnConcluir = document.querySelector('#btnConcluir');
-    let btnEditar = document.querySelector('.divEditar_Salvar #btnEditar');
-    let btnSalvar = document.querySelector('.divEditar_Salvar #btnSalvar');
+    let btnEditar = document.querySelector('.divExcluir_Concluir_Editar_Salvar #btnEditar');
+    let btnSalvar = document.querySelector('.divExcluir_Concluir_Editar_Salvar #btnSalvar');
 
     // Modais
 
@@ -140,7 +137,7 @@ export async function initDetalhesProjeto(id_projeto) {
         btnEditar.style.display = 'none';
         btnSalvar.style.display = 'none';
 
-        if (document.querySelector('#id_responsavel').textContent == usuarioLogado.id) {
+        if (document.querySelector('#id_responsavel').textContent !== usuarioLogado.id) {
             btnExcluir.style.display = 'none';
         }
     }
@@ -316,11 +313,11 @@ export async function initDetalhesProjeto(id_projeto) {
                         let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
                         let sectionParticipantesDetalhesEquipe = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
                         let info = modalDetalhesEquipe.querySelector('#info');
-                        let btnEditar = modalDetalhesEquipe.querySelector('#btnEditar');
+                        let btnEditarEquipe = modalDetalhesEquipe.querySelector('#btnEditarEquipe');
                         let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
 
                         if (usuarioLogado.id != equipe.responsavel.id) {
-                            btnEditar.style.display = 'none';
+                            btnEditarEquipe.style.display = 'none';
                             btnSalvar.style.display = 'none';
                         }
 
@@ -338,7 +335,7 @@ export async function initDetalhesProjeto(id_projeto) {
                         textAreaDescricao.readOnly = true;
                         selectResponsavel.disabled = true;
 
-                        btnEditar.disabled = false;
+                        btnEditarEquipe.disabled = false;
                         btnSalvar.disabled = true;
 
                         inputNome.value = equipe.nome;
@@ -441,8 +438,8 @@ export async function initDetalhesProjeto(id_projeto) {
 
                         }
 
-                        btnEditar.onclick = () => {
-                            btnEditar.disabled = true;
+                        btnEditarEquipe.onclick = () => {
+                            btnEditarEquipe.disabled = true;
                             btnSalvar.disabled = false;
                             inputNome.readOnly = false;
                             textAreaDescricao.readOnly = false;
@@ -492,7 +489,7 @@ export async function initDetalhesProjeto(id_projeto) {
                                         textAreaDescricao.readOnly = true;
                                         selectResponsavel.disabled = true;
 
-                                        btnEditar.disabled = false;
+                                        btnEditarEquipe.disabled = false;
                                         btnSalvar.disabled = true;
 
                                     }
@@ -740,9 +737,13 @@ export async function initDetalhesProjeto(id_projeto) {
         }
     }
 
-    btnEditar.onclick = () => {
+    console.log(btnEditar.parentElement);
+
+    btnEditar.onclick = function () {
 
         btnEditar.disabled = true;
+        btnConcluir.disabled = true;
+        btnExcluir.disabled = true;
 
         inputNome.focus();
 
@@ -752,7 +753,7 @@ export async function initDetalhesProjeto(id_projeto) {
         selectResponsavel.disabled = false;
 
         btnSalvar.disabled = false;
-        articleDetalhes.style.borderColor = "rgba(5, 104, 230, 0.75)";
+        articleDetalhes.style.borderColor = Colors.blue;
     };
 
     btnSalvar.onclick = async () => {
@@ -785,6 +786,8 @@ export async function initDetalhesProjeto(id_projeto) {
 
                 btnSalvar.disabled = true;
                 btnEditar.disabled = false;
+                btnConcluir.disabled = false;
+                btnExcluir.disabled = false;
             }
         } catch (e) {
             console.log(e.message);

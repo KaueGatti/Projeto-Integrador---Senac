@@ -4,45 +4,31 @@ import {initPaginaInicial} from "./PaginaInicial.js";
 import {initPerfil} from "./Perfil.js";
 import {initTarefas} from "./Tarefas.js";
 import {initConversas} from "./Conversas.js";
+import {request} from "./request.js";
 
-let logo = document.querySelector('#divLogo');
-let body = document.querySelector("#body");
-let main = document.querySelector("#main");
-let notificacoes = document.querySelector("#notificacoes");
-let btnRefreshNotificacoes = document.querySelector('#btn_refresh_notificacoes');
-let sectionNotificacoes = document.querySelector("#sectionNotificacoes");
-let btnsAside = document.querySelectorAll(".btnAside");
-let btnProjetos = document.querySelector('#btnProjetos');
-let btnTarefas = document.querySelector('#btnTarefas');
-let btnConversas = document.querySelector('#btnConversas');
-let btnAmigos = document.querySelector('#btnAmigos');
-let btnPerfil = document.querySelector('#btnPerfil');
-let btnNotificao = document.querySelector('#btnNotificacoes');
+export const usuarioLogado = {
+    id: document.querySelector('.usuarioLogado').id,
+    usuario: document.querySelector('.usuarioLogado').textContent
+};
+const DOM = {
+    logo: document.querySelector('#divLogo'),
+    body: document.querySelector("#body"),
+    main: document.querySelector("#main"),
+    notificacoes: document.querySelector("#notificacoes"),
+    btnRefreshNotificacoes: document.querySelector('#btn_refresh_notificacoes'),
+    sectionNotificacoes: document.querySelector("#sectionNotificacoes"),
+    btnsAside: document.querySelectorAll(".btnAside"),
+    btnProjetos: document.querySelector('#btnProjetos'),
+    btnTarefas: document.querySelector('#btnTarefas'),
+    btnConversas: document.querySelector('#btnConversas'),
+    btnAmigos: document.querySelector('#btnAmigos'),
+    btnPerfil: document.querySelector('#btnPerfil'),
+    btnNotificao: document.querySelector('#btnNotificacoes')
+};
 
 export function interactModal(modal, background) {
-    document.getElementById(modal).classList.toggle("show");
-    document.getElementById(background).classList.toggle("onblur");
-}
-
-export async function request(url, options = {}) {
-    let res = await fetch(url, options);
-    let text = await res.text();
-
-    let json;
-
-    try {
-        json = JSON.parse(text);
-    } catch (e) {
-        console.error("Erro ao parsear JSON:", e);
-        console.log("Resposta bruta do PHP:", text);
-        throw new Error("Resposta inválida do servidor (não é JSON)");
-    }
-
-    if (!res.ok || json.success === false) {
-        throw new Error(json.message || "Erro desconhecido");
-    }
-
-    return json;
+    document.querySelector('#' + modal).classList.toggle("show");
+    document.querySelector('#' + background).classList.toggle("onblur");
 }
 
 function atualizarNotificacoes() {
@@ -50,7 +36,7 @@ function atualizarNotificacoes() {
         if (!res.ok) throw new Error("Erro ao atualizar notificações");
         return res.text();
     }).then(conteudo => {
-        sectionNotificacoes.innerHTML = conteudo;
+        DOM.sectionNotificacoes.innerHTML = conteudo;
     }).catch(err => console.log("Erro no atualizarNotificacoes()" + "\n" + err));
 }
 
@@ -59,29 +45,29 @@ export function carregarComponente(url) {
         if (!res.ok) throw new Error("Response failed in carregarComponente():" + url);
         return res.text();
     }).then(conteudo => {
-        if (main.children.length >= 2) {
-            main.children[1].remove();
+        if (DOM.main.children.length >= 2) {
+            DOM.main.children[1].remove();
         }
-        main.insertAdjacentHTML("beforeend", conteudo);
+        DOM.main.insertAdjacentHTML("beforeend", conteudo);
     }).catch(err => console.log("Erro no carregarComponente(): " + url + "\n" + err));
 }
 
-btnNotificao.addEventListener('click', async function () {
+DOM.btnNotificao.addEventListener('click', async function () {
 
-    if (!notificacoes.classList.contains('open')) {
+    if (!DOM.notificacoes.classList.contains('open')) {
         await atualizarNotificacoes();
     }
 
-    notificacoes.classList.toggle('open');
+    DOM.notificacoes.classList.toggle('open');
     document.getElementsByClassName("conteudo")[0].classList.toggle("onblur");
 
 });
 
-btnRefreshNotificacoes.onclick = async () => {
+DOM.btnRefreshNotificacoes.onclick = async () => {
     await atualizarNotificacoes();
 }
 
-sectionNotificacoes.addEventListener('click', async e => {
+DOM.sectionNotificacoes.addEventListener('click', async e => {
 
     if (e.target.classList.contains('btnRecusar') || e.target.classList.contains('btnAceitar')) {
         let notificacao;
@@ -114,24 +100,24 @@ sectionNotificacoes.addEventListener('click', async e => {
         }
 
         setTimeout(async () => {
-            atualizarNotificacoes();
+            await atualizarNotificacoes();
         }, 1000);
     }
 
 
 });
 
-Array.from(btnsAside).forEach(btn => {
+Array.from(DOM.btnsAside).forEach(btn => {
     btn.onclick = () => {
-        if (document.querySelector('#notificacoes').classList.contains('open')) {
-            btnNotificao.click();
+        if (DOM.notificacoes.classList.contains('open')) {
+            DOM.btnNotificao.click();
         }
         let btnSelected = btn;
         let srcImgSelected = btnSelected.firstElementChild.getAttribute('src');
         if (!btnSelected.classList.contains('Selected')) {
             btnSelected.classList.toggle('Selected');
             btnSelected.firstElementChild.setAttribute('src', srcImgSelected.replace(".png", "Selected.png"));
-            Array.from(btnsAside).forEach(btn => {
+            Array.from(DOM.btnsAside).forEach(btn => {
                 if (btn !== btnSelected && btn.classList.contains('Selected')) {
                     let srcImg = btn.firstElementChild.getAttribute('src');
                     btn.classList.toggle('Selected');
@@ -140,24 +126,24 @@ Array.from(btnsAside).forEach(btn => {
             })
         }
     }
-})
+});
 
-btnProjetos.addEventListener('click', async () => {
+DOM.btnProjetos.addEventListener('click', async () => {
 
     await initProjetos();
 
 });
 
-btnTarefas.addEventListener('click', async function () {
+DOM.btnTarefas.addEventListener('click', async function () {
     await initTarefas('', null);
 });
 
-btnConversas.addEventListener('click', async function () {
+DOM.btnConversas.addEventListener('click', async function () {
 
     await initConversas();
 });
 
-btnAmigos.addEventListener('click', async function () {
+DOM.btnAmigos.addEventListener('click', async function () {
 
     await carregarComponente('Loading.php');
 
@@ -167,15 +153,15 @@ btnAmigos.addEventListener('click', async function () {
 
 });
 
-btnPerfil.addEventListener('click', async function () {
+DOM.btnPerfil.addEventListener('click', async function () {
     await initPerfil();
 });
 
-logo.onclick = async () => {
+DOM.logo.onclick = async () => {
 
     await initPaginaInicial();
 
-    Array.from(btnsAside).forEach(btn => {
+    Array.from(DOM.btnsAside).forEach(btn => {
         let srcImg = btn.firstElementChild.getAttribute('src');
         if (btn.classList.contains('Selected')) {
             btn.classList.toggle('Selected');

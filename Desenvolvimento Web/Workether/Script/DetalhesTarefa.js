@@ -1,4 +1,5 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+import {carregarComponente, interactModal, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 import {initProjetos} from "./Projetos.js";
 import {initTarefas} from "./Tarefas.js";
 
@@ -37,10 +38,7 @@ export async function initDetalhesTarefa(id_tarefa) {
 
     await carregarComponente('DetalhesTarefa.php');
 
-
     let articleDetalhes = document.querySelector('.articleDetalhes');
-
-    let usuarioLogado = document.querySelector('.usuarioLogado');
 
     // Inputs
 

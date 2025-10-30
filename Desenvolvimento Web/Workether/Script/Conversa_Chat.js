@@ -1,4 +1,6 @@
-import {carregarComponente, interactModal, request} from "./index.js";
+
+import {carregarComponente, usuarioLogado} from "./index.js";
+import {request} from "./request.js";
 import {initConversas} from "./Conversas.js";
 
 function articleMensagem(tipo, mensagem) {
@@ -37,7 +39,7 @@ function conectar() {
         let sectionMensagens = document.querySelector('.sectionMensagens');
         let message = typeof e.data === 'string' ? e.data : await e.data.text();
         message = JSON.parse(message);
-        if (message.id_usuario != document.querySelector('.usuarioLogado').id) {
+        if (message.id_usuario != usuarioLogado.id) {
             sectionMensagens.insertAdjacentHTML('beforeend', articleMensagem('', message));
         }
         sectionMensagens.scrollTop = sectionMensagens.scrollHeight;
@@ -54,8 +56,6 @@ export async function initConversa_Chat(tipo, id) {
     await carregarComponente('Conversa_Chat.php');
 
     const socket = conectar();
-
-    let usuarioLogado = document.querySelector('.usuarioLogado');
 
     document.querySelector('#btnVoltar').onclick = async () => {
         await initConversas();
