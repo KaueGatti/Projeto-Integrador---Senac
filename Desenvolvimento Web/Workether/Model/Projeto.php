@@ -112,6 +112,11 @@ class Projeto
     public function create()
     {
 
+        $validacao = $this->validarProjeto($this);
+        if (!$validacao["success"]) {
+            return $validacao;
+        }
+
         try {
 
             $sql = "CALL CREATE_PROJETO(:id_criador, :id_responsavel, :nome, :descricao, :dataInicialConclusao)";
@@ -265,6 +270,42 @@ class Projeto
         return [
             'success' => false,
             'message' => 'Erro desconhecido ao deletar projeto!'
+        ];
+    }
+
+    public function validarProjeto() {
+
+        if (trim($this->nome) == '') {
+            return [
+                "success" => false,
+                "message" => 'Nome do projeto não pode estar vázio'
+            ];
+        }
+
+        if (trim($this->descricao) == '') {
+            return [
+                "success" => false,
+                "message" => 'Descrição do projeto não pode estar vázio'
+            ];
+        }
+
+        if (trim($this->id_responsavel) == "") {
+            return [
+                "success" => false,
+                "message" => 'Selecione um responsável para o projeto'
+            ];
+        }
+
+        if (trim($this->dataInicialConclusao) == "") {
+            return [
+                "success" => false,
+                "message" => 'Defina uma data de conclusão para o projeto'
+            ];
+        }
+
+        return [
+            "success" => true,
+            "message" => 'Projeto válido'
         ];
     }
 }

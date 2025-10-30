@@ -56,7 +56,7 @@ export async function initNovoProjeto() {
             };
         }
 
-        if (projeto.responsavel.id === '' || projeto.responsavel.usuario === '') {
+        if (projeto.responsavel.id === '') {
             DOM.selectResponsavel.focus();
             return {
                 success: false,
@@ -88,7 +88,7 @@ export async function initNovoProjeto() {
         form.append('novoProjeto[id_responsavel]', projeto.responsavel.id);
         form.append('novoProjeto[dataInicialConclusao]', projeto.dataConclusao);
 
-        return await request("../API/ProjetoAPI.php", {method: "POST", body: form});
+        return await request("../API/Projeto/createProjeto.php", {method: "POST", body: form});
     }
 
     DOM.btnCancelar.onclick = () => {
@@ -102,7 +102,6 @@ export async function initNovoProjeto() {
             descricao: DOM.textAreaDescricao.value,
             responsavel: {
                 id: DOM.selectResponsavel.options[DOM.selectResponsavel.selectedIndex].value,
-                usuario: DOM.selectResponsavel.options[DOM.selectResponsavel.selectedIndex].textContent,
             },
             dataConclusao: DOM.inputDataConclusao.value
         }
