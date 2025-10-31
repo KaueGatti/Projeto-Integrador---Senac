@@ -18,7 +18,7 @@ function novaEquipeValida(novaEquipe) {
         };
     }
 
-    if (novaEquipe.responsavel.id === '' || novaEquipe.responsavel.usuario === '') {
+    if (novaEquipe.responsavel.id === '') {
         return {
             success: false, message: 'Selecione um responsável para a equipe'
         };
@@ -56,47 +56,166 @@ export async function initDetalhesProjeto(id_projeto) {
 
     await carregarComponente('DetalhesProjeto.php?id=' + id_projeto);
 
+    const DOM = {
+        // Seção de Detalhes do Projeto
+        detalhes: {
+            section: document.querySelector('#sectionDetalhes'),
+            article: document.querySelector('#articleDetalhes'),
+
+            // IDs e dados ocultos
+            dados: {
+                projetoID: document.querySelector('#projetoID'),
+                dataCriacao: document.querySelector('#dataCriacao'),
+                status: document.querySelector('#status'),
+                idResponsavel: document.querySelector('#id_responsavel')
+            },
+
+            // Inputs e campos do formulário
+            campos: {
+                inputNome: document.querySelector('#inputNome'),
+                divInputNome: document.querySelector('#divInputNome'),
+                textAreaDescricao: document.querySelector('#textArea_descricao'),
+                divInputDescricao: document.querySelector('#divInputDescricao'),
+                selectResponsavel: document.querySelector('#select_responsavel'),
+                inputDataConclusao: document.querySelector('#inputDataConclusao'),
+                divDataConclusao: document.querySelector('#input-groupDataConclusao')
+            },
+
+            // Botões de navegação
+            botoes: {
+                participantes: document.querySelector('#articleDetalhes #btnParticipantes'),
+                equipes: document.querySelector('#articleDetalhes #btnEquipes'),
+                tarefas: document.querySelector('#articleDetalhes #btnTarefas'),
+                comentarios: document.querySelector('#articleDetalhes #btnComentarios'),
+                excluir: document.querySelector('#articleDetalhes #btnExcluir'),
+                concluir: document.querySelector('#articleDetalhes #btnConcluir'),
+                editar: document.querySelector('#articleDetalhes #btnEditar'),
+                salvar: document.querySelector('#articleDetalhes #btnSalvar')
+            },
+
+            info: document.querySelector('#articleDetalhes #info')
+        },
+
+        // Modal de Participantes do Projeto
+        participantes: {
+            modal: document.querySelector('#modalParticipantes'),
+            btnFechar: document.querySelector('#modalParticipantes #btnFechar'),
+            btnAdicionar: document.querySelector('#btnAdicionarParticipante'),
+            section: document.querySelector('#sectionParticipantes'),
+
+            // Modal de adicionar participante
+            modalAdicionar: {
+                modal: document.querySelector('#modalAdicionarParticipante'),
+                btnFechar: document.querySelector('#modalAdicionarParticipante #btnFechar'),
+                select: document.querySelector('#modalAdicionarParticipante #select_participante'),
+                info: document.querySelector('#modalAdicionarParticipante #info'),
+                btnAdicionar: document.querySelector('#modalAdicionarParticipante #btnAdicionar')
+            }
+        },
+
+        // Modal de Equipes
+        equipes: {
+            modal: document.querySelector('#modalEquipes'),
+            btnFechar: document.querySelector('#modalEquipes #btnFechar'),
+            btnAdicionarEquipe: document.querySelector('#btnAdicionarEquipe'),
+            section: document.querySelector('.sectionEquipes'),
+
+            // Modal de adicionar equipe
+            modalAdicionar: {
+                modal: document.querySelector('#modalAdicionarEquipe'),
+                inputNome: document.querySelector('#modalAdicionarEquipe #input_nome'),
+                textAreaDescricao: document.querySelector('#modalAdicionarEquipe #textArea_descricao'),
+                selectResponsavel: document.querySelector('#modalAdicionarEquipe #select_responsavel'),
+                info: document.querySelector('#modalAdicionarEquipe #info'),
+                btnCancelar: document.querySelector('#modalAdicionarEquipe #btnCancelar'),
+                btnConcluir: document.querySelector('#modalAdicionarEquipe #btnConcluir')
+            },
+
+            // Modal de participantes da equipe (ao criar)
+            participantes: {
+                modal: document.querySelector('#modalParticipantesEquipe'),
+                btnFechar: document.querySelector('#modalParticipantesEquipe #btnFechar'),
+                btnAdicionar: document.querySelector('#modalParticipantesEquipe #btnAdicionarParticipante'),
+                section: document.querySelector('#modalParticipantesEquipe .sectionParticipantes'),
+
+                modalAdicionar: {
+                    modal: document.querySelector('#modalAdicionarParticipanteEquipe'),
+                    btnFechar: document.querySelector('#modalAdicionarParticipanteEquipe #btnFechar'),
+                    select: document.querySelector('#modalAdicionarParticipanteEquipe #select_participante'),
+                    info: document.querySelector('#modalAdicionarParticipanteEquipe #info'),
+                    btnAdicionar: document.querySelector('#modalAdicionarParticipanteEquipe #btnAdicionar')
+                }
+            },
+
+            // Modal de detalhes da equipe
+            detalhes: {
+                modal: document.querySelector('#modalDetalhesEquipe'),
+                btnFechar: document.querySelector('#modalDetalhesEquipe #btnFechar'),
+                inputNome: document.querySelector('#modalDetalhesEquipe #input_nome'),
+                textAreaDescricao: document.querySelector('#modalDetalhesEquipe #textArea_descricao'),
+                selectResponsavel: document.querySelector('#modalDetalhesEquipe #select_responsavel'),
+                btnParticipantes: document.querySelector('#modalDetalhesEquipe #btnParticipantes'),
+                info: document.querySelector('#modalDetalhesEquipe #info'),
+                btnEditar: document.querySelector('#modalDetalhesEquipe #btnEditarEquipe'),
+                btnSalvar: document.querySelector('#modalDetalhesEquipe #btnSalvar'),
+
+                // Participantes da equipe (nos detalhes)
+                participantes: {
+                    modal: document.querySelector('#modalParticipantesDetalhesEquipe'),
+                    btnFechar: document.querySelector('#modalParticipantesDetalhesEquipe #btnFechar'),
+                    btnAdicionar: document.querySelector('#modalParticipantesDetalhesEquipe #btnAdicionarParticipante'),
+                    section: document.querySelector('#modalParticipantesDetalhesEquipe .sectionParticipantes'),
+
+                    modalAdicionar: {
+                        modal: document.querySelector('#modalAdicionarParticipanteDetalhesEquipe'),
+                        btnFechar: document.querySelector('#modalAdicionarParticipanteDetalhesEquipe #btnFechar'),
+                        select: document.querySelector('#modalAdicionarParticipanteDetalhesEquipe #select_participante'),
+                        info: document.querySelector('#modalAdicionarParticipanteDetalhesEquipe #info'),
+                        btnAdicionar: document.querySelector('#modalAdicionarParticipanteDetalhesEquipe #btnAdicionar')
+                    }
+                }
+            }
+        },
+
+        // Modal de Comentários
+        comentarios: {
+            modal: document.querySelector('#modalComentarios'),
+            btnFechar: document.querySelector('#modalComentarios #btnFechar'),
+            btnAdicionar: document.querySelector('#modalComentarios #btnAdicionarComentario'),
+            section: document.querySelector('.sectionComentarios'),
+
+            modalAdicionar: {
+                modal: document.querySelector('#modalAdicionarComentario'),
+                textArea: document.querySelector('#modalAdicionarComentario #textArea_comentario'),
+                info: document.querySelector('#modalAdicionarComentario #info'),
+                btnCancelar: document.querySelector('#modalAdicionarComentario #btnCancelar'),
+                btnAdicionar: document.querySelector('#modalAdicionarComentario #btnAdicionar')
+            }
+        },
+
+        // Modal de Excluir
+        excluir: {
+            modal: document.querySelector('#modalExcluir'),
+            btnCancelar: document.querySelector('#btnCancelarModalExcluir'),
+            btnExcluir: document.querySelector('#btnExcluirModalExcluir')
+        },
+
+        // Modal de Concluir
+        concluir: {
+            modal: document.querySelector('#modalConcluir'),
+            inputData: document.querySelector('#inputDataModalConcluir'),
+            divData: document.querySelector('#divDataModalConcluir'),
+            btnCancelar: document.querySelector('#btnCancelarModalConcluir'),
+            btnConcluir: document.querySelector('#btnConcluirModalConcluir')
+        }
+    };
+
     document.querySelector('#btnVoltar').onclick = async () => {
         await initProjetos();
     }
 
-    let detalhesProjeto = {
-        nome: '', descricao: '', responsavel: {
-            id: '', usuario: '',
-        }, dataConclusao: ''
-    }
-
-    let articleDetalhes = document.querySelector('.articleDetalhes');
-
-    // Inputs
-
-    let inputNome = document.querySelector('#inputNome');
-    let textAreaDescricao = document.querySelector('#textArea_descricao');
-    let selectResponsavel = document.querySelector('.divResponsavel_Participantes_Equipes #select_responsavel');
-    let inputDataConclusao = document.querySelector('.divDataConclusao_Tarefas_Comentarios #inputDataConclusao');
-    let optionsSelectResponsavel = Array.from(selectResponsavel.options);
-
-    // Buttons
-
-    let btnParticipantes = document.querySelector('.divResponsavel_Participantes_Equipes #btnParticipantes');
-    let btnEquipes = document.querySelector('.divResponsavel_Participantes_Equipes #btnEquipes');
-    let btnTarefas = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnTarefas');
-    let btnComentarios = document.querySelector('.divDataConclusao_Tarefas_Comentarios #btnComentarios');
-    let info = articleDetalhes.querySelector('#info');
-    let btnExcluir = document.querySelector('#btnExcluir');
-    let btnConcluir = document.querySelector('#btnConcluir');
-    let btnEditar = document.querySelector('.divExcluir_Concluir_Editar_Salvar #btnEditar');
-    let btnSalvar = document.querySelector('.divExcluir_Concluir_Editar_Salvar #btnSalvar');
-
-    // Modais
-
-    let modalParticipantes = document.querySelector('#modalParticipantes');
-    let modalAdicionarParticipante = document.querySelector('#modalAdicionarParticipante');
-
-    let section_participantes = modalParticipantes.querySelector('.sectionParticipantes');
-
-    selectResponsavel.addEventListener('change', function (e) {
-        let articlesParticipantes = Array.from(section_participantes.querySelectorAll('.articleParticipante'));
+    DOM.selectResponsavelProjeto.addEventListener('change', function (e) {
+        let articlesParticipantes = Array.from(DOM.sectionParticipantesProjeto.querySelectorAll('.articleParticipante'));
         articlesParticipantes.forEach(article => {
             if (article.id === e.target.value) {
                 article.querySelector('.btnRemover').remove();
@@ -106,31 +225,7 @@ export async function initDetalhesProjeto(id_projeto) {
         })
     });
 
-    let modalEquipes = document.querySelector('#modalEquipes');
-    let modalAdicionarEquipe = document.querySelector('#modalAdicionarEquipe');
-
-    let modalParticipantesEquipe = document.querySelector('#modalParticipantesEquipe');
-    let modalAdicionarParticipanteEquipe = document.querySelector('#modalAdicionarParticipantesEquipe');
-
-    let modalDetalhesEquipe = document.querySelector('#modalDetalhesEquipe');
-
-    let modalParticipantesDetalhesEquipe = document.querySelector('#modalParticipantesDetalhesEquipe');
-    let modalAdicionarParticipanteDetalhesEquipe = document.querySelector('#modalAdicionarParticipanteDetalhesEquipe');
-    let selectParticipanteDetalhesEquipe = modalAdicionarParticipanteDetalhesEquipe.querySelector('#select_participante');
-
-    let modalComentarios = document.querySelector('#modalComentarios');
-    let modalAdicionarComentario = document.querySelector('#modalAdicionarComentario');
-
-    let modalExcluir = document.querySelector('#modalExcluir');
-    let btnCancelarModalExcluir = modalExcluir.querySelector('#btnCancelarModalExcluir');
-    let btnExcluirModalExcluir = modalExcluir.querySelector('#btnExcluirModalExcluir');
-
-    let modalConcluir = document.querySelector('#modalConcluir');
-    let inputDataModalConcluir = document.querySelector('#inputDataModalConcluir');
-    let btnCancelarModalConcluir = modalConcluir.querySelector('#btnCancelarModalConcluir');
-    let btnConcluirModalConcluir = modalConcluir.querySelector('#btnConcluirModalConcluir');
-
-    inputDataModalConcluir.min = document.querySelector('#dataCriacao').textContent;
+    DOM.inputDataModalConcluir.min = document.querySelector('#dataCriacao').textContent;
 
     if (document.querySelector('#status').textContent == 'Concluido') {
         btnConcluir.style.display = 'none';
