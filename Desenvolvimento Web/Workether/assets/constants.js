@@ -6,4 +6,5 @@ export const Colors = {
     red: rootStyles.getPropertyValue('--red').trim(),
     blue: rootStyles.getPropertyValue('--blue').trim(),
     gray: rootStyles.getPropertyValue('--gray').trim(),
+    grayLight: rootStyles.getPropertyValue('--gray--light').trim(),
 }

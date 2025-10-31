@@ -29,12 +29,12 @@ function novaEquipeValida(novaEquipe) {
     };
 }
 
-function articleParticipante(id, usuario) {
-    return '<article class="articleParticipante" id="' + id + '">\n' + '<p class="usuario_participante">' + usuario + '</p>\n' + '<img class="btnRemover" src="Icones/Remover.png" alt="">\n' + '</article>';
+function articleParticipante(usuario) {
+    return '<article class="articleParticipante" id="' + usuario.id + '">\n' + '<p class="usuario_participante">' + usuario.usuario + '</p>\n' + '<img class="btnRemover" src="Icones/Remover.png" alt="">\n' + '</article>';
 }
 
-function articleEquipe(id, nome) {
-    return '<article id="' + id + '" class="articleEquipe">' + '<p id="nome_equipe">' + nome + '</p>' + '<img class="btnRemover" src="Icones/Remover.png" alt="">' + '</article>';
+function articleEquipe(equipe) {
+    return '<article id="' + equipe.id + '" class="articleEquipe">' + '<p id="nome_equipe">' + equipe.nome + '</p>' + '<img class="btnRemover" src="Icones/Remover.png" alt="">' + '</article>';
 }
 
 function articleComentario(comentario) {
@@ -50,6 +50,10 @@ function articleComentario(comentario) {
     return '<article class="articleComentario" id="' + comentario.id + '">' + '<p class="textoComentario">' + comentario.texto + '</p>' + '<div class="divInfo">' + '<img id="btnRemover" class="imgRemover btnRemover" src="Icones/Remover.png" alt="">' + '<p class="data">' + dataFormatada + '</p>' + '<p class="hora">' + horaFormatada + '</p>' + '<div class="divUser">' + '<img src="Icones/User.png" alt="">' + '<p>' + comentario.usuario + '</p>' + '</div>' + '</div>' + '</article>';
 }
 
+function optionUsuario(usuario) {
+    return '<option value="' + usuario.id + '">' + usuario.usuario + '</option>';
+}
+
 export async function initDetalhesProjeto(id_projeto) {
 
     await carregarComponente('Loading.php');
@@ -57,12 +61,13 @@ export async function initDetalhesProjeto(id_projeto) {
     await carregarComponente('DetalhesProjeto.php?id=' + id_projeto);
 
     const DOM = {
-        // Seção de Detalhes do Projeto
+
+        btnVoltar: document.querySelector('#btnVoltar'),
+
         detalhes: {
             section: document.querySelector('#sectionDetalhes'),
             article: document.querySelector('#articleDetalhes'),
 
-            // IDs e dados ocultos
             dados: {
                 projetoID: document.querySelector('#projetoID'),
                 dataCriacao: document.querySelector('#dataCriacao'),
@@ -70,7 +75,6 @@ export async function initDetalhesProjeto(id_projeto) {
                 idResponsavel: document.querySelector('#id_responsavel')
             },
 
-            // Inputs e campos do formulário
             campos: {
                 inputNome: document.querySelector('#inputNome'),
                 divInputNome: document.querySelector('#divInputNome'),
@@ -81,7 +85,6 @@ export async function initDetalhesProjeto(id_projeto) {
                 divDataConclusao: document.querySelector('#input-groupDataConclusao')
             },
 
-            // Botões de navegação
             botoes: {
                 participantes: document.querySelector('#articleDetalhes #btnParticipantes'),
                 equipes: document.querySelector('#articleDetalhes #btnEquipes'),
@@ -96,7 +99,6 @@ export async function initDetalhesProjeto(id_projeto) {
             info: document.querySelector('#articleDetalhes #info')
         },
 
-        // Modal de Participantes do Projeto
         participantes: {
             modal: document.querySelector('#modalParticipantes'),
             btnFechar: document.querySelector('#modalParticipantes #btnFechar'),
@@ -113,7 +115,6 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         },
 
-        // Modal de Equipes
         equipes: {
             modal: document.querySelector('#modalEquipes'),
             btnFechar: document.querySelector('#modalEquipes #btnFechar'),
@@ -177,7 +178,6 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         },
 
-        // Modal de Comentários
         comentarios: {
             modal: document.querySelector('#modalComentarios'),
             btnFechar: document.querySelector('#modalComentarios #btnFechar'),
@@ -193,14 +193,12 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         },
 
-        // Modal de Excluir
         excluir: {
             modal: document.querySelector('#modalExcluir'),
             btnCancelar: document.querySelector('#btnCancelarModalExcluir'),
             btnExcluir: document.querySelector('#btnExcluirModalExcluir')
         },
 
-        // Modal de Concluir
         concluir: {
             modal: document.querySelector('#modalConcluir'),
             inputData: document.querySelector('#inputDataModalConcluir'),
@@ -210,12 +208,12 @@ export async function initDetalhesProjeto(id_projeto) {
         }
     };
 
-    document.querySelector('#btnVoltar').onclick = async () => {
+    DOM.btnVoltar.onclick = async () => {
         await initProjetos();
     }
 
-    DOM.selectResponsavelProjeto.addEventListener('change', function (e) {
-        let articlesParticipantes = Array.from(DOM.sectionParticipantesProjeto.querySelectorAll('.articleParticipante'));
+    DOM.detalhes.campos.selectResponsavel.addEventListener('change', function (e) {
+        let articlesParticipantes = Array.from(DOM.participantes.section.querySelectorAll('.articleParticipante'));
         articlesParticipantes.forEach(article => {
             if (article.id === e.target.value) {
                 article.querySelector('.btnRemover').remove();
@@ -225,29 +223,25 @@ export async function initDetalhesProjeto(id_projeto) {
         })
     });
 
-    DOM.inputDataModalConcluir.min = document.querySelector('#dataCriacao').textContent;
+    if (DOM.detalhes.dados.status.textContent === 'Concluido') {
+        DOM.detalhes.botoes.concluir.style.display = 'none';
+        DOM.detalhes.botoes.editar.style.display = 'none';
+        DOM.detalhes.botoes.salvar.style.display = 'none';
 
-    if (document.querySelector('#status').textContent == 'Concluido') {
-        btnConcluir.style.display = 'none';
-        btnEditar.style.display = 'none';
-        btnSalvar.style.display = 'none';
-
-        if (document.querySelector('#id_responsavel').textContent !== usuarioLogado.id) {
-            btnExcluir.style.display = 'none';
+        if (DOM.detalhes.dados.idResponsavel.textContent !== usuarioLogado.id) {
+            DOM.detalhes.botoes.excluir.style.display = 'none';
         }
     }
 
-    btnParticipantes.addEventListener('click', async function () {
+    DOM.detalhes.botoes.participantes.addEventListener('click', async function () {
 
         interactModal('modalParticipantes', 'sectionDetalhes');
 
-        modalParticipantes.querySelector('#btnFechar').onclick = () => {
+        DOM.participantes.btnFechar.onclick = () => {
             interactModal('modalParticipantes', 'sectionDetalhes');
         }
 
-        let select_participante = modalAdicionarParticipante.querySelector('#select_participante');
-
-        section_participantes.addEventListener('click', async function (e) {
+        DOM.participantes.section.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
                 e.stopPropagation();
                 let articleParticipante = e.target.closest('.articleParticipante');
@@ -261,17 +255,17 @@ export async function initDetalhesProjeto(id_projeto) {
 
                 if (response.success) {
                     articleParticipante.remove();
-                    Array.from(selectResponsavel.options).forEach(o => {
+                    Array.from(DOM.detalhes.campos.selectResponsavel.options).forEach(o => {
                         if (o.value == articleParticipante.id) {
                             o.remove();
                         }
                     });
-                    Array.from(select_participante.options).forEach(o => {
+                    Array.from(DOM.participantes.modalAdicionar.select.options).forEach(o => {
                         if (o.value == articleParticipante.id) {
                             o.disabled = false;
                         }
                     });
-                    Array.from(modalAdicionarEquipe.querySelector('#select_responsavel').options).forEach(o => {
+                    Array.from(DOM.equipes.modalAdicionar.selectResponsavel.options).forEach(o => {
                         if (o.value == articleParticipante.id) {
                             o.remove();
                         }
@@ -280,23 +274,19 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         });
 
-        modalParticipantes.querySelector('#btnAdicionarParticipante').onclick = () => {
+        DOM.participantes.btnAdicionar.onclick = () => {
             interactModal('modalAdicionarParticipante', 'modalParticipantes');
 
-            modalAdicionarParticipante.querySelector('#btnFechar').onclick = () => {
+            DOM.participantes.modalAdicionar.btnFechar.onclick = () => {
                 interactModal('modalAdicionarParticipante', 'modalParticipantes');
             }
 
-            let btnAdicionar = modalAdicionarParticipante.querySelector('#btnAdicionar');
+            DOM.participantes.modalAdicionar.btnAdicionar.onclick = async () => {
+                if (DOM.participantes.modalAdicionar.select.selectedIndex !== 0) {
 
-            btnAdicionar.onclick = async () => {
-                let info = modalAdicionarParticipante.querySelector('#info');
+                    DOM.participantes.modalAdicionar.btnAdicionar.disabled = true;
 
-                if (select_participante.selectedIndex !== 0) {
-
-                    btnAdicionar.disabled = true;
-
-                    let option = select_participante.options[select_participante.selectedIndex];
+                    let option = DOM.participantes.modalAdicionar.select.options[DOM.participantes.modalAdicionar.select.selectedIndex];
                     let participante = {
                         id: option.value, usuario: option.textContent
                     }
@@ -309,42 +299,38 @@ export async function initDetalhesProjeto(id_projeto) {
 
                     if (response.success) {
 
-                        select_participante.selectedIndex = 0;
-                        btnAdicionar.disabled = false;
+                        DOM.participantes.modalAdicionar.select.selectedIndex = 0;
+                        DOM.participantes.modalAdicionar.btnAdicionar.disabled = false;
                         option.disabled = true;
 
-                        selectResponsavel.insertAdjacentHTML('beforeend', '<option value="' + participante.id + '">' + participante.usuario + '</option>');
-                        modalAdicionarEquipe.querySelector('#select_responsavel').insertAdjacentHTML('beforeend',
-                            '<option value="' + participante.id + '">' + participante.usuario + '</option>');
-                        section_participantes.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
-                        info.textContent = 'Participante adicionado';
+                        DOM.detalhes.campos.selectResponsavel.insertAdjacentHTML('beforeend', optionUsuario(participante));
+                        DOM.equipes.modalAdicionar.selectResponsavel.insertAdjacentHTML('beforeend', optionUsuario(participante));
+                        DOM.participantes.section.insertAdjacentHTML('afterbegin', articleParticipante(participante));
+                        DOM.participantes.modalAdicionar.info.textContent = 'Participante adicionado';
                         setTimeout(() => {
-                            info.textContent = '';
+                            DOM.participantes.modalAdicionar.info.textContent = '';
                         }, 1500);
-                        console.log(response);
                     }
                 }
             }
         }
 
-        Array.from(modalParticipantes.querySelectorAll('.articleParticipante')).forEach(p => {
-            if (p.id == document.querySelector('#id_responsavel').textContent) {
+        Array.from(DOM.participantes.section.querySelectorAll('.articleParticipante')).forEach(p => {
+            if (p.id == DOM.detalhes.dados.idResponsavel.textContent) {
                 p.querySelector('.btnRemover').style.display = 'none';
             }
         })
 
     });
 
-    btnEquipes.addEventListener('click', async function () {
+    DOM.detalhes.botoes.equipes.addEventListener('click', async function () {
         interactModal('modalEquipes', 'sectionDetalhes');
 
-        modalEquipes.querySelector('#btnFechar').onclick = () => {
+        DOM.equipes.btnFechar.onclick = () => {
             interactModal('modalEquipes', 'sectionDetalhes');
         }
 
-        let sectionEquipes = modalEquipes.querySelector('.sectionEquipes');
-
-        sectionEquipes.addEventListener('click', async function (e) {
+        DOM.equipes.section.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
                 let articleEquipe = e.target.closest('.articleEquipe');
 
@@ -376,13 +362,14 @@ export async function initDetalhesProjeto(id_projeto) {
 
                     if (responseEquipe.success) {
 
-                        let equipe = {};
-                        equipe.id = responseEquipe.data.id;
-                        equipe.nome = responseEquipe.data.nome;
-                        equipe.descricao = responseEquipe.data.descricao;
-                        equipe.responsavel = {
-                            id: responseEquipe.data.id_responsavel,
-                            usuario: responseEquipe.data.usuario_responsavel
+                        let equipe = {
+                            id: responseEquipe.data.id,
+                            nome: responseEquipe.data.nome,
+                            descricao: responseEquipe.data.descricao,
+                            responsavel: {
+                                id: responseEquipe.data.id_responsavel,
+                                usuario: responseEquipe.data.usuario_responsavel
+                            }
                         };
 
                         let form = new FormData();
@@ -395,66 +382,54 @@ export async function initDetalhesProjeto(id_projeto) {
 
                         let participantesEquipe = responseUsuariosEquipe.data;
 
-                        console.log(responseUsuariosEquipe);
                         interactModal('modalDetalhesEquipe', 'modalEquipes');
 
-                        modalDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                        DOM.equipes.detalhes.btnFechar.onclick = function () {
                             interactModal('modalDetalhesEquipe', 'modalEquipes');
                         }
 
-                        let inputNome = modalDetalhesEquipe.querySelector('#input_nome');
-                        let textAreaDescricao = modalDetalhesEquipe.querySelector('#textArea_descricao');
-                        let selectResponsavel = modalDetalhesEquipe.querySelector('#select_responsavel');
-                        let btnParticipantes = modalDetalhesEquipe.querySelector('#btnParticipantes');
-                        let sectionParticipantesDetalhesEquipe = modalParticipantesDetalhesEquipe.querySelector('.sectionParticipantes');
-                        let info = modalDetalhesEquipe.querySelector('#info');
-                        let btnEditarEquipe = modalDetalhesEquipe.querySelector('#btnEditarEquipe');
-                        let btnSalvar = modalDetalhesEquipe.querySelector('#btnSalvar');
-
                         if (usuarioLogado.id != equipe.responsavel.id) {
-                            btnEditarEquipe.style.display = 'none';
-                            btnSalvar.style.display = 'none';
+                            DOM.equipes.detalhes.btnEditar.style.display = 'none';
+                            DOM.equipes.detalhes.btnSalvar.style.display = 'none';
                         }
 
                         participantesEquipe.forEach(participante => {
-                            sectionParticipantesDetalhesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
+                            DOM.equipes.detalhes.participantes.section.insertAdjacentHTML('afterbegin', articleParticipante(participante));
                         });
 
-                        Array.from(selectParticipanteDetalhesEquipe.options).forEach(option => {
-                            if (participantesEquipe.find(participante => participante.id == option.value)) {
+                        Array.from(DOM.equipes.detalhes.participantes.modalAdicionar.select.options).forEach(option => {
+                            if (participantesEquipe.find(p => p.id == option.value)) {
                                 option.disabled = true;
                             }
                         })
 
-                        inputNome.readOnly = true;
-                        textAreaDescricao.readOnly = true;
-                        selectResponsavel.disabled = true;
+                        DOM.equipes.detalhes.inputNome.readOnly = true;
+                        DOM.equipes.detalhes.textAreaDescricao.readOnly = true;
+                        DOM.equipes.detalhes.selectResponsavel.disabled = true;
 
-                        btnEditarEquipe.disabled = false;
-                        btnSalvar.disabled = true;
+                        DOM.equipes.detalhes.btnEditar.disabled = false;
+                        DOM.equipes.detalhes.btnSalvar.disabled = true;
 
-                        inputNome.value = equipe.nome;
-                        textAreaDescricao.value = equipe.descricao;
-                        selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
-                        selectResponsavel.innerHTML += '<option value="' + equipe.responsavel.id + '" selected >' + equipe.responsavel.usuario + '</option>';
+                        DOM.equipes.detalhes.inputNome.value = equipe.nome;
+                        DOM.equipes.detalhes.textAreaDescricao.value = equipe.descricao;
+                        DOM.equipes.detalhes.selectResponsavel.innerHTML = '<option value="" disabled>Selecione um responsável</option>';
+                        DOM.equipes.detalhes.selectResponsavel.innerHTML += '<option value="' + equipe.responsavel.id + '" selected >' + equipe.responsavel.usuario + '</option>';
 
-                        btnParticipantes.onclick = async function () {
+                        DOM.equipes.detalhes.btnParticipantes.onclick = async function () {
                             interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
 
-                            modalParticipantesDetalhesEquipe.querySelector('#btnFechar').onclick = function () {
+                            DOM.equipes.detalhes.participantes.btnFechar.onclick = function () {
                                 interactModal('modalParticipantesDetalhesEquipe', 'modalDetalhesEquipe');
                             }
 
-                            let btnAdicionarParticipante = modalParticipantesDetalhesEquipe.querySelector('#btnAdicionarParticipante');
-
                             if (usuarioLogado.id != equipe.responsavel.id) {
-                                btnAdicionarParticipante.style.display = 'none';
-                                Array.from(modalParticipantesDetalhesEquipe.querySelectorAll('.btnRemover')).forEach(btn => {
-                                    btnAdicionarParticipante.style.display = 'none';
+                                DOM.equipes.detalhes.participantes.btnAdicionar.style.display = 'none';
+                                Array.from(DOM.equipes.detalhes.participantes.section.querySelectorAll('.btnRemover')).forEach(btn => {
+                                    btn.style.display = 'none';
                                 });
                             }
 
-                            sectionParticipantesDetalhesEquipe.addEventListener('click', async function (e) {
+                            DOM.equipes.detalhes.participantes.section.addEventListener('click', async function (e) {
                                 if (e.target.classList.contains('btnRemover')) {
                                     e.target.disabled = true;
                                     let articleParticipante = e.target.closest('.articleParticipante');
@@ -471,34 +446,29 @@ export async function initDetalhesProjeto(id_projeto) {
                                     if (responseDeleteUsuarioEquipe.success) {
                                         participantesEquipe = participantesEquipe.filter(p => p.id !== articleParticipante.id);
                                         articleParticipante.remove();
-                                        Array.from(selectParticipanteDetalhesEquipe.options).forEach(option => {
+                                        Array.from(DOM.equipes.participantes.modalAdicionar.select.options).forEach(option => {
                                             if (option.value == articleParticipante.id) {
                                                 option.disabled = false;
                                             }
                                         });
                                     }
 
-                                    console.log(responseDeleteUsuarioEquipe);
-
                                 }
                             });
 
-                            btnAdicionarParticipante.onclick = () => {
+                            DOM.equipes.detalhes.participantes.btnAdicionar.onclick = () => {
                                 interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
 
-                                modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnFechar').onclick = () => {
+                                DOM.equipes.detalhes.participantes.modalAdicionar.querySelector('#btnFechar').onclick = () => {
                                     interactModal('modalAdicionarParticipanteDetalhesEquipe', 'modalParticipantesDetalhesEquipe');
                                 }
 
-                                let info = modalAdicionarParticipanteDetalhesEquipe.querySelector('#info');
+                                DOM.equipes.detalhes.participantes.modalAdicionar.btnAdicionar.onclick = async function () {
+                                    if (DOM.equipes.detalhes.participantes.modalAdicionar.select.selectedIndex != 0) {
 
-                                modalAdicionarParticipanteDetalhesEquipe.querySelector('#btnAdicionar').onclick = async function () {
+                                        DOM.equipes.detalhes.participantes.modalAdicionar.btnAdicionar.disabled = true;
 
-                                    if (selectParticipanteDetalhesEquipe.selectedIndex != 0) {
-
-                                        this.disabled = true;
-
-                                        let option = selectParticipanteDetalhesEquipe.options[selectParticipanteDetalhesEquipe.selectedIndex];
+                                        let option = DOM.equipes.detalhes.participantes.modalAdicionar.select.options[DOM.equipes.detalhes.participantes.modalAdicionar.select.selectedIndex];
                                         let participante = {
                                             id: option.value, usuario: option.textContent
                                         };
@@ -515,40 +485,38 @@ export async function initDetalhesProjeto(id_projeto) {
                                         if (response.success) {
                                             participantesEquipe.push(participante);
 
-                                            selectParticipanteDetalhesEquipe.selectedIndex = 0;
-                                            this.disabled = false;
+                                            DOM.equipes.detalhes.participantes.modalAdicionar.select.selectedIndex = 0;
+                                            DOM.equipes.detalhes.participantes.modalAdicionar.btnAdicionar.disabled = false;
                                             option.disabled = true;
 
-                                            sectionParticipantesDetalhesEquipe.insertAdjacentHTML('afterbegin', articleParticipante(participante.id, participante.usuario));
-                                            info.textContent = 'Participante adicionado';
+                                            DOM.equipes.detalhes.participantes.modalAdicionar.select.insertAdjacentHTML('afterbegin', articleParticipante(participante));
+                                            DOM.equipes.detalhes.participantes.modalAdicionar.info.textContent = 'Participante adicionado';
                                             setTimeout(() => {
-                                                info.textContent = '';
+                                                DOM.equipes.detalhes.participantes.modalAdicionar.info.textContent = '';
                                             }, 1500);
                                         }
                                     }
-
-
                                 }
                             }
 
                         }
 
-                        btnEditarEquipe.onclick = () => {
-                            btnEditarEquipe.disabled = true;
-                            btnSalvar.disabled = false;
-                            inputNome.readOnly = false;
-                            textAreaDescricao.readOnly = false;
-                            selectResponsavel.disabled = false;
+                        DOM.equipes.detalhes.btnEditar.onclick = () => {
+                            DOM.equipes.detalhes.btnEditar.disabled = true;
+                            DOM.equipes.detalhes.btnSalvar.disabled = false;
+                            DOM.equipes.detalhes.inputNome.readOnly = false;
+                            DOM.equipes.detalhes.textAreaDescricao.readOnly = false;
+                            DOM.equipes.detalhes.selectResponsavel.disabled = false;
 
-                            inputNome.focus();
+                            DOM.equipes.detalhes.inputNome.focus();
                         }
 
-                        btnSalvar.onclick = async () => {
+                        DOM.equipes.detalhes.btnSalvar.onclick = async () => {
 
-                            equipe.nome = inputNome.value;
-                            equipe.descricao = textAreaDescricao.value;
-                            equipe.responsavel.id = selectResponsavel.options[selectResponsavel.selectedIndex].value;
-                            equipe.responsavel.usuario = selectResponsavel.options[selectResponsavel.selectedIndex].textContent;
+                            equipe.nome = DOM.equipes.detalhes.inputNome.value;
+                            equipe.descricao = DOM.equipes.detalhes.textAreaDescricao.value;
+                            equipe.responsavel.id = DOM.equipes.detalhes.selectResponsavel.options[DOM.equipes.detalhes.selectResponsavel.selectedIndex].value;
+                            equipe.responsavel.usuario = DOM.equipes.detalhes.selectResponsavel.options[DOM.equipes.detalhes.selectResponsavel.selectedIndex].textContent;
 
                             let validacao = novaEquipeValida(equipe);
 
@@ -571,90 +539,76 @@ export async function initDetalhesProjeto(id_projeto) {
 
                                         e.target.remove();
 
-                                        sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(equipe.id, equipe.nome));
+                                        DOM.equipes.section.insertAdjacentHTML("afterbegin", articleEquipe(equipe));
 
-                                        info.style.color = '#75CE70';
-                                        info.textContent = 'Equipe atualizada';
+                                        DOM.equipes.detalhes.info.style.color = Colors.green;
+                                        DOM.equipes.detalhes.info.textContent = 'Equipe atualizada';
 
                                         setTimeout(() => {
-                                            info.textContent = '';
+                                            DOM.equipes.detalhes.info.textContent = '';
                                         }, 1500);
 
-                                        inputNome.readOnly = true;
-                                        textAreaDescricao.readOnly = true;
-                                        selectResponsavel.disabled = true;
+                                        DOM.equipes.detalhes.inputNome.readOnly = true;
+                                        DOM.equipes.detalhes.textAreaDescricao.readOnly = true;
+                                        DOM.equipes.detalhes.selectResponsavel.disabled = true;
 
-                                        btnEditarEquipe.disabled = false;
-                                        btnSalvar.disabled = true;
+                                        DOM.equipes.detalhes.btnEditar.disabled = false;
+                                        DOM.equipes.detalhes.btnSalvar.disabled = true;
 
                                     }
                                 } catch (error) {
                                     if (error.message.includes('1062 Duplicate entry')) {
-                                        info.style.color = '#E65A55';
-                                        info.textContent = 'Já existe uma equipe com esse nome no projeto';
-                                        btnSalvar.disabled = false;
+                                        DOM.equipes.detalhes.info.style.color = Colors.red;
+                                        DOM.equipes.detalhes.info.textContent = 'Já existe uma equipe com esse nome no projeto';
+                                        DOM.equipes.detalhes.btnSalvar.disabled = false;
                                     }
                                 }
                             } else {
-                                info.style.color = '#E65A55';
-                                info.textContent = validacao.message;
+                                DOM.equipes.detalhes.info.style.color = Colors.red;
+                                DOM.equipes.detalhes.info.textContent = validacao.message;
                             }
                         }
                     }
-
-                    console.log(responseEquipe);
                 }
             }
         });
 
-        modalEquipes.querySelector('#btnAdicionarEquipe').onclick = () => {
+        DOM.equipes.btnAdicionarEquipe.onclick = () => {
             interactModal('modalAdicionarEquipe', 'modalEquipes');
 
-            let btnCancelar = modalAdicionarEquipe.querySelector('#btnCancelar')
-
-            btnCancelar.onclick = () => {
+            DOM.equipes.modalAdicionar.btnCancelar.onclick = () => {
                 interactModal('modalAdicionarEquipe', 'modalEquipes');
             };
 
-            let novaEquipe = {
-                nome: '', descricao: '', responsavel: {
-                    id: '', usuario: ''
-                }, participantes: []
-            }
+            DOM.equipes.modalAdicionar.inputNome.value = '';
+            DOM.equipes.modalAdicionar.textAreaDescricao.value = '';
+            DOM.equipes.modalAdicionar.selectResponsavel.selectedIndex = 0;
+            DOM.equipes.modalAdicionar.info.textContent = '';
 
-            let info = modalAdicionarEquipe.querySelector('#info');
+            DOM.equipes.modalAdicionar.btnConcluir.onclick = async () => {
+                let equipe = {
+                    nome: DOM.equipes.modalAdicionar.inputNome.value,
+                    descricao: DOM.equipes.modalAdicionar.textAreaDescricao.value,
+                    responsavel: {
+                        id: DOM.equipes.modalAdicionar.selectResponsavel.options[DOM.equipes.modalAdicionar.selectResponsavel.selectedIndex].value,
+                        usuario: DOM.equipes.modalAdicionar.selectResponsavel.options[DOM.equipes.modalAdicionar.selectResponsavel.selectedIndex].textContent
+                    }
+                }
 
-            let inputNome = modalAdicionarEquipe.querySelector('#input_nome');
-            let textAreaDescricao = modalAdicionarEquipe.querySelector('#textArea_descricao');
-            let selectResponsavelEquipe = modalAdicionarEquipe.querySelector('#select_responsavel');
-
-            inputNome.value = '';
-            textAreaDescricao.value = '';
-            selectResponsavelEquipe.selectedIndex = 0;
-            info.textContent = '';
-
-            let btnConcluir = modalAdicionarEquipe.querySelector('#btnConcluir')
-
-            btnConcluir.onclick = async () => {
-                novaEquipe.nome = inputNome.value;
-                novaEquipe.descricao = textAreaDescricao.value;
-                novaEquipe.responsavel.id = selectResponsavel.options[selectResponsavel.selectedIndex].value;
-                novaEquipe.responsavel.usuario = selectResponsavel.options[selectResponsavel.selectedIndex].textContent;
-
-                let validacao = novaEquipeValida(novaEquipe);
+                let validacao = novaEquipeValida(equipe);
 
                 if (validacao.success) {
 
-                    btnCancelar.disabled = true;
-                    btnConcluir.disabled = true;
+                    DOM.equipes.modalAdicionar.btnCancelar.disabled = true;
+                    DOM.equipes.modalAdicionar.btnConcluir.disabled = true;
 
                     let formNovaEquipe = new FormData();
 
                     formNovaEquipe.append('novaEquipe', JSON.stringify({
                         id_projeto: id_projeto,
-                        nome: novaEquipe.nome,
-                        descricao: novaEquipe.descricao,
-                        id_responsavel: novaEquipe.responsavel.id
+                        nome: equipe.nome,
+                        descricao: equipe.descricao,
+                        id_responsavel: equipe.responsavel.id
                     }));
 
                     try {
@@ -663,49 +617,51 @@ export async function initDetalhesProjeto(id_projeto) {
                         });
 
                         if (response.success) {
-                            sectionEquipes.insertAdjacentHTML("afterbegin", articleEquipe(response.data.id, novaEquipe.nome));
-                            info.style.color = '#46b640';
-                            info.textContent = 'Equipe adicionada';
+                            let novaEquipe = {
+                                id: response.data.id,
+                                nome: equipe.nome
+                            };
+                            DOM.equipes.section.insertAdjacentHTML("afterbegin", articleEquipe(novaEquipe));
+                            DOM.equipes.modalAdicionar.info.style.color = Colors.green;
+                            DOM.equipes.modalAdicionar.info.textContent = 'Equipe adicionada';
                             setTimeout(() => {
                                 interactModal('modalAdicionarEquipe', 'modalEquipes');
-                                btnCancelar.disabled = false;
-                                btnConcluir.disabled = false;
+                                DOM.equipes.modalAdicionar.btnCancelar.disabled = false;
+                                DOM.equipes.modalAdicionar.btnConcluir.disabled = false;
                             }, 1500);
                         } else {
-                            btnCancelar.disabled = false;
-                            btnConcluir.disabled = false;
+                            DOM.equipes.modalAdicionar.btnCancelar.disabled = false;
+                            DOM.equipes.modalAdicionar.btnConcluir.disabled = false;
                         }
                     } catch (error) {
                         if (error.message.includes('1062 Duplicate entry')) {
-                            info.style.color = '#E65A55';
-                            info.textContent = 'Já existe uma equipe com esse nome no projeto';
-                            btnCancelar.disabled = false;
-                            btnConcluir.disabled = false;
-                            inputNome.focus();
+                            DOM.equipes.modalAdicionar.info.style.color = Colors.red;
+                            DOM.equipes.modalAdicionar.info.textContent = 'Já existe uma equipe com esse nome no projeto';
+                            DOM.equipes.modalAdicionar.btnCancelar.disabled = false;
+                            DOM.equipes.modalAdicionar.btnConcluir.disabled = false;
+                            DOM.equipes.modalAdicionar.inputNome.focus();
                         }
                     }
                 } else {
-                    info.style.color = '#E65A55';
-                    info.textContent = validacao.message;
+                    DOM.equipes.modalAdicionar.info.style.color = Colors.red;
+                    DOM.equipes.modalAdicionar.info.textContent = validacao.message;
                 }
             }
         }
     });
 
-    btnTarefas.addEventListener('click', async function () {
+    DOM.detalhes.botoes.tarefas.addEventListener('click', async function () {
         await initTarefas("Projeto", id_projeto);
     })
 
-    btnComentarios.addEventListener('click', async function () {
+    DOM.detalhes.botoes.comentarios.addEventListener('click', async function () {
         interactModal('modalComentarios', 'sectionDetalhes');
 
-        modalComentarios.querySelector('#btnFechar').onclick = () => {
+        DOM.comentarios.btnFechar.onclick = () => {
             interactModal('modalComentarios', 'sectionDetalhes');
         };
 
-        let sectionComentarios = modalComentarios.querySelector('.sectionComentarios');
-
-        sectionComentarios.addEventListener('click', async function (e) {
+        DOM.comentarios.section.addEventListener('click', async function (e) {
             if (e.target.classList.contains('btnRemover')) {
                 let articleComentario = e.target.closest('.articleComentario');
 
@@ -720,78 +676,68 @@ export async function initDetalhesProjeto(id_projeto) {
                 if (responseDeleteComentario.success) {
                     articleComentario.remove();
                 }
-
-                console.log(responseDeleteComentario);
-
             }
         })
 
-        modalComentarios.querySelector('#btnAdicionarComentario').onclick = () => {
+        DOM.comentarios.btnAdicionar.onclick = () => {
             interactModal('modalAdicionarComentario', 'modalComentarios');
 
-            let btnCancelar = modalAdicionarComentario.querySelector('#btnCancelar');
-
-            let textAreaComentario = modalAdicionarComentario.querySelector('#textArea_comentario');
-            let info = modalAdicionarComentario.querySelector('#info');
-
-            btnCancelar.onclick = () => {
+            DOM.comentarios.modalAdicionar.btnCancelar.onclick = () => {
                 interactModal('modalAdicionarComentario', 'modalComentarios');
-                textAreaComentario.value = '';
-                info.textContent = '';
+                DOM.comentarios.modalAdicionar.textArea.value = '';
+                DOM.comentarios.modalAdicionar.info.textContent = '';
             }
 
-            let btnAdicionar = modalAdicionarComentario.querySelector('#btnAdicionar');
+            DOM.comentarios.modalAdicionar.btnAdicionar.onclick = async () => {
+                if (DOM.comentarios.modalAdicionar.textArea.value.replace(/ /g, '') === '') {
+                    DOM.comentarios.modalAdicionar.info.style.color = Colors.red;
+                    DOM.comentarios.modalAdicionar.info.textContent = 'O campo de comentário não pode estar vázio';
+                    return;
+                }
 
-            btnAdicionar.onclick = async () => {
-                if (!(textAreaComentario.value.replace(/ /g, '') === '')) {
+                DOM.comentarios.modalAdicionar.btnAdicionar.disabled = true;
+                DOM.comentarios.modalAdicionar.btnCancelar.disabled = true;
 
-                    btnAdicionar.disabled = true;
-                    btnCancelar.disabled = true;
+                let form = new FormData();
+                form.append('comentario[id_projeto]', id_projeto);
+                form.append('comentario[id_usuario]', usuarioLogado.id);
+                form.append('comentario[texto]', DOM.comentarios.modalAdicionar.textArea.value);
 
-                    let form = new FormData();
-                    form.append('comentario[id_projeto]', id_projeto);
-                    form.append('comentario[id_usuario]', usuarioLogado.id);
-                    form.append('comentario[texto]', textAreaComentario.value);
+                let responseAddComentario = await request('../API/Comentario/addComentarioProjeto.php', {
+                    method: 'POST',
+                    body: form
+                });
 
-                    let responseAddComentario = await request('../API/Comentario/addComentarioProjeto.php', {
-                        method: 'POST',
-                        body: form
-                    });
+                if (responseAddComentario.success) {
 
-                    if (responseAddComentario.success) {
+                    DOM.comentarios.section.insertAdjacentHTML('afterbegin', articleComentario(responseAddComentario.data));
 
-                        sectionComentarios.insertAdjacentHTML('afterbegin', articleComentario(responseAddComentario.data));
+                    DOM.comentarios.modalAdicionar.info.style.color = Colors.green;
+                    DOM.comentarios.modalAdicionar.info.textContent = 'Comentário adicionado';
 
-                        info.textContent = 'Comentário adicionado';
-                        info.style.color = '#46b640';
-
-                        setTimeout(() => {
-                            interactModal('modalAdicionarComentario', 'modalComentarios');
-                            info.textContent = '';
-                            textAreaComentario.value = '';
-                            btnAdicionar.disabled = false;
-                            btnCancelar.disabled = false;
-                        }, 1500);
-                    }
-                } else {
-                    info.textContent = 'O campo de comentário não pode estar vázio';
-                    info.style.color = '#E65A55';
+                    setTimeout(() => {
+                        interactModal('modalAdicionarComentario', 'modalComentarios');
+                        DOM.comentarios.modalAdicionar.info.textContent = '';
+                        DOM.comentarios.modalAdicionar.textArea.value = '';
+                        DOM.comentarios.modalAdicionar.btnAdicionar.disabled = false;
+                        DOM.comentarios.modalAdicionar.btnCancelar.disabled = false;
+                    }, 1500);
                 }
             }
         }
 
     });
 
-    inputDataConclusao.min = new Date().toISOString().split("T")[0];
+    DOM.detalhes.campos.inputDataConclusao.min = new Date().toISOString().split("T")[0];
 
-    btnExcluir.onclick = () => {
+    DOM.detalhes.botoes.excluir.onclick = () => {
         interactModal('modalExcluir', 'sectionDetalhes');
 
-        btnCancelarModalExcluir.onclick = () => {
+        DOM.excluir.btnCancelar.onclick = () => {
             interactModal('modalExcluir', 'sectionDetalhes');
         }
 
-        btnExcluirModalExcluir.onclick = async () => {
+        DOM.excluir.btnExcluir.onclick = async () => {
             let form = new FormData();
 
             form.append('id_projeto', id_projeto);
@@ -804,25 +750,17 @@ export async function initDetalhesProjeto(id_projeto) {
         }
     }
 
-    btnConcluir.onclick = () => {
+    DOM.detalhes.botoes.concluir.onclick = () => {
         interactModal('modalConcluir', 'sectionDetalhes');
 
-        btnCancelarModalConcluir.onclick = () => {
+        DOM.concluir.btnCancelar.onclick = () => {
             interactModal('modalConcluir', 'sectionDetalhes');
         }
 
-        btnConcluirModalConcluir.onclick = async () => {
-
-            inputDataModalConcluir.required = true;
-
-            if (!inputDataModalConcluir.checkValidity() || inputDataModalConcluir.value === '') {
-                inputDataModalConcluir.reportValidity();
-                return;
-            }
+        DOM.concluir.btnConcluir.onclick = async () => {
 
             let form = new FormData();
             form.append('id_projeto', id_projeto);
-            form.append('dataConclusao', inputDataModalConcluir.value);
 
             let responseConcluir = await request('../API/Projeto/concluirProjeto.php', {method: 'POST', body: form});
 
@@ -832,34 +770,32 @@ export async function initDetalhesProjeto(id_projeto) {
         }
     }
 
-    console.log(btnEditar.parentElement);
+    DOM.detalhes.botoes.editar.onclick = function () {
 
-    btnEditar.onclick = function () {
+        DOM.detalhes.botoes.editar.disabled = true;
+        DOM.detalhes.botoes.concluir.disabled = true;
+        DOM.detalhes.botoes.excluir.disabled = true;
 
-        btnEditar.disabled = true;
-        btnConcluir.disabled = true;
-        btnExcluir.disabled = true;
+        DOM.detalhes.campos.inputNome.focus();
 
-        inputNome.focus();
+        DOM.detalhes.campos.inputNome.readOnly = false;
+        DOM.detalhes.campos.textAreaDescricao.readOnly = false;
+        DOM.detalhes.campos.inputDataConclusao.readOnly = false;
+        DOM.detalhes.campos.selectResponsavel.disabled = false;
 
-        inputNome.readOnly = false;
-        textAreaDescricao.readOnly = false;
-        inputDataConclusao.readOnly = false;
-        selectResponsavel.disabled = false;
-
-        btnSalvar.disabled = false;
-        articleDetalhes.style.borderColor = Colors.blue;
+        DOM.detalhes.botoes.salvar.disabled = false;
+        DOM.detalhes.article.style.borderColor = Colors.blue;
     };
 
-    btnSalvar.onclick = async () => {
+    DOM.detalhes.botoes.salvar.onclick = async () => {
 
         let editarProjeto = new FormData();
 
         editarProjeto.append('editarProjeto[id]', id_projeto);
-        editarProjeto.append('editarProjeto[nome]', inputNome.value);
-        editarProjeto.append('editarProjeto[descricao]', textAreaDescricao.value);
-        editarProjeto.append('editarProjeto[dataAtualConclusao]', inputDataConclusao.value);
-        editarProjeto.append('editarProjeto[id_responsavel]', selectResponsavel.value);
+        editarProjeto.append('editarProjeto[nome]', DOM.detalhes.campos.inputNome.value);
+        editarProjeto.append('editarProjeto[descricao]', DOM.detalhes.campos.textAreaDescricao.value);
+        editarProjeto.append('editarProjeto[dataAtualConclusao]', DOM.detalhes.campos.inputDataConclusao.value);
+        editarProjeto.append('editarProjeto[id_responsavel]', DOM.detalhes.campos.selectResponsavel.value);
         editarProjeto.append('editarProjeto[dataConclusao]', '');
         editarProjeto.append('editarProjeto[status]', "Em andamento");
 
@@ -867,25 +803,26 @@ export async function initDetalhesProjeto(id_projeto) {
             let response = await request("../API/ProjetoAPI.php", {method: "POST", body: editarProjeto});
             console.log(response);
             if (response.success) {
-                articleDetalhes.style.borderColor = "#75CE70";
-                info.textContent = 'Projeto atualizado com sucesso!';
+                DOM.detalhes.article.style.borderColor = Colors.green;
+                DOM.detalhes.info.color = Colors.green;
+                DOM.detalhes.info.textContent = 'Projeto atualizado com sucesso!';
                 setTimeout(() => {
-                    articleDetalhes.style.borderColor = "rgba(195, 195, 195, 0.5)";
-                    info.textContent = '';
-                }, 5000);
+                    DOM.detalhes.article.style.borderColor = Colors.grayLight;
+                    DOM.detalhes.info.textContent = '';
+                }, 2500);
 
-                inputNome.readOnly = true;
-                textAreaDescricao.readOnly = true;
-                inputDataConclusao.readOnly = true;
-                selectResponsavel.disabled = true;
+                DOM.detalhes.campos.inputNome.readOnly = true;
+                DOM.detalhes.campos.textAreaDescricao.readOnly = true;
+                DOM.detalhes.campos.inputDataConclusao.readOnly = true;
+                DOM.detalhes.campos.selectResponsavel.disabled = true;
 
-                btnSalvar.disabled = true;
-                btnEditar.disabled = false;
-                btnConcluir.disabled = false;
-                btnExcluir.disabled = false;
+                DOM.detalhes.botoes.salvar.disabled = true;
+                DOM.detalhes.botoes.editar.disabled = false;
+                DOM.detalhes.botoes.concluir.disabled = false;
+                DOM.detalhes.botoes.excluir.disabled = false;
             }
         } catch (e) {
-            console.log(e.message);
+            console.log(e);
         }
     };
 }

@@ -348,11 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </div>
     </div>
     <div class="modal" id="modalConcluir">
-        <h1>Qual a data de conclusão desse projeto?</h1>
-        <div class="input-group" id="divDataModalConcluir">
-            <input type="date" id="inputDataModalConcluir">
-            <label for="inputDataModalConcluir">Data de conclusão</label>
-        </div>
+        <h1>Tem certeza que deseja concluir esse projeto?</h1>
         <div class="divCancelar_Concluir">
             <button class="buttonBlue" id="btnCancelarModalConcluir">Cancelar</button>
             <button class="buttonGreen" id="btnConcluirModalConcluir">Concluir</button>
