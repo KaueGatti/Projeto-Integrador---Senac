@@ -33,9 +33,29 @@ CREATE TABLE Mensagem_Conversa (
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
 
+CREATE TABLE Projeto (
+	id INT AUTO_INCREMENT,
+    id_criador VARCHAR(7) NOT NULL,
+	id_responsavel VARCHAR(7) NOT NULL,
+	nome VARCHAR(150) NOT NULL,
+	descricao VARCHAR(255) NOT NULL,
+	dataCriacao DATE NOT NULL,
+	dataInicialConclusao DATE NOT NULL,
+	dataAtualConclusao DATE NOT NULL,
+	dataConclusao DATE,
+	status VARCHAR(30) NOT NULL,
+    UNIQUE (id_responsavel, nome),
+	PRIMARY KEY (id),
+    FOREIGN KEY (id_criador) REFERENCES Usuario(id),
+	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
+);
+
 CREATE TABLE Chat (
 	id INT AUTO_INCREMENT,
-	PRIMARY KEY (id)
+    id_projeto INT NOT NULL,
+    UNIQUE (id_projeto),
+	PRIMARY KEY (id),
+    FOREIGN KEY (id_projeto) REFERENCES Projeto(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Mensagem_Chat (
@@ -49,31 +69,12 @@ CREATE TABLE Mensagem_Chat (
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
 
-CREATE TABLE Projeto (
-	id INT AUTO_INCREMENT,
-	id_chat INT NOT NULL,
-    id_criador VARCHAR(7) NOT NULL,
-	id_responsavel VARCHAR(7) NOT NULL,
-	nome VARCHAR(150) NOT NULL,
-	descricao VARCHAR(255) NOT NULL,
-	dataCriacao DATE NOT NULL,
-	dataInicialConclusao DATE NOT NULL,
-	dataAtualConclusao DATE NOT NULL,
-	dataConclusao DATE,
-	status VARCHAR(30) NOT NULL,
-    UNIQUE (id_responsavel, nome),
-	PRIMARY KEY (id),
-	FOREIGN KEY (id_chat) REFERENCES Chat(id),
-    FOREIGN KEY (id_criador) REFERENCES Usuario(id),
-	FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
-);
-
 CREATE TABLE Usuario_Projeto (
 	id_usuario VARCHAR(7) NOT NULL,
 	id_projeto INT NOT NULL,
 	PRIMARY KEY (id_usuario, id_projeto),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Equipe (
@@ -89,7 +90,7 @@ CREATE TABLE Equipe (
 	PRIMARY KEY (id),
     UNIQUE (id_projeto, nome),
 	FOREIGN KEY (id_chat) REFERENCES Chat(id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id) ON DELETE CASCADE,
     FOREIGN KEY (id_responsavel) REFERENCES Usuario(id)
 );
 
@@ -99,7 +100,7 @@ CREATE TABLE Usuario_Equipe (
 	id_equipe INT,
 	PRIMARY KEY (id_usuario, id_equipe),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
-	FOREIGN KEY (id_equipe) REFERENCES Equipe(id)
+	FOREIGN KEY (id_equipe) REFERENCES Equipe(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Tarefa (
@@ -115,7 +116,7 @@ CREATE TABLE Tarefa (
 	dataConclusao DATE NULL,
 	status VARCHAR(30),
 	PRIMARY KEY (id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id),
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id) ON DELETE CASCADE,
 	FOREIGN KEY (id_equipe) REFERENCES Equipe(id),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
@@ -128,7 +129,7 @@ CREATE TABLE Comentario_Projeto (
 	data_hora TIMESTAMP,
 	PRIMARY KEY (id),
 	FOREIGN KEY (id_usuario) REFERENCES Usuario(id),
-	FOREIGN KEY (id_projeto) REFERENCES Projeto(id)
+	FOREIGN KEY (id_projeto) REFERENCES Projeto(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Notificacao (
@@ -247,16 +248,8 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE DELETE_PROJETO (_id_projeto INT)
 BEGIN
-
-	DELETE FROM Tarefa
-	WHERE id_projeto = _id_projeto;
-
-	DELETE FROM Usuario_Projeto
-    WHERE id_projeto = _id_projeto;
-
 	DELETE FROM Projeto
     WHERE id = _id_projeto;
-    
 END $
 DELIMITER ;
 
@@ -270,10 +263,10 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CONCLUIR_PROJETO (_id_projeto INT, _dataConclusao DATE)
+CREATE PROCEDURE CONCLUIR_PROJETO (_id_projeto INT)
 BEGIN
 	UPDATE Projeto
-    SET dataConclusao = _dataConclusao, status = 'Concluido'
+    SET status = 'Concluido', dataConclusao = NOW()
     WHERE Projeto.id = _id_projeto;
 END $
 DELIMITER ;
@@ -621,9 +614,9 @@ END $
 DELIMITER ;
 
 DELIMITER $
-CREATE PROCEDURE CREATE_CHAT()
+CREATE PROCEDURE CREATE_CHAT(_id_projeto INT)
 BEGIN
-	INSERT INTO Chat VALUES (NULL);
+	INSERT INTO Chat (id_projeto) VALUES (_id_projeto);
 END $
 DELIMITER ;
 
@@ -725,21 +718,14 @@ DELIMITER ;
 
 DELIMITER $
 CREATE TRIGGER NOVO_CHAT_PROJETO
-BEFORE INSERT ON Projeto
+AFTER INSERT ON Projeto
 FOR EACH ROW
 BEGIN
-	DECLARE id_chat INT;
-    
-	CALL CREATE_CHAT();
-    
-    SET id_chat = LAST_INSERT_ID();
-    
-    SET NEW.id_chat = id_chat;
-    
+	CALL CREATE_CHAT(NEW.id);
 END $
 DELIMITER ;
 
-DELIMITER $
+/*DELIMITER $
 CREATE TRIGGER NOVO_CHAT_EQUIPE
 BEFORE INSERT ON Equipe
 FOR EACH ROW
@@ -753,7 +739,7 @@ BEGIN
     SET NEW.id_chat = id_chat;
     
 END $
-DELIMITER ;
+DELIMITER ;*/
 
 DELIMITER $$
 CREATE TRIGGER NOVO_PEDIDO_AMIZADE
