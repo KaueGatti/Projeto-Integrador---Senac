@@ -102,14 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <div class="divDataConclusao_Tarefas_Comentarios">
                 <div class="input-group" id="input-groupDataConclusao">
                     <input type="date" id="inputDataConclusao" name="dataConclusao" placeholder=" " readonly
-                           value="<?= $projeto->dataAtualConclusao ?>">
+                           value="<?= $projeto->status == "Concluido" ? $projeto->dataConclusao : $projeto->dataAtualConclusao?>">
                     <label for="inputDataConclusao">Data para conclusão</label>
                 </div>
                 <button class="buttonOrange" id="btnTarefas">Tarefas</button>
                 <button class="buttonOrange" id="btnComentarios">Comentários
                 </button>
             </div>
-            <!-- /*<button class="buttonGray" id="btnChat">Chat</button> -->
             <p id="info"></p>
             <div class="divExcluir_Concluir_Editar_Salvar">
                 <button class="buttonRed" id="btnExcluir" <?php if (!$isResponsavel) echo 'hidden' ?>>Excluir
