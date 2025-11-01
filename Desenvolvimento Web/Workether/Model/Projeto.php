@@ -223,10 +223,9 @@ class Projeto
 
     public function concluir() {
         try {
-            $sql = 'CALL CONCLUIR_PROJETO(:id_projeto, :dataConclusao)';
+            $sql = 'CALL CONCLUIR_PROJETO(:id_projeto)';
             $stmt = $this->con->prepare($sql);
             $stmt->bindParam(':id_projeto', $this->id);
-            $stmt->bindParam(':dataConclusao', $this->dataConclusao);
 
             if ($stmt->execute()) {
                 return [

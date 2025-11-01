@@ -208,6 +208,18 @@ export async function initDetalhesProjeto(id_projeto) {
         }
     };
 
+    if (DOM.detalhes.dados.status.textContent === 'Concluido') {
+
+        DOM.detalhes.campos.inputDataConclusao.labels[0].textContent = 'Data de conclusão';
+        DOM.detalhes.botoes.concluir.style.display = 'none';
+        DOM.detalhes.botoes.editar.style.display = 'none';
+        DOM.detalhes.botoes.salvar.style.display = 'none';
+
+        if (DOM.detalhes.dados.idResponsavel.textContent !== usuarioLogado.id) {
+            DOM.detalhes.botoes.excluir.style.display = 'none';
+        }
+    }
+
     DOM.btnVoltar.onclick = async () => {
         await initProjetos();
     }
@@ -222,16 +234,6 @@ export async function initDetalhesProjeto(id_projeto) {
             }
         })
     });
-
-    if (DOM.detalhes.dados.status.textContent === 'Concluido') {
-        DOM.detalhes.botoes.concluir.style.display = 'none';
-        DOM.detalhes.botoes.editar.style.display = 'none';
-        DOM.detalhes.botoes.salvar.style.display = 'none';
-
-        if (DOM.detalhes.dados.idResponsavel.textContent !== usuarioLogado.id) {
-            DOM.detalhes.botoes.excluir.style.display = 'none';
-        }
-    }
 
     DOM.detalhes.botoes.participantes.addEventListener('click', async function () {
 

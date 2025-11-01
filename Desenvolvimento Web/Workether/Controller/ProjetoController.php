@@ -57,9 +57,8 @@ class ProjetoController
         return $this->projeto->delete();
     }
 
-    public function concluirProjeto($id_projeto, $dataConclusao) {
+    public function concluirProjeto($id_projeto) {
         $this->projeto->id = $id_projeto;
-        $this->projeto->dataConclusao = $dataConclusao;
         return $this->projeto->concluir();
     }
 }
